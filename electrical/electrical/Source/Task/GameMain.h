@@ -1,9 +1,12 @@
 #pragma once
 
+#include "../Character/CharacterBase.h"
+#include "../Character/CharacterPlayer.h"
+
 class GameMain
 {
 private:
-
+	CharacterBase *player;
 
 public:
 	// コンストラクタ

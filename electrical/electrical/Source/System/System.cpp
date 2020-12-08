@@ -14,27 +14,6 @@ System::~System()
 	delete gameMain;
 }
 
-// メイン処理
-bool System::Main()
-{
-	// 初期化処理
-	if ( !Initialize() )
-	{
-		return false;
-	}
-
-	// メインループ処理を行う
-	if ( !MainLoop() )
-	{
-		return false;
-	}
-
-	// 終了処理
-	Finalize();
-
-	return true;
-}
-
 // 初期化処理
 bool System::Initialize()
 {
@@ -79,4 +58,25 @@ void System::Finalize()
 {
 	// Dxライブラリ終了処理
 	DxLib_End();
+}
+
+// メイン処理
+bool System::Main()
+{
+	// 初期化処理
+	if ( !Initialize() )
+	{
+		return false;
+	}
+
+	// メインループ処理を行う
+	if ( !MainLoop() )
+	{
+		return false;
+	}
+
+	// 終了処理
+	Finalize();
+
+	return true;
 }

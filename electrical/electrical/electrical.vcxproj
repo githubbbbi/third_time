@@ -132,19 +132,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Character\CharacterBase.cpp" />
+    <ClCompile Include="Source\Character\CharacterPlayer.cpp" />
     <ClCompile Include="Source\Define\Define.cpp" />
     <ClCompile Include="Source\Input\InputKey.cpp" />
+    <ClCompile Include="Source\Input\InputPad.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\System\SettingDxLib.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\Task\GameMain.cpp" />
+    <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Character\CharacterBase.h" />
+    <ClInclude Include="Source\Character\CharacterPlayer.h" />
     <ClInclude Include="Source\Define\Define.h" />
     <ClInclude Include="Source\Input\InputKey.h" />
+    <ClInclude Include="Source\Input\InputPad.h" />
     <ClInclude Include="Source\System\SettingDxLib.h" />
     <ClInclude Include="Source\System\System.h" />
     <ClInclude Include="Source\Task\GameMain.h" />
+    <ClInclude Include="Source\Utility\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
