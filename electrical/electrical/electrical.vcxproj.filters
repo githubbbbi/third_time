@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Define">
+      <UniqueIdentifier>{eeda31d1-0319-430e-a0e8-e54e7d56d5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{71054634-203f-4314-a1dd-149487cd3299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{6682975c-726a-4e29-ab9f-56390ab9c055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Define">
+      <UniqueIdentifier>{dd2f2af3-413f-4e20-8ee8-4aaf91a567ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Input">
+      <UniqueIdentifier>{1d95f540-9c93-4c06-9393-497e5e723af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{d6430350-248f-4e2f-8301-c0f57e876151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task">
+      <UniqueIdentifier>{92752cf9-b411-45e5-afad-da168c0bb572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Task">
+      <UniqueIdentifier>{56b1da09-427e-495a-9509-1fdbb0800ec8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Define\Define.cpp">
+      <Filter>ソース ファイル\Define</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input\InputKey.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\SettingDxLib.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\System.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Task\GameMain.cpp">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Define\Define.h">
+      <Filter>ヘッダー ファイル\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\InputKey.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\SettingDxLib.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\System.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\GameMain.h">
+      <Filter>ヘッダー ファイル\Task</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
