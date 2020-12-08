@@ -53,7 +53,7 @@ bool DxLibGameLoop()
 	}
 
 	// ESCキーが押されたらループから抜ける
-	if ( IsKeyInputRelease(KEY_INPUT_ESCAPE) )
+	if ( InputKey::IsKeyInputRelease(KEY_INPUT_ESCAPE) )
 	{
 		return false;
 	}

@@ -1,18 +1,12 @@
 #include "DxLib.h"
 #include "InputKey.h"
 
-// 初期化処理
-void KeyInit()
-{
-	for ( int i = 0; i < 256; i++ )
-	{
-		keys[i] = 0;
-		oldkeys[i] = 0;
-	}
-}
+// 変数初期化
+char InputKey::keys[] = { 0 };
+char InputKey::oldkeys[] = { 0 };
 
 // 更新処理
-void KeyUpdate()
+void InputKey::KeyUpdate()
 {
 	// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
 	for ( int i = 0; i < 256; i++ )
@@ -25,7 +19,7 @@ void KeyUpdate()
 }
 
 // 前フレームが押されていない状態から押された場合TRUE
-bool IsKeyInputNow(int key)
+bool InputKey::IsKeyInputNow(int key)
 {
 	if ( oldkeys[key] == FALSE && keys[key] == TRUE )
 	{
@@ -36,7 +30,7 @@ bool IsKeyInputNow(int key)
 }
 
 // 押されていて離された場合TRUE
-bool IsKeyInputRelease(int key)
+bool InputKey::IsKeyInputRelease(int key)
 {
 	if ( oldkeys[key] == TRUE && keys[key] == FALSE )
 	{

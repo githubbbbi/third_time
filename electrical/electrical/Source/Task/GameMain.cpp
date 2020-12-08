@@ -18,9 +18,6 @@ GameMain::~GameMain()
 // 初期化処理
 void GameMain::Initialize()
 {
-	// 入力処理の初期化
-	KeyInit();
-
 
 }
 
@@ -28,7 +25,7 @@ void GameMain::Initialize()
 void GameMain::Update()
 {
 	// キーボード
-	KeyUpdate();
+	InputKey::KeyUpdate();
 
 
 }
