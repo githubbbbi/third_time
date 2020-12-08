@@ -36,7 +36,6 @@ void GameMain::Update()
 // •`‰æˆ—
 void GameMain::Draw()
 {
-	DrawString(500, 200, "‚±‚ñ‚É‚¿‚Í", GetColor(255, 255, 255));
 	DrawString(500, 300, "ƒQ[ƒ€‰æ–Ê", GetColor(255, 255, 255));
 }
 
