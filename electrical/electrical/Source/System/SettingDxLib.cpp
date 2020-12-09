@@ -27,6 +27,9 @@ bool DxLibInit()
 	// (ダブルバッファ)描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	// 垂直同期をオフ
+	SetWaitVSyncFlag(FALSE);
+
 	// DxLibの初期化
 	if ( DxLib_Init() == -1 )
 	{

@@ -8,22 +8,23 @@
 // コンストラクタ
 GameMain::GameMain()
 {
-	
+	charaManager = nullptr;
 }
 
 // デストラクタ
 GameMain::~GameMain()
 {
-	delete player;
+	delete charaManager;
 }
 
 // 初期化処理
 void GameMain::Initialize()
 {
-	// プレイヤー生成
-	int playerGH = LoadGraph("Resource/Graphic/player.png");
-	player = new CharacterPlayer(WIN_WIDTH / 2, WIN_HEIGHT / 2, 5,
-								 32, playerGH);
+	// キャラクターインスタンス生成
+	charaManager = new Chara_Manager;
+
+	// キャラクター
+	charaManager->Initialize();
 }
 
 // 更新処理
@@ -35,15 +36,15 @@ void GameMain::Update()
 	// パッド
 	InputPad::PadUpdate();
 
-	// プレイヤー
-	player->Update();
+	// キャラクター
+	charaManager->Update();
 }
 
 // 描画処理
 void GameMain::Draw()
 {
-	// プレイヤー
-	player->Draw();
+	// キャラクター
+	charaManager->Draw();
 }
 
 // 終了処理

@@ -69,17 +69,26 @@
     <ClCompile Include="Source\Task\GameMain.cpp">
       <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\CharacterPlayer.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Character\CharacterBase.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Utility\Utility.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input\InputPad.cpp">
       <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\CharaPlayer.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\CharaBase.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\CharaManager.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyAbsorption.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyBase.cpp">
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,17 +107,26 @@
     <ClInclude Include="Source\Task\GameMain.h">
       <Filter>ヘッダー ファイル\Task</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character\CharacterBase.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\CharacterPlayer.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility\Utility.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input\InputPad.h">
       <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\CharaBase.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyBase.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_Manager.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_Player.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyAbsorption.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

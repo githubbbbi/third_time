@@ -132,8 +132,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Character\CharacterBase.cpp" />
-    <ClCompile Include="Source\Character\CharacterPlayer.cpp" />
+    <ClCompile Include="Source\Character\CharaBase.cpp" />
+    <ClCompile Include="Source\Character\CharaManager.cpp" />
+    <ClCompile Include="Source\Character\CharaPlayer.cpp" />
+    <ClCompile Include="Source\Character\Chara_EnemyAbsorption.cpp" />
+    <ClCompile Include="Source\Character\Chara_EnemyBase.cpp" />
     <ClCompile Include="Source\Define\Define.cpp" />
     <ClCompile Include="Source\Input\InputKey.cpp" />
     <ClCompile Include="Source\Input\InputPad.cpp" />
@@ -144,8 +147,11 @@
     <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Character\CharacterBase.h" />
-    <ClInclude Include="Source\Character\CharacterPlayer.h" />
+    <ClInclude Include="Source\Character\CharaBase.h" />
+    <ClInclude Include="Source\Character\Chara_EnemyBase.h" />
+    <ClInclude Include="Source\Character\Chara_EnemyAbsorption.h" />
+    <ClInclude Include="Source\Character\Chara_Manager.h" />
+    <ClInclude Include="Source\Character\Chara_Player.h" />
     <ClInclude Include="Source\Define\Define.h" />
     <ClInclude Include="Source\Input\InputKey.h" />
     <ClInclude Include="Source\Input\InputPad.h" />
