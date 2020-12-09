@@ -2,9 +2,9 @@
 #include "Chara_EnemyAbsorption.h"
 #include "../Define/Define.h"
 
-Chara_EnemyAbsorption::Chara_EnemyAbsorption(int x, int y, int speed,
-											 int radius, int graphHandle):
-	CharaEnemyBase(x, y, speed, radius, graphHandle)
+Chara_EnemyAbsorption::Chara_EnemyAbsorption(int x, int y, int radius,
+											 int speed, int hp, int graphHandle):
+	CharaEnemyBase(x, y, radius, speed, hp, graphHandle)
 {
 
 }

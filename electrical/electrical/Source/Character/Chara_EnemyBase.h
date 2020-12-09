@@ -8,6 +8,6 @@ protected:
 	
 
 public:
-	CharaEnemyBase(int x, int y, int speed,
-				   int radius, int graphHandle);
+	CharaEnemyBase(int x, int y, int radius,
+				   int speed, int hp, int graphHandle);
 };

@@ -10,6 +10,10 @@ public:
 
 
 	// ‰æ–Ê“à‚É‚Æ‚Ç‚Ü‚é
-	static void StayOnScreen(int *x, int *y, int radius, 
+	static void StayOnScreen(int *x, int *y, int radius,
 							 bool isStayX, bool isStayY);
+
+	// ‰~‚ÌƒRƒŠƒWƒ‡ƒ“
+	static bool CircleCollision(int x1, int y1, int r1,
+						 int x2, int y2, int r2);
 };

@@ -26,14 +26,14 @@ Chara_Manager::~Chara_Manager()
 void Chara_Manager::Initialize()
 {
 	// プレイヤー生成
-	player = new Chara_Player(WIN_WIDTH / 2, WIN_HEIGHT / 2, 5,
-							  32, playerGH);
+	player = new Chara_Player(WIN_WIDTH / 2, WIN_HEIGHT / 2,
+							  32, 5, 50, playerGH);
 
 	// エネミー生成
 	enemyAbsorption[enemyAbsorptionNum] =
 	{
-		new Chara_EnemyAbsorption(32, WIN_HEIGHT / 2, 5,
-								  32, enemyAbsorptionGH)
+		new Chara_EnemyAbsorption(32, WIN_HEIGHT / 2,
+								   32, 5, 2, enemyAbsorptionGH)
 	};
 
 	enemyAbsorptionNum = 1;
@@ -55,8 +55,8 @@ void Chara_Manager::Update()
 		{
 			enemyAbsorption[enemyAbsorptionNum] =
 			{
-				new Chara_EnemyAbsorption(32, GetRand(WIN_HEIGHT - 64) + 32, GetRand(3) + 2,
-										  32, enemyAbsorptionGH)
+				new Chara_EnemyAbsorption(32, GetRand(WIN_HEIGHT - 64) + 32,
+										  32, GetRand(3) + 2, 2,enemyAbsorptionGH)
 			};
 
 			enemyAbsorptionNum++;

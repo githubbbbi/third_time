@@ -46,8 +46,8 @@ bool DxLibGameLoop()
 	// (ダブルバッファ)裏面
 	ScreenFlip();
 
-	// 20ミリ秒待機(疑似60FPS)
-	WaitTimer(20);
+	// 16ミリ秒待機(疑似60FPS)
+	WaitTimer(16);
 
 	// Windowsシステムからくる情報を処理する
 	if ( ProcessMessage() == -1 )

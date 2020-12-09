@@ -1,14 +1,16 @@
 #include "CharaBase.h"
 
 // コンストラクタ
-CharaBase::CharaBase(int x, int y, int speed,
-					 int radius, int graphHandle)
+CharaBase::CharaBase(int x, int y, int radius,
+					 int speed, int hp, int graphHandle)
 {
 	this->x = x;
 	this->y = y;
 	this->speed = speed;
 	this->radius = radius;
 	this->graphHandle = graphHandle;
+
+	this->hp = hp;
 
 	moveX = 0;
 	moveY = 0;
@@ -17,6 +19,24 @@ CharaBase::CharaBase(int x, int y, int speed,
 	isLeftWard = false;
 
 	isJump = false;
+}
+
+// X座標を取得
+int CharaBase::GetPosX()
+{
+	return x;
+}
+
+// Y座標を取得
+int CharaBase::GetPosY()
+{
+	return y;
+}
+
+// 半径を取得
+int CharaBase::GetRadius()
+{
+	return radius;
 }
 
 // 画像の向きを変化
