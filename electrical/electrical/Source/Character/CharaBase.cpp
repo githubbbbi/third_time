@@ -1,8 +1,13 @@
 #include "CharaBase.h"
+#include "../Utility/Utility.h"
+#include "../Define/Define.h"
+
+const float GRAVITY = 0.8f;
+const float JUMP_POWER = -13.0f;
 
 // コンストラクタ
-CharaBase::CharaBase(int x, int y, int radius,
-					 int speed, int hp, int graphHandle)
+CharaBase::CharaBase(float x, float y, int radius,
+					 float speed, int hp, int graphHandle)
 {
 	this->x = x;
 	this->y = y;
@@ -12,8 +17,10 @@ CharaBase::CharaBase(int x, int y, int radius,
 
 	this->hp = hp;
 
-	moveX = 0;
-	moveY = 0;
+	moveX = 0.0f;
+	moveY = 0.0f;
+
+	gravity = 0.0f;
 
 	isAlive = true;
 	isLeftWard = false;
@@ -21,14 +28,121 @@ CharaBase::CharaBase(int x, int y, int radius,
 	isJump = false;
 }
 
+// キャラクタの落下
+void CharaBase::CharaFall()
+{
+	// 落下(画面外では落下しない)
+	if ( isJump )
+	{
+		// 落下速度を増やす
+		gravity += GRAVITY;
+
+		// 落下速度を移動量に加える
+		moveY += gravity;
+	}
+	// ジャンプ中でなければジャンプさせない
+	else
+	{
+		gravity = 0.0f;
+	}
+}
+
+// キャラクタの移動
+void CharaBase::CharaMove()
+{
+	// 落下
+	CharaFall();
+
+	// ダミー これはXまたはY方向の移動量について考慮しない場合に用いる
+	float dummy = 0.0f;
+
+	// キャラクタの左上、右上、左下、右上部分に当たり判定がある
+	// マップに衝突しているか調べ、衝突していた場合補正する
+
+	// 上下の移動量をチェック
+	// 左下 ブロックの上辺に着地した場合、落下停止
+	if ( Utility::MapHitCheck(x - radius, y + radius, &dummy, &moveY) == e_HIT_BOTTOM )
+	{
+		gravity = 0.0f;
+	}
+
+	// 右下 ブロックの上辺に着地した場合、落下停止
+	if ( Utility::MapHitCheck(x + radius, y + radius, &dummy, &moveY) == e_HIT_BOTTOM )
+	{
+		gravity = 0.0f;
+	}
+
+	// 左上 ブロックの下辺に衝突した場合、落下
+	if ( Utility::MapHitCheck(x - radius, y - radius, &dummy, &moveY) == e_HIT_TOP )
+	{
+		gravity = GRAVITY;
+	}
+
+	// 右上 ブロックの下辺に衝突した場合、落下
+	if ( Utility::MapHitCheck(x + radius, y - radius, &dummy, &moveY) == e_HIT_TOP )
+	{
+		gravity = GRAVITY;
+	}
+
+	// 上下移動量を加える
+	y += moveY;
+
+	// 左右の移動量をチェック
+	Utility::MapHitCheck(x - radius, y + radius, &moveX, &dummy);	// 左下
+	Utility::MapHitCheck(x + radius, y + radius, &moveX, &dummy);	// 右下
+	Utility::MapHitCheck(x - radius, y - radius, &moveX, &dummy);	// 左上
+	Utility::MapHitCheck(x + radius, y - radius, &moveX, &dummy);	// 右上
+
+	// 左右移動量を加える
+	x += moveX;
+
+	// 接地判定
+	// キャラクタの左下と右下の下に地面があるか調べる
+	if ( Utility::GetMapParam(x - radius, y + radius + 1.0f) != e_BLOCK &&
+		Utility::GetMapParam(x + radius, y + radius + 1.0f) != e_BLOCK )
+	{
+		// 足場がない場合、ジャンプ中にする
+		isJump = true;
+	}
+	else if ( gravity > 0.0f )
+	{
+		// 足場がある場合、接地中
+		isJump = false;
+	}
+}
+
+// 画像の向きを変化
+void CharaBase::ChangeGraphicDirection()
+{
+	// 左に進行
+	if ( moveX < 0.0f )
+	{
+		isLeftWard = true;
+	}
+	// 右に進攻
+	else if ( moveX > 0.0f )
+	{
+		isLeftWard = false;
+	}
+}
+
+// HP(バッテリー)がない
+void CharaBase::HpZero()
+{
+	if ( hp <= 0 )
+	{
+		isAlive = false;
+	}
+}
+
 // X座標を取得
-int CharaBase::GetPosX()
+float CharaBase::GetPosX()
 {
 	return x;
 }
 
 // Y座標を取得
-int CharaBase::GetPosY()
+float CharaBase::GetPosY()
 {
 	return y;
 }
@@ -37,19 +151,4 @@ int CharaBase::GetPosY()
 int CharaBase::GetRadius()
 {
 	return radius;
-}
-
-// 画像の向きを変化
-void CharaBase::ChangeGraphicDirection()
-{
-	// 左に進行
-	if ( moveX < 0 )
-	{
-		isLeftWard = true;
-	}
-	// 右に進攻
-	else if ( moveX > 0 )
-	{
-		isLeftWard = false;
-	}
 }

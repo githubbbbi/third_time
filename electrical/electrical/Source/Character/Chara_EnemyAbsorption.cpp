@@ -2,8 +2,8 @@
 #include "Chara_EnemyAbsorption.h"
 #include "../Define/Define.h"
 
-Chara_EnemyAbsorption::Chara_EnemyAbsorption(int x, int y, int radius,
-											 int speed, int hp, int graphHandle):
+Chara_EnemyAbsorption::Chara_EnemyAbsorption(float x, float y, int radius,
+											 float speed, int hp, int graphHandle):
 	CharaEnemyBase(x, y, radius, speed, hp, graphHandle)
 {
 
@@ -17,15 +17,15 @@ Chara_EnemyAbsorption::~Chara_EnemyAbsorption()
 // 初期化処理
 void Chara_EnemyAbsorption::Initialize()
 {
-	moveX = 0;
-	moveY = 0;
+	moveX = 0.0f;
+	moveY = 0.0f;
 }
 
 // 移動
 void Chara_EnemyAbsorption::Move()
 {
-	moveX = 0;
-	moveY = 0;
+	moveX = 0.0f;
+	moveY = 0.0f;
 
 	// テスト用
 	{
@@ -37,16 +37,17 @@ void Chara_EnemyAbsorption::Move()
 		moveX += speed;
 	}
 
-	ChangeGraphicDirection();
-
-	x += moveX;
-	y += moveY;
+	CharaMove();
 }
 
 // 更新処理
 void Chara_EnemyAbsorption::Update()
 {
-	Move();
+	if ( isAlive )
+	{
+		Move();
+		ChangeGraphicDirection();
+	}
 }
 
 // 描画処理
@@ -54,6 +55,6 @@ void Chara_EnemyAbsorption::Draw()
 {
 	if ( isAlive )
 	{
-		DrawRotaGraph(x, y, 1.0, 0.0, graphHandle, true, isLeftWard);
+		DrawRotaGraph((int)x, (int)y, 1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 }

@@ -9,8 +9,8 @@ private:
 	void Move();
 
 public:
-	Chara_EnemyAbsorption(int x, int y, int radius,
-						  int speed, int hp, int graphHandle);
+	Chara_EnemyAbsorption(float x, float y, int radius,
+						  float speed, int hp, int graphHandle);
 	~Chara_EnemyAbsorption();
 
 	// ‰Šú‰»ˆ—

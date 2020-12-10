@@ -12,8 +12,8 @@ Chara_Manager::Chara_Manager()
 
 	enemyAbsorptionNum = 0;
 
-	playerGH = LoadGraph("Resource/Graphic/player.png");
-	enemyAbsorptionGH = LoadGraph("Resource/Graphic/enemy_absorption.png");
+	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
+	enemyAbsorptionGH = LoadGraph("Resource/Graphic/Character/enemy_absorption.png");
 }
 
 Chara_Manager::~Chara_Manager()
@@ -26,14 +26,14 @@ Chara_Manager::~Chara_Manager()
 void Chara_Manager::Initialize()
 {
 	// プレイヤー生成
-	player = new Chara_Player(WIN_WIDTH / 2, WIN_HEIGHT / 2,
-							  32, 5, 50, playerGH);
+	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
+							  32, 5.0f, 50, playerGH);
 
 	// エネミー生成
 	enemyAbsorption[enemyAbsorptionNum] =
 	{
-		new Chara_EnemyAbsorption(32, WIN_HEIGHT / 2,
-								   32, 5, 2, enemyAbsorptionGH)
+		new Chara_EnemyAbsorption(32.0f, WIN_HEIGHT / 2.0f,
+								   32, 5.0f, 2, enemyAbsorptionGH)
 	};
 
 	enemyAbsorptionNum = 1;
@@ -50,13 +50,13 @@ void Chara_Manager::Update()
 	// テスト
 	{
 		// パッドのAボタンでエネミー生成
-		if ( InputPad::IsPadInputTrigger(PAD_INPUT_A) &&
+		if ( InputPad::IsPadInputNow(PAD_INPUT_B) &&
 			enemyAbsorptionNum < ENEMY_MAX_NUM )
 		{
 			enemyAbsorption[enemyAbsorptionNum] =
 			{
-				new Chara_EnemyAbsorption(32, GetRand(WIN_HEIGHT - 64) + 32,
-										  32, GetRand(3) + 2, 2,enemyAbsorptionGH)
+				new Chara_EnemyAbsorption(32.0f, 32.0f,
+										  32, GetRand(3) + 2.0f, 2,enemyAbsorptionGH)
 			};
 
 			enemyAbsorptionNum++;
@@ -81,4 +81,7 @@ void Chara_Manager::Draw()
 	{
 		enemyAbsorption[i]->Draw();
 	}
+
+	// デバッグ用
+	DrawFormatString(0, 20, GetColor(255, 255, 255), "XキーもしくはBボタンで敵放出:%d体放出", enemyAbsorptionNum);
 }

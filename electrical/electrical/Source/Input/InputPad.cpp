@@ -6,7 +6,7 @@ int InputPad::pad1 = 0;
 int InputPad::oldPad1 = 0;
 
 // XVˆ—
-void InputPad::PadUpdate()
+void InputPad::Update()
 {
 	oldPad1 = pad1;
 	pad1 = GetJoypadInputState(DX_INPUT_KEY_PAD1);

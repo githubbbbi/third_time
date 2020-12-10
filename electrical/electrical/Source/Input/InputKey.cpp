@@ -6,7 +6,7 @@ char InputKey::keys[] = { 0 };
 char InputKey::oldKeys[] = { 0 };
 
 // 更新処理
-void InputKey::KeyUpdate()
+void InputKey::Update()
 {
 	// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
 	for ( int i = 0; i < 256; i++ )

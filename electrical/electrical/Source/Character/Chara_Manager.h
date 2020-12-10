@@ -12,7 +12,7 @@ private:
 	int playerGH;
 	int enemyAbsorptionGH;
 
-	int enemyAbsorptionNum;// 吸収エネミーの数
+	int enemyAbsorptionNum;	// 吸収エネミーの数
 
 public:
 	Chara_Manager();

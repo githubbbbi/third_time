@@ -31,10 +31,10 @@ void GameMain::Initialize()
 void GameMain::Update()
 {
 	// キーボード
-	InputKey::KeyUpdate();
+	InputKey::Update();
 
 	// パッド
-	InputPad::PadUpdate();
+	InputPad::Update();
 
 	// キャラクター
 	charaManager->Update();

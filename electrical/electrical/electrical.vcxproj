@@ -137,7 +137,6 @@
     <ClCompile Include="Source\Character\CharaPlayer.cpp" />
     <ClCompile Include="Source\Character\Chara_EnemyAbsorption.cpp" />
     <ClCompile Include="Source\Character\Chara_EnemyBase.cpp" />
-    <ClCompile Include="Source\Define\Define.cpp" />
     <ClCompile Include="Source\Input\InputKey.cpp" />
     <ClCompile Include="Source\Input\InputPad.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -155,6 +154,7 @@
     <ClInclude Include="Source\Define\Define.h" />
     <ClInclude Include="Source\Input\InputKey.h" />
     <ClInclude Include="Source\Input\InputPad.h" />
+    <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\System\SettingDxLib.h" />
     <ClInclude Include="Source\System\System.h" />
     <ClInclude Include="Source\Task\GameMain.h" />

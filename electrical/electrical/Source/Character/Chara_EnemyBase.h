@@ -8,6 +8,6 @@ protected:
 	
 
 public:
-	CharaEnemyBase(int x, int y, int radius,
-				   int speed, int hp, int graphHandle);
+	CharaEnemyBase(float x, float y, int radius,
+				   float speed, int hp, int graphHandle);
 };

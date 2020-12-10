@@ -1,5 +1,14 @@
 #pragma once
 
+// マップチップの当たり判定
+enum MapHit
+{
+	e_HIT_LEFT,
+	e_HIT_RIGHT,
+	e_HIT_TOP,
+	e_HIT_BOTTOM
+};
+
 class Utility
 {
 private:
@@ -10,10 +19,17 @@ public:
 
 
 	// 画面内にとどまる
-	static void StayOnScreen(int *x, int *y, int radius,
+	static void StayOnScreen(float *x, float *y, int radius,
 							 bool isStayX, bool isStayY);
 
+	//マップチップの値を取得
+	static int GetMapParam(float x, float y);
+
+	//マップとの当たり判定
+	// 1：左辺に衝突、2：右辺に衝突、3：上辺、4：下辺、5：触れたら死亡、6：ワープ
+	static int MapHitCheck(float x, float y, float *moveX, float *moveY);
+
 	// 円のコリジョン
-	static bool CircleCollision(int x1, int y1, int r1,
-						 int x2, int y2, int r2);
+	static bool IsCircleCollision(float x1, float y1, int r1,
+								float x2, float y2, int r2);
 };
