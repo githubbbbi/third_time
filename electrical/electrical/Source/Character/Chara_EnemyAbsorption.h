@@ -10,7 +10,7 @@ private:
 
 public:
 	Chara_EnemyAbsorption(float x, float y, int radius,
-						  float speed, int hp, int graphHandle);
+						  float speed, int hp, int attackPower, int graphHandle);
 	~Chara_EnemyAbsorption();
 
 	// ‰Šú‰»ˆ—

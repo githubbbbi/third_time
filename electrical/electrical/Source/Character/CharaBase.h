@@ -17,6 +17,7 @@ protected:
 	int graphHandle;	// 画像ハンドル
 
 	int hp;	// HP
+	int attackPower;// 攻撃力
 
 	bool isAlive;		// 生存フラグ
 	bool isLeftWard;	// 左向きフラグ
@@ -38,7 +39,7 @@ protected:
 public:
 	// コンストラクタ宣言
 	CharaBase(float x, float y, int radius,
-			  float speed, int hp, int graphHandle);
+			  float speed, int hp, int attackPower, int graphHandle);
 
 	// X座標を取得
 	float GetPosX();
@@ -48,6 +49,9 @@ public:
 
 	// 半径を取得
 	int GetRadius();
+
+	// 攻撃力を取得
+	int GetAttackPower();
 
 	//// 初期化処理
 	//virtual void Initialize() = 0;

@@ -7,7 +7,7 @@ const float JUMP_POWER = -13.0f;
 
 // コンストラクタ
 CharaBase::CharaBase(float x, float y, int radius,
-					 float speed, int hp, int graphHandle)
+					 float speed, int hp, int attackPower, int graphHandle)
 {
 	this->x = x;
 	this->y = y;
@@ -16,6 +16,7 @@ CharaBase::CharaBase(float x, float y, int radius,
 	this->graphHandle = graphHandle;
 
 	this->hp = hp;
+	this->attackPower = attackPower;
 
 	moveX = 0.0f;
 	moveY = 0.0f;
@@ -151,4 +152,10 @@ float CharaBase::GetPosY()
 int CharaBase::GetRadius()
 {
 	return radius;
+}
+
+// 攻撃力を取得
+int CharaBase::GetAttackPower()
+{
+	return attackPower;
 }

@@ -1,27 +1,35 @@
 #include "DxLib.h"
 #include "Chara_Player.h"
+#include "../Define/Define.h"
 #include "../Input/InputKey.h"
 #include "../Input/InputPad.h"
 #include "../Utility/Utility.h"
 
 Chara_Player::Chara_Player(float x, float y, int radius,
-						   float speed, int hp, int graphHandle):
-	CharaBase(x, y, radius, speed, hp, graphHandle)
+						   float speed, int hp, int attackPower, int graphHandle):
+	CharaBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
 	hpTimer = 0;
 	chargeTimer = 0;
 
-	bullet.x = x;
-	bullet.y = y;
-	bullet.radius = 8;
-	bullet.speed = 15;
-	bullet.graphHandle = LoadGraph("Resource/Graphic/Bullet/bullet.png");
-	bullet.isShot = false;
+	bulletGraphHandle = LoadGraph("Resource/Graphic/Bullet/bullet.png");
 }
 
 Chara_Player::~Chara_Player()
 {
 
+}
+
+// 弾構造体のコンストラクタ
+Chara_Player::Bullet::Bullet(float x, float y, int radius, float speed, int graphHandle)
+{
+	this->x = x;
+	this->y = y;
+	this->radius = radius;
+	this->speed = speed;
+	this->graphHandle = graphHandle;
+
+	isAlive = true;
 }
 
 // 初期化処理
@@ -34,8 +42,6 @@ void Chara_Player::Initialize()
 
 	hpTimer = 0;
 	chargeTimer = 0;
-
-	bullet.isShot = false;
 }
 
 // 移動
@@ -150,7 +156,19 @@ void Chara_Player::Attack()
 	if ( InputKey::IsKeyInputTrigger(e_KEY_ATTACK) ||
 		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
 	{
+		bullets.push_back(new Bullet(x, y, 16, 15, bulletGraphHandle));
+	}
+}
 
+// 弾の更新処理
+void Chara_Player::Bullet::Update()
+{
+	x -= speed;
+
+	if ( x + radius<0 ||
+		x - radius > WIN_WIDTH )
+	{
+		isAlive = false;
 	}
 }
 
@@ -161,23 +179,34 @@ void Chara_Player::Update()
 	{
 		Move();
 		HpManager();
+		Attack();
 		ChangeGraphicDirection();
+
+		// 弾
+		for ( int i = 0; i < bullets.size(); i++ )
+		{
+			bullets[i]->Update();
+		}
 	}
 }
 
 // 描画処理
 void Chara_Player::Draw()
 {
+	// 弾
+	for ( int i = 0; i < bullets.size(); i++ )
+	{
+		if ( bullets[i]->isAlive )
+		{
+			DrawRotaGraph((int)bullets[i]->x, (int)bullets[i]->y,
+						  1.0, 0.0, bullets[i]->graphHandle, true);
+		}
+	}
+
 	// プレイヤー
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)x, (int)y, 1.0, 0.0, graphHandle, true, isLeftWard);
-	}
-
-	// 弾
-	if ( bullet.isShot )
-	{
-		DrawRotaGraph((int)bullet.x, (int)bullet.y, 1.0, 0.0, bullet.graphHandle, true);
 	}
 
 	// デバッグ用

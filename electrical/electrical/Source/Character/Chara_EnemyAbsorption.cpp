@@ -3,8 +3,8 @@
 #include "../Define/Define.h"
 
 Chara_EnemyAbsorption::Chara_EnemyAbsorption(float x, float y, int radius,
-											 float speed, int hp, int graphHandle):
-	CharaEnemyBase(x, y, radius, speed, hp, graphHandle)
+											 float speed, int hp, int attackPower, int graphHandle):
+	CharaEnemyBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
 
 }
@@ -47,6 +47,7 @@ void Chara_EnemyAbsorption::Update()
 	{
 		Move();
 		ChangeGraphicDirection();
+		HpZero();
 	}
 }
 

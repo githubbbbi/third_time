@@ -9,10 +9,13 @@ protected:
 
 public:
 	CharaEnemyBase(float x, float y, int radius,
-				   float speed, int hp, int graphHandle);
+				   float speed, int hp, int attackPower, int graphHandle);
 
 	// isAlive‚ğæ“¾
 	bool GetIsAlive();
+
+	// ƒ_ƒ[ƒW‚ğó‚¯‚é
+	void ReceiveDamage(int playerAttackPower);
 
 	// ‰Šú‰»ˆ—
 	virtual void Initialize() = 0;

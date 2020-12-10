@@ -17,6 +17,9 @@ private:
 	// エネミー管理
 	void EnemyManager();
 
+	// 攻撃の当たり判定
+	void AttackCollision();
+
 public:
 	Chara_Manager();
 	~Chara_Manager();
