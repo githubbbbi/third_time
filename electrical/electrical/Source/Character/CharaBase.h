@@ -52,13 +52,4 @@ public:
 
 	// UŒ‚—Í‚ğæ“¾
 	int GetAttackPower();
-
-	//// ‰Šú‰»ˆ—
-	//virtual void Initialize() = 0;
-
-	//// XVˆ—
-	//virtual void Update() = 0;
-
-	//// •`‰æˆ—
-	//virtual void Draw() = 0;
 };

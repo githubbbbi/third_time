@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "CharaBase.h"
 
 const int HP_DCREASE_TIME = 60 * 1;			// HP減少タイム
@@ -15,26 +13,6 @@ private:
 	int hpTimer;		// HP(バッテリー)タイマー
 	int chargeTimer;	// HP(バッテリー)チャージタイマー
 
-	int bulletGraphHandle;// 弾画像ハンドル
-
-	struct Bullet
-	{
-		float x;			// 中心座標
-		float y;			// 中心座標
-		int radius;			// 半径
-		float speed;		// スピード
-		int graphHandle;	// 画像ハンドル
-		bool isAlive;		// 発射フラグ
-
-		Bullet(float x, float y, int radius,
-			   float speed, int graphHandle);
-
-		void Update();
-		void Draw();
-	};
-
-	std::vector<Bullet *> bullets;
-
 	// 移動
 	void Move();
 
@@ -46,9 +24,6 @@ private:
 
 	// HP管理
 	void HpManager();
-
-	// 攻撃
-	void Attack();
 
 public:
 	Chara_Player(float x, float y, int radius,
@@ -63,4 +38,7 @@ public:
 
 	// 描画処理
 	void Draw();
+
+	// 攻撃
+	bool IsAttack();
 };

@@ -11,25 +11,11 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 {
 	hpTimer = 0;
 	chargeTimer = 0;
-
-	bulletGraphHandle = LoadGraph("Resource/Graphic/Bullet/bullet.png");
 }
 
 Chara_Player::~Chara_Player()
 {
 
-}
-
-// 弾構造体のコンストラクタ
-Chara_Player::Bullet::Bullet(float x, float y, int radius, float speed, int graphHandle)
-{
-	this->x = x;
-	this->y = y;
-	this->radius = radius;
-	this->speed = speed;
-	this->graphHandle = graphHandle;
-
-	isAlive = true;
 }
 
 // 初期化処理
@@ -151,25 +137,15 @@ void Chara_Player::HpManager()
 }
 
 // 攻撃
-void Chara_Player::Attack()
+bool Chara_Player::IsAttack()
 {
 	if ( InputKey::IsKeyInputTrigger(e_KEY_ATTACK) ||
 		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
 	{
-		bullets.push_back(new Bullet(x, y, 16, 15, bulletGraphHandle));
+		return true;
 	}
-}
 
-// 弾の更新処理
-void Chara_Player::Bullet::Update()
-{
-	x -= speed;
-
-	if ( x + radius<0 ||
-		x - radius > WIN_WIDTH )
-	{
-		isAlive = false;
-	}
+	return false;
 }
 
 // 更新処理
@@ -179,30 +155,13 @@ void Chara_Player::Update()
 	{
 		Move();
 		HpManager();
-		Attack();
 		ChangeGraphicDirection();
-
-		// 弾
-		for ( int i = 0; i < bullets.size(); i++ )
-		{
-			bullets[i]->Update();
-		}
 	}
 }
 
 // 描画処理
 void Chara_Player::Draw()
 {
-	// 弾
-	for ( int i = 0; i < bullets.size(); i++ )
-	{
-		if ( bullets[i]->isAlive )
-		{
-			DrawRotaGraph((int)bullets[i]->x, (int)bullets[i]->y,
-						  1.0, 0.0, bullets[i]->graphHandle, true);
-		}
-	}
-
 	// プレイヤー
 	if ( isAlive )
 	{

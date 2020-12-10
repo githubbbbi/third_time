@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\Stage">
       <UniqueIdentifier>{24308323-c38b-4c8c-9446-0c0c14d1f714}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Weapon">
+      <UniqueIdentifier>{69d28d92-4b19-4819-8a28-53b65071ca3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Weapon">
+      <UniqueIdentifier>{c6be5e3c-6909-4fe5-bb6f-53e4cd401f41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -86,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="Source\Character\Chara_EnemyBase.cpp">
       <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Weapon\ElectricGun.cpp">
+      <Filter>ソース ファイル\Character\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Source\Stage\Stage.h">
       <Filter>ヘッダー ファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
+      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@ Chara_Manager::Chara_Manager()
 
 	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
 	enemyAbsorptionGH = LoadGraph("Resource/Graphic/Character/enemy_absorption.png");
+	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
 }
 
 Chara_Manager::~Chara_Manager()
@@ -61,19 +62,55 @@ void Chara_Manager::EnemyManager()
 	}
 }
 
+// 攻撃処理の管理
+void Chara_Manager::WeaponManager()
+{
+	// 生成
+	if ( player->IsAttack() )
+	{
+		electricGun.push_back(new ElectricGun(player->GetPosX(),
+											  player->GetPosY(),
+											  16, 15, electricGunGH));
+	}
+	
+	// 電気銃
+	for ( int i = 0; i < electricGun.size(); i++ )
+	{
+		electricGun[i]->Update();
+	}
+
+	// 電気銃削除
+	for ( int i = electricGun.size() - 1; i >= 0; i-- )
+	{
+		if ( !electricGun[i]->GetIsAlive() )
+		{
+			delete electricGun[i];
+			electricGun.erase(electricGun.begin() + i);
+		}
+	}
+}
+
 // 攻撃の当たり判定
 void Chara_Manager::AttackCollision()
 {
 	for ( int i = 0; i < enemys.size(); i++ )
 	{
 		// エネミーとプレイヤーの攻撃との当たり判定
-		// ここから
+		for ( int i = 0; i < electricGun.size(); i++ )
+		{
+			// ここから
 
+			//enemys[i]->GetPosX()
+			//electricGun[i]->GetPosX()って感じで座標は取得できる！この書き方でそれぞれのX、Y座標と半径を取得してください
 
-		// ここまで
+			// プレイヤーの攻撃とヒットした時、↓の関数が呼ばれる
+			// electricGun[i]->BulletHit();
+			// enemys[i]->ReceiveDamage(player->GetAttackPower());
 
-		// プレイヤーの攻撃とヒットした時、↓の関数が呼ばれる　まんま使って大丈夫なはず
-		// enemys[i]->ReceiveDamage(player->GetAttackPower());
+			// 必要な関数はこれだけ、引数は使う必要はないと思う
+
+			// ここまで
+		}
 	}
 }
 
@@ -82,6 +119,9 @@ void Chara_Manager::Update()
 {
 	// プレイヤー
 	player->Update();
+
+	// 攻撃処理
+	WeaponManager();
 
 	// エネミー
 	EnemyManager();
@@ -93,6 +133,12 @@ void Chara_Manager::Update()
 // 描画処理
 void Chara_Manager::Draw()
 {
+	// 電気銃
+	for ( int i = 0; i < electricGun.size(); i++ )
+	{
+		electricGun[i]->Draw();
+	}
+
 	// プレイヤー
 	player->Draw();
 

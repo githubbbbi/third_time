@@ -4,18 +4,24 @@
 
 #include "../Character/Chara_Player.h"
 #include "../Character/Chara_EnemyAbsorption.h"
+#include "../Character/Weapon/ElectricGun.h"
 
 class Chara_Manager
 {
 private:
 	Chara_Player *player;
 	std::vector<CharaEnemyBase *>enemys;
+	std::vector<ElectricGun *> electricGun;
 
-	int playerGH;
-	int enemyAbsorptionGH;
+	int playerGH;			// プレイヤー
+	int electricGunGH;		// 電気銃
+	int enemyAbsorptionGH;	// 吸収エネミー
 
 	// エネミー管理
 	void EnemyManager();
+
+	// 攻撃処理管理
+	void WeaponManager();
 
 	// 攻撃の当たり判定
 	void AttackCollision();
