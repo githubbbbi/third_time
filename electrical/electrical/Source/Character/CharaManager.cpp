@@ -3,14 +3,9 @@
 #include "../Define/Define.h"
 #include "../Input/InputPad.h"
 
-#define ENEMY_MAX_NUM 1000
-
 Chara_Manager::Chara_Manager()
 {
 	player = nullptr;
-	enemyAbsorption = new Chara_EnemyAbsorption * [ENEMY_MAX_NUM];
-
-	enemyAbsorptionNum = 0;
 
 	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
 	enemyAbsorptionGH = LoadGraph("Resource/Graphic/Character/enemy_absorption.png");
@@ -19,7 +14,12 @@ Chara_Manager::Chara_Manager()
 Chara_Manager::~Chara_Manager()
 {
 	delete player;
-	delete[] enemyAbsorption;
+
+	for ( int i = enemys.size() - 1; i >= 0; i-- )
+	{
+		delete enemys[i];
+		enemys.erase(enemys.begin() + i);
+	}
 }
 
 // 初期化処理
@@ -28,15 +28,36 @@ void Chara_Manager::Initialize()
 	// プレイヤー生成
 	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
 							  32, 5.0f, 50, playerGH);
+}
 
-	// エネミー生成
-	enemyAbsorption[enemyAbsorptionNum] =
+// エネミー管理
+void Chara_Manager::EnemyManager()
+{
+	// 吸収
+	// テスト
 	{
-		new Chara_EnemyAbsorption(32.0f, WIN_HEIGHT / 2.0f,
-								   32, 5.0f, 2, enemyAbsorptionGH)
-	};
+		// パッドのAボタンでエネミー生成
+		if ( InputPad::IsPadInputNow(PAD_INPUT_B) )
+		{
+			enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f,
+													   32, GetRand(3) + 2.0f, 2, enemyAbsorptionGH));
+		}
+	}
 
-	enemyAbsorptionNum = 1;
+	for ( int i = 0; i < enemys.size(); i++ )
+	{
+		enemys[i]->Update();
+	}
+
+	// エネミー削除
+	for ( int i = enemys.size() - 1; i >= 0; i-- )
+	{
+		if ( !enemys[i]->GetIsAlive() )
+		{
+			delete enemys[i];
+			enemys.erase(enemys.begin() + i);
+		}
+	}
 }
 
 // 更新処理
@@ -46,27 +67,7 @@ void Chara_Manager::Update()
 	player->Update();
 
 	// エネミー
-	// 吸収
-	// テスト
-	{
-		// パッドのAボタンでエネミー生成
-		if ( InputPad::IsPadInputNow(PAD_INPUT_B) &&
-			enemyAbsorptionNum < ENEMY_MAX_NUM )
-		{
-			enemyAbsorption[enemyAbsorptionNum] =
-			{
-				new Chara_EnemyAbsorption(32.0f, 32.0f,
-										  32, GetRand(3) + 2.0f, 2,enemyAbsorptionGH)
-			};
-
-			enemyAbsorptionNum++;
-		}
-	}
-
-	for ( int i = 0; i < enemyAbsorptionNum; i++ )
-	{
-		enemyAbsorption[i]->Update();
-	}
+	EnemyManager();
 }
 
 // 描画処理
@@ -76,12 +77,11 @@ void Chara_Manager::Draw()
 	player->Draw();
 
 	// エネミー
-	// 吸収
-	for ( int i = 0; i < enemyAbsorptionNum; i++ )
+	for ( int i = 0; i < enemys.size(); i++ )
 	{
-		enemyAbsorption[i]->Draw();
+		enemys[i]->Draw();
 	}
 
 	// デバッグ用
-	DrawFormatString(0, 20, GetColor(255, 255, 255), "XキーもしくはBボタンで敵放出:%d体放出", enemyAbsorptionNum);
+	DrawFormatString(0, 20, GetColor(255, 255, 255), "XキーまたはBボタンでエネミー生成 エネミーの数:%d", enemys.size());
 }

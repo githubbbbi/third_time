@@ -14,11 +14,11 @@ public:
 	~Chara_EnemyAbsorption();
 
 	// ‰Šú‰»ˆ—
-	void Initialize();
+	void Initialize() override;
 
 	// XVˆ—
-	void Update();
+	void Update() override;
 
 	// •`‰æˆ—
-	void Draw();
+	void Draw() override;
 };

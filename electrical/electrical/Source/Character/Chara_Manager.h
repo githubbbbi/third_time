@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "../Character/Chara_Player.h"
 #include "../Character/Chara_EnemyAbsorption.h"
 
@@ -7,12 +9,13 @@ class Chara_Manager
 {
 private:
 	Chara_Player *player;
-	Chara_EnemyAbsorption **enemyAbsorption;
+	std::vector<CharaEnemyBase *>enemys;
 
 	int playerGH;
 	int enemyAbsorptionGH;
 
-	int enemyAbsorptionNum;	// 吸収エネミーの数
+	// エネミー管理
+	void EnemyManager();
 
 public:
 	Chara_Manager();
