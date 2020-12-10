@@ -73,7 +73,7 @@ void Chara_Manager::WeaponManager()
 											  player->GetPosY(),
 											  16, 15, electricGunGH));
 	}
-	
+
 	// 電気銃
 	for ( int i = 0; i < electricGun.size(); i++ )
 	{
@@ -97,27 +97,18 @@ void Chara_Manager::AttackCollision()
 	for ( int i = 0; i < enemys.size(); i++ )
 	{
 		// エネミーとプレイヤーの攻撃との当たり判定
-		for ( int i = 0; i < electricGun.size(); i++ )
+		for ( int j = 0; j < electricGun.size(); j++ )
 		{
-			// ここから
-
-			if (Utility::IsCircleCollision(electricGun[i]->GetPosX(), electricGun[i]->GetPosY(), electricGun[i]->GetRadius(),
-										   enemys[i]->GetPosX(), enemys[i]->GetPosY(), enemys[i]->GetRadius()))
+			if ( Utility::IsCircleCollision(enemys[i]->GetPosX(),
+											enemys[i]->GetPosY(),
+											enemys[i]->GetRadius(),
+											electricGun[j]->GetPosX(),
+											electricGun[j]->GetPosY(),
+											electricGun[j]->GetRadius()))
 			{
-				electricGun[i]->BulletHit();
 				enemys[i]->ReceiveDamage(player->GetAttackPower());
+				electricGun[j]->BulletHit();
 			}
-
-			//enemys[i]->GetPosX()
-			//electricGun[i]->GetPosX()って感じで座標は取得できる！この書き方でそれぞれのX、Y座標と半径を取得してください
-
-			// プレイヤーの攻撃とヒットした時、↓の関数が呼ばれる
-			// electricGun[i]->BulletHit();
-			// enemys[i]->ReceiveDamage(player->GetAttackPower());
-
-			// 必要な関数はこれだけ、引数は使う必要はないと思う
-
-			// ここまで
 		}
 	}
 }
