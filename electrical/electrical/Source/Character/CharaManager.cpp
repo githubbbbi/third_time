@@ -1,3 +1,4 @@
+#include "../Utility/Utility.h"
 #include "DxLib.h"
 #include "Chara_Manager.h"
 #include "../Define/Define.h"
@@ -99,6 +100,13 @@ void Chara_Manager::AttackCollision()
 		for ( int i = 0; i < electricGun.size(); i++ )
 		{
 			// ここから
+
+			if (Utility::IsCircleCollision(electricGun[i]->GetPosX(), electricGun[i]->GetPosY(), electricGun[i]->GetRadius(),
+										   enemys[i]->GetPosX(), enemys[i]->GetPosY(), enemys[i]->GetRadius()))
+			{
+				electricGun[i]->BulletHit();
+				enemys[i]->ReceiveDamage(player->GetAttackPower());
+			}
 
 			//enemys[i]->GetPosX()
 			//electricGun[i]->GetPosX()って感じで座標は取得できる！この書き方でそれぞれのX、Y座標と半径を取得してください
