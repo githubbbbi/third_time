@@ -1,15 +1,21 @@
 #include "DxLib.h"
 #include "InputPad.h"
+#include "InputKey.h"
 
 // •Ï”‰Šú‰»
 int InputPad::pad1 = 0;
 int InputPad::oldPad1 = 0;
 
+int InputPad::inputX = 0;
+int InputPad::inputY = 0;
+
 // XVˆ—
 void InputPad::Update()
 {
 	oldPad1 = pad1;
-	pad1 = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+	pad1 = GetJoypadInputState(DX_INPUT_PAD1);
+
+	GetJoypadAnalogInput(&inputX, &inputY, DX_INPUT_KEY_PAD1);
 }
 
 // ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡TRUE

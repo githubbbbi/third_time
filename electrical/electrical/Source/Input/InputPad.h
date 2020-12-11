@@ -18,6 +18,9 @@ private:
 	InputPad();
 
 public:
+	static int inputX;	// パッドレバーの左右の入力情報を格納
+	static int inputY;	// パッドレバーの上下の入力情報を格納
+
 	// 更新処理
 	static void Update();
 

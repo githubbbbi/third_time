@@ -5,6 +5,8 @@
 char InputKey::keys[] = { 0 };
 char InputKey::oldKeys[] = { 0 };
 
+int InputKey::inputFrame = 0;
+
 // XVˆ—
 void InputKey::Update()
 {

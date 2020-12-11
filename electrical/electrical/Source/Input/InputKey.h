@@ -18,6 +18,8 @@ private:
 	InputKey();
 
 public:
+	static int inputFrame;// 入力フレーム
+
 	// 更新処理
 	static void Update();
 

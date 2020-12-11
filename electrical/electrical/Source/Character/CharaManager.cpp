@@ -77,7 +77,7 @@ void Chara_Manager::WeaponManager()
 	{
 		electricGun.push_back(new ElectricGun(player->GetPosX(),
 											  player->GetPosY(),
-											  16, 15, 
+											  16, 25,
 											  player->GetIsLeftWard(),
 											  electricGunGH));
 	}
@@ -109,10 +109,10 @@ void Chara_Manager::AttackCollision()
 		{
 			if ( Utility::IsCircleCollision(enemys[i]->GetPosX(),
 											enemys[i]->GetPosY(),
-											enemys[i]->GetRadius(),
+											enemys[i]->GetRadius() - 8,
 											electricGun[j]->GetPosX(),
 											electricGun[j]->GetPosY(),
-											electricGun[j]->GetRadius()) )
+											electricGun[j]->GetRadius() - 4) )
 			{
 				enemys[i]->ReceiveDamage(player->GetAttackPower());
 				electricGun[j]->BulletHit();
@@ -156,6 +156,6 @@ void Chara_Manager::Draw()
 	}
 
 	// デバッグ用
-	DrawFormatString(0, 20, GetColor(255, 255, 255), "XキーまたはBボタンでエネミー生成 エネミーの数:%d", enemys.size());
+	DrawFormatString(0, 20, GetColor(255, 255, 255), "Bボタンでエネミー生成 エネミーの数:%d", enemys.size());
 	DrawFormatString(0, 40, GetColor(255, 255, 255), "SPACEキーまたはXボタンで攻撃");
 }

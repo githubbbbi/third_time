@@ -37,18 +37,26 @@ void Chara_Player::Move()
 	moveX = 0.0f;
 	moveY = 0.0f;
 
-	// 左移動
-	if ( InputKey::IsKeyInputNow(e_KEY_LEFT) ||
-		InputPad::IsPadInputNow(e_PAD_LEFT) )
-	{
-		moveX -= speed;
-	}
+	// 方向キー/アナログスティックでの左右移動
+	moveX += speed * (InputPad::inputX / 1000.0f);
 
-	//右移動
-	if ( InputKey::IsKeyInputNow(e_KEY_RIGHT) ||
-		InputPad::IsPadInputNow(e_PAD_RIGHT) )
+	// それ以外での左右移動
+	if ( InputPad::inputX == 0 &&
+		InputPad::inputY == 0 )
 	{
-		moveX += speed;
+		// 左移動
+		if ( InputKey::IsKeyInputNow(e_KEY_LEFT) ||
+			InputPad::IsPadInputNow(e_PAD_LEFT) )
+		{
+			moveX += speed * (InputPad::inputX / 1000);
+		}
+
+		//右移動
+		if ( InputKey::IsKeyInputNow(e_KEY_RIGHT) ||
+			InputPad::IsPadInputNow(e_PAD_RIGHT) )
+		{
+			moveX += speed * (InputPad::inputX);
+		}
 	}
 
 	// ジャンプ
@@ -170,4 +178,5 @@ void Chara_Player::Draw()
 
 	// デバッグ用
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "Player_HP(battery):%d%", hp);
+	DrawFormatString(0, 60, GetColor(255, 255, 255), "inputPadX:%d%", InputPad::inputX);
 }
