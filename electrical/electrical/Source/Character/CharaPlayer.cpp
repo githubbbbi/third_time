@@ -59,6 +59,20 @@ void Chara_Player::Move()
 		}
 	}
 
+	// ダッシュ
+	if (InputKey::IsKeyInputBarrage(e_KEY_LEFT)||
+		InputKey::IsKeyInputBarrage(e_KEY_RIGHT)||
+		InputPad::IsPadInputBarrage(e_PAD_LEFT) ||
+		InputPad::IsPadInputBarrage(e_PAD_RIGHT) )
+	{
+		DrawString(300, 300, "DASH!", GetColor(255, 255, 255));
+		speed = DASH_SPEED;
+	}
+	else
+	{
+		speed = NORMAL_SPEED;
+	}
+
 	// ジャンプ
 	if ( InputKey::IsKeyInputTrigger(e_KEY_JUMP) ||
 		InputPad::IsPadInputTrigger(e_PAD_JUMP) )

@@ -18,8 +18,6 @@ private:
 	InputKey();
 
 public:
-	static int inputFrame;// 入力フレーム
-
 	// 更新処理
 	static void Update();
 
@@ -33,5 +31,5 @@ public:
 	static bool IsKeyInputRelease(int key);
 
 	// 連打された場合TRUE
-	//static bool IsKeyInputBarrage(int key);
+	static bool IsKeyInputBarrage(int key);
 };

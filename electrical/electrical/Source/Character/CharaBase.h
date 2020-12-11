@@ -1,5 +1,7 @@
 #pragma once
 
+const float NORMAL_SPEED = 4.0f;
+
 // èdóÕ
 const float GRAVITY = 0.8f;
 

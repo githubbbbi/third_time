@@ -5,8 +5,6 @@
 char InputKey::keys[] = { 0 };
 char InputKey::oldKeys[] = { 0 };
 
-int InputKey::inputFrame = 0;
-
 // 更新処理
 void InputKey::Update()
 {
@@ -53,36 +51,51 @@ bool InputKey::IsKeyInputRelease(int key)
 	return false;
 }
 
-//// 連打された場合TRUE
-//bool InputKey::IsKeyInputBarrage(int key)
-//{
-//	static int presstime[2] = { 0 };
-//	static int prevkey = 0;
-//	if (!prevkey && CheckHitKey(key))//キーが押された瞬間なら
-//	{
-//		static int i = 0;//カウント変数
-//		static int j = 0;//カウント変数
-//		presstime[i] = GetTickCount64();//今の時間が知りたい（ミリ秒単位で)
-//		++i;//カウントする
-//		if (i == 2)//iが2なら
-//		{
-//			if ((long long)presstime[1] - presstime[0] <= 0.35 * 1000)//２つの時間差が0.35秒より小さければ
-//			{
-//				i = 0;//iを0にする
-//				presstime[0] = 0;//presstime[]を２つとも０にしておく
-//				presstime[1] = 0;
-//				return 1;//1を返す
-//			}
-//			else {
-//				i = 0;//iを0にする
-//				presstime[0] = 0;//presstime[]を２つとも０にしておく
-//				presstime[1] = 0;
-//				return 0;	//0を返す
-//			}
-//		}
-//	}
-//
-//	prevkey = CheckHitKey(key);//今のフレームのキー入力を保存して、
-//							//後のキー入力判定のとき使う
-//	return 0;
-//}
+// 連打された場合TRUE
+bool InputKey::IsKeyInputBarrage(int key)
+{
+	static long long int presstime[2] = { 0 };
+	static int prevkey = 0;
+
+	// キーが押された瞬間の場合
+	if ( !prevkey && IsKeyInputNow(key) )
+	{
+		static int i = 0;	// カウント変数
+		static int j = 0;	// カウント変数
+
+		// 今の時間が知りたい（ミリ秒単位で)
+		presstime[i] = GetTickCount64();
+		++i;
+
+		// iが2の場合
+		if ( i == 2 )
+		{
+			// ２つの時間差が0.35秒より小さい場合
+			if ( presstime[1] - presstime[0] <= 0.35 * 1000 )
+			{
+				i = 0;
+
+				// presstime[]を２つとも０にしておく
+				presstime[0] = 0;
+				presstime[1] = 0;
+
+				return true;
+			}
+			else
+			{
+				i = 0;
+
+				//presstime[]を２つとも０にしておく
+				presstime[0] = 0;
+				presstime[1] = 0;
+
+				return false;
+			}
+		}
+	}
+
+	// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
+	prevkey = IsKeyInputNow(key);
+
+	return false;
+}

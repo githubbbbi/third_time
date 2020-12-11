@@ -5,7 +5,9 @@
 const int HP_DCREASE_TIME = 60 * 1;			// HP減少タイム
 const int HP_CHARGE_TIME = (60 * 1) / 2;	// HPチャージタイム
 
-const int PLAYER_MAX_HP = 100;
+const float DASH_SPEED = 7.0f;// ダッシュスピード
+
+const int PLAYER_MAX_HP = 100;	// 最大HP
 
 class Chara_Player:public CharaBase
 {

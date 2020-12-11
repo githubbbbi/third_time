@@ -35,7 +35,7 @@ void Chara_Manager::Initialize()
 {
 	// プレイヤー生成
 	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
-							  32, 5.0f, 50, 1, playerGH);
+							  32, NORMAL_SPEED, 50, 1, playerGH);
 }
 
 // エネミー管理

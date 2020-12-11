@@ -51,80 +51,68 @@ bool InputPad::IsPadInputRelease(int key)
 	return false;
 }
 
+// 2回連打でTRUE
 bool InputPad::IsPadInputBarrage(int key)
 {
-	//押した時間を計測するための変数
+	// 押した時間を計測するための変数
 	static int pushTime[2] = { 0 };
-	//前のフレームを判定するための変数
+
+	// 前のフレームを判定するための変数
 	static int oldFrame[2] = { 0 };
-	//再びキー入力があるまで待てるフレーム数
+
+	// 再びキー入力があるまで待てるフレーム数
 	const int waitFrame = 15;
 
 	// スティックを左入力したとき
-	if (key == e_PAD_LEFT)
+	if ( key == e_PAD_LEFT )
 	{
-		if (!oldFrame[0] && (pad1 & key))
-		{//押した瞬間なら
-			if (pushTime[0] != 0)
+		if ( !oldFrame[0] && (pad1 & key) )
+		{
+			// 押した瞬間なら
+			if ( pushTime[0] != 0 )
 			{
-				return 1;
+				return true;
 			}
-			else {
+			else
+			{
 				pushTime[0] = waitFrame;
 			}
 		}
+
 		oldFrame[0] = (pad1 & key);
+
+		// 押した時間が0じゃないなら
+		if ( pushTime[0] != 0 )
+		{
+			// 押した時間をデクリメント
+			pushTime[0]--;
+		}
 	}
 	// スティックを右入力したとき
-	else if (key == e_PAD_RIGHT)
+	else if ( key == e_PAD_RIGHT )
 	{
-		if (!oldFrame[1] && (pad1 & key))
-		{//押した瞬間なら
-			if (pushTime[1] != 0)
+		if ( !oldFrame[1] && (pad1 & key) )
+		{
+			// 押した瞬間なら
+			if ( pushTime[1] != 0 )
 			{
-				return 1;
+				return true;
 			}
-			else {
+			else
+			{
 				pushTime[1] = waitFrame;
 			}
 		}
+
 		oldFrame[1] = (pad1 & key);
 
-		if (pushTime[1] != 0)//押した時間が0じゃないのなら
+		// 押した時間が0じゃない場合
+		if ( pushTime[1] != 0 )
 		{
-			pushTime[1]--;//押した時間をデクリメント
+			// 押した時間をデクリメント
+			pushTime[1]--;
 		}
 	}
 
-	if (pushTime[0] != 0)//押した時間が0じゃないのなら
-	{
-		pushTime[0]--;//押した時間をデクリメント
-	}
-
-	return 0;
+	return false;
 }
-
-// mainに書いてた処理
-
-//int main()
-//{
-//	InputPad::Update();
-//
-//	// 今はmain.cppに書いてるから勝手に動かしていいよ
-//	// 連打したとき
-//	if (InputPad::IsPadInputBarrage(PAD_INPUT_LEFT) ||
-//		InputPad::IsPadInputBarrage(PAD_INPUT_RIGHT))
-//	{
-//		isDashFlag = TRUE; // 宣言が必要
-//	}
-//	else if (!GetJoypadInputState(PAD_INPUT_LEFT) &&
-//		!GetJoypadInputState(PAD_INPUT_RIGHT))
-//	{
-//		isDashFlag = FALSE;
-//	}
-//
-//	if (isDashFlag == TRUE)
-//	{
-//		DrawFormatString(0, 0, GetColor(255, 255, 255), "こんにちは");
-//	}
-//}
