@@ -2,6 +2,8 @@
 #include "System.h"
 #include "SettingDxLib.h"
 
+using namespace SettingDxLib;
+
 // コンストラクタ
 System::System()
 {

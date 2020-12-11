@@ -9,10 +9,11 @@ private:
 	float speed;		// スピード
 	int graphHandle;	// 画像ハンドル
 	bool isAlive;		// 発射フラグ
+	bool isCharaLeftWard;	// キャラクタの左向きフラグ
 
 public:
 	ElectricGun(float x, float y, int radius,
-				float speed, int graphHandle);
+				float speed, bool isCharaLeftWard, int graphHandle);
 
 	// 更新処理
 	void Update();

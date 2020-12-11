@@ -3,12 +3,13 @@
 #include "../../Define/Define.h"
 
 ElectricGun::ElectricGun(float x, float y, int radius,
-						 float speed, int graphHandle)
+						 float speed, bool isCharaLeftWard, int graphHandle)
 {
 	this->x = x;
 	this->y = y;
 	this->radius = radius;
 	this->speed = speed;
+	this->isCharaLeftWard = isCharaLeftWard;
 	this->graphHandle = graphHandle;
 
 	isAlive = true;
@@ -17,8 +18,18 @@ ElectricGun::ElectricGun(float x, float y, int radius,
 // 更新処理
 void ElectricGun::Update()
 {
-	x -= speed;
+	// 左向き
+	if ( isCharaLeftWard )
+	{
+		x -= speed;
+	}
+	// 右向き
+	else
+	{
+		x += speed;
+	}
 
+	// 画面外に出たら削除
 	if ( x + radius < 0 ||
 		x - radius > WIN_WIDTH )
 	{

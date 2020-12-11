@@ -2,9 +2,6 @@
 #include "../Utility/Utility.h"
 #include "../Define/Define.h"
 
-const float GRAVITY = 0.8f;
-const float JUMP_POWER = -13.0f;
-
 // コンストラクタ
 CharaBase::CharaBase(float x, float y, int radius,
 					 float speed, int hp, int attackPower, int graphHandle)
@@ -158,4 +155,10 @@ int CharaBase::GetRadius()
 int CharaBase::GetAttackPower()
 {
 	return attackPower;
+}
+
+// isLeftWardを取得
+bool CharaBase::GetIsLeftWard()
+{
+	return isLeftWard;
 }

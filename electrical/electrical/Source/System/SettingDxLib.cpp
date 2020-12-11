@@ -3,7 +3,7 @@
 #include "../Define/Define.h"
 #include "../Input/InputKey.h"
 
-bool DxLibInit()
+bool SettingDxLib::DxLibInit()
 {
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
@@ -41,7 +41,7 @@ bool DxLibInit()
 	return true;
 }
 
-bool DxLibGameLoop()
+bool SettingDxLib::DxLibGameLoop()
 {
 	// (ダブルバッファ)裏面
 	ScreenFlip();

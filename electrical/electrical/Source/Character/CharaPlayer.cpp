@@ -52,8 +52,8 @@ void Chara_Player::Move()
 	}
 
 	// ジャンプ
-	if ( InputKey::IsKeyInputNow(e_KEY_JUMP) ||
-		InputPad::IsPadInputNow(e_PAD_JUMP) )
+	if ( InputKey::IsKeyInputTrigger(e_KEY_JUMP) ||
+		InputPad::IsPadInputTrigger(e_PAD_JUMP) )
 	{
 		// ジャンプ中でない
 		if ( !isJump )

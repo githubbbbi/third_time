@@ -17,6 +17,12 @@ Chara_Manager::~Chara_Manager()
 {
 	delete player;
 
+	for ( int i = electricGun.size() - 1; i >= 0; i-- )
+	{
+		delete electricGun[i];
+		electricGun.erase(electricGun.begin() + i);
+	}
+
 	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
 		delete enemys[i];
@@ -47,7 +53,7 @@ void Chara_Manager::EnemyManager()
 		}
 	}
 
-	for ( int i = 0; i < enemys.size(); i++ )
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
 		enemys[i]->Update();
 	}
@@ -71,11 +77,13 @@ void Chara_Manager::WeaponManager()
 	{
 		electricGun.push_back(new ElectricGun(player->GetPosX(),
 											  player->GetPosY(),
-											  16, 15, electricGunGH));
+											  16, 15, 
+											  player->GetIsLeftWard(),
+											  electricGunGH));
 	}
 
 	// 電気銃
-	for ( int i = 0; i < electricGun.size(); i++ )
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
 	{
 		electricGun[i]->Update();
 	}
@@ -94,17 +102,17 @@ void Chara_Manager::WeaponManager()
 // 攻撃の当たり判定
 void Chara_Manager::AttackCollision()
 {
-	for ( int i = 0; i < enemys.size(); i++ )
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
 		// エネミーとプレイヤーの攻撃との当たり判定
-		for ( int j = 0; j < electricGun.size(); j++ )
+		for ( unsigned int j = 0; j < electricGun.size(); j++ )
 		{
 			if ( Utility::IsCircleCollision(enemys[i]->GetPosX(),
 											enemys[i]->GetPosY(),
 											enemys[i]->GetRadius(),
 											electricGun[j]->GetPosX(),
 											electricGun[j]->GetPosY(),
-											electricGun[j]->GetRadius()))
+											electricGun[j]->GetRadius()) )
 			{
 				enemys[i]->ReceiveDamage(player->GetAttackPower());
 				electricGun[j]->BulletHit();
@@ -133,7 +141,7 @@ void Chara_Manager::Update()
 void Chara_Manager::Draw()
 {
 	// 電気銃
-	for ( int i = 0; i < electricGun.size(); i++ )
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
 	{
 		electricGun[i]->Draw();
 	}
@@ -142,12 +150,12 @@ void Chara_Manager::Draw()
 	player->Draw();
 
 	// エネミー
-	for ( int i = 0; i < enemys.size(); i++ )
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
 		enemys[i]->Draw();
 	}
 
 	// デバッグ用
 	DrawFormatString(0, 20, GetColor(255, 255, 255), "XキーまたはBボタンでエネミー生成 エネミーの数:%d", enemys.size());
-	DrawFormatString(0, 40, GetColor(255, 255, 255), "SPACEキーまたはXボタンで攻撃(マイナス方向にしかいきません)");
+	DrawFormatString(0, 40, GetColor(255, 255, 255), "SPACEキーまたはXボタンで攻撃");
 }

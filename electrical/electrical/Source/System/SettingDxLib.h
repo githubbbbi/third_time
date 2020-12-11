@@ -1,7 +1,10 @@
 #pragma once
 
-// DxLibの初期化
-bool DxLibInit();
+namespace SettingDxLib
+{
+	// DxLibの初期化
+	bool DxLibInit();
 
-// ゲームループ中の処理
-bool DxLibGameLoop();
+	// ゲームループ中の処理
+	bool DxLibGameLoop();
+}

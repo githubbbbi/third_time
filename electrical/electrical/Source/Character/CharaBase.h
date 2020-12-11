@@ -1,10 +1,10 @@
 #pragma once
 
 // d—Í
-extern const float GRAVITY;
+const float GRAVITY = 0.8f;
 
 // ƒWƒƒƒ“ƒv—Í
-extern const float JUMP_POWER;
+const float JUMP_POWER = -13.0f;
 
 class CharaBase
 {
@@ -52,4 +52,7 @@ public:
 
 	// UŒ‚—Í‚ğæ“¾
 	int GetAttackPower();
+
+	// isLeftWard‚ğæ“¾
+	bool GetIsLeftWard();
 };
