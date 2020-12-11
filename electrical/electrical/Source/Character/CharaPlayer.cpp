@@ -68,7 +68,10 @@ void Chara_Player::Move()
 		DrawString(300, 300, "DASH!", GetColor(255, 255, 255));
 		speed = DASH_SPEED;
 	}
-	else
+	else if (!CheckHitKey(KEY_INPUT_LEFT) && 
+			 !CheckHitKey(KEY_INPUT_RIGHT) &&
+			 !GetJoypadInputState(PAD_INPUT_LEFT) &&
+			 !GetJoypadInputState(PAD_INPUT_RIGHT))
 	{
 		speed = NORMAL_SPEED;
 	}
