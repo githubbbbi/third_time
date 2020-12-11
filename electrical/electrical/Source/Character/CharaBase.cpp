@@ -157,8 +157,20 @@ int CharaBase::GetAttackPower()
 	return attackPower;
 }
 
+// isAlive‚ğæ“¾
+bool CharaBase::GetIsAlive()
+{
+	return isAlive;
+}
+
 // isLeftWard‚ğæ“¾
 bool CharaBase::GetIsLeftWard()
 {
 	return isLeftWard;
+}
+
+// ƒ_ƒ[ƒW‚ğó‚¯‚é
+void CharaBase::ReceiveDamage(int attackPower)
+{
+	hp -= attackPower;
 }

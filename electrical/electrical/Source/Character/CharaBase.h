@@ -55,6 +55,12 @@ public:
 	// UŒ‚—Í‚ğæ“¾
 	int GetAttackPower();
 
+	// isAlive‚ğæ“¾
+	bool GetIsAlive();
+
 	// isLeftWard‚ğæ“¾
 	bool GetIsLeftWard();
+
+	// ƒ_ƒ[ƒW‚ğó‚¯‚é
+	void ReceiveDamage(int attackPower);
 };

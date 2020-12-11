@@ -60,18 +60,18 @@ void Chara_Player::Move()
 	}
 
 	// ダッシュ
-	if (InputKey::IsKeyInputBarrage(e_KEY_LEFT)||
-		InputKey::IsKeyInputBarrage(e_KEY_RIGHT)||
+	if ( InputKey::IsKeyInputBarrage(e_KEY_LEFT) ||
+		InputKey::IsKeyInputBarrage(e_KEY_RIGHT) ||
 		InputPad::IsPadInputBarrage(e_PAD_LEFT) ||
 		InputPad::IsPadInputBarrage(e_PAD_RIGHT) )
 	{
-		DrawString(300, 300, "DASH!", GetColor(255, 255, 255));
 		speed = DASH_SPEED;
 	}
-	else if (!CheckHitKey(KEY_INPUT_LEFT) && 
-			 !CheckHitKey(KEY_INPUT_RIGHT) &&
-			 !GetJoypadInputState(PAD_INPUT_LEFT) &&
-			 !GetJoypadInputState(PAD_INPUT_RIGHT))
+	// ダッシュ入力がなければ通常スピード
+	else if ( !InputKey::IsKeyInputNow(KEY_INPUT_LEFT) &&
+			 !InputKey::IsKeyInputNow(KEY_INPUT_RIGHT) &&
+			 !InputPad::IsPadInputNow(PAD_INPUT_LEFT) &&
+			 !InputPad::IsPadInputNow(PAD_INPUT_RIGHT) )
 	{
 		speed = NORMAL_SPEED;
 	}
@@ -126,9 +126,17 @@ void Chara_Player::HpCharge()
 			{
 				chargeTimer += 2;
 			}
-			else
+			else if ( chargeTimer < 60 * 9 )
 			{
 				chargeTimer += 3;
+			}
+			else if(chargeTimer < 60 * 12)
+			{
+				chargeTimer += 5;
+			}
+			else
+			{
+				chargeTimer += 6;
 			}
 
 			// HP上昇
@@ -159,14 +167,29 @@ void Chara_Player::HpManager()
 	{
 		hp = 100;
 	}
+
+	// 0以下にもならない
+	if ( hp < 0 )
+	{
+		hp = 0;
+	}
 }
 
 // 攻撃
 bool Chara_Player::IsAttack()
 {
+	// 死亡時は攻撃できない
+	if ( !isAlive )
+	{
+		return false;
+	}
+
 	if ( InputKey::IsKeyInputTrigger(e_KEY_ATTACK) ||
 		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
 	{
+		// HP減少
+		hp -= 2;// のちに定数を作ります
+
 		return true;
 	}
 

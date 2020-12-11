@@ -6,14 +6,3 @@ CharaEnemyBase::CharaEnemyBase(float x, float y, int radius,
 {
 
 }
-
-bool CharaEnemyBase::GetIsAlive()
-{
-	return isAlive;
-}
-
-// ƒ_ƒ[ƒW‚ğó‚¯‚é
-void CharaEnemyBase::ReceiveDamage(int playerAttackPower)
-{
-	hp -= playerAttackPower;
-}

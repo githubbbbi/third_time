@@ -35,7 +35,7 @@ void Chara_Manager::Initialize()
 {
 	// プレイヤー生成
 	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
-							  32, NORMAL_SPEED, 50, 1, playerGH);
+							  32, NORMAL_SPEED, 100, 1, playerGH);
 }
 
 // エネミー管理
@@ -73,7 +73,7 @@ void Chara_Manager::EnemyManager()
 void Chara_Manager::WeaponManager()
 {
 	// 生成
-	if ( player->IsAttack() )
+	if ( player->IsAttack() && player->GetIsAlive() )
 	{
 		electricGun.push_back(new ElectricGun(player->GetPosX(),
 											  player->GetPosY(),
