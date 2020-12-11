@@ -31,4 +31,7 @@ public:
 
 	// ‰Ÿ‚³‚ê‚Ä‚¢‚Ä—£‚³‚ê‚½uŠÔTRUE
 	static bool IsKeyInputRelease(int key);
+
+	// ˜A‘Å‚³‚ê‚½ê‡TRUE
+	//static bool IsKeyInputBarrage(int key);
 };

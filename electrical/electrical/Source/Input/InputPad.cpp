@@ -50,3 +50,81 @@ bool InputPad::IsPadInputRelease(int key)
 
 	return false;
 }
+
+bool InputPad::IsPadInputBarrage(int key)
+{
+	//押した時間を計測するための変数
+	static int pushTime[2] = { 0 };
+	//前のフレームを判定するための変数
+	static int oldFrame[2] = { 0 };
+	//再びキー入力があるまで待てるフレーム数
+	const int waitFrame = 15;
+
+	// スティックを左入力したとき
+	if (key == e_PAD_LEFT)
+	{
+		if (!oldFrame[0] && (pad1 & key))
+		{//押した瞬間なら
+			if (pushTime[0] != 0)
+			{
+				return 1;
+			}
+			else {
+				pushTime[0] = waitFrame;
+			}
+		}
+		oldFrame[0] = (pad1 & key);
+	}
+	// スティックを右入力したとき
+	else if (key == e_PAD_RIGHT)
+	{
+		if (!oldFrame[1] && (pad1 & key))
+		{//押した瞬間なら
+			if (pushTime[1] != 0)
+			{
+				return 1;
+			}
+			else {
+				pushTime[1] = waitFrame;
+			}
+		}
+		oldFrame[1] = (pad1 & key);
+
+		if (pushTime[1] != 0)//押した時間が0じゃないのなら
+		{
+			pushTime[1]--;//押した時間をデクリメント
+		}
+	}
+
+	if (pushTime[0] != 0)//押した時間が0じゃないのなら
+	{
+		pushTime[0]--;//押した時間をデクリメント
+	}
+
+	return 0;
+}
+
+// mainに書いてた処理
+
+//int main()
+//{
+//	InputPad::Update();
+//
+//	// 今はmain.cppに書いてるから勝手に動かしていいよ
+//	// 連打したとき
+//	if (InputPad::IsPadInputBarrage(PAD_INPUT_LEFT) ||
+//		InputPad::IsPadInputBarrage(PAD_INPUT_RIGHT))
+//	{
+//		isDashFlag = TRUE; // 宣言が必要
+//	}
+//	else if (!GetJoypadInputState(PAD_INPUT_LEFT) &&
+//		!GetJoypadInputState(PAD_INPUT_RIGHT))
+//	{
+//		isDashFlag = FALSE;
+//	}
+//
+//	if (isDashFlag == TRUE)
+//	{
+//		DrawFormatString(0, 0, GetColor(255, 255, 255), "こんにちは");
+//	}
+//}
