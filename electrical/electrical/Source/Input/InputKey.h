@@ -1,12 +1,15 @@
 #pragma once
 
+#include "DxLib.h"
+
 // キーボードのキーコンフィグ
 enum KeyConfig
 {
-	e_KEY_LEFT = KEY_INPUT_LEFT,	// 左移動
-	e_KEY_RIGHT = KEY_INPUT_RIGHT,	// 右移動
-	e_KEY_JUMP = KEY_INPUT_UP,		// ジャンプ
-	e_KEY_ATTACK = KEY_INPUT_SPACE,	// 攻撃
+	e_KEY_LEFT = KEY_INPUT_LEFT,			// 左移動
+	e_KEY_RIGHT = KEY_INPUT_RIGHT,			// 右移動
+	e_KEY_JUMP = KEY_INPUT_UP,				// ジャンプ
+	e_KEY_ATTACK = KEY_INPUT_SPACE,			// 攻撃
+	e_KEY_FIXED_DIRECTION = KEY_INPUT_Z,	// 向き固定
 };
 
 class InputKey

@@ -1,6 +1,8 @@
 #include "CharaBase.h"
 #include "../Utility/Utility.h"
 #include "../Define/Define.h"
+#include "../Input/InputKey.h"
+#include "../Input/InputPad.h"
 
 // コンストラクタ
 CharaBase::CharaBase(float x, float y, int radius,

@@ -1,12 +1,15 @@
 #pragma once
 
+#include "DxLib.h"
+
 // パッドのキーコンフィグ
 enum PadConfig
 {
-	e_PAD_LEFT = PAD_INPUT_LEFT,	// 左移動
-	e_PAD_RIGHT = PAD_INPUT_RIGHT,	// 右移動
-	e_PAD_JUMP = PAD_INPUT_1,		// ジャンプ
-	e_PAD_ATTACK = PAD_INPUT_3,		// 攻撃
+	e_PAD_LEFT = PAD_INPUT_LEFT,			// 左移動
+	e_PAD_RIGHT = PAD_INPUT_RIGHT,			// 右移動
+	e_PAD_JUMP = PAD_INPUT_1,				// ジャンプ
+	e_PAD_ATTACK = PAD_INPUT_3,				// 攻撃
+	e_PAD_FIXED_DIRECTION = PAD_INPUT_6,	// 向き固定
 };
 
 class InputPad

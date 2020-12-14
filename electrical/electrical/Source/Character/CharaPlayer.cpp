@@ -130,7 +130,7 @@ void Chara_Player::HpCharge()
 			{
 				chargeTimer += 3;
 			}
-			else if(chargeTimer < 60 * 12)
+			else if ( chargeTimer < 60 * 12 )
 			{
 				chargeTimer += 5;
 			}
@@ -188,7 +188,7 @@ bool Chara_Player::IsAttack()
 		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
 	{
 		// HP減少
-		hp -= 2;// のちに定数を作ります
+
 
 		return true;
 	}
@@ -201,9 +201,20 @@ void Chara_Player::Update()
 {
 	if ( isAlive )
 	{
-		Move();
+		// チャージ中は動けない
+		if ( chargeTimer <= 0 )
+		{
+			Move();
+		}
+
 		HpManager();
-		ChangeGraphicDirection();
+
+		// 向き固定ボタンが押されていない
+		if ( !InputKey::IsKeyInputNow(e_KEY_FIXED_DIRECTION) ||
+			!InputPad::IsPadInputNow(e_PAD_FIXED_DIRECTION) )
+		{
+			ChangeGraphicDirection();
+		}
 	}
 }
 
