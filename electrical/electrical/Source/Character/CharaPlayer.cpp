@@ -210,7 +210,7 @@ void Chara_Player::Update()
 		HpManager();
 
 		// Œü‚«ŒÅ’èƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢
-		if ( !InputKey::IsKeyInputNow(e_KEY_FIXED_DIRECTION) ||
+		if ( !InputKey::IsKeyInputNow(e_KEY_FIXED_DIRECTION) &&
 			!InputPad::IsPadInputNow(e_PAD_FIXED_DIRECTION) )
 		{
 			ChangeGraphicDirection();
