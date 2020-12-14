@@ -11,6 +11,7 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 {
 	hpTimer = 0;
 	chargeTimer = 0;
+	shotNum = 0;
 }
 
 Chara_Player::~Chara_Player()
@@ -28,6 +29,7 @@ void Chara_Player::Initialize()
 
 	hpTimer = 0;
 	chargeTimer = 0;
+	shotNum = 0;
 }
 
 // 移動
@@ -105,6 +107,12 @@ void Chara_Player::HpDcrease()
 
 		// タイマーリセット
 		hpTimer = 0;
+	}
+
+	if (shotNum >= 5)
+	{
+		hp -= 2;
+		shotNum = 0;
 	}
 }
 
@@ -187,9 +195,7 @@ bool Chara_Player::IsAttack()
 	if ( InputKey::IsKeyInputTrigger(e_KEY_ATTACK) ||
 		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
 	{
-		// HP減少
-
-
+		shotNum++;
 		return true;
 	}
 

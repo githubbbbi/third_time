@@ -14,6 +14,7 @@ class Chara_Player:public CharaBase
 private:
 	int hpTimer;		// HP(バッテリー)タイマー
 	int chargeTimer;	// HP(バッテリー)チャージタイマー
+	int shotNum;		// 弾を撃った数をカウント
 
 	// 移動
 	void Move();
