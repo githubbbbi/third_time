@@ -20,5 +20,5 @@ public:
 	void Update() override;
 
 	// •`‰æˆ—
-	void Draw() override;
+	void Draw(float shakeX, float shakeY) override;
 };

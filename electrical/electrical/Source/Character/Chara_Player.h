@@ -9,12 +9,14 @@ const float DASH_SPEED = 7.0f;// ダッシュスピード
 
 const int PLAYER_MAX_HP = 100;	// 最大HP
 
+const int PLAYER_CONSUMPTION_BULLET_NUM = 5;	// 電力を消費する弾数
+
 class Chara_Player:public CharaBase
 {
 private:
 	int hpTimer;		// HP(バッテリー)タイマー
 	int chargeTimer;	// HP(バッテリー)チャージタイマー
-	int shotNum;		// 弾を撃った数をカウント
+	int shotBulletNum;		// 撃った弾数
 
 	// 移動
 	void Move();
@@ -40,7 +42,7 @@ public:
 	void Update();
 
 	// 描画処理
-	void Draw();
+	void Draw(float shakeX, float shakeY);
 
 	// 攻撃
 	bool IsAttack();

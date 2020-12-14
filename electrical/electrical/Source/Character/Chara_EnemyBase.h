@@ -18,5 +18,5 @@ public:
 	virtual void Update() = 0;
 
 	// •`‰æˆ—
-	virtual void Draw() = 0;
+	virtual void Draw(float shakeX, float shakeY) = 0;
 };

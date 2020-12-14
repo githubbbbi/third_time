@@ -1,5 +1,7 @@
 #pragma once
 
+const float SHAKE_DECREASE = 0.3f;	// 振動の減少量
+
 // マップチップの当たり判定
 enum MapHit
 {
@@ -31,5 +33,9 @@ public:
 
 	// 円のコリジョン
 	static bool IsCircleCollision(float x1, float y1, int r1,
-								float x2, float y2, int r2);
+								  float x2, float y2, int r2);
+
+	// シェイク
+	static void Shake(float *shakeX, float *shakeY,
+					  float *addX, float *addY);
 };

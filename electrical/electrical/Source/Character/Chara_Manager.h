@@ -17,6 +17,9 @@ private:
 	int electricGunGH;		// 電気銃
 	int enemyAbsorptionGH;	// 吸収エネミー
 
+	float shakeX, shakeY;// シェイク
+	float shakeAddX, shakeAddY;
+
 	// エネミー管理
 	void EnemyManager();
 

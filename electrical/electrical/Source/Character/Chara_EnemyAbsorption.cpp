@@ -52,10 +52,11 @@ void Chara_EnemyAbsorption::Update()
 }
 
 // •`‰æˆ—
-void Chara_EnemyAbsorption::Draw()
+void Chara_EnemyAbsorption::Draw(float shakeX, float shakeY)
 {
 	if ( isAlive )
 	{
-		DrawRotaGraph((int)x, (int)y, 1.0, 0.0, graphHandle, true, isLeftWard);
+		DrawRotaGraph((int)(x + shakeX), (int)(y + shakeY),
+					  1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 }

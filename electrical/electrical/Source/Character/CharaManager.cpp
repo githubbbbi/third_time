@@ -11,6 +11,11 @@ Chara_Manager::Chara_Manager()
 	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
 	enemyAbsorptionGH = LoadGraph("Resource/Graphic/Character/enemy_absorption.png");
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
+
+	shakeX = 0.0f;
+	shakeY = 0.0f;
+	shakeAddX = 0.0f;
+	shakeAddY = 0.0f;
 }
 
 Chara_Manager::~Chara_Manager()
@@ -36,6 +41,12 @@ void Chara_Manager::Initialize()
 	// プレイヤー生成
 	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
 							  32, NORMAL_SPEED, 100, 1, playerGH);
+
+	// シェイク初期化
+	shakeX = 0.0f;
+	shakeY = 0.0f;
+	shakeAddX = 0.0f;
+	shakeAddY = 0.0f;
 }
 
 // エネミー管理
@@ -63,6 +74,11 @@ void Chara_Manager::EnemyManager()
 	{
 		if ( !enemys[i]->GetIsAlive() )
 		{
+			// シェイク テスト
+			{
+				shakeAddX = shakeAddY = 6.0f;
+			}
+
 			delete enemys[i];
 			enemys.erase(enemys.begin() + i);
 		}
@@ -135,6 +151,9 @@ void Chara_Manager::Update()
 
 	// 攻撃の当たり判定
 	AttackCollision();
+
+	// シェイク
+	Utility::Shake(&shakeX, &shakeY, &shakeAddX, &shakeAddX);
 }
 
 // 描画処理
@@ -147,12 +166,12 @@ void Chara_Manager::Draw()
 	}
 
 	// プレイヤー
-	player->Draw();
+	player->Draw(shakeX, shakeY);
 
 	// エネミー
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		enemys[i]->Draw();
+		enemys[i]->Draw(shakeX, shakeY);
 	}
 
 	// デバッグ用

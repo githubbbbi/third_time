@@ -11,7 +11,7 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 {
 	hpTimer = 0;
 	chargeTimer = 0;
-	shotNum = 0;
+	shotBulletNum = 0;
 }
 
 Chara_Player::~Chara_Player()
@@ -29,7 +29,7 @@ void Chara_Player::Initialize()
 
 	hpTimer = 0;
 	chargeTimer = 0;
-	shotNum = 0;
+	shotBulletNum = 0;
 }
 
 // 移動
@@ -109,10 +109,12 @@ void Chara_Player::HpDcrease()
 		hpTimer = 0;
 	}
 
-	if (shotNum >= 5)
+	// 撃った弾数が一定数を超える
+	if ( shotBulletNum >= PLAYER_CONSUMPTION_BULLET_NUM )
 	{
+		// HP減少
 		hp -= 2;
-		shotNum = 0;
+		shotBulletNum = 0;
 	}
 }
 
@@ -195,7 +197,8 @@ bool Chara_Player::IsAttack()
 	if ( InputKey::IsKeyInputTrigger(e_KEY_ATTACK) ||
 		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
 	{
-		shotNum++;
+		// 撃った弾数を増やす
+		shotBulletNum++;
 		return true;
 	}
 
@@ -225,12 +228,12 @@ void Chara_Player::Update()
 }
 
 // 描画処理
-void Chara_Player::Draw()
+void Chara_Player::Draw(float shakeX, float shakeY)
 {
 	// プレイヤー
 	if ( isAlive )
 	{
-		DrawRotaGraph((int)x, (int)y, 1.0, 0.0, graphHandle, true, isLeftWard);
+		DrawRotaGraph((int)(x + shakeX), (int)(y + shakeY), 1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 
 	// デバッグ用
