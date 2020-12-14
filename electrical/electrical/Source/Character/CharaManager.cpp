@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "Chara_Manager.h"
 #include "../Define/Define.h"
+#include "../Input/InputKey.h"
 #include "../Input/InputPad.h"
 
 Chara_Manager::Chara_Manager()
@@ -55,8 +56,9 @@ void Chara_Manager::EnemyManager()
 	// 吸収
 	// テスト
 	{
-		// パッドのAボタンでエネミー生成
-		if ( InputPad::IsPadInputNow(PAD_INPUT_B) )
+		// Bキー、パッドのBボタンでエネミー生成
+		if ( InputKey::IsKeyInputNow(KEY_INPUT_B) ||
+			InputPad::IsPadInputNow(PAD_INPUT_B) )
 		{
 			// 吸収エネミー
 			enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
