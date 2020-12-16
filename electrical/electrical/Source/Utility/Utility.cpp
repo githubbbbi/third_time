@@ -1,7 +1,9 @@
+#include "DxLib.h"
+#include <math.h>
 #include "Utility.h"
 #include "../Define/Define.h"
-#include <math.h>
-#include "DxLib.h"
+#include "../Stage/Stage.h"
+
 
 // 画面内にとどまる
 void Utility::StayOnScreen(float *x, float *y, int radius,
@@ -32,42 +34,6 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 	}
 }
 
-
-
-// マップチップの値を取得
-int Utility::GetMapParam(float x, float y)
-{
-	// テスト用
-	int mapData[MAP_COUNT_Y][MAP_COUNT_X] =
-	{
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	};
-
-	// マップチップ配列の添え字
-	int mapX, mapY;
-
-	mapX = (int)x / CHIP_SIZE;
-	mapY = (int)y / CHIP_SIZE;
-
-	// マップから出ていた場合、-1を返す
-	if ( mapX < 0 || mapY < 0 ||
-		mapX >= MAP_COUNT_X || mapY >= MAP_COUNT_Y )
-	{
-		return -1;
-	}
-
-	// マップチップ配列の値を返す
-	return mapData[mapY][mapX];
-}
-
 // マップとの当たり判定
 // 1：左辺に衝突、2：右辺に衝突、3：上辺、4：下辺
 int Utility::MapHitCheck(float x, float y,
@@ -85,7 +51,7 @@ int Utility::MapHitCheck(float x, float y,
 	addY = y + *moveY;
 
 	// ブロックに当たっているかチェック
-	if ( GetMapParam(addX, addY) == e_BLOCK )
+	if ( Stage::GetMapParam(addX, addY) == e_MAP_BLOCK )
 	{
 		// 当たっていた場合、壁から離す
 		// ブロックの上下左右の座標を計算

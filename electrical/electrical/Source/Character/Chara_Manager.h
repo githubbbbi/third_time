@@ -17,11 +17,8 @@ private:
 	int electricGunGH;		// 電気銃
 	int enemyAbsorptionGH;	// 吸収エネミー
 
-	float shakeX, shakeY;// シェイク
-	float shakeAddX, shakeAddY;
-
 	// エネミー管理
-	void EnemyManager();
+	void EnemyManager(float *shakeAddX, float *shakeAddY);
 
 	// 攻撃処理管理
 	void WeaponManager();
@@ -37,8 +34,8 @@ public:
 	void Initialize();
 
 	// 更新処理
-	void Update();
+	void Update(float *shakeAddX, float *shakeAddY);
 
 	// 描画処理
-	void Draw();
+	void Draw(float shakeX, float shakeY);
 };

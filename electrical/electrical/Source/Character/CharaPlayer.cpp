@@ -79,8 +79,8 @@ void Chara_Player::Move()
 	}
 
 	// ジャンプ
-	if ( InputKey::IsKeyInputTrigger(e_KEY_JUMP) ||
-		InputPad::IsPadInputTrigger(e_PAD_JUMP) )
+	if ( InputKey::IsKeyInputNow(e_KEY_JUMP) ||
+		InputPad::IsPadInputNow(e_PAD_JUMP) )
 	{
 		// ジャンプ中でない
 		if ( !isJump )
@@ -239,4 +239,5 @@ void Chara_Player::Draw(float shakeX, float shakeY)
 	// デバッグ用
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "Player_HP(battery):%d%", hp);
 	DrawFormatString(0, 60, GetColor(255, 255, 255), "inputPadX:%d%", InputPad::inputX);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "frameCount:%.2f", InputKey::frameCount[e_KEY_JUMP]);
 }

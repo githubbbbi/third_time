@@ -13,9 +13,3 @@ const int CHIP_SIZE = 64;
 // マップチップの数
 const int MAP_COUNT_X = WIN_WIDTH / CHIP_SIZE;
 const int MAP_COUNT_Y = WIN_HEIGHT / CHIP_SIZE + 1;
-
-// マップチップに対応する値
-enum MapChip
-{
-	e_BLOCK,
-};

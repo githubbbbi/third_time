@@ -3,6 +3,7 @@
 #include "../Define/Define.h"
 #include "../Input/InputKey.h"
 #include "../Input/InputPad.h"
+#include "../Stage/Stage.h"
 
 // コンストラクタ
 CharaBase::CharaBase(float x, float y, int radius,
@@ -98,8 +99,8 @@ void CharaBase::CharaMove()
 
 	// 接地判定
 	// キャラクタの左下と右下の下に地面があるか調べる
-	if ( Utility::GetMapParam(x - radius, y + radius + 1.0f) != e_BLOCK &&
-		Utility::GetMapParam(x + radius, y + radius + 1.0f) != e_BLOCK )
+	if ( Stage::GetMapParam(x - radius, y + radius + 1.0f) != e_MAP_BLOCK &&
+		Stage::GetMapParam(x + radius, y + radius + 1.0f) != e_MAP_BLOCK )
 	{
 		// 足場がない場合、ジャンプ中にする
 		isJump = true;

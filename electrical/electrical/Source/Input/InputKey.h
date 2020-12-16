@@ -21,6 +21,8 @@ private:
 	InputKey();
 
 public:
+	static float frameCount[256];	// キーが押されているフレーム数
+
 	// 更新処理
 	static void Update();
 

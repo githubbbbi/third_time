@@ -1,6 +1,4 @@
-#include "DxLib.h"
 #include "InputPad.h"
-#include "InputKey.h"
 
 // •Ï”‰Šú‰»
 int InputPad::pad1 = 0;
@@ -8,6 +6,8 @@ int InputPad::oldPad1 = 0;
 
 int InputPad::inputX = 0;
 int InputPad::inputY = 0;
+
+float InputPad::frameCount[] = { 0.0f };
 
 // XVˆ—
 void InputPad::Update()

@@ -141,6 +141,7 @@
     <ClCompile Include="Source\Input\InputKey.cpp" />
     <ClCompile Include="Source\Input\InputPad.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\System\SettingDxLib.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\Task\GameMain.cpp" />

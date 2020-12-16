@@ -41,13 +41,14 @@ void Chara_EnemyAbsorption::Move()
 }
 
 // XVˆ—
-void Chara_EnemyAbsorption::Update()
+void Chara_EnemyAbsorption::Update(float *shakeAddX, float *shakeAddY)
 {
 	if ( isAlive )
 	{
 		Move();
 		ChangeGraphicDirection();
 		HpZero();
+		ShakeStart(&*shakeAddX, &*shakeAddY);
 	}
 }
 

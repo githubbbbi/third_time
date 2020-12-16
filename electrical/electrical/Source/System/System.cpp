@@ -7,7 +7,7 @@ using namespace SettingDxLib;
 // コンストラクタ
 System::System()
 {
-	gameMain = new GameMain;
+	gameMain = nullptr;
 }
 
 // デストラクタ
@@ -24,6 +24,9 @@ bool System::Initialize()
 	{
 		return false;
 	}
+
+	// インスタンス生成
+	gameMain = new GameMain;
 
 	// メインゲーム
 	gameMain->Initialize();

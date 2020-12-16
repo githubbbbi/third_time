@@ -7,16 +7,13 @@
 
 Chara_Manager::Chara_Manager()
 {
-	player = nullptr;
-
 	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
 	enemyAbsorptionGH = LoadGraph("Resource/Graphic/Character/enemy_absorption.png");
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
 
-	shakeX = 0.0f;
-	shakeY = 0.0f;
-	shakeAddX = 0.0f;
-	shakeAddY = 0.0f;
+	// プレイヤー生成
+	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
+							  32, NORMAL_SPEED, 100, 1, playerGH);
 }
 
 Chara_Manager::~Chara_Manager()
@@ -39,49 +36,33 @@ Chara_Manager::~Chara_Manager()
 // 初期化処理
 void Chara_Manager::Initialize()
 {
-	// プレイヤー生成
-	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
-							  32, NORMAL_SPEED, 100, 1, playerGH);
-
-	// シェイク初期化
-	shakeX = 0.0f;
-	shakeY = 0.0f;
-	shakeAddX = 0.0f;
-	shakeAddY = 0.0f;
+	
 }
 
 // エネミー管理
-void Chara_Manager::EnemyManager()
+void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 {
 	// 吸収
-	// テスト
+	// テスト Bキー、パッドのBボタンでエネミー生成
+	if ( InputKey::IsKeyInputNow(KEY_INPUT_B) ||
+		InputPad::IsPadInputNow(PAD_INPUT_B) )
 	{
-		// Bキー、パッドのBボタンでエネミー生成
-		if ( InputKey::IsKeyInputNow(KEY_INPUT_B) ||
-			InputPad::IsPadInputNow(PAD_INPUT_B) )
-		{
-			// 吸収エネミー
-			enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
-													   GetRand(3) + 2.0f, 2, 20, enemyAbsorptionGH));
-		}
+		// 吸収エネミー
+		enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
+												   GetRand(3) + 2.0f, 2, 20, enemyAbsorptionGH));
 	}
 
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		enemys[i]->Update();
+		enemys[i]->Update(&*shakeAddX, &*shakeAddY);
 	}
 
-	// エネミー削除
 	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
+		// 死亡後画面外に出た場合、エネミー削除
 		if ( !enemys[i]->GetIsAlive() )
 		{
-			// シェイク テスト
-			{
-				shakeAddX = shakeAddY = 6.0f;
-			}
-
-			delete enemys[i];
+ 			delete enemys[i];
 			enemys.erase(enemys.begin() + i);
 		}
 	}
@@ -125,12 +106,13 @@ void Chara_Manager::AttackCollision()
 		// エネミーとプレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < electricGun.size(); j++ )
 		{
-			if ( Utility::IsCircleCollision(enemys[i]->GetPosX(),
-											enemys[i]->GetPosY(),
-											enemys[i]->GetRadius() - 8,
-											electricGun[j]->GetPosX(),
-											electricGun[j]->GetPosY(),
-											electricGun[j]->GetRadius() - 4) )
+			if ( enemys[i]->GetIsAlive() &&
+				Utility::IsCircleCollision(enemys[i]->GetPosX(),
+										   enemys[i]->GetPosY(),
+										   enemys[i]->GetRadius() - 8,
+										   electricGun[j]->GetPosX(),
+										   electricGun[j]->GetPosY(),
+										   electricGun[j]->GetRadius() - 4) )
 			{
 				enemys[i]->ReceiveDamage(player->GetAttackPower());
 				electricGun[j]->BulletHit();
@@ -140,7 +122,7 @@ void Chara_Manager::AttackCollision()
 }
 
 // 更新処理
-void Chara_Manager::Update()
+void Chara_Manager::Update(float *shakeAddX, float *shakeAddY)
 {
 	// プレイヤー
 	player->Update();
@@ -149,17 +131,14 @@ void Chara_Manager::Update()
 	WeaponManager();
 
 	// エネミー
-	EnemyManager();
+	EnemyManager(&*shakeAddX, &*shakeAddY);
 
 	// 攻撃の当たり判定
 	AttackCollision();
-
-	// シェイク
-	Utility::Shake(&shakeX, &shakeY, &shakeAddX, &shakeAddX);
 }
 
 // 描画処理
-void Chara_Manager::Draw()
+void Chara_Manager::Draw(float shakeX, float shakeY)
 {
 	// 電気銃
 	for ( unsigned int i = 0; i < electricGun.size(); i++ )

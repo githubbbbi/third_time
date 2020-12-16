@@ -17,15 +17,9 @@ private:
 	Utility();
 
 public:
-	// マップとの当たり判定
-
-
 	// 画面内にとどまる
 	static void StayOnScreen(float *x, float *y, int radius,
 							 bool isStayX, bool isStayY);
-
-	//マップチップの値を取得
-	static int GetMapParam(float x, float y);
 
 	//マップとの当たり判定
 	// 1：左辺に衝突、2：右辺に衝突、3：上辺、4：下辺、5：触れたら死亡、6：ワープ

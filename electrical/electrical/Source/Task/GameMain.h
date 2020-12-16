@@ -1,11 +1,18 @@
 #pragma once
 
 #include "../Character/Chara_Manager.h"
+#include "../Stage/Stage.h"
 
 class GameMain
 {
 private:
 	Chara_Manager *charaManager;
+	Stage *stage;
+
+	int backgroundGH;	// 背景
+
+	float shakeX, shakeY;// シェイク
+	float shakeAddX, shakeAddY;// シェイク量
 
 public:
 	// コンストラクタ

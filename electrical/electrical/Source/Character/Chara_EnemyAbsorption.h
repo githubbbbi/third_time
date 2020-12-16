@@ -17,7 +17,7 @@ public:
 	void Initialize() override;
 
 	// XVˆ—
-	void Update() override;
+	void Update(float *shakeAddX, float *shakeAddY) override;
 
 	// •`‰æˆ—
 	void Draw(float shakeX, float shakeY) override;

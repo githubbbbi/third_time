@@ -55,6 +55,9 @@
     <Filter Include="ソース ファイル\Character\Weapon">
       <UniqueIdentifier>{c6be5e3c-6909-4fe5-bb6f-53e4cd401f41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Staeg">
+      <UniqueIdentifier>{b4050988-15e7-4282-b19c-22c76eb7425e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -95,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="Source\Character\Weapon\ElectricGun.cpp">
       <Filter>ソース ファイル\Character\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stage\Stage.cpp">
+      <Filter>ソース ファイル\Staeg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

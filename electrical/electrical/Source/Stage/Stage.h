@@ -1,9 +1,36 @@
 #pragma once
 
+#include "../Define/Define.h"
+
+// マップチップに対応する値
+enum MapChip
+{
+	e_MAP_NONE = -1,	// なし
+	e_MAP_BLOCK,		// ブロック
+	e_MAP_FIELD,
+	e_MAP_KIND_NUM		// 種類
+};
+
 class Stage
 {
 private:
+	int mapGH[e_MAP_KIND_NUM];
+	int graphIndex;
+
+	static int mapData[MAP_COUNT_Y][MAP_COUNT_X];
+
+	// マップ描画
+	void MapDraw(int x, int y, float shakeX, float shakeY);
 
 public:
-	int mapData[][15];
+	Stage(int mapGH[]);
+
+	// 更新処理
+	void Update();
+
+	// 描画処理
+	void Draw(float shakeX, float shakeY);
+
+	//マップチップの値を取得
+	static int GetMapParam(float x, float y);
 };

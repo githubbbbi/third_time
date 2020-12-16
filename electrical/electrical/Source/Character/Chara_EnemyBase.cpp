@@ -6,3 +6,12 @@ CharaEnemyBase::CharaEnemyBase(float x, float y, int radius,
 {
 
 }
+
+// シェイクスタート
+void CharaEnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
+{
+	if ( hp == 0 )
+	{
+		*shakeAddX = *shakeAddY = 6.0f;
+	}
+}

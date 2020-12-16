@@ -1,9 +1,10 @@
-#include "DxLib.h"
 #include "InputKey.h"
 
 // •Ï”‰Šú‰»
 char InputKey::keys[] = { 0 };
 char InputKey::oldKeys[] = { 0 };
+
+float InputKey::frameCount[] = { 0.0f };
 
 // XVˆ—
 void InputKey::Update()
