@@ -61,8 +61,5 @@ bool SettingDxLib::DxLibGameLoop()
 		return false;
 	}
 
-	// ‰æ–ÊƒNƒŠƒA
-	ClearDrawScreen();
-
 	return true;
 }

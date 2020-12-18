@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "System.h"
 #include "SettingDxLib.h"
+#include "../Mask/Mask.h"
 
 // コンストラクタ
 System::System()
@@ -29,6 +30,9 @@ bool System::Initialize()
 	// メインゲーム
 	gameMain->Initialize();
 
+	// マスクセット
+	Mask::SetMask();
+
 	return true;
 }
 
@@ -43,8 +47,14 @@ bool System::MainLoop()
 		gameMain->Update();
 
 		/* ----- 描画処理 ----- */
+		// マスクの描画
+		Mask::DrawMask();
+
 		// メインゲーム
 		gameMain->Draw();
+
+		// マスクの後処理
+		Mask::LoopMask();
 
 		// DxLibのループ処理
 		if ( !SettingDxLib::DxLibGameLoop() )

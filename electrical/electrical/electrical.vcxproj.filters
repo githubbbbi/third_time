@@ -58,6 +58,12 @@
     <Filter Include="ソース ファイル\Staeg">
       <UniqueIdentifier>{b4050988-15e7-4282-b19c-22c76eb7425e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Mask">
+      <UniqueIdentifier>{2ab3f1c9-01b9-4a3e-a9a8-0eded35ef608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mask">
+      <UniqueIdentifier>{0ecdf528-35e9-46b9-9493-40677f09fe05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -102,6 +108,9 @@
     <ClCompile Include="Source\Stage\Stage.cpp">
       <Filter>ソース ファイル\Staeg</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mask\Mask.cpp">
+      <Filter>ソース ファイル\Mask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -145,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
       <Filter>ヘッダー ファイル\Character\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mask\Mask.h">
+      <Filter>ヘッダー ファイル\Mask</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

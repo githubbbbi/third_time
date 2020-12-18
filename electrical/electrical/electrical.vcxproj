@@ -141,6 +141,7 @@
     <ClCompile Include="Source\Input\InputKey.cpp" />
     <ClCompile Include="Source\Input\InputPad.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Mask\Mask.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\System\SettingDxLib.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Source\Define\Define.h" />
     <ClInclude Include="Source\Input\InputKey.h" />
     <ClInclude Include="Source\Input\InputPad.h" />
+    <ClInclude Include="Source\Mask\Mask.h" />
     <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\System\SettingDxLib.h" />
     <ClInclude Include="Source\System\System.h" />
