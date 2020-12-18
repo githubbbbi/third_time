@@ -63,4 +63,7 @@ public:
 
 	// ダメージを受ける
 	void ReceiveDamage(int attackPower);
+
+	// キャラクタ同士が接触
+	void CharaCollision();
 };

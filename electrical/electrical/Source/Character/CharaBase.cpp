@@ -50,7 +50,7 @@ void CharaBase::CharaFall()
 
 // キャラクタの移動
 void CharaBase::CharaMove()
-{
+{	
 	// 落下
 	CharaFall();
 
@@ -176,4 +176,10 @@ bool CharaBase::GetIsLeftWard()
 void CharaBase::ReceiveDamage(int attackPower)
 {
 	hp -= attackPower;
+}
+
+// キャラクタ同士が接触
+void CharaBase::CharaCollision()
+{
+	moveX = 0;
 }

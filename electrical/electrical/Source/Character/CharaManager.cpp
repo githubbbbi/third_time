@@ -68,6 +68,19 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 	}
 }
 
+// キャラクタ同士の当たり判定
+void Chara_Manager::CharaCollision()
+{
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	{
+		// ここに記述
+
+		// プレイヤーと敵が接触した場合↓の関数を呼ぶ
+		//player->CharaCollision();
+		//enemys[i]->CharaCollision();
+	}
+}
+
 // 攻撃処理の管理
 void Chara_Manager::WeaponManager()
 {

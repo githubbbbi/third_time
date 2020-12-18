@@ -20,6 +20,9 @@ private:
 	// エネミー管理
 	void EnemyManager(float *shakeAddX, float *shakeAddY);
 
+	// キャラクタ同士の当たり判定
+	void CharaCollision();
+
 	// 攻撃処理管理
 	void WeaponManager();
 
