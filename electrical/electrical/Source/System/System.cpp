@@ -2,8 +2,6 @@
 #include "System.h"
 #include "SettingDxLib.h"
 
-using namespace SettingDxLib;
-
 // コンストラクタ
 System::System()
 {
@@ -20,7 +18,7 @@ System::~System()
 bool System::Initialize()
 {
 	// DXLibの初期化
-	if ( !DxLibInit() )
+	if ( !SettingDxLib::DxLibInit() )
 	{
 		return false;
 	}
@@ -49,7 +47,7 @@ bool System::MainLoop()
 		gameMain->Draw();
 
 		// DxLibのループ処理
-		if ( !DxLibGameLoop() )
+		if ( !SettingDxLib::DxLibGameLoop() )
 		{
 			return false;
 		}

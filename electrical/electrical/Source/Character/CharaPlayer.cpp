@@ -79,11 +79,15 @@ void Chara_Player::Move()
 	}
 
 	// ジャンプ
-	// ジャンプ中でない
-	if ( !isJump )
+	if ( InputKey::IsKeyInputTrigger(e_KEY_JUMP) ||
+		InputPad::IsPadInputTrigger(e_PAD_JUMP) )
 	{
-		gravity = JUMP_POWER * InputKey::GetInputFrame(e_KEY_JUMP);
-		isJump = true;
+		// ジャンプ中でない
+		if ( !isJump )
+		{
+			gravity = JUMP_POWER;
+			isJump = true;
+		}
 	}
 
 	CharaMove();
