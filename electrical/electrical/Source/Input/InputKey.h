@@ -37,4 +37,7 @@ public:
 
 	// ˜A‘Å‚³‚ê‚½ê‡TRUE
 	static bool IsKeyInputBarrage(int key);
+
+	// frameCount‚ğ•Ô‚·
+	static float GetInputFrame(int key);
 };

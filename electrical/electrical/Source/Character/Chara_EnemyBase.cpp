@@ -12,6 +12,6 @@ void CharaEnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
 {
 	if ( hp == 0 )
 	{
-		*shakeAddX = *shakeAddY = 6.0f;
+		*shakeAddX = *shakeAddY = 4.0f;
 	}
 }

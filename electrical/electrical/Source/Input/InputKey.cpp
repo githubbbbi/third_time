@@ -58,10 +58,10 @@ bool InputKey::IsKeyInputBarrage(int key)
 	static long long int presstime[2][2] = { 0 };
 	static int prevkey[2] = { 0 };
 
-	if (key == e_KEY_LEFT)
+	if ( key == e_KEY_LEFT )
 	{
 		// キーが押された瞬間の場合
-		if (!prevkey[0] && IsKeyInputNow(key))
+		if ( !prevkey[0] && IsKeyInputNow(key) )
 		{
 			static int i = 0;	// カウント変数
 
@@ -70,10 +70,10 @@ bool InputKey::IsKeyInputBarrage(int key)
 			++i;
 
 			// iが2の場合
-			if (i == 2)
+			if ( i == 2 )
 			{
 				// ２つの時間差が0.35秒より小さい場合
-				if (presstime[0][1] - presstime[0][0] <= 0.25 * 1000)
+				if ( presstime[0][1] - presstime[0][0] <= 0.25 * 1000 )
 				{
 					i = 0;
 
@@ -98,10 +98,10 @@ bool InputKey::IsKeyInputBarrage(int key)
 		// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
 		prevkey[0] = IsKeyInputNow(key);
 	}
-	else if (key == e_KEY_RIGHT)
+	else if ( key == e_KEY_RIGHT )
 	{
 		// キーが押された瞬間の場合
-		if (!prevkey[1] && IsKeyInputNow(key))
+		if ( !prevkey[1] && IsKeyInputNow(key) )
 		{
 			static int j = 0;	// カウント変数
 
@@ -110,10 +110,10 @@ bool InputKey::IsKeyInputBarrage(int key)
 			++j;
 
 			// iが2の場合
-			if (j == 2)
+			if ( j == 2 )
 			{
 				// ２つの時間差が0.35秒より小さい場合
-				if (presstime[1][1] - presstime[1][0] <= 0.25 * 1000)
+				if ( presstime[1][1] - presstime[1][0] <= 0.25 * 1000 )
 				{
 					j = 0;
 
@@ -141,4 +141,11 @@ bool InputKey::IsKeyInputBarrage(int key)
 
 
 	return false;
+}
+
+// frameCountを返す
+float InputKey::GetInputFrame(int key)
+{
+
+	return 0.0f;
 }
