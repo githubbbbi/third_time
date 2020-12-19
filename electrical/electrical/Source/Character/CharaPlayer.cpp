@@ -12,6 +12,7 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 	hpTimer = 0;
 	chargeTimer = 0;
 	shotBulletNum = 0;
+	isRelease = false;
 }
 
 Chara_Player::~Chara_Player()
@@ -78,15 +79,44 @@ void Chara_Player::Move()
 		speed = NORMAL_SPEED;
 	}
 
+	// --- やったこと ---//
+	// Chara_Player.hにbool型のisReleaseを作って、2段ジャンプを防いだ
+	// InputKey::frameCountがstaticで宣言されてるから、関数使わずに呼び出してる
+	// frameCountの関数はInputKey.hに用意はしてるから、必要だったら関数にしてね
+	// フレームの最大値とフレームを割る値の変数を作ってないから、作ってほしい（どこに作ればいいかわからなくてできてない）
+	// 一応、バランスみながら今の値にいてるけど、調整してもらって勝手に変えて全然いいよ
+
 	// ジャンプ
-	if ( InputKey::IsKeyInputTrigger(e_KEY_JUMP) ||
-		InputPad::IsPadInputTrigger(e_PAD_JUMP) )
+	if ( InputKey::IsKeyInputNow(e_KEY_JUMP) ||
+		InputPad::IsPadInputNow(e_PAD_JUMP) )
 	{
-		// ジャンプ中でない
+		// ジャンプの初期化
 		if ( !isJump )
 		{
-			gravity = JUMP_POWER;
+			InputKey::frameCount[e_KEY_JUMP] = 0; // InputKey::ResetFrame(e_KEY_JUMP)でもできる
+			isRelease = false;
 			isJump = true;
+		}
+
+		// ジャンプの更新処理
+		if ( isJump )
+		{
+			InputKey::frameCount[e_KEY_JUMP]++;
+
+			// キーが離ていなければ、フレームカウントを掛けた値を代入する
+			if ( !isRelease && InputKey::frameCount[e_KEY_JUMP] < 9 )
+			{
+				gravity = JUMP_POWER * ((float)InputKey::frameCount[e_KEY_JUMP] / 7);
+			}
+		}
+	}
+	// ジャンプ中にキーが離された時の処理（2段ジャンプの阻止)
+	else if ( InputKey::IsKeyInputRelease(e_KEY_JUMP) ||
+			InputPad::IsPadInputRelease(e_PAD_JUMP) )
+	{
+		if ( isJump )
+		{
+			isRelease = true;
 		}
 	}
 

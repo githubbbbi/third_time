@@ -18,6 +18,8 @@ private:
 	int chargeTimer;	// HP(バッテリー)チャージタイマー
 	int shotBulletNum;		// 撃った弾数
 
+	bool isRelease;		// キー入力がなかった時にtrue
+
 	// 移動
 	void Move();
 

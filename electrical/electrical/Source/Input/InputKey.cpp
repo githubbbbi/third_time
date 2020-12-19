@@ -146,6 +146,17 @@ bool InputKey::IsKeyInputBarrage(int key)
 // frameCountを返す
 float InputKey::GetInputFrame(int key)
 {
+	return frameCount[key];
+}
 
-	return 0.0f;
+// frameCountをインクリメントする
+void InputKey::IncrementFrame(int key)
+{
+	frameCount[key]++;
+}
+
+// frameCountをリセットする
+void InputKey::ResetFrame(int key)
+{
+	frameCount[key] = 0;
 }

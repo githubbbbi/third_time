@@ -40,4 +40,10 @@ public:
 
 	// frameCountを返す
 	static float GetInputFrame(int key);
+
+	// frameCountをインクリメントする
+	static void IncrementFrame(int key);
+
+	// frameCountをリセットする
+	static void ResetFrame(int key);
 };
