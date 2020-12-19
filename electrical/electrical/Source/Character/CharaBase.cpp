@@ -57,30 +57,33 @@ void CharaBase::CharaMove()
 	// ダミー これはXまたはY方向の移動量について考慮しない場合に用いる
 	float dummy = 0.0f;
 
+	// 当たり判定を行う長さ
+	static int hitLength = radius;
+
 	// キャラクタの左上、右上、左下、右上部分に当たり判定がある
 	// マップに衝突しているか調べ、衝突していた場合補正する
 
 	// 上下の移動量をチェック
 	// 左下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x - radius, y + radius, &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x - hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
 	{
 		gravity = 0.0f;
 	}
 
 	// 右下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x + radius, y + radius, &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x + hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
 	{
 		gravity = 0.0f;
 	}
 
 	// 左上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x - radius, y - radius, &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x - hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
 	{
 		gravity = GRAVITY;
 	}
 
 	// 右上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x + radius, y - radius, &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x + hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
 	{
 		gravity = GRAVITY;
 	}
@@ -89,10 +92,10 @@ void CharaBase::CharaMove()
 	y += moveY;
 
 	// 左右の移動量をチェック
-	Utility::MapHitCheck(x - radius, y + radius, &moveX, &dummy);	// 左下
-	Utility::MapHitCheck(x + radius, y + radius, &moveX, &dummy);	// 右下
-	Utility::MapHitCheck(x - radius, y - radius, &moveX, &dummy);	// 左上
-	Utility::MapHitCheck(x + radius, y - radius, &moveX, &dummy);	// 右上
+	Utility::MapHitCheck(x - hitLength, y + hitLength, &moveX, &dummy);	// 左下
+	Utility::MapHitCheck(x + hitLength, y + hitLength, &moveX, &dummy);	// 右下
+	Utility::MapHitCheck(x - hitLength, y - hitLength, &moveX, &dummy);	// 左上
+	Utility::MapHitCheck(x + hitLength, y - hitLength, &moveX, &dummy);	// 右上
 
 	// 左右移動量を加える
 	x += moveX;

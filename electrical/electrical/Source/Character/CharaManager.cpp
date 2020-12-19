@@ -89,7 +89,7 @@ void Chara_Manager::WeaponManager()
 	{
 		electricGun.push_back(new ElectricGun(player->GetPosX(),
 											  player->GetPosY(),
-											  16, 25,
+											  16, 30.0f,
 											  player->GetIsLeftWard(),
 											  electricGunGH));
 	}
@@ -128,7 +128,7 @@ void Chara_Manager::AttackCollision()
 										   electricGun[j]->GetRadius() - 4) )
 			{
 				enemys[i]->ReceiveDamage(player->GetAttackPower());
-				electricGun[j]->BulletHit();
+				electricGun[j]->Hit();
 			}
 		}
 	}

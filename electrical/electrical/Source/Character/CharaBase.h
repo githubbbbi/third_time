@@ -11,19 +11,18 @@ const float JUMP_POWER = -13.0f;
 class CharaBase
 {
 protected:
-	float x, y;			// 中心座標
-	float moveX, moveY;	// 移動量
+	float x;			// 中心座標
+	float y;			// 中心座標
+	float moveX;		// 移動量
+	float moveY;		// 移動量
 	float speed;		// スピード
 	float gravity;		// 落下度
 	int radius;			// 半径
 	int graphHandle;	// 画像ハンドル
-
-	int hp;	// HP
-	int attackPower;// 攻撃力
-
+	int hp;				// HP
+	int attackPower;	// 攻撃力
 	bool isAlive;		// 生存フラグ
 	bool isLeftWard;	// 左向きフラグ
-
 	bool isJump;		// ジャンプフラグ
 
 	// キャラクタの落下

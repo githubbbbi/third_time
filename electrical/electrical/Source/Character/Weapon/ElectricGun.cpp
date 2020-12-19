@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "ElectricGun.h"
 #include "../../Define/Define.h"
+#include "../../Utility/Utility.h"
 
 ElectricGun::ElectricGun(float x, float y, int radius,
 						 float speed, bool isCharaLeftWard, int graphHandle)
@@ -12,29 +13,117 @@ ElectricGun::ElectricGun(float x, float y, int radius,
 	this->isCharaLeftWard = isCharaLeftWard;
 	this->graphHandle = graphHandle;
 
-	isAlive = true;
-}
+	moveY = 0.0f;
 
-// 更新処理
-void ElectricGun::Update()
-{
 	// 左向き
 	if ( isCharaLeftWard )
 	{
-		x -= speed;
+		moveX = -speed;
 	}
 	// 右向き
 	else
 	{
-		x += speed;
+		moveX = speed;
 	}
 
-	// 画面外に出たら削除
+	hitFrame = 0;
+	isAlive = true;
+	isMapHit = false;
+}
+
+// マップとの当たり判定を考慮した移動
+void ElectricGun::Move()
+{
+	// ダミー これはXまたはY方向の移動量について考慮しない場合に用いる
+	static float dummy = 0.0f;
+
+	// 当たり判定を行う長さ
+	static int hitLength = radius - 10;
+
+	//// 上下の移動量をチェック
+	//// 左下
+	//if ( Utility::MapHitCheck(x - hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
+	//{
+
+	//}
+
+	//// 右下
+	//if ( Utility::MapHitCheck(x + hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
+	//{
+
+	//}
+
+	//// 左上
+	//if ( Utility::MapHitCheck(x - hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
+	//{
+
+	//}
+
+	//// 右上
+	//if ( Utility::MapHitCheck(x + hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
+	//{
+
+	//}
+
+	// 上下移動量を加える
+	y += moveY;
+
+	// 左右の移動量をチェック
+	Utility::MapHitCheck(x - hitLength, y + hitLength, &moveX, &dummy);	// 左下
+	Utility::MapHitCheck(x + hitLength, y + hitLength, &moveX, &dummy);	// 右下
+	Utility::MapHitCheck(x - hitLength, y - hitLength, &moveX, &dummy);	// 左上
+	Utility::MapHitCheck(x + hitLength, y - hitLength, &moveX, &dummy);	// 右上
+
+	// 移動量がspeedと等しくない場合マップヒット
+	// 左向き
+	if ( isCharaLeftWard )
+	{
+		if ( moveX != -speed )
+		{
+			hitFrame++;
+		}
+	}
+	// 右向き
+	else
+	{
+		if ( moveX != speed )
+		{
+			hitFrame++;
+		}
+	}
+
+	// ヒット後2フレーム経過で弾を消去
+	if ( hitFrame > 2 )
+	{
+		isMapHit = true;
+	}
+
+	// 左右移動量を加える
+	x += moveX;
+}
+
+// 消去
+void ElectricGun::Erase()
+{
+	// 画面外に出たら消去
 	if ( x + radius < 0 ||
 		x - radius > WIN_WIDTH )
 	{
 		isAlive = false;
 	}
+
+	// マップに当たったら消去
+	if ( isMapHit )
+	{
+		isAlive = false;
+	}
+}
+
+// 更新処理
+void ElectricGun::Update()
+{
+	Move();
+	Erase();
 }
 
 // 描画処理
@@ -45,10 +134,12 @@ void ElectricGun::Draw()
 		DrawRotaGraph((int)x, (int)y,
 					  1.0, 0.0, graphHandle, true);
 	}
+
+	DrawFormatString(0, 120, GetColor(255, 255, 255), "hitFrame:%d", hitFrame);
 }
 
 // 弾がヒットした場合の処理
-void ElectricGun::BulletHit()
+void ElectricGun::Hit()
 {
 	isAlive = false;
 }

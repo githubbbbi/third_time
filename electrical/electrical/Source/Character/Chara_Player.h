@@ -16,7 +16,7 @@ class Chara_Player:public CharaBase
 private:
 	int hpTimer;		// HP(バッテリー)タイマー
 	int chargeTimer;	// HP(バッテリー)チャージタイマー
-	int shotBulletNum;		// 撃った弾数
+	int shotBulletNum;	// 撃った弾数
 
 	bool isRelease;		// キー入力がなかった時にtrue
 

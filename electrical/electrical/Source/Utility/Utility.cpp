@@ -35,7 +35,7 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 }
 
 // マップとの当たり判定
-// 1：左辺に衝突、2：右辺に衝突、3：上辺、4：下辺
+// 1：左辺、2：右辺、3：上辺、4：下辺
 int Utility::MapHitCheck(float x, float y,
 						 float *moveX, float *moveY)
 {
@@ -46,7 +46,7 @@ int Utility::MapHitCheck(float x, float y,
 	// マップチップ上下左右の座標
 	RECT map;
 
-	// キャラクタ座標に移動量を足す
+	// 座標に移動量を足す
 	addX = x + *moveX;
 	addY = y + *moveY;
 
@@ -60,7 +60,7 @@ int Utility::MapHitCheck(float x, float y,
 		map.top = ((int)addY / CHIP_SIZE) * CHIP_SIZE;			// 上辺のY座標
 		map.bottom = ((int)addY / CHIP_SIZE + 1) * CHIP_SIZE;	// 下辺のY座標
 
-		// 上辺に衝突 *moveYが0.0fより大きい場合、キャラクタは下に進もうとしている
+		// 上辺に衝突 *moveYが0.0fより大きい場合、下に進もうとしている
 		if ( *moveY > 0.0f )
 		{
 			// 移動量を補正
@@ -102,7 +102,7 @@ int Utility::MapHitCheck(float x, float y,
 	}
 
 	// 終了 どこにも当たらなかった
-	return 0;
+	return e_HIT_NOT;
 }
 
 // 円のコリジョン
