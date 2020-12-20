@@ -104,9 +104,13 @@ void Chara_Player::Move()
 			InputKey::frameCount[e_KEY_JUMP]++;
 
 			// キーが離ていなければ、フレームカウントを掛けた値を代入する
-			if ( !isRelease && InputKey::frameCount[e_KEY_JUMP] < 9 )
+			if ( !isRelease && InputKey::frameCount[e_KEY_JUMP] < 3 )
 			{
-				gravity = JUMP_POWER * ((float)InputKey::frameCount[e_KEY_JUMP] / 7);
+				gravity += JUMP_POWER * (0.6 - (InputKey::frameCount[e_KEY_JUMP] / 10));
+			}
+			else if ( !isRelease && InputKey::frameCount[e_KEY_JUMP] < 9)
+			{
+				gravity += JUMP_POWER * 0.1;
 			}
 		}
 	}
