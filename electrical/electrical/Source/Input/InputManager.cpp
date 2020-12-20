@@ -14,13 +14,13 @@ void InputManager::ConversionKeyCode(int key)
 	// キーボード
 	if ( isInputKey )
 	{
-		if ( key == e_LEFT )
+		if ( key == e_MOVE_LEFT )
 		{
-			keyCode = e_KEY_LEFT;
+			keyCode = e_KEY_MOVE_LEFT;
 		}
-		else if ( key == e_RIGHT )
+		else if ( key == e_MOVE_RIGHT )
 		{
-			keyCode = e_KEY_RIGHT;
+			keyCode = e_KEY_MOVE_RIGHT;
 		}
 		else if ( key == e_JUMP )
 		{
@@ -43,13 +43,13 @@ void InputManager::ConversionKeyCode(int key)
 	// パッド
 	if ( isInputPad )
 	{
-		if ( key == e_LEFT )
+		if ( key == e_MOVE_LEFT )
 		{
-			keyCode = e_PAD_LEFT;
+			keyCode = e_PAD_MOVE_LEFT;
 		}
-		else if ( key == e_RIGHT )
+		else if ( key == e_MOVE_RIGHT )
 		{
-			keyCode = e_PAD_RIGHT;
+			keyCode = e_PAD_MOVE_RIGHT;
 		}
 		else if ( key == e_JUMP )
 		{

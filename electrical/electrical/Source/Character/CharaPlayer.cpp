@@ -51,27 +51,27 @@ void Chara_Player::Move()
 		InputManager::GetPadInputY == 0 )
 	{
 		// 左移動
-		if ( InputManager::IsInputNow(e_LEFT) )
+		if ( InputManager::IsInputNow(e_MOVE_LEFT) )
 		{
 			moveX += speed * (padInputX / 1000);
 		}
 
 		//右移動
-		if ( InputManager::IsInputNow(e_RIGHT) )
+		if ( InputManager::IsInputNow(e_MOVE_RIGHT) )
 		{
 			moveX += speed * (padInputX);
 		}
 	}
 
 	// ダッシュ
-	if ( InputManager::IsInputBarrage(e_LEFT) ||
-		InputManager::IsInputBarrage(e_RIGHT) )
+	if ( InputManager::IsInputBarrage(e_MOVE_LEFT) ||
+		InputManager::IsInputBarrage(e_MOVE_RIGHT) )
 	{
 		speed = DASH_SPEED;
 	}
 	// ダッシュ入力がなければ通常スピード
-	else if ( !InputManager::IsInputNow(e_LEFT) &&
-			 !InputManager::IsInputNow(e_RIGHT) )
+	else if ( !InputManager::IsInputNow(e_MOVE_LEFT) &&
+			 !InputManager::IsInputNow(e_MOVE_RIGHT) )
 	{
 		speed = NORMAL_SPEED;
 	}

@@ -2,8 +2,8 @@
 
 enum
 {
-	e_LEFT,				// 左移動
-	e_RIGHT,			// 右移動
+	e_MOVE_LEFT,		// 左移動
+	e_MOVE_RIGHT,		// 右移動
 	e_JUMP,				// ジャンプ
 	e_ATTACK,			// 攻撃
 	e_FIXED_DIRECTION,	// 向き固定

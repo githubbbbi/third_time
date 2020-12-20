@@ -56,7 +56,7 @@ bool InputKey::IsKeyInputBarrage(int key)
 	static long long int presstime[2][2] = { 0 };
 	static int prevkey[2] = { 0 };
 
-	if ( key == e_KEY_LEFT )
+	if ( key == e_KEY_MOVE_LEFT )
 	{
 		// キーが押された瞬間の場合
 		if ( !prevkey[0] && IsKeyInputNow(key) )
@@ -96,7 +96,7 @@ bool InputKey::IsKeyInputBarrage(int key)
 		// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
 		prevkey[0] = IsKeyInputNow(key);
 	}
-	else if ( key == e_KEY_RIGHT )
+	else if ( key == e_KEY_MOVE_RIGHT )
 	{
 		// キーが押された瞬間の場合
 		if ( !prevkey[1] && IsKeyInputNow(key) )

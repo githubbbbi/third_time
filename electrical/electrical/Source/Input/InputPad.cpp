@@ -62,7 +62,7 @@ bool InputPad::IsPadInputBarrage(int key)
 	const int waitFrame = 15;
 
 	// スティックを左入力したとき
-	if ( key == e_PAD_LEFT )
+	if ( key == e_PAD_MOVE_LEFT )
 	{
 		if ( !oldFrame[0] && (pad1 & key) )
 		{
@@ -87,7 +87,7 @@ bool InputPad::IsPadInputBarrage(int key)
 		}
 	}
 	// スティックを右入力したとき
-	else if ( key == e_PAD_RIGHT )
+	else if ( key == e_PAD_MOVE_RIGHT )
 	{
 		if ( !oldFrame[1] && (pad1 & key) )
 		{
