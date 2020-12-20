@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "SettingDxLib.h"
 #include "../Define/Define.h"
-#include "../Input/InputKey.h"
+#include "../Input/InputManager.h"
 
 bool SettingDxLib::DxLibInit()
 {
@@ -56,7 +56,7 @@ bool SettingDxLib::DxLibGameLoop()
 	}
 
 	// ESCキーが押されたらループから抜ける
-	if ( InputKey::IsKeyInputRelease(KEY_INPUT_ESCAPE) )
+	if ( InputManager::IsInputRelease(e_EXIT) )
 	{
 		return false;
 	}

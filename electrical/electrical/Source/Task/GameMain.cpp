@@ -1,8 +1,7 @@
 #include "DxLib.h"
 #include "GameMain.h"
 #include "../Define/Define.h"
-#include "../Input/InputKey.h"
-#include "../Input/InputPad.h"
+#include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
 
 
@@ -49,11 +48,8 @@ void GameMain::Initialize()
 // 更新処理
 void GameMain::Update()
 {
-	// キーボード
-	InputKey::Update();
-
-	// パッド
-	InputPad::Update();
+	// 入力
+	InputManager::Update();
 
 	// キャラクター
 	charaManager->Update(&shakeAddX, &shakeAddY);

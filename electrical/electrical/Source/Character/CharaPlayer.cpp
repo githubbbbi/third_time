@@ -1,8 +1,7 @@
 #include "DxLib.h"
 #include "Chara_Player.h"
 #include "../Define/Define.h"
-#include "../Input/InputKey.h"
-#include "../Input/InputPad.h"
+#include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
 
 Chara_Player::Chara_Player(float x, float y, int radius,
@@ -12,7 +11,6 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 	hpTimer = 0;
 	chargeTimer = 0;
 	shotBulletNum = 0;
-	isRelease = false;
 }
 
 Chara_Player::~Chara_Player()
@@ -40,87 +38,62 @@ void Chara_Player::Move()
 	moveX = 0.0f;
 	moveY = 0.0f;
 
+	// パッドレバーの入力情報を取得
+	static int padInputX, padInputY;
+	padInputX = InputManager::GetPadInputX();
+	padInputY = InputManager::GetPadInputY();
+
 	// 方向キー/アナログスティックでの左右移動
-	moveX += speed * (InputPad::inputX / 1000.0f);
+	moveX += speed * (padInputX / 1000.0f);
 
 	// それ以外での左右移動
-	if ( InputPad::inputX == 0 &&
-		InputPad::inputY == 0 )
+	if ( InputManager::GetPadInputX == 0 &&
+		InputManager::GetPadInputY == 0 )
 	{
 		// 左移動
-		if ( InputKey::IsKeyInputNow(e_KEY_LEFT) ||
-			InputPad::IsPadInputNow(e_PAD_LEFT) )
+		if ( InputManager::IsInputNow(e_LEFT) )
 		{
-			moveX += speed * (InputPad::inputX / 1000);
+			moveX += speed * (padInputX / 1000);
 		}
 
 		//右移動
-		if ( InputKey::IsKeyInputNow(e_KEY_RIGHT) ||
-			InputPad::IsPadInputNow(e_PAD_RIGHT) )
+		if ( InputManager::IsInputNow(e_RIGHT) )
 		{
-			moveX += speed * (InputPad::inputX);
+			moveX += speed * (padInputX);
 		}
 	}
 
 	// ダッシュ
-	if ( InputKey::IsKeyInputBarrage(e_KEY_LEFT) ||
-		InputKey::IsKeyInputBarrage(e_KEY_RIGHT) ||
-		InputPad::IsPadInputBarrage(e_PAD_LEFT) ||
-		InputPad::IsPadInputBarrage(e_PAD_RIGHT) )
+	if ( InputManager::IsInputBarrage(e_LEFT) ||
+		InputManager::IsInputBarrage(e_RIGHT) )
 	{
 		speed = DASH_SPEED;
 	}
 	// ダッシュ入力がなければ通常スピード
-	else if ( !InputKey::IsKeyInputNow(KEY_INPUT_LEFT) &&
-			 !InputKey::IsKeyInputNow(KEY_INPUT_RIGHT) &&
-			 !InputPad::IsPadInputNow(PAD_INPUT_LEFT) &&
-			 !InputPad::IsPadInputNow(PAD_INPUT_RIGHT) )
+	else if ( !InputManager::IsInputNow(e_LEFT) &&
+			 !InputManager::IsInputNow(e_RIGHT) )
 	{
 		speed = NORMAL_SPEED;
 	}
 
-	// --- やったこと ---//
-	// Chara_Player.hにbool型のisReleaseを作って、2段ジャンプを防いだ
-	// InputKey::frameCountがstaticで宣言されてるから、関数使わずに呼び出してる
-	// frameCountの関数はInputKey.hに用意はしてるから、必要だったら関数にしてね
-	// フレームの最大値とフレームを割る値の変数を作ってないから、作ってほしい（どこに作ればいいかわからなくてできてない）
-	// 一応、バランスみながら今の値にいてるけど、調整してもらって勝手に変えて全然いいよ
-
 	// ジャンプ
-	if ( InputKey::IsKeyInputNow(e_KEY_JUMP) ||
-		InputPad::IsPadInputNow(e_PAD_JUMP) )
+	if ( InputManager::IsInputTrigger(e_JUMP) )
 	{
 		// ジャンプの初期化
-		if ( !isJump )
+		if ( !isJump && !isFall )
 		{
-			InputKey::frameCount[e_KEY_JUMP] = 0; // InputKey::ResetFrame(e_KEY_JUMP)でもできる
-			isRelease = false;
+			gravity = JUMP_POWER;
 			isJump = true;
 		}
-
-		// ジャンプの更新処理
-		if ( isJump )
-		{
-			InputKey::frameCount[e_KEY_JUMP]++;
-
-			// キーが離ていなければ、フレームカウントを掛けた値を代入する
-			if ( !isRelease && InputKey::frameCount[e_KEY_JUMP] < 3 )
-			{
-				gravity += JUMP_POWER * (0.6 - (InputKey::frameCount[e_KEY_JUMP] / 10));
-			}
-			else if ( !isRelease && InputKey::frameCount[e_KEY_JUMP] < 9)
-			{
-				gravity += JUMP_POWER * 0.1;
-			}
-		}
 	}
-	// ジャンプ中にキーが離された時の処理（2段ジャンプの阻止)
-	else if ( InputKey::IsKeyInputRelease(e_KEY_JUMP) ||
-			InputPad::IsPadInputRelease(e_PAD_JUMP) )
+
+	// ジャンプ上昇中中にキーが離された場合ジャンプを中止
+	if ( isJump && gravity < 0.0f )
 	{
-		if ( isJump )
+		if ( InputManager::IsInputNot(e_JUMP) )
 		{
-			isRelease = true;
+			gravity = 0.0f;
+			isJump = false;
 		}
 	}
 
@@ -158,8 +131,7 @@ void Chara_Player::HpCharge()
 	// 移動中でない
 	if ( moveX == 0.0f && moveY == 0.0f && !isJump )
 	{
-		if ( InputKey::IsKeyInputNow(e_KEY_ATTACK) ||
-			InputPad::IsPadInputNow(e_PAD_ATTACK) )
+		if ( InputManager::IsInputNow(e_ATTACK) )
 		{
 			// 一定時間チャージでチャージ量が増加
 			if ( chargeTimer < 60 * 3 )
@@ -228,8 +200,7 @@ bool Chara_Player::IsAttack()
 		return false;
 	}
 
-	if ( InputKey::IsKeyInputTrigger(e_KEY_ATTACK) ||
-		InputPad::IsPadInputTrigger(e_PAD_ATTACK) )
+	if ( InputManager::IsInputTrigger(e_ATTACK) )
 	{
 		// 撃った弾数を増やす
 		shotBulletNum++;
@@ -253,8 +224,7 @@ void Chara_Player::Update()
 		HpManager();
 
 		// 向き固定ボタンが押されていない
-		if ( !InputKey::IsKeyInputNow(e_KEY_FIXED_DIRECTION) &&
-			!InputPad::IsPadInputNow(e_PAD_FIXED_DIRECTION) )
+		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
 		{
 			ChangeGraphicDirection();
 		}
@@ -272,6 +242,4 @@ void Chara_Player::Draw(float shakeX, float shakeY)
 
 	// デバッグ用
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "Player_HP(battery):%d%", hp);
-	DrawFormatString(0, 60, GetColor(255, 255, 255), "inputPadX:%d%", InputPad::inputX);
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "frameCount:%.2f", InputKey::frameCount[e_KEY_JUMP]);
 }

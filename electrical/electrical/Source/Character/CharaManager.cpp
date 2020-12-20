@@ -2,8 +2,6 @@
 #include "DxLib.h"
 #include "Chara_Manager.h"
 #include "../Define/Define.h"
-#include "../Input/InputKey.h"
-#include "../Input/InputPad.h"
 
 Chara_Manager::Chara_Manager()
 {
@@ -36,20 +34,23 @@ Chara_Manager::~Chara_Manager()
 // 初期化処理
 void Chara_Manager::Initialize()
 {
-	
+
 }
 
 // エネミー管理
 void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 {
 	// 吸収
-	// テスト Bキー、パッドのBボタンでエネミー生成
-	if ( InputKey::IsKeyInputNow(KEY_INPUT_B) ||
-		InputPad::IsPadInputNow(PAD_INPUT_B) )
+	// テスト用
 	{
-		// 吸収エネミー
-		enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
-												   GetRand(3) + 2.0f, 2, 20, enemyAbsorptionGH));
+		static int frame = 0;
+		frame++;
+		if ( frame % 300 == 0 )
+		{
+			// 吸収エネミー
+			enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
+													   GetRand(3) + 2.0f, 2, 20, enemyAbsorptionGH));
+		}
 	}
 
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
@@ -62,7 +63,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		// 死亡後画面外に出た場合、エネミー削除
 		if ( !enemys[i]->GetIsAlive() )
 		{
- 			delete enemys[i];
+			delete enemys[i];
 			enemys.erase(enemys.begin() + i);
 		}
 	}

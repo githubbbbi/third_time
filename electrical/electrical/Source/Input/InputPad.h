@@ -10,6 +10,7 @@ enum PadConfig
 	e_PAD_JUMP = PAD_INPUT_1,				// ジャンプ
 	e_PAD_ATTACK = PAD_INPUT_3,				// 攻撃
 	e_PAD_FIXED_DIRECTION = PAD_INPUT_6,	// 向き固定
+	e_PAD_EXIT = PAD_INPUT_10,				// ゲーム終了
 };
 
 class InputPad
@@ -23,8 +24,6 @@ private:
 public:
 	static int inputX;	// パッドレバーの左右の入力情報を格納
 	static int inputY;	// パッドレバーの上下の入力情報を格納
-
-	static float frameCount[256];	// キーが押されているフレーム数
 
 	// 更新処理
 	static void Update();
@@ -40,4 +39,13 @@ public:
 
 	// 連打された場合TRUE
 	static bool IsPadInputBarrage(int key);
+
+	// 押されていない場合
+	static bool IsPadInputNot(int key);
+
+	// padのinputXを取得
+	static int GetInputX();
+
+	// padのinputXを取得
+	static int GetInputY();
 };

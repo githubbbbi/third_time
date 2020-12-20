@@ -7,8 +7,6 @@ int InputPad::oldPad1 = 0;
 int InputPad::inputX = 0;
 int InputPad::inputY = 0;
 
-float InputPad::frameCount[] = { 0.0f };
-
 // XVˆ—
 void InputPad::Update()
 {
@@ -115,4 +113,27 @@ bool InputPad::IsPadInputBarrage(int key)
 	}
 
 	return false;
+}
+
+// ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡
+bool InputPad::IsPadInputNot(int key)
+{
+	if ( !(pad1 & key) )
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// pad‚ÌinputX‚ğæ“¾
+int InputPad::GetInputX()
+{
+	return inputX;
+}
+
+// pad‚ÌinputY‚ğæ“¾
+int InputPad::GetInputY()
+{
+	return inputY;
 }

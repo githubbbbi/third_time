@@ -24,6 +24,7 @@ protected:
 	bool isAlive;		// 生存フラグ
 	bool isLeftWard;	// 左向きフラグ
 	bool isJump;		// ジャンプフラグ
+	bool isFall;		// 落下フラグ
 
 	// キャラクタの落下
 	void CharaFall();

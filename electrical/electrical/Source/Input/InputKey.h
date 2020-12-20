@@ -10,6 +10,7 @@ enum KeyConfig
 	e_KEY_JUMP = KEY_INPUT_UP,				// ジャンプ
 	e_KEY_ATTACK = KEY_INPUT_SPACE,			// 攻撃
 	e_KEY_FIXED_DIRECTION = KEY_INPUT_Z,	// 向き固定
+	e_KEY_EXIT = KEY_INPUT_ESCAPE,			// ゲーム終了
 };
 
 class InputKey
@@ -21,8 +22,6 @@ private:
 	InputKey();
 
 public:
-	static float frameCount[256];	// キーが押されているフレーム数
-
 	// 更新処理
 	static void Update();
 
@@ -38,12 +37,6 @@ public:
 	// 連打された場合TRUE
 	static bool IsKeyInputBarrage(int key);
 
-	// frameCountを返す
-	static float GetInputFrame(int key);
-
-	// frameCountをインクリメントする
-	static void IncrementFrame(int key);
-
-	// frameCountをリセットする
-	static void ResetFrame(int key);
+	// 押されていない場合
+	static bool IsKeyInputNot(int key);
 };

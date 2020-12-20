@@ -4,8 +4,6 @@
 char InputKey::keys[] = { 0 };
 char InputKey::oldKeys[] = { 0 };
 
-float InputKey::frameCount[] = { 0.0f };
-
 // 更新処理
 void InputKey::Update()
 {
@@ -143,20 +141,13 @@ bool InputKey::IsKeyInputBarrage(int key)
 	return false;
 }
 
-// frameCountを返す
-float InputKey::GetInputFrame(int key)
+// 押されていない場合
+bool InputKey::IsKeyInputNot(int key)
 {
-	return frameCount[key];
-}
+	if ( !keys[key] )
+	{
+		return true;
+	}
 
-// frameCountをインクリメントする
-void InputKey::IncrementFrame(int key)
-{
-	frameCount[key]++;
-}
-
-// frameCountをリセットする
-void InputKey::ResetFrame(int key)
-{
-	frameCount[key] = 0;
+	return false;
 }

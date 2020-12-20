@@ -1,8 +1,6 @@
 #include "CharaBase.h"
 #include "../Utility/Utility.h"
 #include "../Define/Define.h"
-#include "../Input/InputKey.h"
-#include "../Input/InputPad.h"
 #include "../Stage/Stage.h"
 
 // コンストラクタ
@@ -27,13 +25,14 @@ CharaBase::CharaBase(float x, float y, int radius,
 	isLeftWard = false;
 
 	isJump = false;
+	isFall = false;
 }
 
 // キャラクタの落下
 void CharaBase::CharaFall()
 {
 	// 落下(画面外では落下しない)
-	if ( isJump )
+	if ( isJump || isFall )
 	{
 		// 落下速度を増やす
 		gravity += GRAVITY;
@@ -50,7 +49,7 @@ void CharaBase::CharaFall()
 
 // キャラクタの移動
 void CharaBase::CharaMove()
-{	
+{
 	// 落下
 	CharaFall();
 
@@ -105,12 +104,13 @@ void CharaBase::CharaMove()
 	if ( Stage::GetMapParam(x - radius, y + radius + 1.0f) != e_MAP_BLOCK &&
 		Stage::GetMapParam(x + radius, y + radius + 1.0f) != e_MAP_BLOCK )
 	{
-		// 足場がない場合、ジャンプ中にする
-		isJump = true;
+		// 足場がない場合、落下中にする
+		isFall = true;
 	}
 	else if ( gravity > 0.0f )
 	{
 		// 足場がある場合、接地中
+		isFall = false;
 		isJump = false;
 	}
 }
