@@ -53,14 +53,14 @@ bool InputKey::IsKeyInputRelease(int key)
 // 連打された場合TRUE
 bool InputKey::IsKeyInputBarrage(int key)
 {
-	static int presstime[256] = { 0 };
-	static int prevkey[256] = { 0 };
+	static int pressTime[256] = { 0 };
+	static int prevKey[256] = { 0 };
 
 	// キー入力がされた時から増加
-	presstime[key]++;
+	pressTime[key]++;
 
 	// キーが押された瞬間の場合
-	if (!prevkey[key] && IsKeyInputNow(key))
+	if ( !prevKey[key] && IsKeyInputNow(key) )
 	{
 		// カウント変数
 		static int i = 0;
@@ -69,16 +69,16 @@ bool InputKey::IsKeyInputBarrage(int key)
 		i++;
 
 		// iが2の場合
-		if (i == 2)
+		if ( i == 2 )
 		{
 			// 2回目のキー入力が0.3秒より小さい場合
-			if (presstime[key] <= 15)
+			if ( pressTime[key] <= 15 )
 			{
 				// カウントを0にセット
 				i = 0;
 
-				// presstime[]を０にしておく
-				presstime[key] = 0;
+				// pressTime[]を０にしておく
+				pressTime[key] = 0;
 
 				return true;
 			}
@@ -86,8 +86,8 @@ bool InputKey::IsKeyInputBarrage(int key)
 			{
 				i = 0;
 
-				//presstime[]を０にしておく
-				presstime[key] = 0;
+				//presstTime[]を０にしておく
+				pressTime[key] = 0;
 
 				return false;
 			}
@@ -95,7 +95,7 @@ bool InputKey::IsKeyInputBarrage(int key)
 	}
 
 	// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
-	prevkey[key] = IsKeyInputNow(key);
+	prevKey[key] = IsKeyInputNow(key);
 
 	return false;
 }

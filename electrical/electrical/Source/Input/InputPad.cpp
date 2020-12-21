@@ -61,10 +61,10 @@ bool InputPad::IsPadInputBarrage(int key)
 	// 再びキー入力があるまで待てるフレーム数
 	const int waitFrame = 15;
 
-	if (!oldFrame[key] && (pad1 & key))
+	if ( !oldFrame[key] && (pad1 & key) )
 	{
 		// 押した瞬間なら
-		if (pushTime[key] != 0)
+		if ( pushTime[key] != 0 )
 		{
 			return true;
 		}
@@ -77,7 +77,7 @@ bool InputPad::IsPadInputBarrage(int key)
 	oldFrame[key] = (pad1 & key);
 
 	// 押した時間が0じゃないなら
-	if (pushTime[key] != 0)
+	if ( pushTime[key] != 0 )
 	{
 		// 押した時間をデクリメント
 		pushTime[key]--;

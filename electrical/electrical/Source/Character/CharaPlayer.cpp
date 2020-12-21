@@ -92,7 +92,7 @@ void Chara_Player::Move()
 	{
 		if ( InputManager::IsInputNot(e_JUMP) )
 		{
-			gravity = 0.0f;
+			gravity = JUMP_POWER / 2.0f;
 			isJump = false;
 		}
 	}
