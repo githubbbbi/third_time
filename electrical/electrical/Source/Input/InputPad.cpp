@@ -53,63 +53,34 @@ bool InputPad::IsPadInputRelease(int key)
 bool InputPad::IsPadInputBarrage(int key)
 {
 	// 押した時間を計測するための変数
-	static int pushTime[2] = { 0 };
+	static int pushTime[256] = { 0 };
 
 	// 前のフレームを判定するための変数
-	static int oldFrame[2] = { 0 };
+	static int oldFrame[256] = { 0 };
 
 	// 再びキー入力があるまで待てるフレーム数
 	const int waitFrame = 15;
 
-	// スティックを左入力したとき
-	if ( key == e_PAD_MOVE_LEFT )
+	if (!oldFrame[key] && (pad1 & key))
 	{
-		if ( !oldFrame[0] && (pad1 & key) )
+		// 押した瞬間なら
+		if (pushTime[key] != 0)
 		{
-			// 押した瞬間なら
-			if ( pushTime[0] != 0 )
-			{
-				return true;
-			}
-			else
-			{
-				pushTime[0] = waitFrame;
-			}
+			return true;
 		}
-
-		oldFrame[0] = (pad1 & key);
-
-		// 押した時間が0じゃないなら
-		if ( pushTime[0] != 0 )
+		else
 		{
-			// 押した時間をデクリメント
-			pushTime[0]--;
+			pushTime[key] = waitFrame;
 		}
 	}
-	// スティックを右入力したとき
-	else if ( key == e_PAD_MOVE_RIGHT )
+
+	oldFrame[key] = (pad1 & key);
+
+	// 押した時間が0じゃないなら
+	if (pushTime[key] != 0)
 	{
-		if ( !oldFrame[1] && (pad1 & key) )
-		{
-			// 押した瞬間なら
-			if ( pushTime[1] != 0 )
-			{
-				return true;
-			}
-			else
-			{
-				pushTime[1] = waitFrame;
-			}
-		}
-
-		oldFrame[1] = (pad1 & key);
-
-		// 押した時間が0じゃない場合
-		if ( pushTime[1] != 0 )
-		{
-			// 押した時間をデクリメント
-			pushTime[1]--;
-		}
+		// 押した時間をデクリメント
+		pushTime[key]--;
 	}
 
 	return false;

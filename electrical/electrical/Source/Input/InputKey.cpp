@@ -71,8 +71,8 @@ bool InputKey::IsKeyInputBarrage(int key)
 		// iが2の場合
 		if (i == 2)
 		{
-			// 2回目のキー入力が0.24秒より小さい場合
-			if (presstime[key] <= 12)
+			// 2回目のキー入力が0.3秒より小さい場合
+			if (presstime[key] <= 15)
 			{
 				// カウントを0にセット
 				i = 0;
