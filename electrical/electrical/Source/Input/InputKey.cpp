@@ -53,90 +53,49 @@ bool InputKey::IsKeyInputRelease(int key)
 // 連打された場合TRUE
 bool InputKey::IsKeyInputBarrage(int key)
 {
-	static long long int presstime[2][2] = { 0 };
-	static int prevkey[2] = { 0 };
+	static int presstime[256] = { 0 };
+	static int prevkey[256] = { 0 };
 
-	if ( key == e_KEY_MOVE_LEFT )
+	// キー入力がされた時から増加
+	presstime[key]++;
+
+	// キーが押された瞬間の場合
+	if (!prevkey[key] && IsKeyInputNow(key))
 	{
-		// キーが押された瞬間の場合
-		if ( !prevkey[0] && IsKeyInputNow(key) )
+		// カウント変数
+		static int i = 0;
+
+		// カウントを増やす
+		i++;
+
+		// iが2の場合
+		if (i == 2)
 		{
-			static int i = 0;	// カウント変数
-
-			// 今の時間が知りたい（ミリ秒単位で)
-			presstime[0][i] = GetTickCount64();
-			++i;
-
-			// iが2の場合
-			if ( i == 2 )
+			// 2回目のキー入力が0.24秒より小さい場合
+			if (presstime[key] <= 12)
 			{
-				// ２つの時間差が0.35秒より小さい場合
-				if ( presstime[0][1] - presstime[0][0] <= 0.25 * 1000 )
-				{
-					i = 0;
+				// カウントを0にセット
+				i = 0;
 
-					// presstime[]を２つとも０にしておく
-					presstime[0][0] = 0;
-					presstime[0][1] = 0;
+				// presstime[]を０にしておく
+				presstime[key] = 0;
 
-					return true;
-				}
-				else
-				{
-					i = 0;
+				return true;
+			}
+			else
+			{
+				i = 0;
 
-					//presstime[]を２つとも０にしておく
-					presstime[0][0] = 0;
-					presstime[0][1] = 0;
+				//presstime[]を０にしておく
+				presstime[key] = 0;
 
-					return false;
-				}
+				return false;
 			}
 		}
-		// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
-		prevkey[0] = IsKeyInputNow(key);
-	}
-	else if ( key == e_KEY_MOVE_RIGHT )
-	{
-		// キーが押された瞬間の場合
-		if ( !prevkey[1] && IsKeyInputNow(key) )
-		{
-			static int j = 0;	// カウント変数
-
-			// 今の時間が知りたい（ミリ秒単位で)
-			presstime[1][j] = GetTickCount64();
-			++j;
-
-			// iが2の場合
-			if ( j == 2 )
-			{
-				// ２つの時間差が0.35秒より小さい場合
-				if ( presstime[1][1] - presstime[1][0] <= 0.25 * 1000 )
-				{
-					j = 0;
-
-					// presstime[]を２つとも０にしておく
-					presstime[1][0] = 0;
-					presstime[1][1] = 0;
-
-					return true;
-				}
-				else
-				{
-					j = 0;
-
-					//presstime[]を２つとも０にしておく
-					presstime[1][0] = 0;
-					presstime[1][1] = 0;
-
-					return false;
-				}
-			}
-		}
-		// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
-		prevkey[1] = IsKeyInputNow(key);
 	}
 
+	// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
+	prevkey[key] = IsKeyInputNow(key);
 
 	return false;
 }
