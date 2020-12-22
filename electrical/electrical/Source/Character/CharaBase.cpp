@@ -181,8 +181,14 @@ void CharaBase::ReceiveDamage(int attackPower)
 	hp -= attackPower;
 }
 
-// キャラクタ同士が接触
+// 敵と敵でない場合のキャラクタ同士が接触
 void CharaBase::CharaCollision()
 {
-	moveX = 0;
+	x -= moveX;
+}
+
+//自動ジャンプ(敵の上に乗ったとき等）
+void CharaBase::CharaJump()
+{
+	gravity = JUMP_POWER;
 }

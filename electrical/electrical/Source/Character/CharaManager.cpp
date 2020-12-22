@@ -11,7 +11,7 @@ Chara_Manager::Chara_Manager()
 
 	// プレイヤー生成
 	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
-							  32, NORMAL_SPEED, 100, 1, playerGH);
+		32, NORMAL_SPEED, 100, 1, playerGH);
 }
 
 Chara_Manager::~Chara_Manager()
@@ -47,9 +47,11 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		frame++;
 		if ( frame % 300 == 0 )
 		{
-			// 吸収エネミー
-			enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
-													   GetRand(3) + 2.0f, 2, 20, enemyAbsorptionGH));
+			{
+				// 吸収エネミー
+				enemys.push_back(new Chara_EnemyAbsorption(32.0f, 32.0f, 32,
+					GetRand(3) + 2.0f, 2, 20, enemyAbsorptionGH));
+			}
 		}
 	}
 
@@ -75,10 +77,52 @@ void Chara_Manager::CharaCollision()
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
 		// ここに記述
+		//敵とプレイヤーの判定
+		//同じ方向を向いていてプレイヤーが敵の後ろを追いかける場合、敵は進む
+		if ( enemys[i]->GetIsAlive() && player->GetIsAlive()
+			&& Utility::IsCircleCollision(
+				enemys[i]->GetPosX(),
+				enemys[i]->GetPosY(),
+				enemys[i]->GetRadius() - 8,
+				player->GetPosX(),
+				player->GetPosY(),
+				player->GetRadius() - 8
+			) )
+			if ( !enemys[i]->GetIsLeftWard() && !player->GetIsLeftWard()
+				&& enemys[i]->GetPosX() > player->GetPosX()
+				|| enemys[i]->GetIsLeftWard() && player->GetIsLeftWard()
+				&& enemys[i]->GetPosX() < player->GetPosX() )
+			{
+				player->CharaCollision();
+				player->CharaJump();
+			}
+			else
+			{
+				player->CharaJump();
+				player->CharaCollision();
+				enemys[i]->CharaCollision();
+			}
 
-		// プレイヤーと敵が接触した場合↓の関数を呼ぶ
-		//player->CharaCollision();
-		//enemys[i]->CharaCollision();
+		//敵と敵の当たり判定
+		for ( unsigned int j = 0; j < enemys.size(); j++ )
+		{
+			//自分と自分で判定しないように
+			if ( j != i )
+			{
+				if ( enemys[i]->GetIsAlive() && enemys[j]->GetIsAlive()
+					&& Utility::IsCircleCollision(
+						enemys[i]->GetPosX(),
+						enemys[i]->GetPosY(),
+						enemys[i]->GetRadius() - 8,
+						enemys[j]->GetPosX(),
+						enemys[j]->GetPosY(),
+						enemys[j]->GetRadius() - 8) )
+				{
+					enemys[j]->EnemiesCollision();
+					enemys[j]->CharaJump();
+				}
+			}
+		}
 	}
 }
 
@@ -89,10 +133,10 @@ void Chara_Manager::WeaponManager()
 	if ( player->IsAttack() && player->GetIsAlive() )
 	{
 		electricGun.push_back(new ElectricGun(player->GetPosX(),
-											  player->GetPosY(),
-											  16, 30.0f,
-											  player->GetIsLeftWard(),
-											  electricGunGH));
+			player->GetPosY(),
+			16, 30.0f,
+			player->GetIsLeftWard(),
+			electricGunGH));
 	}
 
 	// 電気銃
@@ -122,11 +166,11 @@ void Chara_Manager::AttackCollision()
 		{
 			if ( enemys[i]->GetIsAlive() &&
 				Utility::IsCircleCollision(enemys[i]->GetPosX(),
-										   enemys[i]->GetPosY(),
-										   enemys[i]->GetRadius() - 8,
-										   electricGun[j]->GetPosX(),
-										   electricGun[j]->GetPosY(),
-										   electricGun[j]->GetRadius() - 4) )
+					enemys[i]->GetPosY(),
+					enemys[i]->GetRadius() - 8,
+					electricGun[j]->GetPosX(),
+					electricGun[j]->GetPosY(),
+					electricGun[j]->GetRadius() - 4) )
 			{
 				enemys[i]->ReceiveDamage(player->GetAttackPower());
 				electricGun[j]->Hit();
@@ -140,6 +184,9 @@ void Chara_Manager::Update(float *shakeAddX, float *shakeAddY)
 {
 	// プレイヤー
 	player->Update();
+
+	//キャラの当たり判定
+	CharaCollision();
 
 	// 攻撃処理
 	WeaponManager();

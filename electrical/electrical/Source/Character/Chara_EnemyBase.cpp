@@ -15,3 +15,11 @@ void CharaEnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
 		*shakeAddX = *shakeAddY = 4.0f;
 	}
 }
+
+//“G‚Ì“–‚½‚è”»’è
+void CharaEnemyBase::EnemiesCollision()
+{
+	
+	x -= speed;
+	speed *= -1;
+}

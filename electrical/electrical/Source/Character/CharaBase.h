@@ -66,4 +66,7 @@ public:
 
 	// キャラクタ同士が接触
 	void CharaCollision();
+
+	//強制ジャンプ
+	void CharaJump();
 };

@@ -20,4 +20,8 @@ public:
 
 	// •`‰æˆ—
 	virtual void Draw(float shakeX, float shakeY) = 0;
+
+	//“G‚Ì“–‚½‚è”»’è
+	virtual void EnemiesCollision();
+
 };
