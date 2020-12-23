@@ -1,5 +1,6 @@
 #pragma once
 
+// 通常スピード
 const float NORMAL_SPEED = 4.0f;
 
 // 重力
@@ -13,6 +14,8 @@ class CharaBase
 protected:
 	float x;			// 中心座標
 	float y;			// 中心座標
+	float oldX;			// 1フレーム前の座標
+	float oldY;			// 1フレーム前の座標
 	float moveX;		// 移動量
 	float moveY;		// 移動量
 	float speed;		// スピード
@@ -43,6 +46,8 @@ public:
 	CharaBase(float x, float y, int radius,
 			  float speed, int hp, int attackPower, int graphHandle);
 
+	void CharaJump();
+
 	// X座標を取得
 	float GetPosX();
 
@@ -65,8 +70,5 @@ public:
 	void ReceiveDamage(int attackPower);
 
 	// キャラクタ同士が接触
-	void CharaCollision();
-
-	//強制ジャンプ
-	void CharaJump();
+	void CharactersCollision();
 };

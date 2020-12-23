@@ -18,6 +18,12 @@ private:
 	int chargeTimer;	// HP(バッテリー)チャージタイマー
 	int shotBulletNum;	// 撃った弾数
 
+	// 加速
+	void Acceleration();
+
+	// 減速
+	void Deceleration();
+
 	// 移動
 	void Move();
 

@@ -43,9 +43,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 	// 吸収
 	// テスト用
 	{
-		static int frame = 0;
-		frame++;
-		if ( frame % 300 == 0 )
+		if ( CheckHitKey(KEY_INPUT_B) )
 		{
 			{
 				// 吸収エネミー
@@ -76,9 +74,8 @@ void Chara_Manager::CharaCollision()
 {
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		// ここに記述
-		//敵とプレイヤーの判定
-		//同じ方向を向いていてプレイヤーが敵の後ろを追いかける場合、敵は進む
+		// 敵とプレイヤーの判定
+		// 同じ方向を向いていてプレイヤーが敵の後ろを追いかける場合、敵は進む
 		if ( enemys[i]->GetIsAlive() && player->GetIsAlive()
 			&& Utility::IsCircleCollision(
 				enemys[i]->GetPosX(),
@@ -93,20 +90,20 @@ void Chara_Manager::CharaCollision()
 				|| enemys[i]->GetIsLeftWard() && player->GetIsLeftWard()
 				&& enemys[i]->GetPosX() < player->GetPosX() )
 			{
-				player->CharaCollision();
+				player->CharactersCollision();
 				player->CharaJump();
 			}
 			else
 			{
 				player->CharaJump();
-				player->CharaCollision();
-				enemys[i]->CharaCollision();
+				player->CharactersCollision();
+				enemys[i]->CharactersCollision();
 			}
 
-		//敵と敵の当たり判定
+		// 敵と敵の当たり判定
 		for ( unsigned int j = 0; j < enemys.size(); j++ )
 		{
-			//自分と自分で判定しないように
+			// 自分と自分で判定しないように
 			if ( j != i )
 			{
 				if ( enemys[i]->GetIsAlive() && enemys[j]->GetIsAlive()

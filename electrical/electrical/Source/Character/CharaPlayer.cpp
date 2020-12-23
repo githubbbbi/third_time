@@ -43,26 +43,6 @@ void Chara_Player::Move()
 	padInputX = InputManager::GetPadInputX();
 	padInputY = InputManager::GetPadInputY();
 
-	// 方向キー/アナログスティックでの左右移動
-	moveX += speed * (padInputX / 1000.0f);
-
-	// それ以外での左右移動
-	if ( InputManager::GetPadInputX == 0 &&
-		InputManager::GetPadInputY == 0 )
-	{
-		// 左移動
-		if ( InputManager::IsInputNow(e_MOVE_LEFT) )
-		{
-			moveX += speed * (padInputX / 1000);
-		}
-
-		//右移動
-		if ( InputManager::IsInputNow(e_MOVE_RIGHT) )
-		{
-			moveX += speed * (padInputX);
-		}
-	}
-
 	// ダッシュ
 	if ( InputManager::IsInputBarrage(e_MOVE_LEFT) ||
 		InputManager::IsInputBarrage(e_MOVE_RIGHT) )
@@ -76,6 +56,9 @@ void Chara_Player::Move()
 		speed = NORMAL_SPEED;
 	}
 
+	// 方向キー/アナログスティックでの左右移動
+	moveX += speed * (padInputX / 1000.0f);
+
 	// ジャンプ
 	if ( InputManager::IsInputTrigger(e_JUMP) )
 	{
@@ -88,11 +71,11 @@ void Chara_Player::Move()
 	}
 
 	// ジャンプ上昇中中にキーが離された場合ジャンプを中止
-	if ( isJump && gravity < 0.0f )
+	if ( isJump && gravity < JUMP_POWER / 2.0f )
 	{
 		if ( InputManager::IsInputNot(e_JUMP) )
 		{
-			gravity = JUMP_POWER / 2.0f;
+			gravity = JUMP_POWER / 1.5f;
 			isJump = false;
 		}
 	}
@@ -242,4 +225,6 @@ void Chara_Player::Draw(float shakeX, float shakeY)
 
 	// デバッグ用
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "Player_HP(battery):%d%", hp);
+	DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
 }

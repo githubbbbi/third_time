@@ -16,6 +16,9 @@ CharaBase::CharaBase(float x, float y, int radius,
 	this->hp = hp;
 	this->attackPower = attackPower;
 
+	oldX = x;
+	oldY = y;
+
 	moveX = 0.0f;
 	moveY = 0.0f;
 
@@ -28,10 +31,17 @@ CharaBase::CharaBase(float x, float y, int radius,
 	isFall = false;
 }
 
+// キャラクタのジャンプ
+void CharaBase::CharaJump()
+{
+	gravity = JUMP_POWER;
+	isJump = true;
+}
+
 // キャラクタの落下
 void CharaBase::CharaFall()
 {
-	// 落下(画面外では落下しない)
+	// 落下
 	if ( isJump || isFall )
 	{
 		// 落下速度を増やす
@@ -50,6 +60,10 @@ void CharaBase::CharaFall()
 // キャラクタの移動
 void CharaBase::CharaMove()
 {
+	// 1フレーム前の座標取得
+	oldX = x;
+	oldY = y;
+
 	// 落下
 	CharaFall();
 
@@ -119,12 +133,12 @@ void CharaBase::CharaMove()
 void CharaBase::ChangeGraphicDirection()
 {
 	// 左に進行
-	if ( moveX < 0.0f )
+	if ( x - oldX < 0.0f )
 	{
 		isLeftWard = true;
 	}
 	// 右に進攻
-	else if ( moveX > 0.0f )
+	else if ( x - oldX > 0.0f )
 	{
 		isLeftWard = false;
 	}
@@ -182,13 +196,7 @@ void CharaBase::ReceiveDamage(int attackPower)
 }
 
 // 敵と敵でない場合のキャラクタ同士が接触
-void CharaBase::CharaCollision()
+void CharaBase::CharactersCollision()
 {
 	x -= moveX;
-}
-
-//自動ジャンプ(敵の上に乗ったとき等）
-void CharaBase::CharaJump()
-{
-	gravity = JUMP_POWER;
 }
