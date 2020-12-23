@@ -96,9 +96,6 @@
     <ClCompile Include="Source\Character\CharaManager.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\Chara_EnemyAbsorption.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Character\Chara_EnemyBase.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
@@ -113,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="Source\Input\InputManager.cpp">
       <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyBomb.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyGun.cpp">
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,20 +152,23 @@
     <ClInclude Include="Source\Character\Chara_Player.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character\Chara_EnemyAbsorption.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Stage\Stage.h">
       <Filter>ヘッダー ファイル\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
-      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mask\Mask.h">
       <Filter>ヘッダー ファイル\Mask</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input\InputManager.h">
       <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyBomb.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyGun.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
+      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

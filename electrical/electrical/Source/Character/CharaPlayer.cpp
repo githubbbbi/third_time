@@ -8,14 +8,19 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 						   float speed, int hp, int attackPower, int graphHandle):
 	CharaBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
-	hpTimer = 0;
-	chargeTimer = 0;
+	battery = 100;
+	batteryTimer = 0;
+	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 }
 
 Chara_Player::~Chara_Player()
 {
-
+	for ( int i = electricGun.size() - 1; i >= 0; i-- )
+	{
+		delete electricGun[i];
+		electricGun.erase(electricGun.begin() + i);
+	}
 }
 
 // 初期化処理
@@ -26,8 +31,8 @@ void Chara_Player::Initialize()
 
 	gravity = 0.0f;
 
-	hpTimer = 0;
-	chargeTimer = 0;
+	batteryTimer = 0;
+	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 }
 
@@ -86,92 +91,129 @@ void Chara_Player::Move()
 	Utility::StayOnScreen(&x, &y, radius, true, false);
 }
 
-// HP(バッテリー)減少
-void Chara_Player::HpDcrease()
+// バッテリー減少
+void Chara_Player::BatteryDecrease()
 {
-	hpTimer++;
-	if ( hpTimer > HP_DCREASE_TIME )
+	// 移動中
+	if ( moveX != 0.0f || moveY != 0.0f || isJump )
 	{
-		// HP減少
-		hp--;
+		batteryTimer++;
+		if ( batteryTimer > BATTERY_DCREASE_TIME )
+		{
+			// バッテリー減少
+			battery--;
 
-		// タイマーリセット
-		hpTimer = 0;
+			// タイマーリセット
+			batteryTimer = 0;
+		}
 	}
 
 	// 撃った弾数が一定数を超える
 	if ( shotBulletNum >= PLAYER_CONSUMPTION_BULLET_NUM )
 	{
-		// HP減少
-		hp -= 2;
+		// バッテリー減少
+		battery -= 2;
 		shotBulletNum = 0;
 	}
 }
 
-// HP(バッテリー)チャージ
-void Chara_Player::HpCharge()
+// バッテリーチャージ
+void Chara_Player::BatteryCharge()
 {
 	// 移動中でない
 	if ( moveX == 0.0f && moveY == 0.0f && !isJump )
 	{
-		if ( InputManager::IsInputNow(e_ATTACK) )
+		// 一定時間チャージでチャージ量が増加
+		if ( batteryChargeTimer < 60 * 3 )
 		{
-			// 一定時間チャージでチャージ量が増加
-			if ( chargeTimer < 60 * 3 )
-			{
-				chargeTimer++;
-			}
-			else if ( chargeTimer < 60 * 6 )
-			{
-				chargeTimer += 2;
-			}
-			else if ( chargeTimer < 60 * 9 )
-			{
-				chargeTimer += 3;
-			}
-			else if ( chargeTimer < 60 * 12 )
-			{
-				chargeTimer += 5;
-			}
-			else
-			{
-				chargeTimer += 6;
-			}
-
-			// HP上昇
-			if ( chargeTimer % HP_CHARGE_TIME == 0 )
-			{
-				hp++;
-			}
-
-			// チャージ中はHPは減少しない
-			hpTimer = 0;
-
-			return;
+			batteryChargeTimer++;
 		}
-	}
+		else if ( batteryChargeTimer < 60 * 6 )
+		{
+			batteryChargeTimer += 2;
+		}
+		else if ( batteryChargeTimer < 60 * 9 )
+		{
+			batteryChargeTimer += 3;
+		}
+		else if ( batteryChargeTimer < 60 * 12 )
+		{
+			batteryChargeTimer += 5;
+		}
+		else
+		{
+			batteryChargeTimer += 6;
+		}
 
-	chargeTimer = 0;
+		// バッテリー上昇
+		if ( batteryChargeTimer % BATTERY_CHARGE_TIME == 0 )
+		{
+			battery++;
+		}
+
+		// チャージ中はバッテリーは減少しない
+		batteryTimer = 0;
+
+		return;
+	}
 }
 
-// HP管理
-void Chara_Player::HpManager()
+// バッテリー管理
+void Chara_Player::BatteryManager()
 {
-	HpDcrease();
-	HpCharge();
-	HpZero();
+	BatteryDecrease();
+	BatteryCharge();
 
-	// HPは最大値を超えない
-	if ( hp > PLAYER_MAX_HP )
+	// バッテリーは最大値を超えない
+	if ( battery > PLAYER_MAX_BATTERY )
 	{
-		hp = 100;
+		battery = 100;
 	}
 
 	// 0以下にもならない
-	if ( hp < 0 )
+	if ( battery < 0 )
 	{
-		hp = 0;
+		battery = 0;
 	}
+}
+
+// 更新処理
+void Chara_Player::Update()
+{
+	if ( isAlive )
+	{
+		Move();
+		BatteryManager();
+
+		// 向き固定ボタンが押されていない
+		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
+		{
+			ChangeGraphicDirection();
+		}
+	}
+}
+
+// 描画処理
+void Chara_Player::Draw(float shakeX, float shakeY)
+{
+	// 電気銃
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
+	{
+		electricGun[i]->Draw();
+	}
+
+	// プレイヤー
+	if ( isAlive )
+	{
+		DrawRotaGraph((int)(x + shakeX), (int)(y + shakeY),
+					  1.0, 0.0, graphHandle, true, isLeftWard);
+	}
+
+	// デバッグ用
+	DrawFormatString(0, 0, GetColor(255, 255, 255), "hp:%d%", hp);
+	DrawFormatString(0, 20, GetColor(255, 255, 255), "battery:%d%", battery);
+	DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
 }
 
 // 攻撃
@@ -187,44 +229,71 @@ bool Chara_Player::IsAttack()
 	{
 		// 撃った弾数を増やす
 		shotBulletNum++;
+
+		batteryChargeTimer = 0;
+
 		return true;
 	}
 
 	return false;
 }
 
-// 更新処理
-void Chara_Player::Update()
+// 攻撃ヒット
+void Chara_Player::HitAttack(int index)
 {
-	if ( isAlive )
+	electricGun[index]->Hit();
+}
+
+// 攻撃処理の管理
+void Chara_Player::WeaponManager(int electricGunGH)
+{
+	// 生成
+	if ( IsAttack() && isAlive )
 	{
-		// チャージ中は動けない
-		if ( chargeTimer <= 0 )
-		{
-			Move();
-		}
+		electricGun.push_back(new ElectricGun(x,
+											  y,
+											  16, 10.0f,
+											  isLeftWard,
+											  electricGunGH));
+	}
 
-		HpManager();
+	// 電気銃
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
+	{
+		electricGun[i]->Update();
+	}
 
-		// 向き固定ボタンが押されていない
-		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
+	// 電気銃削除
+	for ( int i = electricGun.size() - 1; i >= 0; i-- )
+	{
+		if ( !electricGun[i]->GetIsAlive() )
 		{
-			ChangeGraphicDirection();
+			delete electricGun[i];
+			electricGun.erase(electricGun.begin() + i);
 		}
 	}
 }
 
-// 描画処理
-void Chara_Player::Draw(float shakeX, float shakeY)
+// 電気銃の要素数
+unsigned int Chara_Player::GetGunSize()
 {
-	// プレイヤー
-	if ( isAlive )
-	{
-		DrawRotaGraph((int)(x + shakeX), (int)(y + shakeY), 1.0, 0.0, graphHandle, true, isLeftWard);
-	}
+	return electricGun.size();
+}
 
-	// デバッグ用
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "Player_HP(battery):%d%", hp);
-	DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
+// 電気銃のX座標取得
+float Chara_Player::GetGunPosX(int index)
+{
+	return electricGun[index]->GetPosX();
+}
+
+// 電気銃のY座標取得
+float Chara_Player::GetGunPosY(int index)
+{
+	return electricGun[index]->GetPosY();
+}
+
+// 電気銃のradius取得
+int Chara_Player::GetGunRadius(int index)
+{
+	return electricGun[index]->GetRadius();
 }

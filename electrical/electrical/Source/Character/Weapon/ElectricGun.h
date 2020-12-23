@@ -1,5 +1,7 @@
 #pragma once
 
+const int ALIVE_TIME = 30;
+
 class ElectricGun
 {
 private:
@@ -8,9 +10,11 @@ private:
 	float moveX;			// 移動量
 	float moveY;			// 移動量
 	int radius;				// 半径
+	double exRate;
 	float speed;			// スピード
 	int graphHandle;		// 画像ハンドル
 	int hitFrame;			// ヒットしているフレーム数
+	int aliveTimer;
 	bool isAlive;			// 発射フラグ
 	bool isMapHit;			// マップヒットフラグ
 	bool isCharaLeftWard;	// キャラクタの左向きフラグ

@@ -7,7 +7,7 @@ enum MapChip
 {
 	e_MAP_NONE = -1,	// なし
 	e_MAP_BLOCK,		// ブロック
-	e_MAP_FIELD,
+	e_MAP_FIELD,		// テスト用
 	e_MAP_KIND_NUM		// 種類
 };
 

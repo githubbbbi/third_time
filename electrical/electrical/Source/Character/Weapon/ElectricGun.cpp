@@ -14,6 +14,7 @@ ElectricGun::ElectricGun(float x, float y, int radius,
 	this->graphHandle = graphHandle;
 
 	moveY = 0.0f;
+	exRate = 1.0;
 
 	// 左向き
 	if ( isCharaLeftWard )
@@ -27,6 +28,7 @@ ElectricGun::ElectricGun(float x, float y, int radius,
 	}
 
 	hitFrame = 0;
+	aliveTimer = 0;
 	isAlive = true;
 	isMapHit = false;
 }
@@ -39,31 +41,6 @@ void ElectricGun::Move()
 
 	// 当たり判定を行う長さ
 	static int hitLength = radius - 10;
-
-	//// 上下の移動量をチェック
-	//// 左下
-	//if ( Utility::MapHitCheck(x - hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
-	//{
-
-	//}
-
-	//// 右下
-	//if ( Utility::MapHitCheck(x + hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
-	//{
-
-	//}
-
-	//// 左上
-	//if ( Utility::MapHitCheck(x - hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
-	//{
-
-	//}
-
-	//// 右上
-	//if ( Utility::MapHitCheck(x + hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
-	//{
-
-	//}
 
 	// 上下移動量を加える
 	y += moveY;
@@ -117,6 +94,21 @@ void ElectricGun::Erase()
 	{
 		isAlive = false;
 	}
+
+	// 一定時間で消去
+	aliveTimer++;
+	if ( aliveTimer > ALIVE_TIME )
+	{
+		isAlive = false;
+	}
+	else if ( aliveTimer > ALIVE_TIME / 2 )
+	{
+		// 小さくなる
+		if ( exRate > 0.0 )
+		{
+			exRate -= 0.05;
+		}
+	}
 }
 
 // 更新処理
@@ -132,7 +124,7 @@ void ElectricGun::Draw()
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)x, (int)y,
-					  1.0, 0.0, graphHandle, true);
+					  exRate, 0.0, graphHandle, true);
 	}
 
 	DrawFormatString(0, 120, GetColor(255, 255, 255), "hitFrame:%d", hitFrame);

@@ -1,21 +1,19 @@
 #pragma once
 
 #include <vector>
-
 #include "../Character/Chara_Player.h"
-#include "../Character/Chara_EnemyAbsorption.h"
-#include "../Character/Weapon/ElectricGun.h"
+#include "../Character/Chara_EnemyBase.h"
 
 class Chara_Manager
 {
 private:
 	Chara_Player *player;
-	std::vector<CharaEnemyBase *>enemys;
-	std::vector<ElectricGun *> electricGun;
+	std::vector<Chara_EnemyBase *>enemys;
 
 	int playerGH;			// プレイヤー
 	int electricGunGH;		// 電気銃
-	int enemyAbsorptionGH;	// 吸収エネミー
+	int enemyBombGH;		// 爆弾エネミー
+	int enemyGunGH;		// 銃エネミー
 
 	// エネミー管理
 	void EnemyManager(float *shakeAddX, float *shakeAddY);

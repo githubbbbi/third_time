@@ -73,9 +73,6 @@ void GameMain::Draw()
 
 	// ステージ
 	stage->Draw(shakeX, shakeY);
-
-	// デバッグ用
-	DrawFormatString(0, 100, GetColor(255, 255, 255), "shakeAddX:%.2f", shakeAddX);
 }
 
 // 終了処理

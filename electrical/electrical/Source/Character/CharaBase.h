@@ -1,13 +1,10 @@
 #pragma once
 
-// 通常スピード
-const float NORMAL_SPEED = 4.0f;
 
-// 重力
-const float GRAVITY = 0.8f;
-
-// ジャンプ力
-const float JUMP_POWER = -13.0f;
+const float NORMAL_SPEED = 4.0f;	// 通常スピード
+const float DASH_SPEED = 7.0f;						// ダッシュスピード
+const float GRAVITY = 0.8f;			// 重力
+const float JUMP_POWER = -13.0f;	// ジャンプ力
 
 class CharaBase
 {

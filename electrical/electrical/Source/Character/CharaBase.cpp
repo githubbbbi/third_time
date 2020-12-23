@@ -34,8 +34,11 @@ CharaBase::CharaBase(float x, float y, int radius,
 // キャラクタのジャンプ
 void CharaBase::CharaJump()
 {
-	gravity = JUMP_POWER;
-	isJump = true;
+	if ( !isJump && !isFall )
+	{
+		gravity = JUMP_POWER;
+		isJump = true;
+	}
 }
 
 // キャラクタの落下

@@ -1,6 +1,6 @@
 #include "Chara_EnemyBase.h"
 
-CharaEnemyBase::CharaEnemyBase(float x, float y, int radius,
+Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius,
 							   float speed, int hp, int attackPower, int graphHandle):
 	CharaBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
@@ -8,7 +8,7 @@ CharaEnemyBase::CharaEnemyBase(float x, float y, int radius,
 }
 
 // シェイクスタート
-void CharaEnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
+void Chara_EnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
 {
 	if ( hp == 0 )
 	{
@@ -17,7 +17,7 @@ void CharaEnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
 }
 
 //敵の当たり判定
-void CharaEnemyBase::EnemiesCollision()
+void Chara_EnemyBase::EnemiesCollision()
 {
 	
 	x -= speed;

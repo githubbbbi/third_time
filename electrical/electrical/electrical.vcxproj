@@ -135,8 +135,9 @@
     <ClCompile Include="Source\Character\CharaBase.cpp" />
     <ClCompile Include="Source\Character\CharaManager.cpp" />
     <ClCompile Include="Source\Character\CharaPlayer.cpp" />
-    <ClCompile Include="Source\Character\Chara_EnemyAbsorption.cpp" />
+    <ClCompile Include="Source\Character\Chara_EnemyBomb.cpp" />
     <ClCompile Include="Source\Character\Chara_EnemyBase.cpp" />
+    <ClCompile Include="Source\Character\Chara_EnemyGun.cpp" />
     <ClCompile Include="Source\Character\Weapon\ElectricGun.cpp" />
     <ClCompile Include="Source\Input\InputKey.cpp" />
     <ClCompile Include="Source\Input\InputManager.cpp" />
@@ -152,7 +153,8 @@
   <ItemGroup>
     <ClInclude Include="Source\Character\CharaBase.h" />
     <ClInclude Include="Source\Character\Chara_EnemyBase.h" />
-    <ClInclude Include="Source\Character\Chara_EnemyAbsorption.h" />
+    <ClInclude Include="Source\Character\Chara_EnemyBomb.h" />
+    <ClInclude Include="Source\Character\Chara_EnemyGun.h" />
     <ClInclude Include="Source\Character\Chara_Manager.h" />
     <ClInclude Include="Source\Character\Chara_Player.h" />
     <ClInclude Include="Source\Character\Weapon\ElectricGun.h" />
