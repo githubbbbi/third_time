@@ -60,16 +60,16 @@ void Chara_EnemyBomb::Move(float playerX, float playerY)
 			{
 				CharaJump();
 			}
-		}
 
-		// 画面外に行きそうなとき、進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-		if (x - radius < 0 || x + radius > WIN_WIDTH ||
-			Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_BLOCK ||
-			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK)
-		{
-			speed *= -1;
+			// 画面外に行きそうなとき、進む予定の位置に2つ並んでブロックがあった場合、方向を変える
+			if (x - radius < 0 || x + radius > WIN_WIDTH ||
+				Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
+				Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_BLOCK ||
+				Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
+				Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK)
+			{
+				speed *= -1;
+			}
 		}
 
 		moveX += speed;
