@@ -27,4 +27,5 @@ public:
 
 	// UŒ‚ˆ—ŠÇ—
 	virtual void WeaponManager(int electricGunGH) = 0;
+
 };

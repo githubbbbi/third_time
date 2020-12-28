@@ -9,6 +9,10 @@ class Chara_EnemyGun:public Chara_EnemyBase
 private:
 	std::vector<ElectricGun *> electricGun;
 
+	int shotBulletNum;		// Œ‚‚Á‚½’e”
+	int bulletInterval;
+	int targetlock;	//”ÍˆÍ“à‚Ìƒtƒ‰ƒO
+	
 	// ˆÚ“®
 	void Move(float playerX, float playerY);
 
