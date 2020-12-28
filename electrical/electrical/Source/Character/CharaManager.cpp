@@ -43,7 +43,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		if ( CheckHitKey(KEY_INPUT_B) )
 		{
 			enemys.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
-												NORMAL_SPEED, 2, 20, enemyBombGH));
+												 GetRand(3) + 2.0f, 2, 20, enemyBombGH));
 		}
 
 		// 銃エネミー
