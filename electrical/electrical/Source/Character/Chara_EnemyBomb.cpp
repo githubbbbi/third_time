@@ -4,7 +4,7 @@
 #include "../Stage/Stage.h"
 
 Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius,
-								 float speed, int hp, int attackPower, int graphHandle):
+	float speed, int hp, int attackPower, int graphHandle) :
 	Chara_EnemyBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
 
@@ -32,7 +32,8 @@ void Chara_EnemyBomb::Move(float playerX, float playerY)
 	{
 		// 移動処理
 		// 敵とプレイヤーのX座標が等しい時、スピードをダッシュに合わせる
-		if ( y == playerY)
+		if (y == playerY && isLeftWard && playerX < x ||
+			y == playerY && !isLeftWard && playerX > x)
 		{
 			if (speed > 0)
 			{
@@ -81,9 +82,9 @@ void Chara_EnemyBomb::Move(float playerX, float playerY)
 
 // 更新処理
 void Chara_EnemyBomb::Update(float playerX, float playerY,
-							 float *shakeAddX, float *shakeAddY)
+	float *shakeAddX, float *shakeAddY)
 {
-	if ( isAlive )
+	if (isAlive)
 	{
 		Move(playerX, playerY);
 		ChangeGraphicDirection();
@@ -95,10 +96,10 @@ void Chara_EnemyBomb::Update(float playerX, float playerY,
 // 描画処理
 void Chara_EnemyBomb::Draw(float shakeX, float shakeY)
 {
-	if ( isAlive )
+	if (isAlive)
 	{
 		DrawRotaGraph((int)(x + shakeX), (int)(y + shakeY),
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+			1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 }
 
