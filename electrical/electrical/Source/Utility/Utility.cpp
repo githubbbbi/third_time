@@ -4,7 +4,6 @@
 #include "../Define/Define.h"
 #include "../Stage/Stage.h"
 
-
 // 画面内にとどまる
 void Utility::StayOnScreen(float *x, float *y, int radius,
 						   bool isStayX, bool isStayY)
@@ -15,9 +14,9 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 		{
 			*x = (float)0 + (float)radius;
 		}
-		else if ( *x + radius > WIN_WIDTH )
+		else if ( *x + radius > MAP_COUNT_X * CHIP_SIZE )
 		{
-			*x = (float)WIN_WIDTH - (float)radius;
+			*x = (float)(MAP_COUNT_X * CHIP_SIZE) - (float)radius;
 		}
 	}
 
@@ -27,9 +26,9 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 		{
 			*y = (float)0 + (float)radius;
 		}
-		else if ( *y + radius > WIN_HEIGHT )
+		else if ( *y + radius > MAP_COUNT_Y * CHIP_SIZE )
 		{
-			*y = (float)WIN_HEIGHT - (float)radius;
+			*y = (float)(MAP_COUNT_Y * CHIP_SIZE) - (float)radius;
 		}
 	}
 }
@@ -150,5 +149,39 @@ void Utility::Shake(float *shakeX, float *shakeY,
 	if ( *addY < 0 )
 	{
 		*addY = 0;
+	}
+}
+
+// スクロール
+void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
+{
+	// 指定座標を中心にスクロール量を決定
+	*scrollX = centerX - WIN_WIDTH / 2;
+	*scrollY = centerY - WIN_HEIGHT / 2;
+
+	// X方向
+	// マップの左端より左にはいかない
+	if ( *scrollX < 0 )
+	{
+		*scrollX = 0;
+	}
+
+	// マップの右端より右にはいかない
+	if ( *scrollX + WIN_WIDTH > MAP_COUNT_X * CHIP_SIZE )
+	{
+		*scrollX = MAP_COUNT_X * CHIP_SIZE - WIN_WIDTH;
+	}
+
+	// Y方向
+	// マップの上端より上にはいかない
+	if ( *scrollY < 0 )
+	{
+		*scrollY = 0;
+	}
+
+	// マップの下端より下にはいかない
+	if ( *scrollY + WIN_HEIGHT > MAP_COUNT_Y * CHIP_SIZE )
+	{
+		*scrollY = MAP_COUNT_Y * CHIP_SIZE - WIN_HEIGHT;
 	}
 }

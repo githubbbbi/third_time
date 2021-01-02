@@ -4,17 +4,19 @@
 #include "Chara_EnemyBase.h"
 #include "Weapon/ElectricGun.h"
 
+const int BULLET_INTERVAL = 70;
+
 class Chara_EnemyGun:public Chara_EnemyBase
 {
 private:
 	std::vector<ElectricGun *> electricGun;
 
 	int shotBulletNum;		// Œ‚‚Á‚½’e”
-	int bulletInterval;
-	int targetlock;	//”ÍˆÍ“à‚Ìƒtƒ‰ƒO
-	
+	int bulletInterval;		// e‚ğŒ‚‚ÂŠÔŠu
+	bool isTargetLock;		// ”ÍˆÍ“à‚Ìƒtƒ‰ƒO
+
 	// ˆÚ“®
-	void Move(float playerX, float playerY);
+	void Move(float playerX, float playerY, bool isPlayerAlive);
 
 public:
 	Chara_EnemyGun(float x, float y, int radius,
@@ -22,17 +24,17 @@ public:
 	~Chara_EnemyGun();
 
 	// ‰Šú‰»ˆ—
-	void Initialize() override;
+	void Initialize();
 
 	// XVˆ—
-	void Update(float playerX, float playerY,
-				float *shakeAddX, float *shakeAddY) override;
+	void Update(float playerX, float playerY, bool isPlayerAlive,
+				float *shakeAddX, float *shakeAddY);
 
 	// •`‰æˆ—
-	void Draw(float shakeX, float shakeY) override;
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
 	// UŒ‚ˆ—ŠÇ—
-	void WeaponManager(int electricGunGH) override;
+	void WeaponManager(int electricGunGH);
 
 	// UŒ‚ƒqƒbƒg
 	void HitAttack(int index);

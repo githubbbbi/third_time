@@ -30,13 +30,16 @@ protected:
 	void CharaFall();
 
 	// キャラの移動
-	void CharaMove();
+	void CharaMove(float hitWidth, float hitHeight);
 
 	// 画像の向きを変化
 	void ChangeGraphicDirection();
 
 	// HP(バッテリー)が0
 	void HpZero();
+
+	// HP管理
+	void HpManager();
 
 public:
 	// コンストラクタ宣言
@@ -50,6 +53,12 @@ public:
 
 	// Y座標を取得
 	float GetPosY();
+	
+	// oldX座標を取得
+	float GetPosOldX();
+
+	// oldY座標を取得
+	float GetPosOldY();
 
 	// 半径を取得
 	int GetRadius();

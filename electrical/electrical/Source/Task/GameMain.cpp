@@ -13,7 +13,7 @@ GameMain::GameMain()
 
 	// ステージインスタンス生成
 	int mapGH[e_MAP_KIND_NUM];
-	LoadDivGraph("Resource/Graphic/MapChip/mapChip.png", 
+	LoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
 				 e_MAP_KIND_NUM, e_MAP_KIND_NUM, 1, CHIP_SIZE, CHIP_SIZE, mapGH);
 	stage = new Stage(mapGH);
 
@@ -24,6 +24,8 @@ GameMain::GameMain()
 	shakeY = 0.0f;
 	shakeAddX = 0.0f;
 	shakeAddY = 0.0f;
+	scrollX = 0;
+	scrollY = 0;
 }
 
 // デストラクタ
@@ -51,28 +53,32 @@ void GameMain::Update()
 	// 入力
 	InputManager::Update();
 
-	// キャラクター
-	charaManager->Update(&shakeAddX, &shakeAddY);
+	// シェイク
+	Utility::Shake(&shakeX, &shakeY, &shakeAddX, &shakeAddX);
+
+	// スクロール
+	Utility::Scroll((int)charaManager->GetScrollCenterX(),
+					(int)charaManager->GetScrollCenterY(), &scrollX, &scrollY);
 
 	// ステージ
 	stage->Update();
 
-	// シェイク
-	Utility::Shake(&shakeX, &shakeY, &shakeAddX, &shakeAddX);
+	// キャラクター
+	charaManager->Update(&shakeAddX, &shakeAddY);
 }
 
 // 描画処理
 void GameMain::Draw()
 {
 	// 背景
-	DrawRotaGraph(WIN_WIDTH / 2 - (int)shakeX, WIN_HEIGHT / 2 - (int)shakeY,
+	DrawRotaGraph(WIN_WIDTH / 2 - (int)shakeX - scrollX, WIN_HEIGHT / 2 - (int)shakeY - scrollY,
 				  1.0, 0.0, backgroundGH, true);
 
-	// キャラクター
-	charaManager->Draw(shakeX, shakeY);
-
 	// ステージ
-	stage->Draw(shakeX, shakeY);
+	stage->Draw(shakeX, shakeY, scrollX, scrollY);
+
+	// キャラクター
+	charaManager->Draw(shakeX, shakeY, scrollX, scrollY);
 }
 
 // 終了処理

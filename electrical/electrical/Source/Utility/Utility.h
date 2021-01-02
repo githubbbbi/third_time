@@ -33,4 +33,8 @@ public:
 	// シェイク
 	static void Shake(float *shakeX, float *shakeY,
 					  float *addX, float *addY);
+
+	// スクロール
+	static void Scroll(int centerX, int centerY,
+					   int *scrollX, int *scrollY);
 };

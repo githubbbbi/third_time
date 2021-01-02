@@ -20,7 +20,7 @@ private:
 	static int mapData[MAP_COUNT_Y][MAP_COUNT_X];
 
 	// マップ描画
-	void MapDraw(int x, int y, float shakeX, float shakeY);
+	void MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int scrollY);
 
 public:
 	Stage(int mapGH[]);
@@ -29,7 +29,7 @@ public:
 	void Update();
 
 	// 描画処理
-	void Draw(float shakeX, float shakeY);
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
 	//マップチップの値を取得
 	static int GetMapParam(float x, float y);

@@ -84,7 +84,7 @@ void ElectricGun::Erase()
 {
 	// 画面外に出たら消去
 	if ( x + radius < 0 ||
-		x - radius > WIN_WIDTH )
+		x - radius > MAP_COUNT_X * CHIP_SIZE )
 	{
 		isAlive = false;
 	}
@@ -119,15 +119,13 @@ void ElectricGun::Update()
 }
 
 // 描画処理
-void ElectricGun::Draw()
+void ElectricGun::Draw(int scrollX, int scrollY)
 {
 	if ( isAlive )
 	{
-		DrawRotaGraph((int)x, (int)y,
+		DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
 					  exRate, 0.0, graphHandle, true);
 	}
-
-	DrawFormatString(0, 120, GetColor(255, 255, 255), "hitFrame:%d", hitFrame);
 }
 
 // 弾がヒットした場合の処理

@@ -6,7 +6,7 @@ class Chara_EnemyBomb:public Chara_EnemyBase
 {
 private:
 	// ˆÚ“®
-	void Move(float playerX, float playerY);
+	void Move(float playerX, float playerY, bool isPlayerAlive);
 
 public:
 	Chara_EnemyBomb(float x, float y, int radius,
@@ -14,15 +14,12 @@ public:
 	~Chara_EnemyBomb();
 
 	// ‰Šú‰»ˆ—
-	void Initialize() override;
+	void Initialize();
 
 	// XVˆ—
-	void Update(float playerX, float playerY,
-				float *shakeAddX, float *shakeAddY) override;
+	void Update(float playerX, float playerY, bool isPlayerAlive,
+				float *shakeAddX, float *shakeAddY);
 
 	// •`‰æˆ—
-	void Draw(float shakeX, float shakeY) override;
-
-	// UŒ‚ˆ—ŠÇ—
-	void WeaponManager(int electricGunGH) override;
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 };

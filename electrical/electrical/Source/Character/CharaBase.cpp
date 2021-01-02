@@ -61,7 +61,7 @@ void CharaBase::CharaFall()
 }
 
 // キャラクタの移動
-void CharaBase::CharaMove()
+void CharaBase::CharaMove(float hitWidth, float hitHeight)
 {
 	// 1フレーム前の座標取得
 	oldX = x;
@@ -73,33 +73,30 @@ void CharaBase::CharaMove()
 	// ダミー これはXまたはY方向の移動量について考慮しない場合に用いる
 	float dummy = 0.0f;
 
-	// 当たり判定を行う長さ
-	static int hitLength = radius;
-
 	// キャラクタの左上、右上、左下、右上部分に当たり判定がある
 	// マップに衝突しているか調べ、衝突していた場合補正する
 
 	// 上下の移動量をチェック
 	// 左下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x - hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x - hitWidth, y + hitHeight, &dummy, &moveY) == e_HIT_TOP )
 	{
 		gravity = 0.0f;
 	}
 
 	// 右下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x + hitLength, y + hitLength, &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x + hitWidth, y + hitHeight, &dummy, &moveY) == e_HIT_TOP )
 	{
 		gravity = 0.0f;
 	}
 
 	// 左上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x - hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x - hitWidth, y - hitHeight, &dummy, &moveY) == e_HIT_BOTTOM )
 	{
 		gravity = GRAVITY;
 	}
 
 	// 右上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x + hitLength, y - hitLength, &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x + hitWidth, y - hitHeight, &dummy, &moveY) == e_HIT_BOTTOM )
 	{
 		gravity = GRAVITY;
 	}
@@ -108,27 +105,27 @@ void CharaBase::CharaMove()
 	y += moveY;
 
 	// 左右の移動量をチェック
-	Utility::MapHitCheck(x - hitLength, y + hitLength, &moveX, &dummy);	// 左下
-	Utility::MapHitCheck(x + hitLength, y + hitLength, &moveX, &dummy);	// 右下
-	Utility::MapHitCheck(x - hitLength, y - hitLength, &moveX, &dummy);	// 左上
-	Utility::MapHitCheck(x + hitLength, y - hitLength, &moveX, &dummy);	// 右上
+	Utility::MapHitCheck(x - hitWidth, y + hitHeight, &moveX, &dummy);	// 左下
+	Utility::MapHitCheck(x + hitWidth, y + hitHeight, &moveX, &dummy);	// 右下
+	Utility::MapHitCheck(x - hitWidth, y - hitHeight, &moveX, &dummy);	// 左上
+	Utility::MapHitCheck(x + hitWidth, y - hitHeight, &moveX, &dummy);	// 右上
 
 	// 左右移動量を加える
 	x += moveX;
 
 	// 接地判定
-	// キャラクタの左下と右下の下に地面があるか調べる
-	if ( Stage::GetMapParam(x - radius, y + radius + 1.0f) != e_MAP_BLOCK &&
-		Stage::GetMapParam(x + radius, y + radius + 1.0f) != e_MAP_BLOCK )
-	{
-		// 足場がない場合、落下中にする
-		isFall = true;
-	}
-	else if ( gravity > 0.0f )
+	// キャラクタの左下または右下が地面であるか調べる
+	if ( Stage::GetMapParam(x - hitWidth, y + hitHeight + 1.0f) == e_MAP_BLOCK ||
+		Stage::GetMapParam(x + hitWidth, y + hitHeight + 1.0f) == e_MAP_BLOCK )
 	{
 		// 足場がある場合、接地中
 		isFall = false;
 		isJump = false;
+	}
+	else
+	{
+		// 足場がない場合、落下中にする
+		isFall = true;
 	}
 }
 
@@ -156,6 +153,12 @@ void CharaBase::HpZero()
 	}
 }
 
+// HP管理
+void CharaBase::HpManager()
+{
+	HpZero();
+}
+
 // X座標を取得
 float CharaBase::GetPosX()
 {
@@ -166,6 +169,18 @@ float CharaBase::GetPosX()
 float CharaBase::GetPosY()
 {
 	return y;
+}
+
+// oldX座標を取得
+float CharaBase::GetPosOldX()
+{
+	return oldX;
+}
+
+// oldY座標を取得
+float CharaBase::GetPosOldY()
+{
+	return oldY;
 }
 
 // 半径を取得

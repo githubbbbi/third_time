@@ -9,10 +9,10 @@ private:
 	Chara_Manager *charaManager;
 	Stage *stage;
 
-	int backgroundGH;	// 背景
-
-	float shakeX, shakeY;// シェイク
-	float shakeAddX, shakeAddY;// シェイク量
+	int backgroundGH;			// 背景画像
+	float shakeX, shakeY;		// シェイク
+	float shakeAddX, shakeAddY;	// シェイク量
+	int scrollX, scrollY;		// スクロール量
 
 public:
 	// コンストラクタ

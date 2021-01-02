@@ -20,7 +20,5 @@ void Chara_EnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
 //“G‚Ì“–‚½‚è”»’è
 void Chara_EnemyBase::EnemiesCollision()
 {
-	
-	x -= speed;
-	speed *= -1;
+
 }

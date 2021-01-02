@@ -85,7 +85,7 @@ void Chara_Player::Move()
 		}
 	}
 
-	CharaMove();
+	CharaMove(30.0f, 30.0f);
 
 	// 画面内にとどまる(X方向についてのみ)
 	Utility::StayOnScreen(&x, &y, radius, true, false);
@@ -184,6 +184,7 @@ void Chara_Player::Update()
 	{
 		Move();
 		BatteryManager();
+		HpManager();
 
 		// 向き固定ボタンが押されていない
 		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
@@ -194,18 +195,18 @@ void Chara_Player::Update()
 }
 
 // 描画処理
-void Chara_Player::Draw(float shakeX, float shakeY)
+void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 {
 	// 電気銃
 	for ( unsigned int i = 0; i < electricGun.size(); i++ )
 	{
-		electricGun[i]->Draw();
+		electricGun[i]->Draw(scrollX, scrollY);
 	}
 
 	// プレイヤー
 	if ( isAlive )
 	{
-		DrawRotaGraph((int)(x + shakeX), (int)(y + shakeY),
+		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
 					  1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 

@@ -2,8 +2,6 @@
 #include "DxLib.h"
 #include "../Define/Define.h"
 #include "Chara_Manager.h"
-#include "../Character/Chara_EnemyBomb.h"
-#include "../Character/Chara_EnemyGun.h"
 
 Chara_Manager::Chara_Manager()
 {
@@ -21,10 +19,16 @@ Chara_Manager::~Chara_Manager()
 {
 	delete player;
 
-	for ( int i = enemys.size() - 1; i >= 0; i-- )
+	for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
 	{
-		delete enemys[i];
-		enemys.erase(enemys.begin() + i);
+		delete enemyBomb[i];
+		enemyBomb.erase(enemyBomb.begin() + i);
+	}
+
+	for ( int i = enemyGun.size() - 1; i >= 0; i-- )
+	{
+		delete enemyGun[i];
+		enemyGun.erase(enemyGun.begin() + i);
 	}
 }
 
@@ -42,31 +46,49 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		// 爆弾エネミー
 		if ( CheckHitKey(KEY_INPUT_B) )
 		{
-			enemys.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
-												NORMAL_SPEED, 2, 20, enemyBombGH));
+			enemyBomb.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
+													NORMAL_SPEED, 2, 20, enemyBombGH));
 		}
 
 		// 銃エネミー
 		if ( CheckHitKey(KEY_INPUT_A) )
 		{
-			enemys.push_back(new Chara_EnemyGun(32.0f, 32.0f, 32,
-												 GetRand(3) + 2.0f, 2, 20, enemyGunGH));
+			enemyGun.push_back(new Chara_EnemyGun(32.0f, 32.0f, 32,
+												  GetRand(3) + 2.0f, 2, 2, enemyGunGH));
 		}
 	}
 
-	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	// 爆弾エネミー
+	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
-		enemys[i]->Update(player->GetPosX(), player->GetPosY(),
-						  &*shakeAddX, &*shakeAddY);
+		enemyBomb[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive(),
+							 &*shakeAddX, &*shakeAddY);
 	}
 
-	for ( int i = enemys.size() - 1; i >= 0; i-- )
+	for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
 	{
 		// 死亡後画面外に出た場合、エネミー削除
-		if ( !enemys[i]->GetIsAlive() )
+		if ( !enemyBomb[i]->GetIsAlive() )
 		{
-			delete enemys[i];
-			enemys.erase(enemys.begin() + i);
+			delete enemyBomb[i];
+			enemyBomb.erase(enemyBomb.begin() + i);
+		}
+	}
+
+	// 銃エネミー
+	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
+	{
+		enemyGun[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive(),
+							&*shakeAddX, &*shakeAddY);
+	}
+
+	for ( int i = enemyGun.size() - 1; i >= 0; i-- )
+	{
+		// 死亡後画面外に出た場合、エネミー削除
+		if ( !enemyGun[i]->GetIsAlive() )
+		{
+			delete enemyGun[i];
+			enemyGun.erase(enemyGun.begin() + i);
 		}
 	}
 }
@@ -74,7 +96,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 // キャラクタ同士の当たり判定
 void Chara_Manager::CharaCollision()
 {
-	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	//for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
 		// 敵とプレイヤーの判定
 		// 同じ方向を向いていてプレイヤーが敵の後ろを追いかける場合、敵は進む
@@ -131,31 +153,76 @@ void Chara_Manager::WeaponManager()
 	// プレイヤー攻撃
 	player->WeaponManager(electricGunGH);
 
-	// エネミー攻撃
-	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	// 銃エネミー攻撃
+	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
 	{
-		enemys[i]->WeaponManager(electricGunGH);
+		enemyGun[i]->WeaponManager(electricGunGH);
 	}
 }
 
 // 攻撃の当たり判定
 void Chara_Manager::AttackCollision()
 {
-	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	// 爆弾エネミー
+	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
+		if ( !enemyBomb[i]->GetIsAlive() || !player->GetIsAlive() )
+		{
+			break;
+		}
+
 		// エネミーとプレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
-			if ( enemys[i]->GetIsAlive() &&
-				Utility::IsCircleCollision(enemys[i]->GetPosX(),
-										   enemys[i]->GetPosY(),
-										   enemys[i]->GetRadius() - 8,
+			if ( enemyBomb[i]->GetIsAlive() &&
+				Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
+										   enemyBomb[i]->GetPosY(),
+										   enemyBomb[i]->GetRadius() - 8,
 										   player->GetGunPosX(j),
 										   player->GetGunPosY(j),
 										   player->GetGunRadius(j) - 4) )
 			{
-				enemys[i]->ReceiveDamage(player->GetAttackPower());
+				enemyBomb[i]->ReceiveDamage(player->GetAttackPower());
 				player->HitAttack(j);
+			}
+		}
+	}
+
+	// 銃エネミー
+	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
+	{
+		if ( !enemyGun[i]->GetIsAlive() || !player->GetIsAlive() )
+		{
+			break;
+		}
+
+		// エネミーとプレイヤーの攻撃との当たり判定
+		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
+		{
+			if ( Utility::IsCircleCollision(enemyGun[i]->GetPosX(),
+											enemyGun[i]->GetPosY(),
+											enemyGun[i]->GetRadius() - 8,
+											player->GetGunPosX(j),
+											player->GetGunPosY(j),
+											player->GetGunRadius(j) - 4) )
+			{
+				enemyGun[i]->ReceiveDamage(player->GetAttackPower());
+				player->HitAttack(j);
+			}
+		}
+
+		// エネミーの攻撃とプレイヤーの当たり判定
+		for ( unsigned int j = 0; j < enemyGun[i]->GetGunSize(); j++ )
+		{
+			if ( Utility::IsCircleCollision(enemyGun[i]->GetGunPosX(j),
+											enemyGun[i]->GetGunPosY(j),
+											enemyGun[i]->GetGunRadius(j) - 8,
+											player->GetPosX(),
+											player->GetPosY(),
+											player->GetRadius() - 4) )
+			{
+				enemyGun[i]->HitAttack(j);
+				player->ReceiveDamage(enemyGun[i]->GetAttackPower());
 			}
 		}
 	}
@@ -181,17 +248,36 @@ void Chara_Manager::Update(float *shakeAddX, float *shakeAddY)
 }
 
 // 描画処理
-void Chara_Manager::Draw(float shakeX, float shakeY)
+void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 {
 	// プレイヤー
-	player->Draw(shakeX, shakeY);
+	player->Draw(shakeX, shakeY, scrollX, scrollY);
 
-	// エネミー
-	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	// 爆弾エネミー
+	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
-		enemys[i]->Draw(shakeX, shakeY);
+		enemyBomb[i]->Draw(shakeX, shakeY, scrollX, scrollY);
+	}
+
+	// 銃エネミー
+	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
+	{
+		enemyGun[i]->Draw(shakeX, shakeY, scrollX, scrollY);
 	}
 
 	// デバッグ用
-	DrawFormatString(0, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 エネミーの数:%d", enemys.size());
+	DrawFormatString(50, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 爆弾エネミーの数:%d", enemyBomb.size());
+	DrawFormatString(50, 120, GetColor(255, 255, 255), "Aキーでエネミー生成 銃エネミーの数:%d", enemyGun.size());
+}
+
+// スクロールの中心X座標を取得
+float Chara_Manager::GetScrollCenterX()
+{
+	return player->GetPosOldX();
+}
+
+// スクロールの中心Y座標を取得
+float Chara_Manager::GetScrollCenterY()
+{
+	return player->GetPosOldY();
 }

@@ -46,7 +46,7 @@ public:
 	void Update();
 
 	// •`‰æˆ—
-	void Draw(float shakeX, float shakeY);
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
 	// UŒ‚
 	bool IsAttack();
