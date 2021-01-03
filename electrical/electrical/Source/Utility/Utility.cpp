@@ -83,7 +83,7 @@ int Utility::MapHitCheck(float x, float y,
 		if ( *moveX > 0.0f )
 		{
 			// ˆÚ“®—Ê‚ğ•â³
-			*moveX = map.left - x - 1.0f;
+			*moveX = 0.0f;
 
 			// ¶•Ó‚ÉÕ“Ë‚µ‚½‚Æ•Ô‚·
 			return e_HIT_LEFT;
@@ -93,7 +93,7 @@ int Utility::MapHitCheck(float x, float y,
 		if ( *moveX < 0.0f )
 		{
 			// ˆÚ“®—Ê‚ğ•â³
-			*moveX = map.right - x + 1.0f;
+			*moveX = 0.0f;
 
 			// ‰E•Ó‚ÉÕ“Ë‚µ‚½‚Æ•Ô‚·
 			return e_HIT_RIGHT;
