@@ -28,9 +28,14 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	moveX = 0.0f;
 	moveY = 0.0f;
 
+	blockFlag = false;
+
+	// ブロックが間にあるか探す
+	FindBlock(playerX);
+
 	// 移動処理
 	// 敵とプレイヤーのX座標が等しい時、スピードをダッシュに合わせる
-	if ( isPlayerAlive &&
+	if ( isPlayerAlive && !blockFlag &&
 		(y == playerY && isLeftWard && playerX < x ||
 		 y == playerY && !isLeftWard && playerX > x) )
 	{

@@ -10,8 +10,6 @@ Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius,
 {
 	shotBulletNum = 0;
 	bulletInterval = 0;
-	enemySpace = 0;
-	blockFlag = false;
 	isTargetLock = false;
 }
 
@@ -31,36 +29,11 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 	//初期化
 	moveX = 0.0f;
 	moveY = 0.0f;
+
 	blockFlag = false;
 
-	//敵とプレイヤーの間のブロック数
-	if ( x < playerX )
-	{
-		enemySpace = (playerX - x) / 64;
-	}
-	else
-	{
-		enemySpace = (x - playerX) / 64;
-	}
-
-	//右向き時のプレイヤーとの間にブロックがあるか
-	for ( int i = 0; i < enemySpace; i++ )
-	{
-		if ( isLeftWard == FALSE )
-		{
-			if ( Stage::GetMapParam(x + (64 * i), y) == e_MAP_BLOCK )
-			{
-				blockFlag = 1;
-			}
-		}
-		else if ( isLeftWard == TRUE )
-		{
-			if ( Stage::GetMapParam(x - (64 * i), y) == e_MAP_BLOCK )
-			{
-				blockFlag = 1;
-			}
-		}
-	}
+	// ブロックが間にあるか探す
+	FindBlock(playerX);
 
 	// 射程内で止まる 間にブロックがあればとまらない
 	if ( playerX - x + radius >= 200 || x - radius - playerX >= 200 || blockFlag )
