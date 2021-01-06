@@ -5,11 +5,13 @@
 #include"../stage/stage.h"
 
 Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius,
-							   float speed, int hp, int attackPower, int graphHandle):
+	float speed, int hp, int attackPower, int graphHandle) :
 	Chara_EnemyBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
 	shotBulletNum = 0;
 	bulletInterval = 0;
+	enemySpace = 0;
+	blockFlag = false;
 	isTargetLock = false;
 }
 
@@ -24,27 +26,69 @@ void Chara_EnemyGun::Initialize()
 
 }
 
-// 移動処理
 void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 {
+	//初期化
 	moveX = 0.0f;
 	moveY = 0.0f;
+	blockFlag = false;
 
-	// 射程内で止まる
-	if ( playerX - x + radius >= 200 || x - radius - playerX >= 200 )
+	//敵とプレイヤーの間のブロック数
+	if ( x < playerX )
+	{
+		enemySpace = (playerX - x) / 64;
+	}
+	else
+	{
+		enemySpace = (x - playerX) / 64;
+	}
+
+	//右向き時のプレイヤーとの間にブロックがあるか
+	for ( int i = 0; i < enemySpace; i++ )
+	{
+		if ( isLeftWard == FALSE )
+		{
+			if ( Stage::GetMapParam(x + (64 * i), y) == e_MAP_BLOCK )
+			{
+				blockFlag = 1;
+			}
+		}
+		else if ( isLeftWard == TRUE )
+		{
+			if ( Stage::GetMapParam(x - (64 * i), y) == e_MAP_BLOCK )
+			{
+				blockFlag = 1;
+			}
+		}
+	}
+
+	// 射程内で止まる 間にブロックがあればとまらない
+	if ( playerX - x + radius >= 200 || x - radius - playerX >= 200 || blockFlag )
 	{
 		moveX += speed;
 
 		// 射程外では撃たない
 		isTargetLock = false;
 
-		// ジャンプするとき
-		if ( x == oldX )
+		// x座標が変わっておらず、目の前にブロックがある場合のみジャンプする
+		if ( x == oldX && Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK
+			|| Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
+		{
+			CharaJump();
+		}
+		
+	}
+	else if ( y != playerY )	//ｙが違う場合なら、射程内でも進む
+	{
+		moveX += speed;
+		//ジャンプ
+		if ( x == oldX && Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK
+			|| Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
 		{
 			CharaJump();
 		}
 	}
-	// else
+	else
 	{
 		// 射程内で、y座標が同じなら撃つ
 		isTargetLock = true;
@@ -65,27 +109,12 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 			isLeftWard = FALSE;
 		}
 	}
-
-
-
-
-	//// 画面外に行きそうなとき、進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-	//if ( x - radius < 0 || x + radius > WIN_WIDTH ||
-	//	Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
-	//	Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_BLOCK ||
-	//	Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-	//	Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK )
-	//{
-	//	speed *= -1;
-	//}
-	//
-	
 	CharaMove(30.0f, 30.0f);
 }
 
 // 更新処理
 void Chara_EnemyGun::Update(float playerX, float playerY, bool isPlayerAlive,
-							float *shakeAddX, float *shakeAddY)
+	float *shakeAddX, float *shakeAddY)
 {
 	if ( isAlive )
 	{
@@ -108,7 +137,7 @@ void Chara_EnemyGun::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+			1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 }
 
@@ -134,9 +163,9 @@ void Chara_EnemyGun::WeaponManager(int electricGunGH)
 	if ( bulletInterval == BULLET_INTERVAL && isTargetLock )
 	{
 		electricGun.push_back(new ElectricGun(x, y,
-											  16, 10.0f,
-											  isLeftWard,
-											  electricGunGH));
+			16, 10.0f,
+			isLeftWard,
+			electricGunGH));
 	}
 
 	// 電気銃

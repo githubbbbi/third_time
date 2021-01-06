@@ -13,7 +13,10 @@ private:
 
 	int shotBulletNum;		// 撃った弾数
 	int bulletInterval;		// 銃を撃つ間隔
+	float enemySpace;		//プレイヤーと敵のブロック個数
+	bool blockFlag;			//ブロックがあるかないかのフラグ
 	bool isTargetLock;		// 範囲内のフラグ
+
 
 	// 移動
 	void Move(float playerX, float playerY, bool isPlayerAlive);
