@@ -60,6 +60,9 @@ public:
 	// oldY座標を取得
 	float GetPosOldY();
 
+	// スピードを取得
+	float GetSpeed();
+
 	// 半径を取得
 	int GetRadius();
 

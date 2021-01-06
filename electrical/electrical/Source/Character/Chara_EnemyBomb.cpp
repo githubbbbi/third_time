@@ -55,19 +55,19 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 			speed = -NORMAL_SPEED;
 		}
 
-		// X座標に変化がなくなった時にジャンプする
-		if ( x == oldX )
-		{
-			CharaJump();
-		}
-
 		// 進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-		if ( Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_BLOCK ||
+		if (Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
+			Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_BLOCK ||
 			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK )
+			Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK)
 		{
 			speed *= -1;
+		}
+
+		// X座標に変化がなくなった時にジャンプする
+		if (x == oldX)
+		{
+			CharaJump();
 		}
 	}
 

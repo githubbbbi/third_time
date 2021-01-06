@@ -183,6 +183,11 @@ float CharaBase::GetPosOldY()
 	return oldY;
 }
 
+float CharaBase::GetSpeed()
+{
+	return speed;
+}
+
 // ”¼Œa‚ğæ“¾
 int CharaBase::GetRadius()
 {

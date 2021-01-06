@@ -47,7 +47,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		if ( CheckHitKey(KEY_INPUT_B) )
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
-													NORMAL_SPEED, 2, 20, enemyBombGH));
+													NORMAL_SPEED, 2, 10, enemyBombGH));
 		}
 
 		// 銃エネミー
@@ -96,33 +96,24 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 // キャラクタ同士の当たり判定
 void Chara_Manager::CharaCollision()
 {
-	//for ( unsigned int i = 0; i < enemys.size(); i++ )
+	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
 		// 敵とプレイヤーの判定
-		// 同じ方向を向いていてプレイヤーが敵の後ろを追いかける場合、敵は進む
-		//if ( enemys[i]->GetIsAlive() && player->GetIsAlive()
-		//	&& Utility::IsCircleCollision(
-		//		enemys[i]->GetPosX(),
-		//		enemys[i]->GetPosY(),
-		//		enemys[i]->GetRadius() - 8,
-		//		player->GetPosX(),
-		//		player->GetPosY(),
-		//		player->GetRadius() - 8
-		//	) )
-		//	if ( !enemys[i]->GetIsLeftWard() && !player->GetIsLeftWard()
-		//		&& enemys[i]->GetPosX() > player->GetPosX()
-		//		|| enemys[i]->GetIsLeftWard() && player->GetIsLeftWard()
-		//		&& enemys[i]->GetPosX() < player->GetPosX() )
-		//	{
-		//		player->CharactersCollision();
-		//		player->CharaJump();
-		//	}
-		//	else
-		//	{
-		//		player->CharaJump();
-		//		player->CharactersCollision();
-		//		enemys[i]->CharactersCollision();
-		//	}
+		// 敵と当たり、敵がダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
+		if (enemyBomb[i]->GetIsAlive() && player->GetIsAlive()
+			&& Utility::IsCircleCollision(
+				enemyBomb[i]->GetPosX(),
+				enemyBomb[i]->GetPosY(),
+				enemyBomb[i]->GetRadius() - 8,
+				player->GetPosX(),
+				player->GetPosY(),
+				player->GetRadius() - 8
+			) )
+			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED)
+			{
+				enemyBomb[i]->ReceiveDamage(player->GetAttackPower() * 2);
+				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
+			}
 
 		//// 敵と敵の当たり判定
 		//for ( unsigned int j = 0; j < enemys.size(); j++ )
