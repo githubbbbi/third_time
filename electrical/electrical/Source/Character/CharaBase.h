@@ -64,6 +64,12 @@ public:
 	// ”¼Œa‚ğæ“¾
 	int GetRadius();
 
+	// width‚ğæ“¾
+	int GetWidth();
+
+	// height‚ğæ“¾
+	int GetHeight();
+
 	// UŒ‚—Í‚ğæ“¾
 	int GetAttackPower();
 

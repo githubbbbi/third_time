@@ -98,3 +98,12 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 					  1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 }
+
+// UŒ‚ƒqƒbƒg
+void Chara_EnemyBomb::HitAttack(float *shakeAddX, float *shakeAddY)
+{
+	if ( isAlive )
+	{
+		hp = 0;
+	}
+}

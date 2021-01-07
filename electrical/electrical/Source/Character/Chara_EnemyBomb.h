@@ -25,4 +25,7 @@ public:
 
 	// •`‰æˆ—
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
+
+	// UŒ‚ƒqƒbƒg
+	void HitAttack(float *shakeAddX, float *shakeAddY);
 };

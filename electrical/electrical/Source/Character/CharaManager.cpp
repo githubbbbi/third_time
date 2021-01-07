@@ -14,7 +14,7 @@ Chara_Manager::Chara_Manager()
 	float startY = WIN_HEIGHT / 2.0f;
 
 	// プレイヤー生成
-	player = new Chara_Player(startX, startY, 32, 
+	player = new Chara_Player(startX, startY, 32,
 							  PLAYER_WIDTH, PLAYER_HEIGHT,
 							  NORMAL_SPEED, 100, 1, playerGH);
 }
@@ -50,7 +50,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		// 爆弾エネミー
 		if ( CheckHitKey(KEY_INPUT_B) && enemyBomb.size() < 1 )
 		{
-			enemyBomb.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
+			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
 													ENEMY_BOMB_WIDTH, ENEMY_BOMB_HEIGHT,
 													NORMAL_SPEED, 2, 10, enemyBombGH));
 		}
@@ -58,7 +58,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		// 銃エネミー
 		if ( CheckHitKey(KEY_INPUT_A) && enemyGun.size() < 1 )
 		{
-			enemyGun.push_back(new Chara_EnemyGun(32.0f, 32.0f, 32,
+			enemyGun.push_back(new Chara_EnemyGun(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
 												  ENEMY_GUN_WIDTH, ENEMY_GUN_HEIGHT,
 												  GetRand(3) + 2.0f, 2, 2, enemyGunGH));
 		}
@@ -102,49 +102,34 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 // キャラクタ同士の当たり判定
 void Chara_Manager::CharaCollision()
 {
+	if ( !player->GetIsAlive() )
+	{
+		return;
+	}
+
 	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
-		// 敵とプレイヤーの判定
-		// 敵と当たり、敵がダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
-		if ( enemyBomb[i]->GetIsAlive() && player->GetIsAlive()
-			&& Utility::IsCircleCollision(
-				enemyBomb[i]->GetPosX(),
-				enemyBomb[i]->GetPosY(),
-				enemyBomb[i]->GetRadius() - 8,
-				player->GetPosX(),
-				player->GetPosY(),
-				player->GetRadius() - 8
-			) )
-			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED )
-			{
-				enemyBomb[i]->ReceiveDamage(player->GetAttackPower() * 2);
-				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
-			}
+		// プレイヤーと敵との判定
+		if ( !enemyBomb[i]->GetIsAlive() )
+		{
+			continue;
+		}
 
-		//// 敵と敵の当たり判定
-		//for ( unsigned int j = 0; j < enemys.size(); j++ )
-		//{
-		//	// 自分と自分で判定しないように
-		//	if ( j != i )
-		//	{
-		//		if ( enemys[i]->GetIsAlive() && enemys[j]->GetIsAlive()
-		//			&& Utility::IsCircleCollision(
-		//				enemys[i]->GetPosX(),
-		//				enemys[i]->GetPosY(),
-		//				enemys[i]->GetRadius() - 8,
-		//				enemys[j]->GetPosX(),
-		//				enemys[j]->GetPosY(),
-		//				enemys[j]->GetRadius() - 8) )
-		//		{
-		//			enemys[j]->EnemiesCollision();
-		//			enemys[j]->CharaJump();
-		//		}
-		//	}
-		//}
+		if ( Utility::IsRectCollision(enemyBomb[i]->GetPosX(),
+									  enemyBomb[i]->GetPosY(),
+									  enemyBomb[i]->GetWidth(),
+									  enemyBomb[i]->GetHeight(),
+									  player->GetPosX(),
+									  player->GetPosY(),
+									  player->GetWidth(),
+									  player->GetHeight()) )
+		{
+			player->CharactersCollision();
+		}
 	}
 }
 
-// 攻撃処理管理
+// 武器処理管理
 void Chara_Manager::WeaponManager()
 {
 	// プレイヤー攻撃
@@ -158,26 +143,45 @@ void Chara_Manager::WeaponManager()
 }
 
 // 攻撃の当たり判定
-void Chara_Manager::AttackCollision()
+void Chara_Manager::AttackCollision(float *shakeAddX, float *shakeAddY)
 {
+	if ( !player->GetIsAlive() )
+	{
+		return;
+	}
+
 	// 爆弾エネミー
 	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
-		if ( !enemyBomb[i]->GetIsAlive() || !player->GetIsAlive() )
+		if ( !enemyBomb[i]->GetIsAlive() )
 		{
-			break;
+			continue;
 		}
 
-		// エネミーとプレイヤーの攻撃との当たり判定
+		// 爆弾エネミーがダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
+		if ( Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
+										enemyBomb[i]->GetPosY(),
+										enemyBomb[i]->GetRadius() - 8,
+										player->GetPosX(),
+										player->GetPosY(),
+										player->GetRadius() - 8) )
+		{
+			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED )
+			{
+				enemyBomb[i]->HitAttack(&*shakeAddX, &*shakeAddY);
+				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
+			}
+		}
+
+		// プレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
-			if ( enemyBomb[i]->GetIsAlive() &&
-				Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
-										   enemyBomb[i]->GetPosY(),
-										   enemyBomb[i]->GetRadius() - 8,
-										   player->GetGunPosX(j),
-										   player->GetGunPosY(j),
-										   player->GetGunRadius(j) - 4) )
+			if ( Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
+											enemyBomb[i]->GetPosY(),
+											enemyBomb[i]->GetRadius() - 8,
+											player->GetGunPosX(j),
+											player->GetGunPosY(j),
+											player->GetGunRadius(j) - 4) )
 			{
 				enemyBomb[i]->ReceiveDamage(player->GetAttackPower());
 				player->HitAttack(j);
@@ -188,9 +192,9 @@ void Chara_Manager::AttackCollision()
 	// 銃エネミー
 	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
 	{
-		if ( !enemyGun[i]->GetIsAlive() || !player->GetIsAlive() )
+		if ( !enemyGun[i]->GetIsAlive() )
 		{
-			break;
+			continue;
 		}
 
 		// エネミーとプレイヤーの攻撃との当たり判定
@@ -234,14 +238,14 @@ void Chara_Manager::Update(float *shakeAddX, float *shakeAddY)
 	//キャラの当たり判定
 	CharaCollision();
 
-	// 攻撃処理
+	// 武器処理
 	WeaponManager();
 
 	// エネミー
 	EnemyManager(&*shakeAddX, &*shakeAddY);
 
 	// 攻撃の当たり判定
-	AttackCollision();
+	AttackCollision(&*shakeAddX, &*shakeAddY);
 }
 
 // 描画処理

@@ -30,6 +30,10 @@ public:
 	static bool IsCircleCollision(float x1, float y1, int r1,
 								  float x2, float y2, int r2);
 
+	// 矩形のコリジョン
+	static bool IsRectCollision(float x1, float y1, int w1, int h1,
+								float x2, float y2, int w2, int h2);
+
 	// シェイク
 	static void Shake(float *shakeX, float *shakeY,
 					  float *addX, float *addY);

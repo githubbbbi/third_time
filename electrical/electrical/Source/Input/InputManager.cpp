@@ -38,6 +38,10 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_KEY_EXIT;
 		}
+		else
+		{
+			keyCode = e_NO_INPUT;
+		}
 	}
 
 	// ƒpƒbƒh
@@ -66,6 +70,9 @@ void InputManager::ConversionKeyCode(int key)
 		else if ( key == e_EXIT )
 		{
 			keyCode = e_PAD_EXIT;
+		}
+		{
+			keyCode = e_NO_INPUT;
 		}
 	}
 }

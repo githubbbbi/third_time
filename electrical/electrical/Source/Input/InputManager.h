@@ -8,6 +8,7 @@ enum
 	e_ATTACK,			// UŒ‚
 	e_FIXED_DIRECTION,	// Œü‚«ŒÅ’è
 	e_EXIT,				// ƒQ[ƒ€I—¹
+	e_NO_INPUT = -1,	// “ü—Í‚È‚µ
 };
 
 class InputManager
@@ -44,7 +45,7 @@ public:
 
 	// pad‚ÌinputX‚ğæ“¾
 	static int GetPadInputX();
-	
+
 	// pad‚ÌinputX‚ğæ“¾
 	static int GetPadInputY();
 };

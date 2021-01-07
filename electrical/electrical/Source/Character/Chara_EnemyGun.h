@@ -37,7 +37,7 @@ public:
 	// •`‰æˆ—
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
-	// UŒ‚ˆ—ŠÇ—
+	// •Šíˆ—ŠÇ—
 	void WeaponManager(int electricGunGH);
 
 	// UŒ‚ƒqƒbƒg

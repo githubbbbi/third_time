@@ -181,6 +181,18 @@ int CharaBase::GetRadius()
 	return radius;
 }
 
+// width‚ğæ“¾
+int CharaBase::GetWidth()
+{
+	return width;
+}
+
+// height‚ğæ“¾
+int CharaBase::GetHeight()
+{
+	return height;
+}
+
 // UŒ‚—Í‚ğæ“¾
 int CharaBase::GetAttackPower()
 {
@@ -208,5 +220,5 @@ void CharaBase::ReceiveDamage(int attackPower)
 // “G‚Æ“G‚Å‚È‚¢ê‡‚ÌƒLƒƒƒ‰ƒNƒ^“¯m‚ªÚG
 void CharaBase::CharactersCollision()
 {
-	x -= moveX;
+	moveX = 0.0f;
 }

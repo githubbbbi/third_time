@@ -46,7 +46,7 @@ public:
 	// ‰Šú‰»ˆ—
 	void Initialize();
 
-	// UŒ‚ˆ—ŠÇ—
+	// •Šíˆ—ŠÇ—
 	void WeaponManager(int electricGunGH);
 
 	// XVˆ—

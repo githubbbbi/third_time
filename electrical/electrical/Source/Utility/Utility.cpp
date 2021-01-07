@@ -121,6 +121,24 @@ bool Utility::IsCircleCollision(float x1, float y1, int r1,
 	return false;
 }
 
+// 矩形の子リジョン
+bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
+							  float x2, float y2, int w2, int h2)
+{
+	float halfW1 = (float)w1 / 2.0f;
+	float halfH1 = (float)h1 / 2.0f;
+	float halfW2 = (float)w2 / 2.0f;
+	float halfH2 = (float)h2 / 2.0f;
+
+	if ( fabsf(x1 - x2) < halfW1 + halfW2 &&
+		fabsf(y1 - y2) < halfH1 + halfH2 )
+	{
+		return true;
+	}
+
+	return false;
+}
+
 // シェイク
 void Utility::Shake(float *shakeX, float *shakeY,
 					float *addX, float *addY)

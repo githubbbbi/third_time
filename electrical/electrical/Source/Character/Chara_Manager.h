@@ -27,7 +27,7 @@ private:
 	void WeaponManager();
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	void AttackCollision();
+	void AttackCollision(float *shakeAddX, float *shakeAddY);
 
 public:
 	Chara_Manager();
