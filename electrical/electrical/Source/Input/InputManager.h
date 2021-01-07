@@ -41,7 +41,7 @@ public:
 	static bool IsInputBarrage(int key);
 
 	// ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡
-	static bool IsInputNot(int key);
+	static bool IsInputNo(int key);
 
 	// pad‚ÌinputX‚ğæ“¾
 	static int GetPadInputX();

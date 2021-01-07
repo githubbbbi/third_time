@@ -53,55 +53,42 @@ bool InputKey::IsKeyInputRelease(int key)
 // 連打された場合TRUE
 bool InputKey::IsKeyInputBarrage(int key)
 {
-	static int pressTime[256] = { 0 };
-	static int prevKey[256] = { 0 };
+	// 押した時間を計測するための変数
+	static int pushTime[256] = { 0 };
 
-	// キー入力がされた時から増加
-	pressTime[key]++;
+	// 前のフレームを判定するための変数
+	static int oldFrame[256] = { 0 };
 
-	// キーが押された瞬間の場合
-	if ( !prevKey[key] && IsKeyInputNow(key) )
+	// 再びキー入力があるまで待てるフレーム数
+	const int waitFrame = 15;
+
+	if ( !oldFrame[key] && keys[key] )
 	{
-		// カウント変数
-		static int i = 0;
-
-		// カウントを増やす
-		i++;
-
-		// iが2の場合
-		if ( i == 2 )
+		// 押した瞬間なら
+		if ( pushTime[key] != 0 )
 		{
-			// 2回目のキー入力が0.3秒より小さい場合
-			if ( pressTime[key] <= 15 )
-			{
-				// カウントを0にセット
-				i = 0;
-
-				// pressTime[]を０にしておく
-				pressTime[key] = 0;
-
-				return true;
-			}
-			else
-			{
-				i = 0;
-
-				//presstTime[]を０にしておく
-				pressTime[key] = 0;
-
-				return false;
-			}
+			return true;
+		}
+		else
+		{
+			pushTime[key] = waitFrame;
 		}
 	}
 
-	// 今のフレームのキー入力を保存して、後のキー入力判定のとき使う
-	prevKey[key] = IsKeyInputNow(key);
+	oldFrame[key] = keys[key];
+
+	// 押した時間が0じゃないなら
+	if ( pushTime[key] != 0 )
+	{
+		// 押した時間をデクリメント
+		pushTime[key]--;
+	}
 
 	return false;
 }
 
 // 押されていない場合
-bool InputKey::IsKeyInputNot(int key)
+bool InputKey::IsKeyInputNo(int key)
 {
 	if ( !keys[key] )
 	{

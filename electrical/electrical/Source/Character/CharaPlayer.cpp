@@ -46,8 +46,6 @@ void Chara_Player::Move()
 	moveX = 0.0f;
 	moveY = 0.0f;
 
-	speed = NORMAL_SPEED;
-
 	// パッドレバーの入力情報を取得
 	padInputX = InputManager::GetPadInputX();
 	padInputY = InputManager::GetPadInputY();
@@ -58,6 +56,10 @@ void Chara_Player::Move()
 		!InputManager::IsInputNow(e_FIXED_DIRECTION) )
 	{
 		speed = DASH_SPEED;
+	}
+	else
+	{
+		speed = NORMAL_SPEED;
 	}
 
 	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
@@ -110,7 +112,7 @@ void Chara_Player::Move()
 	// ジャンプ上昇中中にキーが離された場合ジャンプを中止
 	if ( isJump && gravity < JUMP_POWER / 2.0f )
 	{
-		if ( InputManager::IsInputNot(e_JUMP) )
+		if ( InputManager::IsInputNo(e_JUMP) )
 		{
 			gravity = JUMP_POWER / 1.5f;
 			isJump = false;

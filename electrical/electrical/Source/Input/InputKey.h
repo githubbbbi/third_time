@@ -38,5 +38,5 @@ public:
 	static bool IsKeyInputBarrage(int key);
 
 	// ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡
-	static bool IsKeyInputNot(int key);
+	static bool IsKeyInputNo(int key);
 };

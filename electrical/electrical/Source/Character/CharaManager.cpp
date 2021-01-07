@@ -115,7 +115,7 @@ void Chara_Manager::CharaCollision()
 			continue;
 		}
 
-		if ( Utility::IsRectCollision(enemyBomb[i]->GetPosX(),
+		/*if ( Utility::IsRectCollision(enemyBomb[i]->GetPosX(),
 									  enemyBomb[i]->GetPosY(),
 									  enemyBomb[i]->GetWidth(),
 									  enemyBomb[i]->GetHeight(),
@@ -125,7 +125,7 @@ void Chara_Manager::CharaCollision()
 									  player->GetHeight()) )
 		{
 			player->CharactersCollision();
-		}
+		}*/
 	}
 }
 

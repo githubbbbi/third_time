@@ -71,6 +71,7 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_PAD_EXIT;
 		}
+		else
 		{
 			keyCode = e_NO_INPUT;
 		}
@@ -203,14 +204,14 @@ bool InputManager::IsInputBarrage(int key)
 }
 
 // 押されていない場合
-bool InputManager::IsInputNot(int key)
+bool InputManager::IsInputNo(int key)
 {
 	ConversionKeyCode(key);
 
 	// キーボード入力
 	if ( isInputKey )
 	{
-		if ( InputKey::IsKeyInputNot(keyCode) )
+		if ( InputKey::IsKeyInputNo(keyCode) )
 		{
 			return true;
 		}
@@ -219,7 +220,7 @@ bool InputManager::IsInputNot(int key)
 	// パッド入力
 	if ( isInputPad )
 	{
-		if ( InputPad::IsPadInputNot(keyCode) )
+		if ( InputPad::IsPadInputNo(keyCode) )
 		{
 			return true;
 		}

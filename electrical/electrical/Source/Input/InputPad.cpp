@@ -87,7 +87,7 @@ bool InputPad::IsPadInputBarrage(int key)
 }
 
 // ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡
-bool InputPad::IsPadInputNot(int key)
+bool InputPad::IsPadInputNo(int key)
 {
 	if ( !(pad1 & key) )
 	{
