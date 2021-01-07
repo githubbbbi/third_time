@@ -4,6 +4,9 @@
 #include "CharaBase.h"
 #include "Weapon/ElectricGun.h"
 
+const int PLAYER_WIDTH = 30;						// 横幅
+const int PLAYER_HEIGHT = 30;						// 縦幅
+
 const int BATTERY_DCREASE_TIME = 60 * 1;			// バッテリー減少タイム
 const int BATTERY_CHARGE_TIME = (60 * 1) / 2;		// バッテリーチャージタイム
 const int PLAYER_MAX_BATTERY = 100;					// 最大バッテリー
@@ -14,6 +17,7 @@ class Chara_Player:public CharaBase
 private:
 	std::vector<ElectricGun *> electricGun;
 
+	int padInputX, padInputY;	// パッドレバーの入力量(キーボードの矢印キーの入力量も取得できる)
 	int battery;				// バッテリー
 	int batteryTimer;			// バッテリー減少タイマー
 	int batteryChargeTimer;		// バッテリーチャージタイマー
@@ -35,7 +39,7 @@ private:
 	void BatteryManager();
 
 public:
-	Chara_Player(float x, float y, int radius,
+	Chara_Player(float x, float y, int radius, int width, int height,
 				 float speed, int hp, int attackPower, int graphHandle);
 	~Chara_Player();
 

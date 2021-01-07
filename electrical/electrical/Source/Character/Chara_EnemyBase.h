@@ -11,11 +11,11 @@ protected:
 	// シェイクスタート
 	void ShakeStart(float *shakeAddX, float *shakeAddY);
 
-	// ブロックが間にあるか探す
+	// プレイヤーとの間にブロックがあるか探す
 	bool IsBlock(float playerX);
 
 public:
-	Chara_EnemyBase(float x, float y, int radius,
+	Chara_EnemyBase(float x, float y, int radius, int width, int height,
 					float speed, int hp, int attackPower, int graphHandle);
 
 	// 敵の当たり判定

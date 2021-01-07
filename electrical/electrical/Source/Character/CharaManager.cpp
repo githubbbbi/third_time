@@ -1,7 +1,7 @@
-#include "../Utility/Utility.h"
 #include "DxLib.h"
-#include "../Define/Define.h"
 #include "Chara_Manager.h"
+#include "../Define/Define.h"
+#include "../Utility/Utility.h"
 
 Chara_Manager::Chara_Manager()
 {
@@ -10,9 +10,13 @@ Chara_Manager::Chara_Manager()
 	enemyGunGH = LoadGraph("Resource/Graphic/Character/enemy_gun.png");
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
 
+	float startX = WIN_WIDTH / 2.0f;
+	float startY = WIN_HEIGHT / 2.0f;
+
 	// ÉvÉåÉCÉÑÅ[ê∂ê¨
-	player = new Chara_Player(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f,
-							  32, NORMAL_SPEED, 100, 1, playerGH);
+	player = new Chara_Player(startX, startY, 32, 
+							  PLAYER_WIDTH, PLAYER_HEIGHT,
+							  NORMAL_SPEED, 100, 1, playerGH);
 }
 
 Chara_Manager::~Chara_Manager()
@@ -47,6 +51,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		if ( CheckHitKey(KEY_INPUT_B) && enemyBomb.size() < 1 )
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
+													ENEMY_BOMB_WIDTH, ENEMY_BOMB_HEIGHT,
 													NORMAL_SPEED, 2, 10, enemyBombGH));
 		}
 
@@ -54,6 +59,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		if ( CheckHitKey(KEY_INPUT_A) && enemyGun.size() < 1 )
 		{
 			enemyGun.push_back(new Chara_EnemyGun(32.0f, 32.0f, 32,
+												  ENEMY_GUN_WIDTH, ENEMY_GUN_HEIGHT,
 												  GetRand(3) + 2.0f, 2, 2, enemyGunGH));
 		}
 	}

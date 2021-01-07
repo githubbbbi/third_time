@@ -4,13 +4,15 @@
 #include "../Stage/Stage.h"
 
 // コンストラクタ
-CharaBase::CharaBase(float x, float y, int radius,
+CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 					 float speed, int hp, int attackPower, int graphHandle)
 {
 	this->x = x;
 	this->y = y;
 	this->speed = speed;
 	this->radius = radius;
+	this->width = width;
+	this->height = height;
 	this->graphHandle = graphHandle;
 
 	this->hp = hp;

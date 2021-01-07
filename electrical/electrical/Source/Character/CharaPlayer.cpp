@@ -4,10 +4,12 @@
 #include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
 
-Chara_Player::Chara_Player(float x, float y, int radius,
+Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 						   float speed, int hp, int attackPower, int graphHandle):
-	CharaBase(x, y, radius, speed, hp, attackPower, graphHandle)
+	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
+	padInputX = 0;
+	padInputY = 0;
 	battery = 100;
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
@@ -16,6 +18,7 @@ Chara_Player::Chara_Player(float x, float y, int radius,
 
 Chara_Player::~Chara_Player()
 {
+	// 電気銃
 	for ( int i = electricGun.size() - 1; i >= 0; i-- )
 	{
 		delete electricGun[i];
@@ -43,22 +46,51 @@ void Chara_Player::Move()
 	moveX = 0.0f;
 	moveY = 0.0f;
 
+	speed = NORMAL_SPEED;
+
 	// パッドレバーの入力情報を取得
-	static int padInputX, padInputY;
 	padInputX = InputManager::GetPadInputX();
 	padInputY = InputManager::GetPadInputY();
 
 	// ダッシュ
-	if ( InputManager::IsInputBarrage(e_MOVE_LEFT) ||
-		InputManager::IsInputBarrage(e_MOVE_RIGHT) )
+	if ( (InputManager::IsInputBarrage(e_MOVE_LEFT) ||
+		  InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
+		!InputManager::IsInputNow(e_FIXED_DIRECTION) )
 	{
 		speed = DASH_SPEED;
 	}
-	// ダッシュ入力がなければ通常スピード
-	else if ( !InputManager::IsInputNow(e_MOVE_LEFT) &&
-			 !InputManager::IsInputNow(e_MOVE_RIGHT) )
+
+	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
+	if ( InputManager::IsInputNow(e_FIXED_DIRECTION) )
 	{
-		speed = NORMAL_SPEED;
+		// 左向き
+		if ( isLeftWard )
+		{
+			// 左進行
+			if ( padInputX < 0 )
+			{
+				speed = NORMAL_SPEED;
+			}
+			// 右進行
+			else if ( padInputX > 0 )
+			{
+				speed = NORMAL_SPEED / 2.0f;
+			}
+		}
+		// 右向き
+		else
+		{
+			// 左進行
+			if ( padInputX < 0 )
+			{
+				speed = NORMAL_SPEED / 2.0f;
+			}
+			// 右進行
+			else if ( padInputX > 0 )
+			{
+				speed = NORMAL_SPEED;
+			}
+		}
 	}
 
 	// 方向キー/アナログスティックでの左右移動
@@ -85,7 +117,7 @@ void Chara_Player::Move()
 		}
 	}
 
-	CharaMove(30.0f, 30.0f);
+	CharaMove((float)width, (float)height);
 
 	// 画面内にとどまる(X方向についてのみ)
 	Utility::StayOnScreen(&x, &y, radius, true, false);
@@ -94,7 +126,16 @@ void Chara_Player::Move()
 // 画像の向きを変更
 void Chara_Player::ChangeGraphicDirection()
 {
-
+	// 左向き
+	if ( padInputX < 0 )
+	{
+		isLeftWard = true;
+	}
+	// 右向き
+	else if ( padInputX > 0 )
+	{
+		isLeftWard = false;
+	}
 }
 
 // バッテリー減少

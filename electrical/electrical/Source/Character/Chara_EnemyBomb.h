@@ -2,6 +2,9 @@
 
 #include "Chara_EnemyBase.h"
 
+const int ENEMY_BOMB_WIDTH = 30;	// â°ïù
+const int ENEMY_BOMB_HEIGHT = 30;	// ècïù
+
 class Chara_EnemyBomb:public Chara_EnemyBase
 {
 private:
@@ -9,7 +12,7 @@ private:
 	void Move(float playerX, float playerY, bool isPlayerAlive);
 
 public:
-	Chara_EnemyBomb(float x, float y, int radius,
+	Chara_EnemyBomb(float x, float y, int radius, int width, int height,
 					float speed, int hp, int attackPower, int graphHandle);
 	~Chara_EnemyBomb();
 

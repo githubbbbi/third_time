@@ -4,6 +4,9 @@
 #include "Chara_EnemyBase.h"
 #include "Weapon/ElectricGun.h"
 
+const int ENEMY_GUN_WIDTH = 30;		// â°ïù
+const int ENEMY_GUN_HEIGHT = 30;	// ècïù
+
 const int BULLET_INTERVAL = 70;
 
 class Chara_EnemyGun:public Chara_EnemyBase
@@ -20,7 +23,7 @@ private:
 	void Move(float playerX, float playerY, bool isPlayerAlive);
 
 public:
-	Chara_EnemyGun(float x, float y, int radius,
+	Chara_EnemyGun(float x, float y, int radius, int width, int height,
 				   float speed, int hp, int attackPower, int graphHandle);
 	~Chara_EnemyGun();
 

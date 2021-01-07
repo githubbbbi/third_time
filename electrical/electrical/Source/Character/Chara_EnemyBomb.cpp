@@ -3,9 +3,9 @@
 #include "../Define/Define.h"
 #include "../Stage/Stage.h"
 
-Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius,
+Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius, int width, int height,
 								 float speed, int hp, int attackPower, int graphHandle):
-	Chara_EnemyBase(x, y, radius, speed, hp, attackPower, graphHandle)
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
 
 }
@@ -73,7 +73,7 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 
 	moveX += speed;
 
-	CharaMove(30.0f, 30.0f);
+	CharaMove((float)width, (float)height);
 }
 
 // XVˆ—

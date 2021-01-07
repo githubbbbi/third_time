@@ -1,8 +1,7 @@
 #pragma once
 
-
 const float NORMAL_SPEED = 4.0f;	// 通常スピード
-const float DASH_SPEED = 7.0f;						// ダッシュスピード
+const float DASH_SPEED = 7.0f;		// ダッシュスピード
 const float GRAVITY = 0.8f;			// 重力
 const float JUMP_POWER = -13.0f;	// ジャンプ力
 
@@ -18,6 +17,8 @@ protected:
 	float speed;		// スピード
 	float gravity;		// 落下度
 	int radius;			// 半径
+	int width;			// 横幅
+	int height;			// 縦幅
 	int graphHandle;	// 画像ハンドル
 	int hp;				// HP
 	int attackPower;	// 攻撃力
@@ -40,7 +41,7 @@ protected:
 
 public:
 	// コンストラクタ宣言
-	CharaBase(float x, float y, int radius,
+	CharaBase(float x, float y, int radius, int width, int height,
 			  float speed, int hp, int attackPower, int graphHandle);
 
 	void CharaJump();
@@ -50,7 +51,7 @@ public:
 
 	// Y座標を取得
 	float GetPosY();
-	
+
 	// oldX座標を取得
 	float GetPosOldX();
 

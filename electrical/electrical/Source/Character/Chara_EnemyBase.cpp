@@ -2,10 +2,11 @@
 #include "Chara_EnemyBase.h"
 #include"../stage/stage.h"
 
-Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius,
+Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
 								 float speed, int hp, int attackPower, int graphHandle):
-	CharaBase(x, y, radius, speed, hp, attackPower, graphHandle)
+	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
+
 }
 
 // 画像の向きを変化
@@ -32,7 +33,7 @@ void Chara_EnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
 	}
 }
 
-// ブロックが間にあるか探す
+// プレイヤーとの間にブロックがあるか探す
 bool Chara_EnemyBase::IsBlock(float playerX)
 {
 	// 敵とプレイヤーの間のブロック数

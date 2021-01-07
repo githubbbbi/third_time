@@ -4,9 +4,9 @@
 #include"../Character/Chara_Manager.h"
 #include"../stage/stage.h"
 
-Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius,
+Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius, int width, int height,
 							   float speed, int hp, int attackPower, int graphHandle):
-	Chara_EnemyBase(x, y, radius, speed, hp, attackPower, graphHandle)
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
 	shotBulletNum = 0;
 	bulletInterval = 0;
@@ -15,7 +15,12 @@ Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius,
 
 Chara_EnemyGun::~Chara_EnemyGun()
 {
-
+	// 電気銃
+	for ( int i = electricGun.size() - 1; i >= 0; i-- )
+	{
+		delete electricGun[i];
+		electricGun.erase(electricGun.begin() + i);
+	}
 }
 
 // 初期化処理
@@ -82,7 +87,8 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 			isLeftWard = FALSE;
 		}
 	}
-	CharaMove(30.0f, 30.0f);
+	
+	CharaMove((float)width, (float)height);
 }
 
 // 更新処理
