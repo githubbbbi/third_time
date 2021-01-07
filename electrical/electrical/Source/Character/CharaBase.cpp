@@ -129,21 +129,6 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	}
 }
 
-// 画像の向きを変化
-void CharaBase::ChangeGraphicDirection()
-{
-	// 左に進行
-	if ( x - oldX < 0.0f )
-	{
-		isLeftWard = true;
-	}
-	// 右に進攻
-	else if ( x - oldX > 0.0f )
-	{
-		isLeftWard = false;
-	}
-}
-
 // HP(バッテリー)がない
 void CharaBase::HpZero()
 {

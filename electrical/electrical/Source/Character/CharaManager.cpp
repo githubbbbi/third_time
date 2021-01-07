@@ -44,14 +44,14 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 	// テスト用
 	{
 		// 爆弾エネミー
-		if ( CheckHitKey(KEY_INPUT_B) )
+		if ( CheckHitKey(KEY_INPUT_B) && enemyBomb.size() < 1 )
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(32.0f, 32.0f, 32,
 													NORMAL_SPEED, 2, 10, enemyBombGH));
 		}
 
 		// 銃エネミー
-		if ( CheckHitKey(KEY_INPUT_A) )
+		if ( CheckHitKey(KEY_INPUT_A) && enemyGun.size() < 1 )
 		{
 			enemyGun.push_back(new Chara_EnemyGun(32.0f, 32.0f, 32,
 												  GetRand(3) + 2.0f, 2, 2, enemyGunGH));
@@ -100,7 +100,7 @@ void Chara_Manager::CharaCollision()
 	{
 		// 敵とプレイヤーの判定
 		// 敵と当たり、敵がダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
-		if (enemyBomb[i]->GetIsAlive() && player->GetIsAlive()
+		if ( enemyBomb[i]->GetIsAlive() && player->GetIsAlive()
 			&& Utility::IsCircleCollision(
 				enemyBomb[i]->GetPosX(),
 				enemyBomb[i]->GetPosY(),
@@ -109,7 +109,7 @@ void Chara_Manager::CharaCollision()
 				player->GetPosY(),
 				player->GetRadius() - 8
 			) )
-			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED)
+			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED )
 			{
 				enemyBomb[i]->ReceiveDamage(player->GetAttackPower() * 2);
 				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());

@@ -5,7 +5,7 @@
 #include"../stage/stage.h"
 
 Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius,
-	float speed, int hp, int attackPower, int graphHandle) :
+							   float speed, int hp, int attackPower, int graphHandle):
 	Chara_EnemyBase(x, y, radius, speed, hp, attackPower, graphHandle)
 {
 	shotBulletNum = 0;
@@ -26,17 +26,13 @@ void Chara_EnemyGun::Initialize()
 
 void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 {
-	//初期化
+	// 初期化
 	moveX = 0.0f;
 	moveY = 0.0f;
 
-	blockFlag = false;
-
-	// ブロックが間にあるか探す
-	FindBlock(playerX);
-
 	// 射程内で止まる 間にブロックがあればとまらない
-	if ( playerX - x + radius >= 200 || x - radius - playerX >= 200 || blockFlag )
+	if ( playerX - x + radius >= 200 ||
+		x - radius - playerX >= 200 || IsBlock(playerX) )
 	{
 		moveX += speed;
 
@@ -44,19 +40,23 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 		isTargetLock = false;
 
 		// x座標が変わっておらず、目の前にブロックがある場合のみジャンプする
-		if ( x == oldX && Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK
-			|| Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
+		if ( x == oldX &&
+			Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK ||
+			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
 		{
 			CharaJump();
 		}
-		
+
 	}
-	else if ( y != playerY )	//ｙが違う場合なら、射程内でも進む
+	// ｙが違う場合なら、射程内でも進む
+	else if ( y != playerY )
 	{
 		moveX += speed;
-		//ジャンプ
-		if ( x == oldX && Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK
-			|| Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
+
+		// ジャンプ
+		if ( x == oldX &&
+			Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK ||
+			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
 		{
 			CharaJump();
 		}
@@ -87,7 +87,7 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 
 // 更新処理
 void Chara_EnemyGun::Update(float playerX, float playerY, bool isPlayerAlive,
-	float *shakeAddX, float *shakeAddY)
+							float *shakeAddX, float *shakeAddY)
 {
 	if ( isAlive )
 	{
@@ -110,7 +110,7 @@ void Chara_EnemyGun::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-			1.0, 0.0, graphHandle, true, isLeftWard);
+					  1.0, 0.0, graphHandle, true, isLeftWard);
 	}
 }
 
@@ -123,10 +123,10 @@ void Chara_EnemyGun::HitAttack(int index)
 // 攻撃処理の管理
 void Chara_EnemyGun::WeaponManager(int electricGunGH)
 {
-	//弾のインターバルを測るカウント
+	// 弾のインターバルを測るカウント
 	bulletInterval++;
 
-	//インターバルの初期化
+	// インターバルの初期化
 	if ( bulletInterval > BULLET_INTERVAL )
 	{
 		bulletInterval = 0;
@@ -136,9 +136,9 @@ void Chara_EnemyGun::WeaponManager(int electricGunGH)
 	if ( bulletInterval == BULLET_INTERVAL && isTargetLock )
 	{
 		electricGun.push_back(new ElectricGun(x, y,
-			16, 10.0f,
-			isLeftWard,
-			electricGunGH));
+											  16, 10.0f,
+											  isLeftWard,
+											  electricGunGH));
 	}
 
 	// 電気銃

@@ -22,6 +22,9 @@ private:
 	// 移動
 	void Move();
 
+	// 画像の向きを変更
+	void ChangeGraphicDirection();
+
 	// バッテリー減少
 	void BatteryDecrease();
 

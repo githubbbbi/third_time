@@ -91,6 +91,12 @@ void Chara_Player::Move()
 	Utility::StayOnScreen(&x, &y, radius, true, false);
 }
 
+// 画像の向きを変更
+void Chara_Player::ChangeGraphicDirection()
+{
+
+}
+
 // バッテリー減少
 void Chara_Player::BatteryDecrease()
 {

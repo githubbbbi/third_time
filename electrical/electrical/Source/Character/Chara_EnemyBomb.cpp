@@ -28,14 +28,9 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	moveX = 0.0f;
 	moveY = 0.0f;
 
-	blockFlag = false;
-
-	// ブロックが間にあるか探す
-	FindBlock(playerX);
-
 	// 移動処理
 	// 敵とプレイヤーのX座標が等しい時、スピードをダッシュに合わせる
-	if ( isPlayerAlive && !blockFlag &&
+	if ( isPlayerAlive && !IsBlock(playerX) &&
 		(y == playerY && isLeftWard && playerX < x ||
 		 y == playerY && !isLeftWard && playerX > x) )
 	{
@@ -61,16 +56,16 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 		}
 
 		// 進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-		if (Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
+		if ( Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
 			Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_BLOCK ||
 			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK)
+			Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK )
 		{
 			speed *= -1;
 		}
 
 		// X座標に変化がなくなった時にジャンプする
-		if (x == oldX)
+		if ( x == oldX )
 		{
 			CharaJump();
 		}

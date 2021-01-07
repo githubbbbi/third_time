@@ -32,9 +32,6 @@ protected:
 	// キャラの移動
 	void CharaMove(float hitWidth, float hitHeight);
 
-	// 画像の向きを変化
-	void ChangeGraphicDirection();
-
 	// HP(バッテリー)が0
 	void HpZero();
 
