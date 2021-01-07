@@ -115,7 +115,7 @@ void Chara_Manager::CharaCollision()
 				player->GetPosY(),
 				player->GetRadius() - 8
 			) )
-			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED )
+			if ( abs(enemyBomb[i]->GetSpeed()) == DASH_SPEED )
 			{
 				enemyBomb[i]->ReceiveDamage(player->GetAttackPower() * 2);
 				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
