@@ -166,7 +166,7 @@ void Chara_Manager::AttackCollision(float *shakeAddX, float *shakeAddY)
 										player->GetPosY(),
 										player->GetRadius() - 8) )
 		{
-			if ( enemyBomb[i]->GetSpeed() == DASH_SPEED )
+			if ( fabsf(enemyBomb[i]->GetSpeed()) == DASH_SPEED )
 			{
 				enemyBomb[i]->HitAttack(&*shakeAddX, &*shakeAddY);
 				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
