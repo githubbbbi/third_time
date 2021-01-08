@@ -234,6 +234,7 @@ void Chara_Player::Update()
 		Move();
 		BatteryManager();
 		HpManager();
+		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
 
 		// Œü‚«ŒÅ’èƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢
 		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
@@ -241,8 +242,6 @@ void Chara_Player::Update()
 			ChangeGraphicDirection();
 		}
 	}
-
-	Blinking(0.0f, 255.0f, 255.0f, 4);
 
 	// HSV‚©‚çRGB‚É•ÏŠ·
 	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
@@ -277,6 +276,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 220, GetColor(255, 255, 255), "h:%f", h);
 	DrawFormatString(80, 240, GetColor(255, 255, 255), "s:%f", s);
 	DrawFormatString(80, 260, GetColor(255, 255, 255), "v:%f", v);
+	DrawFormatString(80, 280, GetColor(255, 255, 255), "isColorBlinking:%d", isColorBlinking);
 }
 
 // UŒ‚

@@ -32,10 +32,12 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	isJump = false;
 	isFall = false;
 
-	r = g = b = 0.0f;
+	r = g = b = 255.0f;
 	h = 0.0f;
-	s = (100.0f / 100.0f) * 255.0f;
-	v = (100.0f / 100.0f) * 255.0f;
+	s = 0.0f;
+	v = 255.0f;
+
+	isColorBlinking = false;
 }
 
 // キャラクタのジャンプ
@@ -152,41 +154,43 @@ void CharaBase::HpManager()
 	HpZero();
 }
 
-// 点滅
-void CharaBase::Blinking(float h, float s, float v, int  noOfTimes)
+// 色点滅
+void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
 {
 	static int timer = 0;
 	static int count = 0;
-	const int change = 50;
+	const int change = 5;
 
-	// 点滅終了
-	if ( count > noOfTimes )
+	if ( isColorBlinking )
 	{
-		this->s = 0.0f;
-		count = 0;
-		return;
-	}
-	else
-	{
+		// 点滅終了
+		if ( count > noOfTimes )
+		{
+			this->s = 0.0f;
+			count = 0;
+			isColorBlinking = false;
+
+			return;
+		}
+
+		// 点滅
 		timer++;
-	}
-
-	// 点滅
-	if ( timer < change )
-	{
-		this->h = h;
-		this->s = s;
-		this->v = v;
-	}
-	else if ( timer < change * 2 )
-	{
-		this->s = 0.0f;
-		this->v = 255.0f;
-	}
-	else if ( timer < change * 3 )
-	{
-		count++;
-		timer = 0;
+		if ( timer < change )
+		{
+			this->h = h;
+			this->s = s;
+			this->v = v;
+		}
+		else if ( timer < change * 2 )
+		{
+			this->s = 0.0f;
+			this->v = 255.0f;
+		}
+		else if ( timer < change * 3 )
+		{
+			count++;
+			timer = 0;
+		}
 	}
 }
 
@@ -258,6 +262,8 @@ bool CharaBase::GetIsLeftWard()
 // ダメージを受ける
 void CharaBase::ReceiveDamage(int attackPower)
 {
+	// 点滅フラグTRUE
+	isColorBlinking = true;
 	hp -= attackPower;
 }
 

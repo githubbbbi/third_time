@@ -2,7 +2,8 @@
 #include "Chara_EnemyGun.h"
 #include "../Define/Define.h"
 #include"../Character/Chara_Manager.h"
-#include"../stage/stage.h"
+#include"../Stage/Stage.h"
+#include "../Utility/Utility.h"
 
 Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius, int width, int height,
 							   float speed, int hp, int attackPower, int graphHandle):
@@ -93,8 +94,12 @@ void Chara_EnemyGun::Update(float playerX, float playerY, bool isPlayerAlive,
 		Move(playerX, playerY, isPlayerAlive);
 		ChangeGraphicDirection();
 		HpZero();
+		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
 		ShakeStart(&*shakeAddX, &*shakeAddY);
 	}
+
+	// HSVÇ©ÇÁRGBÇ…ïœä∑
+	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
 }
 
 // ï`âÊèàóù
@@ -108,8 +113,10 @@ void Chara_EnemyGun::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 
 	if ( isAlive )
 	{
+		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
 					  1.0, 0.0, graphHandle, true, isLeftWard);
+		SetDrawBright(255, 255, 255);
 	}
 }
 
