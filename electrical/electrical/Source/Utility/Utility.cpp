@@ -203,3 +203,48 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
 		*scrollY = MAP_COUNT_Y * CHIP_SIZE - WIN_HEIGHT;
 	}
 }
+
+// HSV‚©‚çRGB‚É•ÏŠ·
+void Utility::ConvertHSVtoRGB(float *r, float *g, float *b,
+							  float h, float s, float v)
+{
+	float max = v;
+	float min = max - (s / 255.0f) * max;
+
+	if ( h >= 0 && h <= 60 )
+	{
+		*r = max;
+		*g = (h / 60.0f) * (max - min) + min;
+		*b = min;
+	}
+	else if ( h <= 120 )
+	{
+		*r = ((120.0f - h) / 60.0f) * (max - min) + min;
+		*g = max;
+		*b = min;
+	}
+	else if ( h <= 180 )
+	{
+		*r = min;
+		*g = max;
+		*b = ((h - 120.0f) / 60.0f) * (max - min) + min;
+	}
+	else if ( h <= 240 )
+	{
+		*r = min;
+		*g = ((240.0f - h) / 60.0f) * (max - min) + min;
+		*b = max;
+	}
+	else if ( h <= 300 )
+	{
+		*r = ((h - 240.0f) / 60.0f) * (max - min) + min;
+		*g = min;
+		*b = max;
+	}
+	else if ( h <= 360 )
+	{
+		*r = max;
+		*g = min;
+		*b = ((360.0f - h) / 60.0f) * (max - min) + min;
+	}
+}

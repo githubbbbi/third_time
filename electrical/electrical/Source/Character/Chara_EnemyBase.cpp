@@ -14,10 +14,10 @@ void Chara_EnemyBase::Jump()
 {
 	// x座標が変わっておらず、目の前に縦1ブロックがある場合のみジャンプする
 	if ( x == oldX &&
-		((Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_NONE) ||
-		 (Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_NONE)) )
+		((Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
+		 (Stage::GetMapParam(x - radius - 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x - radius - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
 	{
 		CharaJump();
 	}
@@ -27,10 +27,10 @@ void Chara_EnemyBase::Jump()
 void Chara_EnemyBase::ChangeDirection()
 {
 	// 進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-	if ( (Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_BLOCK) ||
-		(Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-		 Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK) )
+	if ( (Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		(Stage::GetMapParam(x - radius - 1, y) == e_MAP_BLOCK &&
+		 Stage::GetMapParam(x - radius - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1;
 	}

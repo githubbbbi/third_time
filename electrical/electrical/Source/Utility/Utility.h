@@ -41,4 +41,8 @@ public:
 	// ƒXƒNƒ[ƒ‹
 	static void Scroll(int centerX, int centerY,
 					   int *scrollX, int *scrollY);
+
+	// HSV‚©‚çRGB‚É•ÏŠ·
+	static void ConvertHSVtoRGB(float *r, float *g, float *b,
+								float h, float s, float v);
 };

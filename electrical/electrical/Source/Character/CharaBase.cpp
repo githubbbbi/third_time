@@ -31,6 +31,11 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 
 	isJump = false;
 	isFall = false;
+
+	r = g = b = 0.0f;
+	h = 0.0f;
+	s = (100.0f / 100.0f) * 255.0f;
+	v = (100.0f / 100.0f) * 255.0f;
 }
 
 // キャラクタのジャンプ
@@ -136,6 +141,7 @@ void CharaBase::HpZero()
 {
 	if ( hp <= 0 )
 	{
+		hp = 0;
 		isAlive = false;
 	}
 }
@@ -144,6 +150,44 @@ void CharaBase::HpZero()
 void CharaBase::HpManager()
 {
 	HpZero();
+}
+
+// 点滅
+void CharaBase::Blinking(float h, float s, float v, int  noOfTimes)
+{
+	static int timer = 0;
+	static int count = 0;
+	const int change = 50;
+
+	// 点滅終了
+	if ( count > noOfTimes )
+	{
+		this->s = 0.0f;
+		count = 0;
+		return;
+	}
+	else
+	{
+		timer++;
+	}
+
+	// 点滅
+	if ( timer < change )
+	{
+		this->h = h;
+		this->s = s;
+		this->v = v;
+	}
+	else if ( timer < change * 2 )
+	{
+		this->s = 0.0f;
+		this->v = 255.0f;
+	}
+	else if ( timer < change * 3 )
+	{
+		count++;
+		timer = 0;
+	}
 }
 
 // X座標を取得

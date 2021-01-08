@@ -24,6 +24,12 @@ protected:
 	bool isLeftWard;	// 左向きフラグ
 	bool isJump;		// ジャンプフラグ
 	bool isFall;		// 落下フラグ
+	float r;			// 赤色				:0~255
+	float g;			// 緑色				:0~255
+	float b;			// 青色				:0~255
+	float h;			// 色相(hue)			:0~360
+	float s;			// 彩度(saturation)	:0~255
+	float v;			// 明度(value)		:0~255
 
 	// キャラクタの落下
 	void CharaFall();
@@ -36,6 +42,9 @@ protected:
 
 	// HP管理
 	void HpManager();
+
+	// 指定された回数だけ点滅
+	void Blinking(float h, float s, float v, int noOfTimes);
 
 public:
 	// コンストラクタ宣言

@@ -47,8 +47,10 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 {
 	// テスト用
 	{
+		static int timer = 0;
+		timer++;
 		// 爆弾エネミー
-		if ( CheckHitKey(KEY_INPUT_B) && enemyBomb.size() < 1 )
+		if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
 													E_BOMB_WIDTH, E_BOMB_HEIGHT,
@@ -56,7 +58,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		}
 
 		// 銃エネミー
-		if ( CheckHitKey(KEY_INPUT_A) && enemyGun.size() < 1 )
+		if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
 		{
 			enemyGun.push_back(new Chara_EnemyGun(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
 												  E_GUN_WIDTH, E_GUN_HEIGHT,
