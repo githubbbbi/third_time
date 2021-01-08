@@ -11,7 +11,7 @@ Chara_Manager::Chara_Manager()
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
 
 	float startX = WIN_WIDTH / 2.0f;
-	float startY = WIN_HEIGHT / 2.0f;
+	float startY = 0.0f;
 
 	// プレイヤー生成
 	player = new Chara_Player(startX, startY, 32,
@@ -43,7 +43,7 @@ void Chara_Manager::Initialize()
 }
 
 // エネミー管理
-void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
+void Chara_Manager::EnemyManager()
 {
 	// テスト用
 	{
@@ -52,7 +52,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		// 爆弾エネミー
 		if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
 		{
-			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
+			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, 0.0f, 32,
 													E_BOMB_WIDTH, E_BOMB_HEIGHT,
 													E_BOMB_NORMAL_SPEED, 2, 10, enemyBombGH));
 		}
@@ -60,7 +60,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		// 銃エネミー
 		if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
 		{
-			enemyGun.push_back(new Chara_EnemyGun(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
+			enemyGun.push_back(new Chara_EnemyGun(WIN_WIDTH / 2.0f, 0.0f, 32,
 												  E_GUN_WIDTH, E_GUN_HEIGHT,
 												  E_GUN_NORMAL_SPEED, 2, 2, enemyGunGH));
 		}
@@ -69,8 +69,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 	// 爆弾エネミー
 	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
 	{
-		enemyBomb[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive(),
-							 &*shakeAddX, &*shakeAddY);
+		enemyBomb[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
 	}
 
 	for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
@@ -86,8 +85,7 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 	// 銃エネミー
 	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
 	{
-		enemyGun[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive(),
-							&*shakeAddX, &*shakeAddY);
+		enemyGun[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
 	}
 
 	for ( int i = enemyGun.size() - 1; i >= 0; i-- )
@@ -145,7 +143,7 @@ void Chara_Manager::WeaponManager()
 }
 
 // 攻撃の当たり判定
-void Chara_Manager::AttackCollision(float *shakeAddX, float *shakeAddY)
+void Chara_Manager::AttackCollision()
 {
 	if ( !player->GetIsAlive() )
 	{
@@ -170,7 +168,7 @@ void Chara_Manager::AttackCollision(float *shakeAddX, float *shakeAddY)
 		{
 			if ( fabsf(enemyBomb[i]->GetSpeed()) == E_BOMB_DASH_SPEED )
 			{
-				enemyBomb[i]->HitAttack(&*shakeAddX, &*shakeAddY);
+				enemyBomb[i]->HitAttack();
 				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
 			}
 		}
@@ -232,7 +230,7 @@ void Chara_Manager::AttackCollision(float *shakeAddX, float *shakeAddY)
 }
 
 // 更新処理
-void Chara_Manager::Update(float *shakeAddX, float *shakeAddY)
+void Chara_Manager::Update()
 {
 	// プレイヤー
 	player->Update();
@@ -244,10 +242,10 @@ void Chara_Manager::Update(float *shakeAddX, float *shakeAddY)
 	WeaponManager();
 
 	// エネミー
-	EnemyManager(&*shakeAddX, &*shakeAddY);
+	EnemyManager();
 
 	// 攻撃の当たり判定
-	AttackCollision(&*shakeAddX, &*shakeAddY);
+	AttackCollision();
 }
 
 // 描画処理

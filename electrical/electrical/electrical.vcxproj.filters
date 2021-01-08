@@ -64,6 +64,12 @@
     <Filter Include="ソース ファイル\Mask">
       <UniqueIdentifier>{0ecdf528-35e9-46b9-9493-40677f09fe05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Effect">
+      <UniqueIdentifier>{a8629071-05a6-4d9d-ac3c-6c58f0c263e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{1db471b8-38d2-4b3a-9ac1-9e2ea6951631}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -117,6 +123,12 @@
     <ClCompile Include="Source\Character\Chara_EnemyGun.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Effect\EffectManager.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect\Effect_Shake.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -169,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
       <Filter>ヘッダー ファイル\Character\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect\EffectManager.h">
+      <Filter>ヘッダー ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect\Effect_Shake.h">
+      <Filter>ヘッダー ファイル\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

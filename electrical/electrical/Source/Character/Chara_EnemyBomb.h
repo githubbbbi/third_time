@@ -2,9 +2,9 @@
 
 #include "Chara_EnemyBase.h"
 
-const int E_BOMB_WIDTH = 30;			// 横幅
-const int E_BOMB_HEIGHT = 30;			// 縦幅
-const float E_BOMB_NORMAL_SPEED = 2.0f;	// 通常スピード
+const int E_BOMB_WIDTH = 50;			// 横幅
+const int E_BOMB_HEIGHT = 50;			// 縦幅
+const float E_BOMB_NORMAL_SPEED = 1.0f;	// 通常スピード
 const float E_BOMB_DASH_SPEED = 8.0f;	// ダッシュスピード
 
 class Chara_EnemyBomb:public Chara_EnemyBase
@@ -22,12 +22,11 @@ public:
 	void Initialize();
 
 	// 更新処理
-	void Update(float playerX, float playerY, bool isPlayerAlive,
-				float *shakeAddX, float *shakeAddY);
+	void Update(float playerX, float playerY, bool isPlayerAlive);
 
 	// 描画処理
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
 	// 攻撃ヒット
-	void HitAttack(float *shakeAddX, float *shakeAddY);
+	void HitAttack();
 };

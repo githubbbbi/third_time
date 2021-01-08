@@ -4,7 +4,6 @@
 #include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
 
-
 // コンストラクタ
 GameMain::GameMain()
 {
@@ -20,10 +19,10 @@ GameMain::GameMain()
 	// 背景
 	backgroundGH = LoadGraph("Resource/Graphic/Background/background.png");
 
-	shakeX = 0.0f;
-	shakeY = 0.0f;
-	shakeAddX = 0.0f;
-	shakeAddY = 0.0f;
+	// エフェクト
+	int particleGH = LoadGraph("Resource/Graphic/Effects/particle.png");
+	effects = new EffectManager(particleGH);
+
 	scrollX = 0;
 	scrollY = 0;
 }
@@ -32,6 +31,8 @@ GameMain::GameMain()
 GameMain::~GameMain()
 {
 	delete charaManager;
+	delete stage;
+	delete effects;
 }
 
 // 初期化処理
@@ -39,12 +40,6 @@ void GameMain::Initialize()
 {
 	// キャラクター
 	charaManager->Initialize();
-
-	// シェイク
-	shakeX = 0.0f;
-	shakeY = 0.0f;
-	shakeAddX = 0.0f;
-	shakeAddY = 0.0f;
 }
 
 // 更新処理
@@ -53,8 +48,8 @@ void GameMain::Update()
 	// 入力
 	InputManager::Update();
 
-	// シェイク
-	Utility::Shake(&shakeX, &shakeY, &shakeAddX, &shakeAddX);
+	// エフェクト
+	effects->Update();
 
 	// スクロール
 	Utility::Scroll((int)charaManager->GetScrollCenterX(),
@@ -64,21 +59,27 @@ void GameMain::Update()
 	stage->Update();
 
 	// キャラクター
-	charaManager->Update(&shakeAddX, &shakeAddY);
+	charaManager->Update();
 }
 
 // 描画処理
 void GameMain::Draw()
 {
 	// 背景
-	DrawRotaGraph(WIN_WIDTH / 2 - (int)shakeX - scrollX, WIN_HEIGHT / 2 - (int)shakeY - scrollY,
+	DrawRotaGraph(WIN_WIDTH / 2 - (int)effects->GetShakeX() - scrollX,
+				  WIN_HEIGHT / 2 - (int)effects->GetShakeY() - scrollY,
 				  1.0, 0.0, backgroundGH, true);
 
 	// ステージ
-	stage->Draw(shakeX, shakeY, scrollX, scrollY);
+	stage->Draw(effects->GetShakeX(),
+				effects->GetShakeY(), scrollX, scrollY);
 
 	// キャラクター
-	charaManager->Draw(shakeX, shakeY, scrollX, scrollY);
+	charaManager->Draw(effects->GetShakeX(),
+					   effects->GetShakeY(), scrollX, scrollY);
+
+	// エフェクト
+	effects->Draw();
 }
 
 // 終了処理

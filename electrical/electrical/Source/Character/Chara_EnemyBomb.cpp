@@ -33,11 +33,15 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	// 進行方向チェンジ
 	ChangeDirection();
 
+	// 座標をマップチップでの座標に変換
+	int enemyMapY = (int)y / CHIP_SIZE;
+	int playerMapY = (int)playerY / CHIP_SIZE;
+
 	// 移動処理
 	// 敵とプレイヤーのX座標が等しい時、スピードをダッシュに合わせる
 	if ( isPlayerAlive && !IsBlock(playerX) &&
-		(y == playerY && isLeftWard && playerX < x ||
-		 y == playerY && !isLeftWard && playerX > x) )
+		(enemyMapY == playerMapY) &&
+		(isLeftWard && x > playerX || !isLeftWard && x < playerX) )
 	{
 		if ( speed > 0 )
 		{
@@ -65,12 +69,11 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	}
 
 	moveX += speed;
-	CharaMove((float)width, (float)height);
+	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
 // 更新処理
-void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive,
-							 float *shakeAddX, float *shakeAddY)
+void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 {
 	if ( isAlive )
 	{
@@ -78,7 +81,6 @@ void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive,
 		ChangeGraphicDirection();
 		HpManager();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
-		ShakeStart(&*shakeAddX, &*shakeAddY);
 	}
 
 	// HSVからRGBに変換
@@ -97,8 +99,8 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	}
 }
 
-// 攻撃ヒット
-void Chara_EnemyBomb::HitAttack(float *shakeAddX, float *shakeAddY)
+// 攻撃ヒット(突進)
+void Chara_EnemyBomb::HitAttack()
 {
 	if ( isAlive )
 	{

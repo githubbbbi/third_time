@@ -18,7 +18,7 @@ private:
 	int enemyGunGH;			// 銃エネミー
 
 	// エネミー管理
-	void EnemyManager(float *shakeAddX, float *shakeAddY);
+	void EnemyManager();
 
 	// キャラクタ同士の当たり判定
 	void CharaCollision();
@@ -27,7 +27,7 @@ private:
 	void WeaponManager();
 
 	// 攻撃の当たり判定
-	void AttackCollision(float *shakeAddX, float *shakeAddY);
+	void AttackCollision();
 
 public:
 	Chara_Manager();
@@ -37,7 +37,7 @@ public:
 	void Initialize();
 
 	// 更新処理
-	void Update(float *shakeAddX, float *shakeAddY);
+	void Update();
 
 	// 描画処理
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);

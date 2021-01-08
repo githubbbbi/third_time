@@ -14,9 +14,6 @@ protected:
 	// 画像の向きを変化
 	void ChangeGraphicDirection();
 
-	// シェイクスタート
-	void ShakeStart(float *shakeAddX, float *shakeAddY);
-
 	// プレイヤーとの間にブロックがあるか探す
 	bool IsBlock(float playerX);
 

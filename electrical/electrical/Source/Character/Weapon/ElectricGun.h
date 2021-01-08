@@ -17,7 +17,7 @@ private:
 	int aliveTimer;
 	bool isAlive;			// 発射フラグ
 	bool isMapHit;			// マップヒットフラグ
-	bool isCharaLeftWard;	// キャラクタの左向きフラグ
+	bool isLeftWard;		// 左向きフラグ
 
 public:
 	ElectricGun(float x, float y, int radius,

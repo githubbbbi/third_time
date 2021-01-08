@@ -2,16 +2,16 @@
 
 #include "../Character/Chara_Manager.h"
 #include "../Stage/Stage.h"
+#include "../Effect/EffectManager.h"
 
 class GameMain
 {
 private:
 	Chara_Manager *charaManager;
 	Stage *stage;
+	EffectManager *effects;
 
 	int backgroundGH;			// 背景画像
-	float shakeX, shakeY;		// シェイク
-	float shakeAddX, shakeAddY;	// シェイク量
 	int scrollX, scrollY;		// スクロール量
 
 public:

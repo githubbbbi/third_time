@@ -12,12 +12,17 @@ Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int he
 // ジャンプする
 void Chara_EnemyBase::Jump()
 {
-	// x座標が変わっておらず、目の前に縦1ブロックがある場合のみジャンプする
-	if ( x == oldX &&
-		((Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
-		 (Stage::GetMapParam(x - radius - 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x - radius - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
+	if ( x != oldX )
+	{
+		return;
+	}
+
+	// 目の前に縦1ブロックがあるかつ上にブロックがない場合のみジャンプする
+	if ( Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_NONE &&
+		((Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
+		 (Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
 	{
 		CharaJump();
 	}
@@ -26,11 +31,25 @@ void Chara_EnemyBase::Jump()
 // 進行方向を変える
 void Chara_EnemyBase::ChangeDirection()
 {
-	// 進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-	if ( (Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + radius + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
-		(Stage::GetMapParam(x - radius - 1, y) == e_MAP_BLOCK &&
-		 Stage::GetMapParam(x - radius - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
+	if ( x != oldX )
+	{
+		return;
+	}
+
+	// 進む予定の位置に2つ並んでブロックがある
+	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+		 Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
+	{
+		speed *= -1;
+	}
+
+	// 目の前に縦1ブロックがあるかつ上にブロックがある
+	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+		 Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1;
 	}
@@ -48,15 +67,6 @@ void Chara_EnemyBase::ChangeGraphicDirection()
 	else if ( x - oldX > 0.0f )
 	{
 		isLeftWard = false;
-	}
-}
-
-// シェイクスタート
-void Chara_EnemyBase::ShakeStart(float *shakeAddX, float *shakeAddY)
-{
-	if ( hp <= 0 )
-	{
-		*shakeAddX = *shakeAddY = 4.0f;
 	}
 }
 

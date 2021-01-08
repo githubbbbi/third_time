@@ -119,7 +119,7 @@ void Chara_Player::Move()
 		}
 	}
 
-	CharaMove((float)width, (float)height);
+	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 
 	// ‰æ–Ê“à‚É‚Æ‚Ç‚Ü‚é(X•ûŒü‚É‚Â‚¢‚Ä‚Ì‚Ý)
 	Utility::StayOnScreen(&x, &y, radius, true, false);

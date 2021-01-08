@@ -80,7 +80,7 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	CharaFall();
 
 	// ダミー これはXまたはY方向の移動量について考慮しない場合に用いる
-	float dummy = 0.0f;
+	static float dummy = 0.0f;
 
 	// キャラクタの左上、右上、左下、右上部分に当たり判定がある
 	// マップに衝突しているか調べ、衝突していた場合補正する
@@ -158,16 +158,17 @@ void CharaBase::HpManager()
 void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
 {
 	static int timer = 0;
-	static int count = 0;
+	static int counter = 0;
 	const int change = 5;
 
 	if ( isColorBlinking )
 	{
 		// 点滅終了
-		if ( count > noOfTimes )
+		if ( counter > noOfTimes )
 		{
 			this->s = 0.0f;
-			count = 0;
+			counter = 0;
+			timer = 0;
 			isColorBlinking = false;
 
 			return;
@@ -188,7 +189,7 @@ void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
 		}
 		else if ( timer < change * 3 )
 		{
-			count++;
+			counter++;
 			timer = 0;
 		}
 	}
@@ -263,7 +264,11 @@ bool CharaBase::GetIsLeftWard()
 void CharaBase::ReceiveDamage(int attackPower)
 {
 	// 点滅フラグTRUE
-	isColorBlinking = true;
+	if ( !isColorBlinking )
+	{
+		isColorBlinking = true;
+	}
+
 	hp -= attackPower;
 }
 

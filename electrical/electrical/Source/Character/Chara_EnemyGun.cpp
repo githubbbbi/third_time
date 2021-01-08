@@ -39,55 +39,61 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 	// 進行方向チェンジ
 	ChangeDirection();
 
-	// 射程内で止まる 間にブロックがあればとまらない
-	if ( playerX - x + radius >= 200 ||
-		x - radius - playerX >= 200 || IsBlock(playerX) )
+	if ( isPlayerAlive )
 	{
-		moveX += speed;
+		// 射程内で止まる 間にブロックがあればとまらない
+		if ( playerX - x + radius >= 200 ||
+			x - radius - playerX >= 200 || IsBlock(playerX) )
+		{
+			moveX += speed;
 
-		// 射程外では撃たない
+			// 射程外では撃たない
+			isTargetLock = false;
+
+			// ジャンプ
+			Jump();
+		}
+		// ｙが違う場合なら、射程内でも進む
+		else if ( y != playerY )
+		{
+			moveX += speed;
+
+			// ジャンプ
+			Jump();
+		}
+		else
+		{
+			// 射程内で、y座標が同じなら撃つ
+			isTargetLock = true;
+		}
+
+		// 標的になったら、プレイヤーを追いかける（反転したり）
+		if ( isTargetLock )
+		{
+			// プレイヤーより右で、右を向いている場合、左向きに変える
+			if ( playerX < x && !isLeftWard )
+			{
+				speed *= -1;
+				isLeftWard = true;
+			}
+			else if ( playerX > x && isLeftWard )
+			{
+				speed *= -1;
+				isLeftWard = false;
+			}
+		}
+	}
+
+	if ( !isPlayerAlive )
+	{
 		isTargetLock = false;
-
-		// ジャンプ
-		Jump();
-
-	}
-	// ｙが違う場合なら、射程内でも進む
-	else if ( y != playerY )
-	{
-		moveX += speed;
-
-		// ジャンプ
-		Jump();
-	}
-	else
-	{
-		// 射程内で、y座標が同じなら撃つ
-		isTargetLock = true;
 	}
 
-	// 標的になったら、プレイヤーを追いかける（反転したり）
-	if ( isTargetLock )
-	{
-		// プレイヤーより右で、右を向いている場合、左向きに変える
-		if ( playerX < x && speed > 0 )
-		{
-			speed *= -1;
-			isLeftWard = TRUE;
-		}
-		else if ( playerX > x && speed < 0 )
-		{
-			speed *= -1;
-			isLeftWard = FALSE;
-		}
-	}
-
-	CharaMove((float)width, (float)height);
+	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
 // 更新処理
-void Chara_EnemyGun::Update(float playerX, float playerY, bool isPlayerAlive,
-							float *shakeAddX, float *shakeAddY)
+void Chara_EnemyGun::Update(float playerX, float playerY, bool isPlayerAlive)
 {
 	if ( isAlive )
 	{
@@ -95,7 +101,6 @@ void Chara_EnemyGun::Update(float playerX, float playerY, bool isPlayerAlive,
 		ChangeGraphicDirection();
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
-		ShakeStart(&*shakeAddX, &*shakeAddY);
 	}
 
 	// HSVからRGBに変換

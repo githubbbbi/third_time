@@ -10,14 +10,14 @@ ElectricGun::ElectricGun(float x, float y, int radius,
 	this->y = y;
 	this->radius = radius;
 	this->speed = speed;
-	this->isCharaLeftWard = isCharaLeftWard;
+	this->isLeftWard = isCharaLeftWard;
 	this->graphHandle = graphHandle;
 
 	moveY = 0.0f;
 	exRate = 1.0;
 
 	// 左向き
-	if ( isCharaLeftWard )
+	if ( isLeftWard )
 	{
 		moveX = -speed;
 	}
@@ -53,7 +53,7 @@ void ElectricGun::Move()
 
 	// 移動量がspeedと等しくない場合マップヒット
 	// 左向き
-	if ( isCharaLeftWard )
+	if ( isLeftWard )
 	{
 		if ( moveX != -speed )
 		{
@@ -124,7 +124,7 @@ void ElectricGun::Draw(int scrollX, int scrollY)
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
-					  exRate, 0.0, graphHandle, true);
+					  exRate, 0.0, graphHandle, true, isLeftWard);
 	}
 }
 
