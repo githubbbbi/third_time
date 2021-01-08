@@ -4,8 +4,10 @@
 #include "Chara_EnemyBase.h"
 #include "Weapon/ElectricGun.h"
 
-const int ENEMY_GUN_WIDTH = 30;		// 横幅
-const int ENEMY_GUN_HEIGHT = 30;	// 縦幅
+const int E_GUN_WIDTH = 30;				// 横幅
+const int E_GUN_HEIGHT = 30;			// 縦幅
+const float E_GUN_NORMAL_SPEED = 3.0f;	// 通常スピード
+const float E_GUN_DASH_SPEED = 5.0f;	// ダッシュスピード
 
 const int BULLET_INTERVAL = 70;
 

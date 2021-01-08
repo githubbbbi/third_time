@@ -55,11 +55,11 @@ void Chara_Player::Move()
 		  InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
 		!InputManager::IsInputNow(e_FIXED_DIRECTION) )
 	{
-		speed = DASH_SPEED;
+		speed = P_DASH_SPEED;
 	}
 	else
 	{
-		speed = NORMAL_SPEED;
+		speed = P_NORMAL_SPEED;
 	}
 
 	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
@@ -71,12 +71,12 @@ void Chara_Player::Move()
 			// 左進行
 			if ( padInputX < 0 )
 			{
-				speed = NORMAL_SPEED;
+				speed = P_NORMAL_SPEED;
 			}
 			// 右進行
 			else if ( padInputX > 0 )
 			{
-				speed = NORMAL_SPEED / 2.0f;
+				speed = P_NORMAL_SPEED / 2.0f;
 			}
 		}
 		// 右向き
@@ -85,12 +85,12 @@ void Chara_Player::Move()
 			// 左進行
 			if ( padInputX < 0 )
 			{
-				speed = NORMAL_SPEED / 2.0f;
+				speed = P_NORMAL_SPEED / 2.0f;
 			}
 			// 右進行
 			else if ( padInputX > 0 )
 			{
-				speed = NORMAL_SPEED;
+				speed = P_NORMAL_SPEED;
 			}
 		}
 	}
@@ -158,7 +158,7 @@ void Chara_Player::BatteryDecrease()
 	}
 
 	// 撃った弾数が一定数を超える
-	if ( shotBulletNum >= PLAYER_CONSUMPTION_BULLET_NUM )
+	if ( shotBulletNum >= P_CONSUMPTION_BULLET_NUM )
 	{
 		// バッテリー減少
 		battery -= 2;
@@ -214,7 +214,7 @@ void Chara_Player::BatteryManager()
 	BatteryCharge();
 
 	// バッテリーは最大値を超えない
-	if ( battery > PLAYER_MAX_BATTERY )
+	if ( battery > P_MAX_BATTERY )
 	{
 		battery = 100;
 	}

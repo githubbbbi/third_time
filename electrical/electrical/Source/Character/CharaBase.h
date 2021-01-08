@@ -1,7 +1,5 @@
 #pragma once
 
-const float NORMAL_SPEED = 4.0f;	// 通常スピード
-const float DASH_SPEED = 7.0f;		// ダッシュスピード
 const float GRAVITY = 0.8f;			// 重力
 const float JUMP_POWER = -13.0f;	// ジャンプ力
 

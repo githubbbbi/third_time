@@ -9,6 +9,33 @@ Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int he
 
 }
 
+// ジャンプする
+void Chara_EnemyBase::Jump()
+{
+	// x座標が変わっておらず、目の前に縦1ブロックがある場合のみジャンプする
+	if ( x == oldX &&
+		((Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_NONE) ||
+		 (Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_NONE)) )
+	{
+		CharaJump();
+	}
+}
+
+// 進行方向を変える
+void Chara_EnemyBase::ChangeDirection()
+{
+	// 進む予定の位置に2つ並んでブロックがあった場合、方向を変える
+	if ( (Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		(Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
+		 Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK) )
+	{
+		speed *= -1;
+	}
+}
+
 // 画像の向きを変化
 void Chara_EnemyBase::ChangeGraphicDirection()
 {

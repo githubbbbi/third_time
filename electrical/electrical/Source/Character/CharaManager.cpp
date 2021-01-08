@@ -15,8 +15,8 @@ Chara_Manager::Chara_Manager()
 
 	// プレイヤー生成
 	player = new Chara_Player(startX, startY, 32,
-							  PLAYER_WIDTH, PLAYER_HEIGHT,
-							  NORMAL_SPEED, 100, 1, playerGH);
+							  P_WIDTH, P_HEIGHT,
+							  P_NORMAL_SPEED, 100, 1, playerGH);
 }
 
 Chara_Manager::~Chara_Manager()
@@ -51,16 +51,16 @@ void Chara_Manager::EnemyManager(float *shakeAddX, float *shakeAddY)
 		if ( CheckHitKey(KEY_INPUT_B) && enemyBomb.size() < 1 )
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
-													ENEMY_BOMB_WIDTH, ENEMY_BOMB_HEIGHT,
-													NORMAL_SPEED, 2, 10, enemyBombGH));
+													E_BOMB_WIDTH, E_BOMB_HEIGHT,
+													E_BOMB_NORMAL_SPEED, 2, 10, enemyBombGH));
 		}
 
 		// 銃エネミー
 		if ( CheckHitKey(KEY_INPUT_A) && enemyGun.size() < 1 )
 		{
 			enemyGun.push_back(new Chara_EnemyGun(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f, 32,
-												  ENEMY_GUN_WIDTH, ENEMY_GUN_HEIGHT,
-												  GetRand(3) + 2.0f, 2, 2, enemyGunGH));
+												  E_GUN_WIDTH, E_GUN_HEIGHT,
+												  E_GUN_NORMAL_SPEED, 2, 2, enemyGunGH));
 		}
 	}
 
@@ -166,7 +166,7 @@ void Chara_Manager::AttackCollision(float *shakeAddX, float *shakeAddY)
 										player->GetPosY(),
 										player->GetRadius() - 8) )
 		{
-			if ( fabsf(enemyBomb[i]->GetSpeed()) == DASH_SPEED )
+			if ( fabsf(enemyBomb[i]->GetSpeed()) == E_BOMB_DASH_SPEED )
 			{
 				enemyBomb[i]->HitAttack(&*shakeAddX, &*shakeAddY);
 				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());

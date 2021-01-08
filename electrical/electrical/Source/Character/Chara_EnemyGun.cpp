@@ -35,6 +35,9 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 	moveX = 0.0f;
 	moveY = 0.0f;
 
+	// 進行方向チェンジ
+	ChangeDirection();
+
 	// 射程内で止まる 間にブロックがあればとまらない
 	if ( playerX - x + radius >= 200 ||
 		x - radius - playerX >= 200 || IsBlock(playerX) )
@@ -44,13 +47,8 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 		// 射程外では撃たない
 		isTargetLock = false;
 
-		// x座標が変わっておらず、目の前にブロックがある場合のみジャンプする
-		if ( x == oldX &&
-			Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK ||
-			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
-		{
-			CharaJump();
-		}
+		// ジャンプ
+		Jump();
 
 	}
 	// ｙが違う場合なら、射程内でも進む
@@ -59,12 +57,7 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 		moveX += speed;
 
 		// ジャンプ
-		if ( x == oldX &&
-			Stage::GetMapParam(x + radius + 1, y) == e_MAP_BLOCK ||
-			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK )
-		{
-			CharaJump();
-		}
+		Jump();
 	}
 	else
 	{
@@ -87,7 +80,7 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 			isLeftWard = FALSE;
 		}
 	}
-	
+
 	CharaMove((float)width, (float)height);
 }
 

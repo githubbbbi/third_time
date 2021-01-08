@@ -5,6 +5,12 @@
 class Chara_EnemyBase:public CharaBase
 {
 protected:
+	// ジャンプする
+	void Jump();
+
+	// 進行方向を変える
+	void ChangeDirection();
+
 	// 画像の向きを変化
 	void ChangeGraphicDirection();
 

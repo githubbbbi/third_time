@@ -2,8 +2,10 @@
 
 #include "Chara_EnemyBase.h"
 
-const int ENEMY_BOMB_WIDTH = 30;	// 横幅
-const int ENEMY_BOMB_HEIGHT = 30;	// 縦幅
+const int E_BOMB_WIDTH = 30;			// 横幅
+const int E_BOMB_HEIGHT = 30;			// 縦幅
+const float E_BOMB_NORMAL_SPEED = 2.0f;	// 通常スピード
+const float E_BOMB_DASH_SPEED = 8.0f;	// ダッシュスピード
 
 class Chara_EnemyBomb:public Chara_EnemyBase
 {

@@ -25,8 +25,12 @@ void Chara_EnemyBomb::Initialize()
 // 移動
 void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 {
+	// 移動量初期化
 	moveX = 0.0f;
 	moveY = 0.0f;
+
+	// 進行方向チェンジ
+	ChangeDirection();
 
 	// 移動処理
 	// 敵とプレイヤーのX座標が等しい時、スピードをダッシュに合わせる
@@ -36,11 +40,11 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	{
 		if ( speed > 0 )
 		{
-			speed = DASH_SPEED;
+			speed = E_BOMB_DASH_SPEED;
 		}
 		else
 		{
-			speed = -DASH_SPEED;
+			speed = -E_BOMB_DASH_SPEED;
 		}
 	}
 	// 違う時、スピードをノーマルに戻す
@@ -48,31 +52,18 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	{
 		if ( speed > 0 )
 		{
-			speed = NORMAL_SPEED;
+			speed = E_BOMB_NORMAL_SPEED;
 		}
 		else
 		{
-			speed = -NORMAL_SPEED;
+			speed = -E_BOMB_NORMAL_SPEED;
 		}
 
-		// 進む予定の位置に2つ並んでブロックがあった場合、方向を変える
-		if ( Stage::GetMapParam(x + radius + 2, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x + radius + 2, y - CHIP_SIZE) == e_MAP_BLOCK ||
-			Stage::GetMapParam(x - radius - 2, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x - radius - 2, y - CHIP_SIZE) == e_MAP_BLOCK )
-		{
-			speed *= -1;
-		}
-
-		// X座標に変化がなくなった時にジャンプする
-		if ( x == oldX )
-		{
-			CharaJump();
-		}
+		// ジャンプ
+		Jump();
 	}
 
 	moveX += speed;
-
 	CharaMove((float)width, (float)height);
 }
 
