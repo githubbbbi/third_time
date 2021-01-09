@@ -49,5 +49,5 @@ void EffectManager::Shake()
 // ”š”­
 void EffectManager::Explosion(float x, float y)
 {
-
+	explosion.push_back(new Effect_Explosion(x, y));
 }

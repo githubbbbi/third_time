@@ -3,7 +3,7 @@
 #include"../stage/stage.h"
 
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
-	float speed, int hp, int attackPower, int graphHandle) :
+								 float speed, int hp, int attackPower, int graphHandle):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
 
@@ -17,12 +17,12 @@ void Chara_EnemyBase::Jump()
 		return;
 	}
 
-	// 目の前に縦1ブロックがあるかつ上にブロックがない場合のみジャンプする
+	// 目の前に縦1ブロックがあるかつ真上にブロックがない場合のみジャンプする
 	if ( Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_NONE &&
 		((Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
-			(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-				Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
+		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
+		 (Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
 	{
 		CharaJump();
 	}
@@ -36,20 +36,20 @@ void Chara_EnemyBase::ChangeDirection()
 		return;
 	}
 
-	// 進む予定の位置に2つ並んでブロックがある
+	// 進む予定の位置に縦に2つ並んでブロックがある
 	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-		Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
 		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
+		 Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1;
 	}
 
-	// 目の前に縦1ブロックがあるかつ上にブロックがある
+	// 目の前に縦1ブロックがあるかつ真上にブロックがある
 	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-		Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		  Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
 		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
+		 Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1;
 	}

@@ -93,18 +93,6 @@
     <ClCompile Include="Source\Input\InputPad.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\CharaPlayer.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Character\CharaBase.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Character\CharaManager.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Character\Chara_EnemyBase.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Character\Weapon\ElectricGun.cpp">
       <Filter>ソース ファイル\Character\Weapon</Filter>
     </ClCompile>
@@ -117,17 +105,32 @@
     <ClCompile Include="Source\Input\InputManager.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Effect\EffectManager.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect\Effect_Shake.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect\Effect_Explosion.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\CharaManager.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyBase.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Character\Chara_EnemyBomb.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character\Chara_EnemyGun.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Effect\EffectManager.cpp">
-      <Filter>ソース ファイル\Effect</Filter>
+    <ClCompile Include="Source\Character\CharaPlayer.cpp">
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Effect\Effect_Shake.cpp">
-      <Filter>ソース ファイル\Effect</Filter>
+    <ClCompile Include="Source\Character\CharaBase.cpp">
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,18 +155,6 @@
     <ClInclude Include="Source\Input\InputPad.h">
       <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character\CharaBase.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Chara_EnemyBase.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Chara_Manager.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Chara_Player.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Stage\Stage.h">
       <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
@@ -173,12 +164,6 @@
     <ClInclude Include="Source\Input\InputManager.h">
       <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character\Chara_EnemyBomb.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Chara_EnemyGun.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
       <Filter>ヘッダー ファイル\Character\Weapon</Filter>
     </ClInclude>
@@ -187,6 +172,27 @@
     </ClInclude>
     <ClInclude Include="Source\Effect\Effect_Shake.h">
       <Filter>ヘッダー ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect\Effect_Explosion.h">
+      <Filter>ヘッダー ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_Manager.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyGun.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyBomb.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyBase.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_Player.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\CharaBase.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

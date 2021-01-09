@@ -51,6 +51,13 @@ void GameMain::Update()
 	// エフェクト
 	effects->Update();
 
+	// エネミーの死亡エフェクト
+	if ( charaManager->IsEnemyDeath() )
+	{
+		effects->Shake();
+		//effects->Explosion(charaManager->x, charaManager->);
+	}
+
 	// スクロール
 	Utility::Scroll((int)charaManager->GetScrollCenterX(),
 					(int)charaManager->GetScrollCenterY(), &scrollX, &scrollY);

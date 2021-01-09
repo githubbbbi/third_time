@@ -1,11 +1,12 @@
 #pragma once
 
 #include <vector>
+#include "Effect_Explosion.h"
 
 class EffectManager
 {
 private:
-	//std::vector<Effect_Explosion *>explosion;
+	std::vector<Effect_Explosion *>explosion;
 
 	float shakeX, shakeY;
 	float shakeAddX, shakeAddY;

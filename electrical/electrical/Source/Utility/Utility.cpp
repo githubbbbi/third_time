@@ -139,37 +139,6 @@ bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
 	return false;
 }
 
-// シェイク
-void Utility::Shake(float *shakeX, float *shakeY,
-					float *addX, float *addY)
-{
-	// X方向
-	*shakeX = (rand() % ((int)*addX - ((int)-*addX) + 1)) + (-*addX);
-
-	if ( *addX > 0 )
-	{
-		*addX -= SHAKE_DECREASE;
-	}
-
-	if ( *addX < 0 )
-	{
-		*addX = 0;
-	}
-
-	// Y方向
-	*shakeY = (rand() % ((int)*addY - ((int)-*addY) + 1)) + (-*addY);
-
-	if ( *addY > 0 )
-	{
-		*addY -= SHAKE_DECREASE;
-	}
-
-	if ( *addY < 0 )
-	{
-		*addY = 0;
-	}
-}
-
 // スクロール
 void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
 {

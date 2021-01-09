@@ -42,6 +42,10 @@ public:
 	// 描画処理
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
+	// スクロールの中心座標を取得
 	float GetScrollCenterX();
 	float GetScrollCenterY();
+
+	// エネミーの死亡
+	bool IsEnemyDeath();
 };

@@ -34,10 +34,6 @@ public:
 	static bool IsRectCollision(float x1, float y1, int w1, int h1,
 								float x2, float y2, int w2, int h2);
 
-	// シェイク
-	static void Shake(float *shakeX, float *shakeY,
-					  float *addX, float *addY);
-
 	// スクロール
 	static void Scroll(int centerX, int centerY,
 					   int *scrollX, int *scrollY);

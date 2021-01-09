@@ -72,15 +72,15 @@ void Chara_Manager::EnemyManager()
 		enemyBomb[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
 	}
 
-	for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
-	{
-		// 死亡後画面外に出た場合、エネミー削除
-		if ( !enemyBomb[i]->GetIsAlive() )
-		{
-			delete enemyBomb[i];
-			enemyBomb.erase(enemyBomb.begin() + i);
-		}
-	}
+	//for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
+	//{
+	//	// 死亡後画面外に出た場合、エネミー削除
+	//	if ( !enemyBomb[i]->GetIsAlive() )
+	//	{
+	//		delete enemyBomb[i];
+	//		enemyBomb.erase(enemyBomb.begin() + i);
+	//	}
+	//}
 
 	// 銃エネミー
 	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
@@ -88,15 +88,15 @@ void Chara_Manager::EnemyManager()
 		enemyGun[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
 	}
 
-	for ( int i = enemyGun.size() - 1; i >= 0; i-- )
-	{
-		// 死亡後画面外に出た場合、エネミー削除
-		if ( !enemyGun[i]->GetIsAlive() )
-		{
-			delete enemyGun[i];
-			enemyGun.erase(enemyGun.begin() + i);
-		}
-	}
+	//for ( int i = enemyGun.size() - 1; i >= 0; i-- )
+	//{
+	//	// 死亡後画面外に出た場合、エネミー削除
+	//	if ( !enemyGun[i]->GetIsAlive() )
+	//	{
+	//		delete enemyGun[i];
+	//		enemyGun.erase(enemyGun.begin() + i);
+	//	}
+	//}
 }
 
 // キャラクタ同士の当たり判定
@@ -286,4 +286,46 @@ float Chara_Manager::GetScrollCenterX()
 float Chara_Manager::GetScrollCenterY()
 {
 	return player->GetPosOldY();
+}
+
+// エネミーの死亡
+bool Chara_Manager::IsEnemyDeath()
+{
+	// 爆弾エネミー
+	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
+	{
+		if ( enemyBomb[i]->GetIsAlive() )
+		{
+			continue;
+		}
+
+		if ( !enemyBomb[i]->GetIsAlive() )
+		{
+			// エネミーを消去
+			delete enemyBomb[i];
+			enemyBomb.erase(enemyBomb.begin() + i);
+
+			return true;
+		}
+	}
+
+	// 銃エネミー
+	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
+	{
+		if ( enemyGun[i]->GetIsAlive() )
+		{
+			continue;
+		}
+
+		if ( !enemyGun[i]->GetIsAlive() )
+		{
+			// エネミーを消去
+			delete enemyGun[i];
+			enemyGun.erase(enemyGun.begin() + i);
+
+			return true;
+		}
+	}
+
+	return false;
 }
