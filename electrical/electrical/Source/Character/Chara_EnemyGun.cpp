@@ -12,6 +12,7 @@ Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius, int width, int heig
 	shotBulletNum = 0;
 	bulletInterval = 0;
 	isTargetLock = false;
+	checkY = 0;
 }
 
 Chara_EnemyGun::~Chara_EnemyGun()
@@ -103,6 +104,8 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 		isTargetLock = false;
 	}
 
+	checkY = playerY;
+
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
@@ -138,6 +141,8 @@ void Chara_EnemyGun::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBright(255, 255, 255);
 	}
 
+	// 確認用
+	DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f 敵のY座標%f",checkY,y, TRUE);
 }
 
 // 攻撃ヒット

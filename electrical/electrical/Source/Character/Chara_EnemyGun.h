@@ -19,6 +19,7 @@ private:
 	int shotBulletNum;		// 撃った弾数
 	int bulletInterval;		// 銃を撃つ間隔
 	bool isTargetLock;		// 範囲内のフラグ
+	float checkY;			// y座標を確認する
 
 
 	// 移動
