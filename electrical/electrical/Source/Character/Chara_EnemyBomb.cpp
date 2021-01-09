@@ -97,8 +97,6 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 					  1.0, 0.0, graphHandle, true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 	}
-
-	DrawFormatString(300, 150, GetColor(255, 255, 255), "”š’e“G‚ÌYÀ•W%f", y,true);
 }
 
 // UŒ‚ƒqƒbƒg(“Ëi)

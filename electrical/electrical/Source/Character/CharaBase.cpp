@@ -37,7 +37,9 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	s = 0.0f;
 	v = 255.0f;
 
-	isColorBlinking = false;
+	cBlinkingTimer = 0;
+	cBlinkingCounter = 0;
+	isCBlinking = false;
 }
 
 // キャラクタのジャンプ
@@ -62,7 +64,7 @@ void CharaBase::CharaFall()
 		// 落下速度を移動量に加える
 		moveY += gravity;
 	}
-	// ジャンプ中でなければジャンプさせない
+	// ジャンプ中でも落下中でもなければジャンプさせない
 	else
 	{
 		gravity = 0.0f;
@@ -79,33 +81,37 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	// 落下
 	CharaFall();
 
-	// ダミー これはXまたはY方向の移動量について考慮しない場合に用いる
-	static float dummy = 0.0f;
+	// XまたはY方向の移動量について考慮しない場合に用いる
+	float dummy = 0.0f;
 
 	// キャラクタの左上、右上、左下、右上部分に当たり判定がある
 	// マップに衝突しているか調べ、衝突していた場合補正する
 
 	// 上下の移動量をチェック
 	// 左下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x - hitWidth, y + hitHeight, &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x - hitWidth, y + hitHeight,
+							  &dummy, &moveY) == e_HIT_TOP )
 	{
 		gravity = 0.0f;
 	}
 
 	// 右下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x + hitWidth, y + hitHeight, &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x + hitWidth, y + hitHeight,
+							  &dummy, &moveY) == e_HIT_TOP )
 	{
 		gravity = 0.0f;
 	}
 
 	// 左上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x - hitWidth, y - hitHeight, &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x - hitWidth, y - hitHeight,
+							  &dummy, &moveY) == e_HIT_BOTTOM )
 	{
 		gravity = GRAVITY;
 	}
 
 	// 右上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x + hitWidth, y - hitHeight, &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x + hitWidth, y - hitHeight,
+							  &dummy, &moveY) == e_HIT_BOTTOM )
 	{
 		gravity = GRAVITY;
 	}
@@ -124,8 +130,10 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 
 	// 接地判定
 	// キャラクタの左下または右下が地面であるか調べる
-	if ( Stage::GetMapParam(x - hitWidth, y + hitHeight + 1.0f) == e_MAP_BLOCK ||
-		Stage::GetMapParam(x + hitWidth, y + hitHeight + 1.0f) == e_MAP_BLOCK )
+	if ( Stage::GetMapParam(x - hitWidth, 
+							y + hitHeight + 1.0f) == e_MAP_BLOCK ||
+		Stage::GetMapParam(x + hitWidth, 
+						   y + hitHeight + 1.0f) == e_MAP_BLOCK )
 	{
 		// 足場がある場合、接地中
 		isFall = false;
@@ -157,40 +165,38 @@ void CharaBase::HpManager()
 // 色点滅
 void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
 {
-	static int timer = 0;
-	static int counter = 0;
 	const int change = 5;
 
-	if ( isColorBlinking )
+	if ( isCBlinking )
 	{
 		// 点滅終了
-		if ( counter > noOfTimes )
+		if ( cBlinkingCounter > noOfTimes )
 		{
 			this->s = 0.0f;
-			counter = 0;
-			timer = 0;
-			isColorBlinking = false;
+			cBlinkingCounter = 0;
+			cBlinkingTimer = 0;
+			isCBlinking = false;
 
 			return;
 		}
 
 		// 点滅
-		timer++;
-		if ( timer < change )
+		cBlinkingTimer++;
+		if ( cBlinkingTimer < change )
 		{
 			this->h = h;
 			this->s = s;
 			this->v = v;
 		}
-		else if ( timer < change * 2 )
+		else if ( cBlinkingTimer < change * 2 )
 		{
 			this->s = 0.0f;
 			this->v = 255.0f;
 		}
-		else if ( timer < change * 3 )
+		else if ( cBlinkingTimer < change * 3 )
 		{
-			counter++;
-			timer = 0;
+			cBlinkingCounter++;
+			cBlinkingTimer = 0;
 		}
 	}
 }
@@ -263,10 +269,10 @@ bool CharaBase::GetIsLeftWard()
 // ダメージを受ける
 void CharaBase::ReceiveDamage(int attackPower)
 {
-	// 点滅フラグTRUE
-	if ( !isColorBlinking )
+	// 色点滅フラグTRUE
+	if ( !isCBlinking )
 	{
-		isColorBlinking = true;
+		isCBlinking = true;
 	}
 
 	hp -= attackPower;

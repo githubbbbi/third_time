@@ -140,9 +140,6 @@ void Chara_EnemyGun::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 			1.0, 0.0, graphHandle, true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 	}
-
-	// 確認用
-	DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f 敵のY座標%f",checkY,y, TRUE);
 }
 
 // 攻撃ヒット

@@ -30,7 +30,10 @@ protected:
 	float h;				// 色相(hue)			:0~360
 	float s;				// 彩度(saturation)	:0~255
 	float v;				// 明度(value)		:0~255
-	bool isColorBlinking;	// 点滅フラグ
+	
+	int cBlinkingTimer;		// 色点滅タイマー
+	int cBlinkingCounter;	// 色点滅回数カウンター
+	bool isCBlinking;		// 色点滅フラグ
 
 	// キャラクタの落下
 	void CharaFall();

@@ -59,11 +59,11 @@ int Utility::MapHitCheck(float x, float y,
 		map.top = ((int)addY / CHIP_SIZE) * CHIP_SIZE;			// 上辺のY座標
 		map.bottom = ((int)addY / CHIP_SIZE + 1) * CHIP_SIZE;	// 下辺のY座標
 
-		// 上辺に衝突 *moveYが0.0fより大きい場合、下に進もうとしている
+		// 上辺に衝突 moveYが0.0fより大きい場合、下に進もうとしている
 		if ( *moveY > 0.0f )
 		{
 			// 移動量を補正
-			*moveY = map.top - y - 1.0f;
+			*moveY = (float)map.top - y - 1.0f;
 
 			// 上辺に衝突したと返す
 			return e_HIT_TOP;
@@ -73,7 +73,7 @@ int Utility::MapHitCheck(float x, float y,
 		if ( *moveY < 0.0f )
 		{
 			// 移動量を補正
-			*moveY = map.bottom - y + 1.0f;
+			*moveY = (float)map.bottom - y + 1.0f;
 
 			// 下辺に衝突したと返す
 			return e_HIT_BOTTOM;
@@ -83,7 +83,7 @@ int Utility::MapHitCheck(float x, float y,
 		if ( *moveX > 0.0f )
 		{
 			// 移動量を補正
-			*moveX = 0.0f;
+			*moveX = (float)map.left - x - 1.0f;
 
 			// 左辺に衝突したと返す
 			return e_HIT_LEFT;
@@ -93,7 +93,7 @@ int Utility::MapHitCheck(float x, float y,
 		if ( *moveX < 0.0f )
 		{
 			// 移動量を補正
-			*moveX = 0.0f;
+			*moveX = (float)map.right - x + 1.0f;;
 
 			// 右辺に衝突したと返す
 			return e_HIT_RIGHT;
