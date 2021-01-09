@@ -6,7 +6,7 @@
 #include "../Utility/Utility.h"
 
 Chara_EnemyGun::Chara_EnemyGun(float x, float y, int radius, int width, int height,
-							   float speed, int hp, int attackPower, int graphHandle):
+	float speed, int hp, int attackPower, int graphHandle) :
 	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
 	shotBulletNum = 0;
@@ -39,6 +39,10 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 	// 進行方向チェンジ
 	ChangeDirection();
 
+	// 爆弾エネミーと同じくマップチップでの座標に
+	int enemyMapY = (int)y / CHIP_SIZE;
+	int playerMapY = (int)playerY / CHIP_SIZE;
+	
 	if ( isPlayerAlive )
 	{
 		// 射程内で止まる 間にブロックがあればとまらない
@@ -48,18 +52,19 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 			moveX += speed;
 
 			// 射程外では撃たない
-			isTargetLock = false;
 
+			isTargetLock = false;
+			
 			// ジャンプ
 			Jump();
 		}
 		// ｙが違う場合なら、射程内でも進む
-		else if ( y != playerY )
+		else if (enemyMapY!= playerMapY )
 		{
 			moveX += speed;
 
-			// ジャンプ
-			Jump();
+			// 射程外では撃たない
+			isTargetLock = false;
 		}
 		else
 		{
@@ -67,23 +72,32 @@ void Chara_EnemyGun::Move(float playerX, float playerY, bool isPlayerAlive)
 			isTargetLock = true;
 		}
 
-		// 標的になったら、プレイヤーを追いかける（反転したり）
+		// 標的になったら、プレイヤーを追いかける（反転したり)
 		if ( isTargetLock )
 		{
 			// プレイヤーより右で、右を向いている場合、左向きに変える
 			if ( playerX < x && !isLeftWard )
 			{
 				speed *= -1;
-				isLeftWard = true;
+				if (speed < 0 )
+				{
+					isLeftWard = true;
+				}
 			}
-			else if ( playerX > x && isLeftWard )
+			
+			if ( playerX > x && isLeftWard )
 			{
 				speed *= -1;
-				isLeftWard = false;
+
+				if (speed > 0 )
+				{
+					isLeftWard = false;
+				}
 			}
 		}
 	}
 
+	// プレイヤーが死んでる場合は、弾撃たない
 	if ( !isPlayerAlive )
 	{
 		isTargetLock = false;
@@ -120,9 +134,10 @@ void Chara_EnemyGun::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	{
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+			1.0, 0.0, graphHandle, true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 	}
+
 }
 
 // 攻撃ヒット
@@ -147,9 +162,9 @@ void Chara_EnemyGun::WeaponManager(int electricGunGH)
 	if ( bulletInterval == BULLET_INTERVAL && isTargetLock )
 	{
 		electricGun.push_back(new ElectricGun(x, y,
-											  16, 10.0f,
-											  isLeftWard,
-											  electricGunGH));
+			16, 10.0f,
+			isLeftWard,
+			electricGunGH));
 	}
 
 	// 電気銃

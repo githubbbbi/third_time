@@ -3,7 +3,7 @@
 #include"../stage/stage.h"
 
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
-								 float speed, int hp, int attackPower, int graphHandle):
+	float speed, int hp, int attackPower, int graphHandle) :
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
 {
 
@@ -20,9 +20,9 @@ void Chara_EnemyBase::Jump()
 	// 目の前に縦1ブロックがあるかつ上にブロックがない場合のみジャンプする
 	if ( Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_NONE &&
 		((Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
-		 (Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
+			Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
+			(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+				Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
 	{
 		CharaJump();
 	}
@@ -38,18 +38,18 @@ void Chara_EnemyBase::ChangeDirection()
 
 	// 進む予定の位置に2つ並んでブロックがある
 	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
 		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-		 Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
+			Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1;
 	}
 
 	// 目の前に縦1ブロックがあるかつ上にブロックがある
 	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
 		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-		 Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
+			Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1;
 	}
@@ -76,6 +76,8 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 	// 敵とプレイヤーの間のブロック数
 	int enemySpace = (int)fabsf(x - playerX) / CHIP_SIZE;
 
+
+
 	// プレイヤーとの間にブロックがあるか
 	for ( int i = 1; i <= enemySpace; i++ )
 	{
@@ -96,6 +98,7 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 			}
 		}
 	}
+
 
 	return false;
 }

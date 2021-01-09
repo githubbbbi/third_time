@@ -38,7 +38,7 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	int playerMapY = (int)playerY / CHIP_SIZE;
 
 	// 移動処理
-	// 敵とプレイヤーのX座標が等しい時、スピードをダッシュに合わせる
+	// 敵とプレイヤーのy座標が等しい時、スピードをダッシュに合わせる
 	if ( isPlayerAlive && !IsBlock(playerX) &&
 		(enemyMapY == playerMapY) &&
 		(isLeftWard && x > playerX || !isLeftWard && x < playerX) )
