@@ -31,7 +31,7 @@ void Chara_EnemyBase::Jump()
 // 進行方向を変える
 void Chara_EnemyBase::ChangeDirection()
 {
-	if ( x != oldX )
+	if ( x != oldX || isJump || isFall )
 	{
 		return;
 	}
@@ -58,15 +58,28 @@ void Chara_EnemyBase::ChangeDirection()
 // 画像の向きを変化
 void Chara_EnemyBase::ChangeGraphicDirection()
 {
-	// 左に進行
-	if ( x - oldX < 0.0f )
+	if ( x == oldX )
 	{
-		isLeftWard = true;
+		return;
 	}
-	// 右に進攻
-	else if ( x - oldX > 0.0f )
+
+	// 左に進行で右向きの場合
+	if ( !isLeftWard )
 	{
-		isLeftWard = false;
+		if ( speed < 0.0f )
+		{
+			// 左を向く
+			isLeftWard = true;
+		}
+	}
+	// 右に進行で左向きの場合
+	else
+	{
+		if ( speed > 0.0f )
+		{
+			// 右を向く
+			isLeftWard = false;
+		}
 	}
 }
 
@@ -75,8 +88,6 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 {
 	// 敵とプレイヤーの間のブロック数
 	int enemySpace = (int)fabsf(x - playerX) / CHIP_SIZE;
-
-
 
 	// プレイヤーとの間にブロックがあるか
 	for ( int i = 1; i <= enemySpace; i++ )

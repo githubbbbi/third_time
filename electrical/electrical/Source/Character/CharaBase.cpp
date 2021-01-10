@@ -52,10 +52,10 @@ void CharaBase::CharaJump()
 	}
 }
 
-// キャラクタの落下
-void CharaBase::CharaFall()
+// キャラクタの上昇&落下
+void CharaBase::CharaRiseFall()
 {
-	// 落下
+	// 上昇&落下
 	if ( isJump || isFall )
 	{
 		// 落下速度を増やす
@@ -78,8 +78,8 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	oldX = x;
 	oldY = y;
 
-	// 落下
-	CharaFall();
+	// 上昇&落下
+	CharaRiseFall();
 
 	// XまたはY方向の移動量について考慮しない場合に用いる
 	float dummy = 0.0f;

@@ -1,6 +1,6 @@
 #pragma once
 
-const float GRAVITY = 0.8f;			// 重力
+const float GRAVITY = 0.85f;		// 重力
 const float JUMP_POWER = -13.0f;	// ジャンプ力
 
 class CharaBase
@@ -30,13 +30,13 @@ protected:
 	float h;				// 色相(hue)			:0~360
 	float s;				// 彩度(saturation)	:0~255
 	float v;				// 明度(value)		:0~255
-	
+
 	int cBlinkingTimer;		// 色点滅タイマー
 	int cBlinkingCounter;	// 色点滅回数カウンター
 	bool isCBlinking;		// 色点滅フラグ
 
-	// キャラクタの落下
-	void CharaFall();
+	// キャラクタの上昇&落下
+	void CharaRiseFall();
 
 	// キャラの移動
 	void CharaMove(float hitWidth, float hitHeight);

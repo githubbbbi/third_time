@@ -153,6 +153,7 @@ void Chara_Player::BatteryDecrease()
 			battery--;
 
 			// タイマーリセット
+			batteryChargeTimer = 0;
 			batteryTimer = 0;
 		}
 	}
@@ -169,8 +170,13 @@ void Chara_Player::BatteryDecrease()
 // バッテリーチャージ
 void Chara_Player::BatteryCharge()
 {
+	if ( battery == P_MAX_BATTERY )
+	{
+		return;
+	}
+
 	// 移動中でない
-	if ( moveX == 0.0f && moveY == 0.0f && !isJump )
+	if ( moveX == 0.0f && moveY == 0.0f && (!isJump || !isFall) )
 	{
 		// 一定時間チャージでチャージ量が増加
 		if ( batteryChargeTimer < 60 * 3 )
