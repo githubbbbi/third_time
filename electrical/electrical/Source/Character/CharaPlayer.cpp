@@ -276,12 +276,12 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(0, 20, GetColor(255, 255, 255), "battery:%d%", battery);
 	DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
-	DrawFormatString(80, 140, GetColor(255, 255, 255), "r:%f", r);
-	DrawFormatString(80, 160, GetColor(255, 255, 255), "g:%f", g);
-	DrawFormatString(80, 180, GetColor(255, 255, 255), "b:%f", b);
-	DrawFormatString(80, 220, GetColor(255, 255, 255), "h:%f", h);
-	DrawFormatString(80, 240, GetColor(255, 255, 255), "s:%f", s);
-	DrawFormatString(80, 260, GetColor(255, 255, 255), "v:%f", v);
+	DrawFormatString(80, 160, GetColor(255, 255, 255), "r:%f", r);
+	DrawFormatString(80, 180, GetColor(255, 255, 255), "g:%f", g);
+	DrawFormatString(80, 200, GetColor(255, 255, 255), "b:%f", b);
+	DrawFormatString(80, 240, GetColor(255, 255, 255), "h:%f", h);
+	DrawFormatString(80, 260, GetColor(255, 255, 255), "s:%f", s);
+	DrawFormatString(80, 280, GetColor(255, 255, 255), "v:%f", v);
 }
 
 // çUåÇ

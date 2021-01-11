@@ -351,7 +351,7 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	// デバッグ用
 	DrawFormatString(50, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 爆弾エネミーの数:%d", enemyBomb.size());
 	DrawFormatString(50, 120, GetColor(255, 255, 255), "Aキーでエネミー生成 銃エネミーの数:%d", enemyGun.size());
-	DrawFormatString(50, 140, GetColor(255, 255, 255), "Cキーでエネミー生成 銃エネミーの数:%d", enemyWater.size());
+	DrawFormatString(50, 140, GetColor(255, 255, 255), "Cキーでエネミー生成 水弾エネミーの数:%d", enemyWater.size());
 	DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f", player->GetPosY());
 	if ( enemyBomb.size() >= 1 )
 	{
