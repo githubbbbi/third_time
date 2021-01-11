@@ -132,6 +132,12 @@
     <ClCompile Include="Source\Character\CharaBase.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Character\Weapon\WaterBullet.cpp">
+      <Filter>ソース ファイル\Character\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyWater.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -193,6 +199,12 @@
     </ClInclude>
     <ClInclude Include="Source\Character\CharaBase.h">
       <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyWater.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Weapon\WaterBullet.h">
+      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

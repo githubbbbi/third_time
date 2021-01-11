@@ -8,7 +8,10 @@ Chara_Manager::Chara_Manager()
 	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
 	enemyBombGH = LoadGraph("Resource/Graphic/Character/enemy_bomb.png");
 	enemyGunGH = LoadGraph("Resource/Graphic/Character/enemy_gun.png");
+	enemyWaterGH = LoadGraph("Resource/Graphic/Character/enemy_gun.png");
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
+	waterBulletGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
+
 
 	explosionX = 0.0f;
 	explosionY = 0.0f;
@@ -67,6 +70,14 @@ void Chara_Manager::EnemyManager()
 												  E_GUN_WIDTH, E_GUN_HEIGHT,
 												  E_GUN_NORMAL_SPEED, 2, 2, enemyGunGH));
 		}
+
+		// 水弾エネミー
+		if ( CheckHitKey(KEY_INPUT_C) && timer % 30 == 0 )
+		{
+			enemyWater.push_back(new Chara_EnemyWater(WIN_WIDTH / 2.0f, 0.0f, 32,
+				E_WATER_WIDTH, E_WATER_HEIGHT,
+				0.0f, 2, 2, enemyWaterGH));
+		}
 	}
 
 	// 爆弾エネミー
@@ -98,6 +109,22 @@ void Chara_Manager::EnemyManager()
 	//	{
 	//		delete enemyGun[i];
 	//		enemyGun.erase(enemyGun.begin() + i);
+	//	}
+	//}
+
+	// 水弾エネミー
+	for (unsigned int i = 0; i < enemyWater.size(); i++)
+	{
+		enemyWater[i]->Update(player->GetPosX(), player->GetPosY());
+	}
+
+	//for ( int i = enemyWater.size() - 1; i >= 0; i-- )
+	//{
+	//	// 死亡後画面外に出た場合、エネミー削除
+	//	if ( !enemyWater[i]->GetIsAlive() )
+	//	{
+	//		delete enemyWater[i];
+	//		enemyWater.erase(enemyWater.begin() + i);
 	//	}
 	//}
 }
@@ -142,6 +169,13 @@ void Chara_Manager::WeaponManager()
 	for ( unsigned int i = 0; i < enemyGun.size(); i++ )
 	{
 		enemyGun[i]->WeaponManager(electricGunGH);
+	}
+
+	// 水弾エネミー攻撃
+	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
+	{
+		enemyWater[i]->WeaponManager(player->GetPosX(), player->GetPosY(),
+									player->GetIsAlive(), waterBulletGH);
 	}
 }
 
@@ -230,6 +264,45 @@ void Chara_Manager::AttackCollision()
 			}
 		}
 	}
+
+	// 水弾エネミー
+	for (unsigned int i = 0; i < enemyWater.size(); i++)
+	{
+		if (!enemyWater[i]->GetIsAlive())
+		{
+			continue;
+		}
+
+		// エネミーとプレイヤーの攻撃との当たり判定
+		for (unsigned int j = 0; j < player->GetGunSize(); j++)
+		{
+			if (Utility::IsCircleCollision(enemyWater[i]->GetPosX(),
+				enemyWater[i]->GetPosY(),
+				enemyWater[i]->GetRadius() - 8,
+				player->GetGunPosX(j),
+				player->GetGunPosY(j),
+				player->GetGunRadius(j) - 4))
+			{
+				enemyWater[i]->ReceiveDamage(player->GetAttackPower());
+				player->HitAttack(j);
+			}
+		}
+
+		// エネミーの攻撃とプレイヤーの当たり判定
+		for (unsigned int j = 0; j < enemyWater[i]->GetGunSize(); j++)
+		{
+			if (Utility::IsCircleCollision(enemyWater[i]->GetGunPosX(j),
+				enemyWater[i]->GetGunPosY(j),
+				enemyWater[i]->GetGunRadius(j) - 8,
+				player->GetPosX(),
+				player->GetPosY(),
+				player->GetRadius() - 4))
+			{
+				enemyWater[i]->HitAttack(j);
+				player->ReceiveDamage(enemyWater[i]->GetAttackPower());
+			}
+		}
+	}
 }
 
 // 更新処理
@@ -269,9 +342,16 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		enemyGun[i]->Draw(shakeX, shakeY, scrollX, scrollY);
 	}
 
+	// 水弾エネミー
+	for (unsigned int i = 0; i < enemyWater.size(); i++)
+	{
+		enemyWater[i]->Draw(shakeX, shakeY, scrollX, scrollY);
+	}
+
 	// デバッグ用
 	DrawFormatString(50, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 爆弾エネミーの数:%d", enemyBomb.size());
 	DrawFormatString(50, 120, GetColor(255, 255, 255), "Aキーでエネミー生成 銃エネミーの数:%d", enemyGun.size());
+	DrawFormatString(50, 140, GetColor(255, 255, 255), "Cキーでエネミー生成 銃エネミーの数:%d", enemyWater.size());
 	DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f", player->GetPosY());
 	if ( enemyBomb.size() >= 1 )
 	{
@@ -346,6 +426,28 @@ bool Chara_Manager::GetIsEnemyDeath()
 			// エネミーを消去
 			delete enemyGun[i];
 			enemyGun.erase(enemyGun.begin() + i);
+
+			return true;
+		}
+	}
+
+	// 水弾エネミー
+	for (unsigned int i = 0; i < enemyWater.size(); i++)
+	{
+		if (enemyWater[i]->GetIsAlive())
+		{
+			continue;
+		}
+
+		if (!enemyWater[i]->GetIsAlive())
+		{
+			// 座標を取得
+			explosionX = enemyWater[i]->GetPosX();
+			explosionY = enemyWater[i]->GetPosY();
+
+			// エネミーを消去
+			delete enemyWater[i];
+			enemyWater.erase(enemyWater.begin() + i);
 
 			return true;
 		}
