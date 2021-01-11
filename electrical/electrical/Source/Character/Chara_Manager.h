@@ -17,6 +17,9 @@ private:
 	int enemyBombGH;		// 爆弾エネミー
 	int enemyGunGH;			// 銃エネミー
 
+	float explosionX;		// 爆発の中心となる座標
+	float explosionY;		// 爆発の中心となる座標
+
 	// エネミー管理
 	void EnemyManager();
 
@@ -46,6 +49,12 @@ public:
 	float GetScrollCenterX();
 	float GetScrollCenterY();
 
-	// エネミーの死亡
-	bool IsEnemyDeath();
+	// 爆発の中心となるX座標を取得
+	float GetExplosionPosX();
+
+	// 爆発の中心となるY座標を取得
+	float GetExplosionPosY();
+
+	// エネミーの死亡を取得
+	bool GetIsEnemyDeath();
 };

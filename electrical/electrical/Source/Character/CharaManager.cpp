@@ -10,6 +10,9 @@ Chara_Manager::Chara_Manager()
 	enemyGunGH = LoadGraph("Resource/Graphic/Character/enemy_gun.png");
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
 
+	explosionX = 0.0f;
+	explosionY = 0.0f;
+
 	float startX = WIN_WIDTH / 2.0f;
 	float startY = 0.0f;
 
@@ -289,8 +292,20 @@ float Chara_Manager::GetScrollCenterY()
 	return player->GetPosOldY();
 }
 
+// エネミーの死亡X座標を取得
+float Chara_Manager::GetExplosionPosX()
+{
+	return explosionX;
+}
+
+// エネミーの死亡Y座標を取得
+float Chara_Manager::GetExplosionPosY()
+{
+	return explosionY;
+}
+
 // エネミーの死亡
-bool Chara_Manager::IsEnemyDeath()
+bool Chara_Manager::GetIsEnemyDeath()
 {
 	// 爆弾エネミー
 	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
@@ -302,6 +317,10 @@ bool Chara_Manager::IsEnemyDeath()
 
 		if ( !enemyBomb[i]->GetIsAlive() )
 		{
+			// 座標を取得
+			explosionX = enemyBomb[i]->GetPosX();
+			explosionY = enemyBomb[i]->GetPosY();
+
 			// エネミーを消去
 			delete enemyBomb[i];
 			enemyBomb.erase(enemyBomb.begin() + i);
@@ -320,6 +339,10 @@ bool Chara_Manager::IsEnemyDeath()
 
 		if ( !enemyGun[i]->GetIsAlive() )
 		{
+			// 座標を取得
+			explosionX = enemyGun[i]->GetPosX();
+			explosionY = enemyGun[i]->GetPosY();
+
 			// エネミーを消去
 			delete enemyGun[i];
 			enemyGun.erase(enemyGun.begin() + i);

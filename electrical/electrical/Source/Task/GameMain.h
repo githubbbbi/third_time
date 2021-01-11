@@ -14,6 +14,10 @@ private:
 	int backgroundGH;			// 背景画像
 	int scrollX, scrollY;		// スクロール量
 
+	// エフェクト管理
+	// 「Local」はEffectManagerクラスと名前が被らないよう
+	void LocalEffectManager();
+
 public:
 	// コンストラクタ
 	GameMain();

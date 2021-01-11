@@ -12,7 +12,16 @@ EffectManager::EffectManager(int particleGH)
 
 EffectManager::~EffectManager()
 {
-
+	// 消去
+	// 爆発
+	for ( int i = explosion.size() - 1; i >= 0; i-- )
+	{
+		if ( !explosion[i]->GetIsActive() )
+		{
+			delete explosion[i];
+			explosion.erase(explosion.begin() + i);
+		}
+	}
 }
 
 // 更新処理
@@ -20,12 +29,38 @@ void EffectManager::Update()
 {
 	// シェイク
 	Effect_Shake::Shake(&shakeX, &shakeY, &shakeAddX, &shakeAddY);
+
+	//　爆発
+	for ( unsigned int i = 0; i < explosion.size(); i++ )
+	{
+		if ( explosion[i]->GetIsActive() )
+		{
+			explosion[i]->Update();
+		}
+	}
+
+	// 消去
+	for ( int i = explosion.size() - 1; i >= 0; i-- )
+	{
+		if ( !explosion[i]->GetIsActive() )
+		{
+			delete explosion[i];
+			explosion.erase(explosion.begin() + i);
+		}
+	}
 }
 
 // 描画処理
-void EffectManager::Draw()
+void EffectManager::Draw(int scrollX, int scrollY)
 {
-
+	//　爆発
+	for ( unsigned int i = 0; i < explosion.size(); i++ )
+	{
+		if ( explosion[i]->GetIsActive() )
+		{
+			explosion[i]->Draw(scrollX, scrollY);
+		}
+	}
 }
 
 // shakeXを取得
@@ -49,5 +84,5 @@ void EffectManager::Shake()
 // 爆発
 void EffectManager::Explosion(float x, float y)
 {
-	explosion.push_back(new Effect_Explosion(x, y));
+	explosion.push_back(new Effect_Explosion(x, y, particleGH));
 }

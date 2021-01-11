@@ -42,6 +42,24 @@ void GameMain::Initialize()
 	charaManager->Initialize();
 }
 
+// エフェクト管理
+void GameMain::LocalEffectManager()
+{
+	// エネミーの死亡エフェクト
+	if ( charaManager->GetIsEnemyDeath() )
+	{
+		// シェイク
+		effects->Shake();
+
+		// 爆発
+		effects->Explosion(charaManager->GetExplosionPosX(),
+						   charaManager->GetExplosionPosY());
+	}
+
+	// エフェクト
+	effects->Update();
+}
+
 // 更新処理
 void GameMain::Update()
 {
@@ -49,14 +67,7 @@ void GameMain::Update()
 	InputManager::Update();
 
 	// エフェクト
-	effects->Update();
-
-	// エネミーの死亡エフェクト
-	if ( charaManager->IsEnemyDeath() )
-	{
-		effects->Shake();
-		//effects->Explosion(charaManager->x, charaManager->);
-	}
+	LocalEffectManager();
 
 	// スクロール
 	Utility::Scroll((int)charaManager->GetScrollCenterX(),
@@ -86,7 +97,7 @@ void GameMain::Draw()
 					   effects->GetShakeY(), scrollX, scrollY);
 
 	// エフェクト
-	effects->Draw();
+	effects->Draw(scrollX, scrollY);
 }
 
 // 終了処理

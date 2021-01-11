@@ -21,7 +21,7 @@ public:
 	void Update();
 
 	// •`‰æˆ—
-	void Draw();
+	void Draw(int scrollX, int scrollY);
 
 	// shakeX‚ğæ“¾
 	float GetShakeX();
