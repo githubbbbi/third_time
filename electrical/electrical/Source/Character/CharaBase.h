@@ -1,6 +1,6 @@
 #pragma once
 
-const float GRAVITY = 0.85f;		// 重力
+const float GRAVITY = 0.850f;		// 重力
 const float JUMP_POWER = -13.0f;	// ジャンプ力
 
 class CharaBase

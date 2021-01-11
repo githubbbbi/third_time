@@ -4,7 +4,7 @@
 
 const int E_BOMB_WIDTH = 50;			// 横幅
 const int E_BOMB_HEIGHT = 50;			// 縦幅
-const float E_BOMB_NORMAL_SPEED = 10.0f;	// 通常スピード
+const float E_BOMB_NORMAL_SPEED = 1.0f;	// 通常スピード
 const float E_BOMB_DASH_SPEED = 8.0f;	// ダッシュスピード
 
 class Chara_EnemyBomb:public Chara_EnemyBase
