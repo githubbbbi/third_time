@@ -54,4 +54,7 @@ public:
 
 	// …’e‚Ìradiusæ“¾
 	int GetGunRadius(int index);
+
+	// …e‚ÌisLeftWardæ“¾
+	bool GetIsGunLeftWard(int index);
 };

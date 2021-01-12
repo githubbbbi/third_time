@@ -180,3 +180,9 @@ int Chara_EnemyWater::GetGunRadius(int index)
 {
 	return waterGun[index]->GetRadius();
 }
+
+// …e‚ÌisLeftWardŽæ“¾
+bool Chara_EnemyWater::GetIsGunLeftWard(int index)
+{
+	return waterGun[index]->GetIsLeftWard();
+}

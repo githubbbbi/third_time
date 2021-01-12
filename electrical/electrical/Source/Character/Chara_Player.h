@@ -76,4 +76,7 @@ public:
 
 	// 電気銃のradius取得
 	int GetGunRadius(int index);
+
+	// 電気銃のisLeftWard取得
+	bool GetIsGunLeftWard(int index);
 };

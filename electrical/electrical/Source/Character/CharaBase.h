@@ -36,6 +36,7 @@ protected:
 	bool isCBlinking;		// 色点滅フラグ
 
 	bool isKnockBack;		// ノックバックフラグ
+	bool isAttackLeftWard;	// 攻撃の左向きフラグ
 
 	// キャラクタの上昇&落下
 	void CharaRiseFall();
@@ -96,5 +97,5 @@ public:
 	bool GetIsLeftWard();
 
 	// ダメージを受ける
-	void ReceiveDamage(int attackPower);
+	void ReceiveDamage(int attackPower, bool isAttackLeftWard);
 };

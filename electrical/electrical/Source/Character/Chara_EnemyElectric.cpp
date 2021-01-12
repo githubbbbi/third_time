@@ -12,7 +12,6 @@ Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width
 	shotBulletNum = 0;
 	bulletInterval = 0;
 	isTargetLock = false;
-	checkY = 0;
 }
 
 Chara_EnemyElectric::~Chara_EnemyElectric()
@@ -38,6 +37,10 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 	{
 		return;
 	}
+
+	// 初期化
+	moveX = 0.0f;
+	moveY = 0.0f;
 
 	// 爆弾エネミーと同じくマップチップでの座標に
 	int enemyMapY = (int)y / CHIP_SIZE;
@@ -101,16 +104,10 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 	{
 		isTargetLock = false;
 	}
-
-	checkY = playerY;
 }
 
 void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 {
-	// 初期化
-	moveX = 0.0f;
-	moveY = 0.0f;
-
 	ChangeDirection();
 	AutoMove(playerX, playerY, isPlayerAlive);
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
@@ -218,4 +215,10 @@ float Chara_EnemyElectric::GetGunPosY(int index)
 int Chara_EnemyElectric::GetGunRadius(int index)
 {
 	return electricGun[index]->GetRadius();
+}
+
+// 電気銃のisLeftWard取得
+bool Chara_EnemyElectric::GetIsGunLeftWard(int index)
+{
+	return electricGun[index]->GetIsLeftWard();
 }

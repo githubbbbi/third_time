@@ -31,6 +31,10 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 		return;
 	}
 
+	// 初期化
+	moveX = 0.0f;
+	moveY = 0.0f;
+
 	// 座標をマップチップでの座標に変換
 	int enemyMapY = (int)y / CHIP_SIZE;
 	int playerMapY = (int)playerY / CHIP_SIZE;
@@ -72,10 +76,6 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 // 移動
 void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 {
-	// 移動量初期化
-	moveX = 0.0f;
-	moveY = 0.0f;
-
 	ChangeDirection();
 	AutoMove(playerX, playerY, isPlayerAlive);
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);

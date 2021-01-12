@@ -42,6 +42,7 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	isCBlinking = false;
 
 	isKnockBack = false;
+	isAttackLeftWard = false;
 }
 
 // キャラクタのジャンプ
@@ -132,9 +133,9 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 
 	// 接地判定
 	// キャラクタの左下または右下が地面であるか調べる
-	if ( Stage::GetMapParam(x - hitWidth, 
+	if ( Stage::GetMapParam(x - hitWidth,
 							y + hitHeight + 1.0f) == e_MAP_BLOCK ||
-		Stage::GetMapParam(x + hitWidth, 
+		Stage::GetMapParam(x + hitWidth,
 						   y + hitHeight + 1.0f) == e_MAP_BLOCK )
 	{
 		// 足場がある場合、接地中
@@ -208,7 +209,30 @@ void CharaBase::KnockBack()
 {
 	if ( isKnockBack )
 	{
+		if ( isCBlinking )
+		{
+			// 初期化
+			moveX = 0.0f;
+			moveY = 0.0f;
 
+			float knockBackSpeed = 0.20f;
+
+			if ( isAttackLeftWard )
+			{
+				knockBackSpeed *= -1.0f;
+			}
+			else
+			{
+				knockBackSpeed *= 1.0f;
+			}
+
+			moveX += knockBackSpeed;
+		}
+		// 色点滅終了でノックバック終了
+		else
+		{
+			isKnockBack = false;
+		}
 	}
 }
 
@@ -278,7 +302,7 @@ bool CharaBase::GetIsLeftWard()
 }
 
 // ダメージを受ける
-void CharaBase::ReceiveDamage(int attackPower)
+void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 {
 	// 色点滅フラグTRUE
 	if ( !isCBlinking )
@@ -289,6 +313,7 @@ void CharaBase::ReceiveDamage(int attackPower)
 	// ノックバックフラグTRUE
 	if ( !isKnockBack )
 	{
+		isAttackLeftWard = isLeftWard;
 		isKnockBack = true;
 	}
 

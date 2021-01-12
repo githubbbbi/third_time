@@ -102,3 +102,9 @@ bool WeaponBase::GetIsAlive()
 {
 	return isAlive;
 }
+
+// isLeftWard‚ðŽæ“¾
+bool WeaponBase::GetIsLeftWard()
+{
+	return isLeftWard;
+}

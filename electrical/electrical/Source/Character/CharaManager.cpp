@@ -206,7 +206,8 @@ void Chara_Manager::AttackCollision()
 			if ( fabsf(enemyBomb[i]->GetSpeed()) == E_BOMB_DASH_SPEED )
 			{
 				enemyBomb[i]->HitAttack();
-				player->ReceiveDamage(enemyBomb[i]->GetAttackPower());
+				player->ReceiveDamage(enemyBomb[i]->GetAttackPower(),
+									  enemyBomb[i]->GetIsLeftWard());
 			}
 		}
 
@@ -220,7 +221,8 @@ void Chara_Manager::AttackCollision()
 											player->GetGunPosY(j),
 											player->GetGunRadius(j) - 4) )
 			{
-				enemyBomb[i]->ReceiveDamage(player->GetAttackPower());
+				enemyBomb[i]->ReceiveDamage(player->GetAttackPower(),
+											player->GetIsGunLeftWard(j));
 				player->HitAttack(j);
 			}
 		}
@@ -244,7 +246,8 @@ void Chara_Manager::AttackCollision()
 											player->GetGunPosY(j),
 											player->GetGunRadius(j) - 4) )
 			{
-				enemyElectric[i]->ReceiveDamage(player->GetAttackPower());
+				enemyElectric[i]->ReceiveDamage(player->GetAttackPower(),
+												player->GetIsGunLeftWard(j));
 				player->HitAttack(j);
 			}
 		}
@@ -260,7 +263,8 @@ void Chara_Manager::AttackCollision()
 											player->GetRadius() - 4) )
 			{
 				enemyElectric[i]->HitAttack(j);
-				player->ReceiveDamage(enemyElectric[i]->GetAttackPower());
+				player->ReceiveDamage(enemyElectric[i]->GetAttackPower(),
+									  enemyElectric[i]->GetIsGunLeftWard(j));
 			}
 		}
 	}
@@ -283,7 +287,8 @@ void Chara_Manager::AttackCollision()
 											player->GetGunPosY(j),
 											player->GetGunRadius(j) - 4) )
 			{
-				enemyWater[i]->ReceiveDamage(player->GetAttackPower());
+				enemyWater[i]->ReceiveDamage(player->GetAttackPower(),
+											 player->GetIsGunLeftWard(j));
 				player->HitAttack(j);
 			}
 		}
@@ -299,7 +304,8 @@ void Chara_Manager::AttackCollision()
 											player->GetRadius() - 4) )
 			{
 				enemyWater[i]->HitAttack(j);
-				player->ReceiveDamage(enemyWater[i]->GetAttackPower());
+				player->ReceiveDamage(enemyWater[i]->GetAttackPower(),
+									  enemyWater[i]->GetIsGunLeftWard(j));
 			}
 		}
 	}

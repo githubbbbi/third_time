@@ -47,6 +47,10 @@ void Chara_Player::InputMove()
 		return;
 	}
 
+	// 初期化
+	moveX = 0.0f;
+	moveY = 0.0f;
+
 	// パッドレバーの入力情報を取得
 	padInputX = InputManager::GetPadInputX();
 	padInputY = InputManager::GetPadInputY();
@@ -124,10 +128,6 @@ void Chara_Player::InputMove()
 // 移動
 void Chara_Player::Move()
 {
-	// 移動量初期化
-	moveX = 0.0f;
-	moveY = 0.0f;
-
 	InputMove();
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 
@@ -375,4 +375,10 @@ float Chara_Player::GetGunPosY(int index)
 int Chara_Player::GetGunRadius(int index)
 {
 	return electricGun[index]->GetRadius();
+}
+
+// 電気銃のisLeftWard取得
+bool Chara_Player::GetIsGunLeftWard(int index)
+{
+	return electricGun[index]->GetIsLeftWard();
 }

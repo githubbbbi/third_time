@@ -19,7 +19,6 @@ private:
 	int shotBulletNum;		// 撃った弾数
 	int bulletInterval;		// 銃を撃つ間隔
 	bool isTargetLock;		// 範囲内のフラグ
-	float checkY;			// y座標を確認する
 
 	// 自動移動
 	void AutoMove(float playerX, float playerY, bool isPlayerAlive);
@@ -58,4 +57,7 @@ public:
 
 	// 電気銃のradius取得
 	int GetGunRadius(int index);
+
+	// 電気銃のisLeftWard取得
+	bool GetIsGunLeftWard(int index);
 };

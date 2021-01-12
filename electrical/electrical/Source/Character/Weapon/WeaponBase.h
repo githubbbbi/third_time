@@ -41,4 +41,7 @@ public:
 
 	// isAlive‚ðŽæ“¾
 	bool GetIsAlive();
+
+	// isLeftWard‚ðŽæ“¾
+	bool GetIsLeftWard();
 };
