@@ -10,6 +10,9 @@ const float E_BOMB_DASH_SPEED = 8.0f;	// ダッシュスピード
 class Chara_EnemyBomb:public Chara_EnemyBase
 {
 private:
+	// 自動移動
+	void AutoMove(float playerX, float playerY, bool isPlayerAlive);
+
 	// 移動
 	void Move(float playerX, float playerY, bool isPlayerAlive);
 

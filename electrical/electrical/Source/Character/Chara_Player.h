@@ -24,6 +24,9 @@ private:
 	int batteryChargeTimer;		// バッテリーチャージタイマー
 	int shotBulletNum;			// 撃った弾数
 
+	// 入力での移動
+	void InputMove();
+
 	// 移動
 	void Move();
 

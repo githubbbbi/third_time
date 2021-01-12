@@ -40,6 +40,8 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	cBlinkingTimer = 0;
 	cBlinkingCounter = 0;
 	isCBlinking = false;
+
+	isKnockBack = false;
 }
 
 // キャラクタのジャンプ
@@ -201,6 +203,15 @@ void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
 	}
 }
 
+// ノックバック
+void CharaBase::KnockBack()
+{
+	if ( isKnockBack )
+	{
+
+	}
+}
+
 // X座標を取得
 float CharaBase::GetPosX()
 {
@@ -275,11 +286,11 @@ void CharaBase::ReceiveDamage(int attackPower)
 		isCBlinking = true;
 	}
 
-	hp -= attackPower;
-}
+	// ノックバックフラグTRUE
+	if ( !isKnockBack )
+	{
+		isKnockBack = true;
+	}
 
-// 敵と敵でない場合のキャラクタ同士が接触
-void CharaBase::CharactersCollision()
-{
-	moveX = 0.0f;
+	hp -= attackPower;
 }

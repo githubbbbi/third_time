@@ -23,15 +23,13 @@ void Chara_EnemyBomb::Initialize()
 	moveY = 0.0f;
 }
 
-// 移動
-void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
+// 自動移動
+void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 {
-	// 移動量初期化
-	moveX = 0.0f;
-	moveY = 0.0f;
-
-	// 進行方向チェンジ
-	ChangeDirection();
+	if ( isKnockBack )
+	{
+		return;
+	}
 
 	// 座標をマップチップでの座標に変換
 	int enemyMapY = (int)y / CHIP_SIZE;
@@ -69,6 +67,17 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	}
 
 	moveX += speed;
+}
+
+// 移動
+void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
+{
+	// 移動量初期化
+	moveX = 0.0f;
+	moveY = 0.0f;
+
+	ChangeDirection();
+	AutoMove(playerX, playerY, isPlayerAlive);
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
@@ -81,6 +90,7 @@ void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 		ChangeGraphicDirection();
 		HpManager();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
+		KnockBack();
 	}
 
 	// HSVからRGBに変換

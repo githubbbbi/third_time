@@ -39,12 +39,13 @@ void Chara_Player::Initialize()
 	shotBulletNum = 0;
 }
 
-// 移動
-void Chara_Player::Move()
+// 入力での移動
+void Chara_Player::InputMove()
 {
-	// 移動量初期化
-	moveX = 0.0f;
-	moveY = 0.0f;
+	if ( isKnockBack )
+	{
+		return;
+	}
 
 	// パッドレバーの入力情報を取得
 	padInputX = InputManager::GetPadInputX();
@@ -118,7 +119,16 @@ void Chara_Player::Move()
 			isJump = false;
 		}
 	}
+}
 
+// 移動
+void Chara_Player::Move()
+{
+	// 移動量初期化
+	moveX = 0.0f;
+	moveY = 0.0f;
+
+	InputMove();
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 
 	// 画面内にとどまる(X方向についてのみ)
@@ -241,6 +251,7 @@ void Chara_Player::Update()
 		BatteryManager();
 		HpManager();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
+		KnockBack();
 
 		// 向き固定ボタンが押されていない
 		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )

@@ -68,6 +68,7 @@ void Chara_EnemyWater::Update(float playerX, float playerY)
 		ChangeDirection(playerX);
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
+		KnockBack();
 	}
 
 	// HSV‚©‚çRGB‚É•ÏŠ·

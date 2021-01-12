@@ -21,6 +21,8 @@ private:
 	bool isTargetLock;		// 範囲内のフラグ
 	float checkY;			// y座標を確認する
 
+	// 自動移動
+	void AutoMove(float playerX, float playerY, bool isPlayerAlive);
 
 	// 移動
 	void Move(float playerX, float playerY, bool isPlayerAlive);

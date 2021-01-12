@@ -35,6 +35,8 @@ protected:
 	int cBlinkingCounter;	// 色点滅回数カウンター
 	bool isCBlinking;		// 色点滅フラグ
 
+	bool isKnockBack;		// ノックバックフラグ
+
 	// キャラクタの上昇&落下
 	void CharaRiseFall();
 
@@ -49,6 +51,9 @@ protected:
 
 	// 色について指定された回数だけ点滅
 	void ColorBlinking(float h, float s, float v, int noOfTimes);
+
+	// ノックバック
+	void KnockBack();
 
 public:
 	// コンストラクタ宣言
@@ -92,7 +97,4 @@ public:
 
 	// ダメージを受ける
 	void ReceiveDamage(int attackPower);
-
-	// キャラクタ同士が接触
-	void CharactersCollision();
 };

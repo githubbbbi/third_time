@@ -31,14 +31,13 @@ void Chara_EnemyElectric::Initialize()
 
 }
 
-void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
+// 自動移動
+void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 {
-	// 初期化
-	moveX = 0.0f;
-	moveY = 0.0f;
-
-	// 進行方向チェンジ
-	ChangeDirection();
+	if ( isKnockBack )
+	{
+		return;
+	}
 
 	// 爆弾エネミーと同じくマップチップでの座標に
 	int enemyMapY = (int)y / CHIP_SIZE;
@@ -89,7 +88,6 @@ void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 			if ( playerX > x && isLeftWard )
 			{
 				speed *= -1;
-
 				if ( speed > 0 )
 				{
 					isLeftWard = false;
@@ -105,7 +103,16 @@ void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 	}
 
 	checkY = playerY;
+}
 
+void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
+{
+	// 初期化
+	moveX = 0.0f;
+	moveY = 0.0f;
+
+	ChangeDirection();
+	AutoMove(playerX, playerY, isPlayerAlive);
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
@@ -118,6 +125,7 @@ void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAliv
 		ChangeGraphicDirection();
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
+		KnockBack();
 	}
 
 	// HSVからRGBに変換
