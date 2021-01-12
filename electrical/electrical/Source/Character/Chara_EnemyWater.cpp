@@ -32,6 +32,10 @@ void Chara_EnemyWater::Initialize()
 // ˆÚ“®
 void Chara_EnemyWater::Move()
 {
+	// ˆÚ“®—Ê‰Šú‰»
+	moveX = 0.0f;
+	moveY = 0.0f;
+
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
