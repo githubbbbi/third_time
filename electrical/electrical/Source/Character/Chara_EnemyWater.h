@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Chara_EnemyBase.h"
-#include "Weapon/WaterBullet.h"
+#include "Weapon/Weapon_WaterGun.h"
 
 const int E_WATER_WIDTH = 50;			// ‰¡•
 const int E_WATER_HEIGHT = 50;			// c•
@@ -12,13 +12,16 @@ extern const int BULLET_INTERVAL;
 class Chara_EnemyWater :public Chara_EnemyBase
 {
 private:
-	std::vector<WaterBullet *> waterBullet;
+	std::vector<Weapon_WaterGun *> waterGun;
 
 	int bulletInterval;		// e‚ğŒ‚‚ÂŠÔŠu
 	float bulletSpeed;		// e‚ÌƒXƒs[ƒh
 
 	// ˆÚ“®
 	void Move();
+
+	// Œü‚«‚ğ•ÏX
+	void ChangeDirection(float playerX);
 
 public:
 	Chara_EnemyWater(float x, float y, int radius, int width, int height,

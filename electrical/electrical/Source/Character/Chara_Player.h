@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "CharaBase.h"
-#include "Weapon/ElectricGun.h"
+#include "Weapon/Weapon_ElectricGun.h"
 
 const int P_WIDTH = 50;							// 横幅
 const int P_HEIGHT = 50;						// 縦幅
@@ -16,7 +16,7 @@ const int P_CONSUMPTION_BULLET_NUM = 5;			// 電力を消費する弾数
 class Chara_Player:public CharaBase
 {
 private:
-	std::vector<ElectricGun *> electricGun;
+	std::vector<Weapon_ElectricGun *> electricGun;
 
 	int padInputX, padInputY;	// パッドレバーの入力量(キーボードの矢印キーの入力量も取得できる)
 	int battery;				// バッテリー

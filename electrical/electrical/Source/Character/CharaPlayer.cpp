@@ -318,11 +318,11 @@ void Chara_Player::WeaponManager(int electricGunGH)
 	// ê∂ê¨
 	if ( IsAttack() && isAlive )
 	{
-		electricGun.push_back(new ElectricGun(x,
-											  y,
-											  16, 10.0f,
-											  isLeftWard,
-											  electricGunGH));
+		electricGun.push_back(new Weapon_ElectricGun(x, y, 16,
+													 EG_SPEED,
+													 0.0f, 2,
+													 isLeftWard,
+													 electricGunGH));
 	}
 
 	// ìdãCèe

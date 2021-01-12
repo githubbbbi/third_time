@@ -93,9 +93,6 @@
     <ClCompile Include="Source\Input\InputPad.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\Weapon\ElectricGun.cpp">
-      <Filter>ソース ファイル\Character\Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Stage\Stage.cpp">
       <Filter>ソース ファイル\Staeg</Filter>
     </ClCompile>
@@ -123,19 +120,25 @@
     <ClCompile Include="Source\Character\Chara_EnemyBomb.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\Chara_EnemyGun.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Character\CharaPlayer.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character\CharaBase.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\Weapon\WaterBullet.cpp">
+    <ClCompile Include="Source\Character\Chara_EnemyWater.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Weapon\WeaponBase.cpp">
       <Filter>ソース ファイル\Character\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\Chara_EnemyWater.cpp">
+    <ClCompile Include="Source\Character\Weapon\Weapon_ElectricGun.cpp">
+      <Filter>ソース ファイル\Character\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Weapon\Weapon_WaterGun.cpp">
+      <Filter>ソース ファイル\Character\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character\Chara_EnemyElectric.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,9 +173,6 @@
     <ClInclude Include="Source\Input\InputManager.h">
       <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character\Weapon\ElectricGun.h">
-      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Effect\EffectManager.h">
       <Filter>ヘッダー ファイル\Effect</Filter>
     </ClInclude>
@@ -183,9 +183,6 @@
       <Filter>ヘッダー ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Source\Character\Chara_Manager.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Chara_EnemyGun.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\Character\Chara_EnemyBomb.h">
@@ -203,8 +200,17 @@
     <ClInclude Include="Source\Character\Chara_EnemyWater.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character\Weapon\WaterBullet.h">
+    <ClInclude Include="Source\Character\Weapon\WeaponBase.h">
       <Filter>ヘッダー ファイル\Character\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Weapon\Weapon_ElectricGun.h">
+      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Weapon\Weapon_WaterGun.h">
+      <Filter>ヘッダー ファイル\Character\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character\Chara_EnemyElectric.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

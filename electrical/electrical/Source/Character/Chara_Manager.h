@@ -1,24 +1,24 @@
 #pragma once
 
 #include <vector>
-#include "../Character/Chara_Player.h"
-#include "../Character/Chara_EnemyBomb.h"
-#include "../Character/Chara_EnemyGun.h"
-#include "../Character/Chara_EnemyWater.h"
+#include "Chara_Player.h"
+#include "Chara_EnemyBomb.h"
+#include "Chara_EnemyElectric.h"
+#include "Chara_EnemyWater.h"
 
 class Chara_Manager
 {
 private:
 	Chara_Player *player;
 	std::vector<Chara_EnemyBomb *>enemyBomb;
-	std::vector<Chara_EnemyGun *>enemyGun;
+	std::vector<Chara_EnemyElectric *>enemyElectric;
 	std::vector<Chara_EnemyWater *>enemyWater;
 
 	int playerGH;			// プレイヤー
 	int electricGunGH;		// 電気銃
 	int waterBulletGH;		// 水弾
 	int enemyBombGH;		// 爆弾エネミー
-	int enemyGunGH;			// 銃エネミー
+	int enemyElectricGH;	// 銃エネミー
 	int enemyWaterGH;		// 水弾エネミー
 
 	float explosionX;		// 爆発の中心となる座標
