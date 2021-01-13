@@ -195,22 +195,6 @@ void Chara_Manager::AttackCollision()
 			continue;
 		}
 
-		// 爆弾エネミーがダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
-		if ( Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
-										enemyBomb[i]->GetPosY(),
-										enemyBomb[i]->GetRadius() - 8,
-										player->GetPosX(),
-										player->GetPosY(),
-										player->GetRadius() - 8) )
-		{
-			if ( fabsf(enemyBomb[i]->GetSpeed()) == E_BOMB_DASH_SPEED )
-			{
-				enemyBomb[i]->HitAttack();
-				player->ReceiveDamage(enemyBomb[i]->GetAttackPower(),
-									  enemyBomb[i]->GetIsLeftWard());
-			}
-		}
-
 		// プレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
@@ -226,6 +210,23 @@ void Chara_Manager::AttackCollision()
 				player->HitAttack(j);
 			}
 		}
+
+		// 爆弾エネミーがダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
+		if ( !player->GetIsInvicible() &&
+			Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
+									   enemyBomb[i]->GetPosY(),
+									   enemyBomb[i]->GetRadius() - 8,
+									   player->GetPosX(),
+									   player->GetPosY(),
+									   player->GetRadius() - 8) )
+		{
+			if ( fabsf(enemyBomb[i]->GetSpeed()) == E_BOMB_DASH_SPEED )
+			{
+				enemyBomb[i]->HitAttack();
+				player->ReceiveDamage(enemyBomb[i]->GetAttackPower(),
+									  enemyBomb[i]->GetIsLeftWard());
+			}
+		}
 	}
 
 	// 銃エネミー
@@ -236,7 +237,7 @@ void Chara_Manager::AttackCollision()
 			continue;
 		}
 
-		// エネミーとプレイヤーの攻撃との当たり判定
+		// プレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
 			if ( Utility::IsCircleCollision(enemyElectric[i]->GetPosX(),
@@ -255,12 +256,13 @@ void Chara_Manager::AttackCollision()
 		// エネミーの攻撃とプレイヤーの当たり判定
 		for ( unsigned int j = 0; j < enemyElectric[i]->GetGunSize(); j++ )
 		{
-			if ( Utility::IsCircleCollision(enemyElectric[i]->GetGunPosX(j),
-											enemyElectric[i]->GetGunPosY(j),
-											enemyElectric[i]->GetGunRadius(j) - 8,
-											player->GetPosX(),
-											player->GetPosY(),
-											player->GetRadius() - 4) )
+			if ( !player->GetIsInvicible() &&
+				Utility::IsCircleCollision(enemyElectric[i]->GetGunPosX(j),
+										   enemyElectric[i]->GetGunPosY(j),
+										   enemyElectric[i]->GetGunRadius(j) - 8,
+										   player->GetPosX(),
+										   player->GetPosY(),
+										   player->GetRadius() - 4) )
 			{
 				enemyElectric[i]->HitAttack(j);
 				player->ReceiveDamage(enemyElectric[i]->GetAttackPower(),
@@ -277,7 +279,7 @@ void Chara_Manager::AttackCollision()
 			continue;
 		}
 
-		// エネミーとプレイヤーの攻撃との当たり判定
+		// プレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
 			if ( Utility::IsCircleCollision(enemyWater[i]->GetPosX(),
@@ -296,7 +298,8 @@ void Chara_Manager::AttackCollision()
 		// エネミーの攻撃とプレイヤーの当たり判定
 		for ( unsigned int j = 0; j < enemyWater[i]->GetGunSize(); j++ )
 		{
-			if ( Utility::IsCircleCollision(enemyWater[i]->GetGunPosX(j),
+			if ( !player->GetIsInvicible() &&
+				Utility::IsCircleCollision(enemyWater[i]->GetGunPosX(j),
 											enemyWater[i]->GetGunPosY(j),
 											enemyWater[i]->GetGunRadius(j) - 8,
 											player->GetPosX(),

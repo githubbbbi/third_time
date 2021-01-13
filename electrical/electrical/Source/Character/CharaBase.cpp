@@ -1,3 +1,4 @@
+#include "DxLib.h"
 #include "CharaBase.h"
 #include "../Utility/Utility.h"
 #include "../Define/Define.h"
@@ -41,8 +42,18 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	cBlinkingCounter = 0;
 	isCBlinking = false;
 
+	bBlinkingTimer = 0;
+	bBlinkingCounter = 0;
+	isBBlinking = false;
+
 	isKnockBack = false;
 	isAttackLeftWard = false;
+
+	invicibleTimer = 0;
+	isInvicible = false;
+
+	blendMode = DX_BLENDMODE_NOBLEND;
+	blendValue = 0;
 }
 
 // キャラクタのジャンプ
@@ -166,14 +177,12 @@ void CharaBase::HpManager()
 }
 
 // 色点滅
-void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
+void CharaBase::ColorBlinking(float h, float s, float v, int change, int  num)
 {
-	const int change = 5;
-
 	if ( isCBlinking )
 	{
 		// 点滅終了
-		if ( cBlinkingCounter > noOfTimes )
+		if ( cBlinkingCounter > num )
 		{
 			this->s = 0.0f;
 			cBlinkingCounter = 0;
@@ -200,6 +209,44 @@ void CharaBase::ColorBlinking(float h, float s, float v, int  noOfTimes)
 		{
 			cBlinkingCounter++;
 			cBlinkingTimer = 0;
+		}
+	}
+}
+
+// Blendについて指定された回数だけ点滅
+void CharaBase::BlendBlinking(int blendMode1, int blendMode2,
+							  int blendValue1, int blendValue2, int change, int num)
+{
+	if ( isBBlinking )
+	{
+		// 点滅終了
+		if ( bBlinkingCounter > num )
+		{
+			this->blendMode = DX_BLENDMODE_NOBLEND;
+			this->blendValue = 0;
+			bBlinkingCounter = 0;
+			bBlinkingTimer = 0;
+			isBBlinking = false;
+
+			return;
+		}
+
+		// 点滅
+		bBlinkingTimer++;
+		if ( bBlinkingTimer < change )
+		{
+			this->blendMode = blendMode1;
+			this->blendValue = blendValue1;
+		}
+		else if ( bBlinkingTimer < change * 2 )
+		{
+			this->blendMode = blendMode2;
+			this->blendValue = blendValue2;
+		}
+		else if ( bBlinkingTimer < change * 3 )
+		{
+			bBlinkingCounter++;
+			bBlinkingTimer = 0;
 		}
 	}
 }
@@ -233,6 +280,56 @@ void CharaBase::KnockBack()
 		{
 			isKnockBack = false;
 		}
+	}
+}
+
+// 無敵時の処理
+void CharaBase::Invicible()
+{
+	// 色点滅が終わり次第無敵時間のカウント開始
+	if ( isCBlinking || !isInvicible )
+	{
+		return;
+	}
+
+	BlendBlinking(DX_BLENDMODE_ALPHA, DX_BLENDMODE_ALPHA, 150, 200, 4, 5);
+
+	invicibleTimer++;
+	if ( invicibleTimer > INVICIBLE_TIME )
+	{
+		invicibleTimer = 0;
+		isInvicible = false;
+	}
+}
+
+// ダメージを受ける
+void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
+{
+	hp -= attackPower;
+
+	// 色点滅フラグTRUE
+	if ( !isCBlinking )
+	{
+		isCBlinking = true;
+	}
+
+	// ブレンド点滅フラグTRUE
+	if ( !isBBlinking )
+	{
+		isBBlinking = true;
+	}
+
+	// ノックバックフラグTRUE
+	if ( !isKnockBack )
+	{
+		isAttackLeftWard = isLeftWard;
+		isKnockBack = true;
+	}
+
+	// 無敵フラグTRUE
+	if ( !isInvicible )
+	{
+		isInvicible = true;
 	}
 }
 
@@ -301,21 +398,8 @@ bool CharaBase::GetIsLeftWard()
 	return isLeftWard;
 }
 
-// ダメージを受ける
-void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
+// isInvicibleを取得
+bool CharaBase::GetIsInvicible()
 {
-	// 色点滅フラグTRUE
-	if ( !isCBlinking )
-	{
-		isCBlinking = true;
-	}
-
-	// ノックバックフラグTRUE
-	if ( !isKnockBack )
-	{
-		isAttackLeftWard = isLeftWard;
-		isKnockBack = true;
-	}
-
-	hp -= attackPower;
+	return isInvicible;
 }

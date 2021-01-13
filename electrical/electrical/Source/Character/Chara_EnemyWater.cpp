@@ -67,7 +67,7 @@ void Chara_EnemyWater::Update(float playerX, float playerY)
 		Move();
 		ChangeDirection(playerX);
 		HpZero();
-		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
+		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 	}
 
@@ -86,10 +86,12 @@ void Chara_EnemyWater::Draw(float shakeX, float shakeY, int scrollX, int scrollY
 
 	if ( isAlive )
 	{
+		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
 					  1.0, 0.0, graphHandle, true, isLeftWard);
 		SetDrawBright(255, 255, 255);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
 
@@ -102,6 +104,11 @@ void Chara_EnemyWater::HitAttack(int index)
 // 武器処理管理
 void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayerAlive, int waterBulletGH)
 {
+	if ( !isPlayerAlive )
+	{
+		return;
+	}
+
 	// 弾のインターバルを測るカウント
 	bulletInterval++;
 
@@ -112,7 +119,7 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 	}
 
 	// 生成
-	if ( bulletInterval == BULLET_INTERVAL && isPlayerAlive )
+	if ( bulletInterval == BULLET_INTERVAL )
 	{
 		double a = (double)x - playerX;
 		double b = (double)y - playerY;

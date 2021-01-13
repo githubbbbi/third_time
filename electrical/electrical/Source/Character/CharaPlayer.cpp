@@ -250,8 +250,9 @@ void Chara_Player::Update()
 		Move();
 		BatteryManager();
 		HpManager();
-		ColorBlinking(0.0f, 255.0f, 255.0f, 2);
+		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
+		Invicible();
 
 		// 向き固定ボタンが押されていない
 		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
@@ -276,10 +277,12 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	// プレイヤー
 	if ( isAlive )
 	{
+		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
 					  1.0, 0.0, graphHandle, true, isLeftWard);
 		SetDrawBright(255, 255, 255);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
 	// デバッグ用
@@ -293,6 +296,11 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 240, GetColor(255, 255, 255), "h:%f", h);
 	DrawFormatString(80, 260, GetColor(255, 255, 255), "s:%f", s);
 	DrawFormatString(80, 280, GetColor(255, 255, 255), "v:%f", v);
+	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
+	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
+
+	DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "isInvicible:%d", isInvicible);
+	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "isCBlinking:%d", isCBlinking);
 }
 
 // 攻撃

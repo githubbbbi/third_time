@@ -68,15 +68,15 @@ public:
 	// 電気銃の要素数
 	unsigned int GetGunSize();
 
-	// 電気銃のX座標取得
+	// 電気銃のX座標を取得
 	float GetGunPosX(int index);
 
-	// 電気銃のY座標取得
+	// 電気銃のY座標を取得
 	float GetGunPosY(int index);
 
-	// 電気銃のradius取得
+	// 電気銃のradiusを取得
 	int GetGunRadius(int index);
 
-	// 電気銃のisLeftWard取得
+	// 電気銃のisLeftWardを取得
 	bool GetIsGunLeftWard(int index);
 };

@@ -2,6 +2,7 @@
 
 const float GRAVITY = 0.850f;		// 重力
 const float JUMP_POWER = -13.0f;	// ジャンプ力
+const int INVICIBLE_TIME = 60;		// 無敵時間
 
 class CharaBase
 {
@@ -35,8 +36,18 @@ protected:
 	int cBlinkingCounter;	// 色点滅回数カウンター
 	bool isCBlinking;		// 色点滅フラグ
 
+	int bBlinkingTimer;		// ブレンド点滅タイマー
+	int bBlinkingCounter;	// ブレンド点滅回数カウンター
+	bool isBBlinking;		// ブレンド点滅フラグ
+
 	bool isKnockBack;		// ノックバックフラグ
 	bool isAttackLeftWard;	// 攻撃の左向きフラグ
+
+	int invicibleTimer;		// 無敵時間
+	bool isInvicible;		// 無敵フラグ
+
+	int blendMode;			// ブレンドモード
+	int blendValue;			// ブレンド値
 
 	// キャラクタの上昇&落下
 	void CharaRiseFall();
@@ -51,17 +62,28 @@ protected:
 	void HpManager();
 
 	// 色について指定された回数だけ点滅
-	void ColorBlinking(float h, float s, float v, int noOfTimes);
+	void ColorBlinking(float h, float s, float v, int change, int num);
+
+	// Blendについて指定された回数だけ点滅
+	void BlendBlinking(int blendMode1, int bledMode2,
+					   int blendValue1, int blendValue2, int change, int num);
 
 	// ノックバック
 	void KnockBack();
+
+	// 無敵の処理
+	void Invicible();
 
 public:
 	// コンストラクタ宣言
 	CharaBase(float x, float y, int radius, int width, int height,
 			  float speed, int hp, int attackPower, int graphHandle);
 
+	// キャラクタのジャンプ
 	void CharaJump();
+
+	// ダメージを受ける
+	void ReceiveDamage(int attackPower, bool isAttackLeftWard);
 
 	// X座標を取得
 	float GetPosX();
@@ -96,6 +118,6 @@ public:
 	// isLeftWardを取得
 	bool GetIsLeftWard();
 
-	// ダメージを受ける
-	void ReceiveDamage(int attackPower, bool isAttackLeftWard);
+	// isInvicibleを取得
+	bool GetIsInvicible();
 };
