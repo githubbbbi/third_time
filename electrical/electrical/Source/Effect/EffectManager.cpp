@@ -84,8 +84,8 @@ void EffectManager::Shake()
 // ”š”­
 void EffectManager::Explosion(float x, float y)
 {
-	for ( int i = 0; i < 200; i++ )
+	for ( int i = 0; i < 100; i++ )
 	{
-		explosion.push_back(new Effect_Explosion(x, y, 8, particleGH));
+		explosion.push_back(new Effect_Explosion(x, y, 9, particleGH));
 	}
 }

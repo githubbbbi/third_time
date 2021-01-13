@@ -9,18 +9,18 @@ Effect_Explosion::Effect_Explosion(float x, float y, int blendDecrease, int part
 	this->blendDecrease = blendDecrease;
 	this->graphHandle = particleGH;
 
-	number = rand() % 10;
+	number = rand() % 10 + 1;
 	randAngle = (double)(rand() % 360);
 
 	if ( number < 10 )
 	{
-		speed = (float)(rand() % 4);
-		exRate = (double)(rand() % 10 + 1) / 10.0;
+		speed = (float)(rand() % 3);
+		exRate = (double)(rand() % 5 + 3) / 10.0;
 	}
 	else
 	{
 		speed = (float)(rand() % 2);
-		exRate = (double)(rand() % 1 + 1) / 10.0;
+		exRate = (double)(rand() % 2 + 1) / 10.0;
 	}
 
 	frame = 0;
