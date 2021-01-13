@@ -3,6 +3,8 @@
 #include "../../Define/Define.h"
 #include "../../Utility/Utility.h"
 
+const float WG_GRAVITY = 0.85f;
+
 Weapon_WaterGun::Weapon_WaterGun(float x, float y, int radius, float speedX, float speedY,
 								 int eraseFrame, bool isCharaLeftWard, int graphHandle):
 	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard, graphHandle)

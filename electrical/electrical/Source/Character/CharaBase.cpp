@@ -4,6 +4,10 @@
 #include "../Define/Define.h"
 #include "../Stage/Stage.h"
 
+const float GRAVITY = 0.850f;
+const float JUMP_POWER = -13.0f;
+const int INVICIBLE_TIME = 60;
+
 // コンストラクタ
 CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 					 float speed, int hp, int attackPower, int graphHandle)

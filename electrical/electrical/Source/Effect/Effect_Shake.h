@@ -1,6 +1,6 @@
 #pragma once
 
-const float SHAKE_DECREASE = 0.3f;
+extern const float SHAKE_DECREASE;
 
 class Effect_Shake
 {

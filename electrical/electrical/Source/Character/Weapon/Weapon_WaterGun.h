@@ -2,7 +2,7 @@
 
 #include "WeaponBase.h"
 
-const float WG_GRAVITY = 0.85f;
+extern const float WG_GRAVITY;
 
 class Weapon_WaterGun:public WeaponBase
 {

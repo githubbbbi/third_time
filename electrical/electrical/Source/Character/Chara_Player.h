@@ -4,14 +4,14 @@
 #include "CharaBase.h"
 #include "Weapon/Weapon_ElectricGun.h"
 
-const int P_WIDTH = 50;							// 横幅
-const int P_HEIGHT = 50;						// 縦幅
-const float P_NORMAL_SPEED = 3.0f;				// 通常スピード
-const float P_DASH_SPEED = 5.0f;				// ダッシュスピード
-const int BATTERY_DCREASE_TIME = 60 * 1;		// バッテリー減少タイム
-const int BATTERY_CHARGE_TIME = (60 * 1) / 2;	// バッテリーチャージタイム
-const int P_MAX_BATTERY = 100;					// 最大バッテリー
-const int P_CONSUMPTION_BULLET_NUM = 5;			// 電力を消費する弾数
+extern const int P_WIDTH;							// 横幅
+extern const int P_HEIGHT;						// 縦幅
+extern const float P_NORMAL_SPEED;				// 通常スピード
+extern const float P_DASH_SPEED;				// ダッシュスピード
+extern const int BATTERY_DCREASE_TIME;		// バッテリー減少タイム
+extern const int BATTERY_CHARGE_TIME;	// バッテリーチャージタイム
+extern const int P_MAX_BATTERY;					// 最大バッテリー
+extern const int P_CONSUMPTION_BULLET_NUM;			// 電力を消費する弾数
 
 class Chara_Player:public CharaBase
 {

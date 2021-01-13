@@ -4,6 +4,11 @@
 #include "../Stage/Stage.h"
 #include "../Utility/Utility.h"
 
+const int E_BOMB_WIDTH = 50;
+const int E_BOMB_HEIGHT = 50;
+const float E_BOMB_NORMAL_SPEED = 1.0f;
+const float E_BOMB_DASH_SPEED = 8.0f;
+
 Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius, int width, int height,
 								 float speed, int hp, int attackPower, int graphHandle):
 	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)

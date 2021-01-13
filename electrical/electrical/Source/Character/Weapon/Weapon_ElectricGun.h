@@ -2,8 +2,8 @@
 
 #include "WeaponBase.h"
 
-const float EG_SPEED = 10.0f;
-const int EG_ALIVE_TIME = 30;
+extern const float EG_SPEED;
+extern const int EG_ALIVE_TIME;
 
 class Weapon_ElectricGun:public WeaponBase
 {

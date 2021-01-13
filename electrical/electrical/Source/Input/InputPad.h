@@ -10,7 +10,8 @@ enum PadConfig
 	e_PAD_JUMP = PAD_INPUT_1,				// ジャンプ
 	e_PAD_ATTACK = PAD_INPUT_3,				// 攻撃
 	e_PAD_FIXED_DIRECTION = PAD_INPUT_6,	// 向き固定
-	e_PAD_EXIT = PAD_INPUT_8,				// ポーズ(ゲーム終了)
+	e_PAD_START = PAD_INPUT_1,				// ゲーム開始
+	e_PAD_PAUSE_EXIT = PAD_INPUT_8,			// ポーズ&ゲーム終了
 };
 
 class InputPad

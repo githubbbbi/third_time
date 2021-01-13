@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "Effect_Shake.h"
 
+const float SHAKE_DECREASE = 0.3f;
+
 void Effect_Shake::Shake(float *shakeX, float *shakeY,
 						 float *addX, float *addY)
 {

@@ -1,7 +1,5 @@
 #pragma once
 
-const float SHAKE_DECREASE = 0.3f;	// 振動の減少量
-
 // マップチップの当たり判定
 enum MapHit
 {

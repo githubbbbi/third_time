@@ -1,8 +1,8 @@
 #pragma once
 
-const float GRAVITY = 0.850f;		// 重力
-const float JUMP_POWER = -13.0f;	// ジャンプ力
-const int INVICIBLE_TIME = 60;		// 無敵時間
+extern const float GRAVITY;			// 重力
+extern const float JUMP_POWER;		// ジャンプ力
+extern const int INVICIBLE_TIME;	// 無敵時間
 
 class CharaBase
 {

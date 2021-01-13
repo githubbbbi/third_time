@@ -4,10 +4,10 @@
 #include "Chara_EnemyBase.h"
 #include "Weapon/Weapon_ElectricGun.h"
 
-const int E_GUN_WIDTH = 50;				// 横幅
-const int E_GUN_HEIGHT = 50;			// 縦幅
-const float E_GUN_NORMAL_SPEED = 2.0f;	// 通常スピード
-const float E_GUN_DASH_SPEED = 4.0f;	// ダッシュスピード
+extern const int E_GUN_WIDTH;			// 横幅
+extern const int E_GUN_HEIGHT;			// 縦幅
+extern const float E_GUN_NORMAL_SPEED;	// 通常スピード
+extern const float E_GUN_DASH_SPEED;	// ダッシュスピード
 
 const int BULLET_INTERVAL = 70;
 
@@ -28,7 +28,7 @@ private:
 
 public:
 	Chara_EnemyElectric(float x, float y, int radius, int width, int height,
-				   float speed, int hp, int attackPower, int graphHandle);
+						float speed, int hp, int attackPower, int graphHandle);
 	~Chara_EnemyElectric();
 
 	// 初期化処理

@@ -5,12 +5,12 @@
 
 Chara_Manager::Chara_Manager()
 {
-	playerGH = LoadGraph("Resource/Graphic/Character/player.png");
-	enemyBombGH = LoadGraph("Resource/Graphic/Character/enemy_bomb.png");
-	enemyElectricGH = LoadGraph("Resource/Graphic/Character/enemy_gun.png");
-	enemyWaterGH = LoadGraph("Resource/Graphic/Character/enemy_gun.png");
+	playerGH = LoadGraph("Resource/Graphic/Character/Player/player.png");
+	enemyBombGH = LoadGraph("Resource/Graphic/Character/Enemy/enemy_bomb.png");
+	enemyElectricGH = LoadGraph("Resource/Graphic/Character/Enemy/enemy_gun.png");
+	enemyWaterGH = LoadGraph("Resource/Graphic/Character/Enemy/enemy_gun.png");
 	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
-	waterBulletGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
+	waterBulletGH = LoadGraph("Resource/Graphic/Weapon/waterGun.png");
 
 
 	explosionX = 0.0f;

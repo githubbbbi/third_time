@@ -5,6 +5,11 @@
 #include"../Stage/Stage.h"
 #include "../Utility/Utility.h"
 
+const int E_GUN_WIDTH = 50;
+const int E_GUN_HEIGHT = 50;
+const float E_GUN_NORMAL_SPEED = 2.0f;
+const float E_GUN_DASH_SPEED = 4.0f;
+
 Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width, int height,
 										 float speed, int hp, int attackPower, int graphHandle):
 	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)

@@ -4,6 +4,15 @@
 #include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
 
+const int P_WIDTH = 50;
+const int P_HEIGHT = 50;
+const float P_NORMAL_SPEED = 3.0f;
+const float P_DASH_SPEED = 5.0f;
+const int BATTERY_DCREASE_TIME = 60 * 1;
+const int BATTERY_CHARGE_TIME = (60 * 1) / 2;
+const int P_MAX_BATTERY = 100;
+const int P_CONSUMPTION_BULLET_NUM = 5;
+
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 						   float speed, int hp, int attackPower, int graphHandle):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)

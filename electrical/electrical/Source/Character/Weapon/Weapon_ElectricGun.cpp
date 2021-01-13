@@ -3,6 +3,9 @@
 #include "../../Define/Define.h"
 #include "../../Utility/Utility.h"
 
+const float EG_SPEED = 10.0f;
+const int EG_ALIVE_TIME = 30;
+
 Weapon_ElectricGun::Weapon_ElectricGun(float x, float y, int radius, float speedX, float speedY,
 									   int eraseFrame, bool isCharaLeftWard, int graphHandle):
 	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard, graphHandle)

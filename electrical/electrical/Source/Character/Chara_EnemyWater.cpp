@@ -5,6 +5,9 @@
 #include"../Stage/Stage.h"
 #include "../Utility/Utility.h"
 
+const int E_WATER_WIDTH = 50;
+const int E_WATER_HEIGHT = 50;
+
 Chara_EnemyWater::Chara_EnemyWater(float x, float y, int radius, int width, int height,
 								   float speed, int hp, int attackPower, int graphHandle):
 	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
