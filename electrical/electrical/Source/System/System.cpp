@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include <time.h>
 #include "System.h"
 #include "SettingDxLib.h"
 #include "../Mask/Mask.h"
@@ -23,6 +24,9 @@ bool System::Initialize()
 	{
 		return false;
 	}
+
+	// シード値
+	srand((unsigned)time(nullptr));
 
 	// インスタンス生成
 	gameMain = new GameMain;
