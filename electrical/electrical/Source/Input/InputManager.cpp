@@ -34,9 +34,13 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_KEY_FIXED_DIRECTION;
 		}
-		else if ( key == e_PAUSE_EXIT )
+		else if ( key == e_START )
 		{
-			keyCode = e_KEY_PAUSE_EXIT;
+			keyCode = e_KEY_START;
+		}
+		else if ( key == e_PAUSE )
+		{
+			keyCode = e_KEY_PAUSE;
 		}
 		else
 		{
@@ -67,9 +71,13 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_PAD_FIXED_DIRECTION;
 		}
-		else if ( key == e_PAUSE_EXIT )
+		else if ( key == e_START )
 		{
-			keyCode = e_PAD_PAUSE_EXIT;
+			keyCode = e_PAD_START;
+		}
+		else if ( key == e_PAUSE )
+		{
+			keyCode = e_PAD_PAUSE;
 		}
 		else
 		{

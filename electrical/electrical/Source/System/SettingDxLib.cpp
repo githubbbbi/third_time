@@ -1,7 +1,6 @@
 #include "DxLib.h"
 #include "SettingDxLib.h"
 #include "../Define/Define.h"
-#include "../Input/InputManager.h"
 
 bool SettingDxLib::DxLibInit()
 {
@@ -51,12 +50,6 @@ bool SettingDxLib::DxLibGameLoop()
 
 	// Windowsシステムからくる情報を処理する
 	if ( ProcessMessage() == -1 )
-	{
-		return false;
-	}
-
-	// ESCキーが押されたらループから抜ける
-	if ( InputManager::IsInputRelease(e_PAUSE_EXIT) )
 	{
 		return false;
 	}

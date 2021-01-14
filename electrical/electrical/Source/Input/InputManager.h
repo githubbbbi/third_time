@@ -8,7 +8,7 @@ enum
 	e_ATTACK,			// 攻撃
 	e_FIXED_DIRECTION,	// 向き固定
 	e_START,			// ゲーム開始
-	e_PAUSE_EXIT,		// ポーズ&ゲーム終了
+	e_PAUSE,			// ポーズ
 	e_NO_INPUT = -1,	// 入力なし
 };
 

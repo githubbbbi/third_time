@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Task/GameMain.h"
+#include "../Scene/SceneManager.h"
 
 class System
 {
 private:
-	GameMain *gameMain;
+	SceneManager *scene;
 
 public:
 	// コンストラクタ

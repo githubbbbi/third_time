@@ -11,7 +11,7 @@ enum KeyConfig
 	e_KEY_ATTACK = KEY_INPUT_SPACE,			// 攻撃
 	e_KEY_FIXED_DIRECTION = KEY_INPUT_Z,	// 向き固定
 	e_KEY_START = KEY_INPUT_SPACE,			// ゲーム開始
-	e_KEY_PAUSE_EXIT = KEY_INPUT_ESCAPE,	// ポーズ&ゲーム終了
+	e_KEY_PAUSE = KEY_INPUT_ESCAPE,			// ポーズ
 };
 
 class InputKey

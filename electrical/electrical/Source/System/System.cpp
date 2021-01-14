@@ -2,18 +2,17 @@
 #include <time.h>
 #include "System.h"
 #include "SettingDxLib.h"
-#include "../Mask/Mask.h"
 
 // コンストラクタ
 System::System()
 {
-	gameMain = nullptr;
+	scene = nullptr;
 }
 
 // デストラクタ
 System::~System()
 {
-	delete gameMain;
+	delete scene;
 }
 
 // 初期化処理
@@ -29,13 +28,7 @@ bool System::Initialize()
 	srand((unsigned)time(nullptr));
 
 	// インスタンス生成
-	gameMain = new GameMain;
-
-	// メインゲーム
-	gameMain->Initialize();
-
-	// マスクセット
-	Mask::SetMask();
+	scene = new SceneManager;
 
 	return true;
 }
@@ -47,18 +40,16 @@ bool System::MainLoop()
 	while ( true )
 	{
 		/* ----- 更新処理 ----- */
-		// メインゲーム
-		gameMain->Update();
+		scene->Update();
 
 		/* ----- 描画処理 ----- */
-		// マスクの描画
-		Mask::DrawMask();
+		scene->Draw();
 
-		// メインゲーム
-		gameMain->Draw();
-
-		// マスクの後処理
-		Mask::LoopMask();
+		// ゲーム終了
+		if ( scene->GetIsGameEnd() )
+		{
+			break;
+		}
 
 		// DxLibのループ処理
 		if ( !SettingDxLib::DxLibGameLoop() )
