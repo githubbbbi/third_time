@@ -13,6 +13,7 @@ enum CharaState
 	e_STATE_JUMP,				// ジャンプ
 	e_STATE_ATTACK,				// 攻撃
 	e_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
+	e_STATE_NUM
 };
 
 class CharaBase

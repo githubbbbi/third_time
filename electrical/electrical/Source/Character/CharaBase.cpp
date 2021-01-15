@@ -42,6 +42,7 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	s = 0.0f;
 	v = 255.0f;
 
+	state = e_STATE_IDLE;
 	graphIndex = 0;
 
 	cBlinkingTimer = 0;
@@ -67,6 +68,7 @@ void CharaBase::CharaJump()
 {
 	if ( !isJump && !isFall )
 	{
+		state = e_STATE_JUMP;
 		gravity = JUMP_POWER;
 		isJump = true;
 	}
@@ -78,6 +80,8 @@ void CharaBase::CharaRiseFall()
 	// ã¸&—‰º
 	if ( isJump || isFall )
 	{
+		state = e_STATE_JUMP;
+
 		// —‰º‘¬“x‚ğ‘‚â‚·
 		gravity += GRAVITY;
 

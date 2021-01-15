@@ -14,6 +14,8 @@ const int BATTERY_CHARGE_TIME = (60 * 1) / 2;
 const int P_MAX_BATTERY = 100;
 const int P_CONSUMPTION_BULLET_NUM = 5;
 
+const int P_MOTION[] = { 0,1,2,3 };
+
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 						   float speed, int hp, int attackPower):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
@@ -24,6 +26,8 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
+
+	anim = new Animation;
 }
 
 Chara_Player::~Chara_Player()
@@ -34,6 +38,8 @@ Chara_Player::~Chara_Player()
 		delete electricGun[i];
 		electricGun.erase(electricGun.begin() + i);
 	}
+
+	delete anim;
 }
 
 // 初期化処理
@@ -49,32 +55,26 @@ void Chara_Player::Initialize()
 	shotBulletNum = 0;
 }
 
-// テスト用
-void Chara_Player::Animation()
+// アニメーション
+void Chara_Player::LocalAnimation()
 {
-	static int index = 0;
-	int waitTime = 10;
-	static int wait = waitTime;
-	static int motion[] = { 0,1,2,3 };
-
-
-	if ( state == e_STATE_WALK )
+	static int wait = 50;
+	int num = 4;
+	
+	if ( state == e_STATE_IDLE )
 	{
-		waitTime = 10;
+		wait = 10;
+	}
+	else if ( state == e_STATE_WALK )
+	{
+		wait = 10;
 	}
 	else if ( state == e_STATE_DASH )
 	{
-		waitTime = 4;
+		wait = 6;
 	}
 
-	if ( --wait <= 0 )
-	{
-		index++;
-		index %= 4;
-		wait = waitTime;
-	}
-
-	graphIndex = motion[index];
+	graphIndex = anim->AnimationLoop(P_MOTION, wait, num);// *(state + 1);
 }
 
 // 入力での移動
@@ -101,7 +101,7 @@ void Chara_Player::InputMove()
 		state = e_STATE_DASH;
 		speed = P_DASH_SPEED;
 	}
-	else
+	else if ( padInputX != 0 || padInputY != 0 )
 	{
 		state = e_STATE_WALK;
 		speed = P_NORMAL_SPEED;
@@ -147,11 +147,7 @@ void Chara_Player::InputMove()
 	if ( InputManager::IsInputTrigger(e_JUMP) )
 	{
 		// ジャンプの初期化
-		if ( !isJump && !isFall )
-		{
-			gravity = JUMP_POWER;
-			isJump = true;
-		}
+		CharaJump();
 	}
 
 	// ジャンプ上昇中中にキーが離された場合ジャンプを中止
@@ -287,7 +283,8 @@ void Chara_Player::Update()
 {
 	if ( isAlive )
 	{
-		Animation();
+		state = e_STATE_IDLE;
+
 		Move();
 		BatteryManager();
 		HpManager();
@@ -300,6 +297,8 @@ void Chara_Player::Update()
 		{
 			ChangeGraphicDirection();
 		}
+
+		LocalAnimation();
 	}
 
 	// HSVからRGBに変換
@@ -340,8 +339,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
 
-	DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "isInvicible:%d", isInvicible);
-	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "isCBlinking:%d", isCBlinking);
+	DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 }
 
 // 攻撃

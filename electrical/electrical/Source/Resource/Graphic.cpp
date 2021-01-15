@@ -4,15 +4,15 @@
 
 Graphic::Graphic()
 {
-	myLoadDivGraph("Resource/Graphic/Character/Player/player.png",
+	MyLoadDivGraph("Resource/Graphic/Character/Player/player.png",
 				   6, 6, 1, CHARA_SIZE, CHARA_SIZE, player);
-	enemyBomb = myLoadGraph("Resource/Graphic/Character/Enemy/bomb.png");
-	enemyElectric = myLoadGraph("Resource/Graphic/Character/Enemy/electric.png");
-	enemyWater = myLoadGraph("Resource/Graphic/Character/Enemy/water.png");
-	electricGun = myLoadGraph("Resource/Graphic/Weapon/electricGun.png");
-	waterGun = myLoadGraph("Resource/Graphic/Weapon/waterGun.png");
-	particle = myLoadGraph("Resource/Graphic/Effects/particle.png");
-	myLoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
+	enemyBomb = MyLoadGraph("Resource/Graphic/Character/Enemy/bomb.png");
+	enemyElectric = MyLoadGraph("Resource/Graphic/Character/Enemy/electric.png");
+	enemyWater = MyLoadGraph("Resource/Graphic/Character/Enemy/water.png");
+	electricGun = MyLoadGraph("Resource/Graphic/Weapon/electricGun.png");
+	waterGun = MyLoadGraph("Resource/Graphic/Weapon/waterGun.png");
+	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
+	MyLoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
 				   e_MAP_KIND_NUM, e_MAP_KIND_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
 }
 
@@ -27,7 +27,7 @@ void Graphic::Release()
 	images.clear();
 }
 
-int Graphic::myLoadGraph(const char *filename)
+int Graphic::MyLoadGraph(const char *filename)
 {
 	int temp = LoadGraph(filename);
 	images.push_back(temp);
@@ -35,7 +35,7 @@ int Graphic::myLoadGraph(const char *filename)
 	return temp;
 }
 
-int Graphic::myLoadDivGraph(const char *fileName, int n,
+int Graphic::MyLoadDivGraph(const char *fileName, int n,
 							int xn, int yn, int w, int h, int *buf)
 {
 	int temp = LoadDivGraph(fileName, n, xn, yn, w, h, buf);

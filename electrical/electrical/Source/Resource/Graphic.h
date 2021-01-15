@@ -16,8 +16,8 @@ private:
 	int particle;				// パーティクル
 	int map[e_MAP_KIND_NUM];	// マップ
 
-	int myLoadGraph(const char *filename);
-	int myLoadDivGraph(const char *fileName, int n,
+	int MyLoadGraph(const char *filename);
+	int MyLoadDivGraph(const char *fileName, int n,
 							  int xn, int yn, int w, int h, int *buf);
 
 public:

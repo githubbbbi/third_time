@@ -3,20 +3,24 @@
 #include <vector>
 #include "CharaBase.h"
 #include "Weapon/Weapon_ElectricGun.h"
+#include "Animation.h"
 
-extern const int P_WIDTH;							// 横幅
-extern const int P_HEIGHT;						// 縦幅
-extern const float P_NORMAL_SPEED;				// 通常スピード
-extern const float P_DASH_SPEED;				// ダッシュスピード
+extern const int P_WIDTH;					// 横幅
+extern const int P_HEIGHT;					// 縦幅
+extern const float P_NORMAL_SPEED;			// 通常スピード
+extern const float P_DASH_SPEED;			// ダッシュスピード
 extern const int BATTERY_DCREASE_TIME;		// バッテリー減少タイム
-extern const int BATTERY_CHARGE_TIME;	// バッテリーチャージタイム
-extern const int P_MAX_BATTERY;					// 最大バッテリー
-extern const int P_CONSUMPTION_BULLET_NUM;			// 電力を消費する弾数
+extern const int BATTERY_CHARGE_TIME;		// バッテリーチャージタイム
+extern const int P_MAX_BATTERY;				// 最大バッテリー
+extern const int P_CONSUMPTION_BULLET_NUM;	// 電力を消費する弾数
+
+extern const int P_MOTION[];				// モーション
 
 class Chara_Player:public CharaBase
 {
 private:
 	std::vector<Weapon_ElectricGun *> electricGun;
+	Animation *anim;
 
 	int padInputX, padInputY;	// パッドレバーの入力量(キーボードの矢印キーの入力量も取得できる)
 	int battery;				// バッテリー
@@ -25,7 +29,7 @@ private:
 	int shotBulletNum;			// 撃った弾数
 
 	// アニメーション
-	void Animation();
+	void LocalAnimation();
 
 	// 入力での移動
 	void InputMove();
