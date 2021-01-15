@@ -4,13 +4,14 @@
 #include"../Character/Chara_Manager.h"
 #include"../Stage/Stage.h"
 #include "../Utility/Utility.h"
+#include "../Resource/Graphic.h"
 
 const int E_WATER_WIDTH = 50;
 const int E_WATER_HEIGHT = 50;
 
 Chara_EnemyWater::Chara_EnemyWater(float x, float y, int radius, int width, int height,
-								   float speed, int hp, int attackPower, int graphHandle):
-	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
+								   float speed, int hp, int attackPower):
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower)
 {
 	bulletInterval = 0;
 	bulletSpeed = 0.0f;
@@ -92,7 +93,7 @@ void Chara_EnemyWater::Draw(float shakeX, float shakeY, int scrollX, int scrollY
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+					  1.0, 0.0, Graphic::GetEnemyWater(), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
@@ -105,7 +106,7 @@ void Chara_EnemyWater::HitAttack(int index)
 }
 
 // ïêäÌèàóùä«óù
-void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayerAlive, int waterBulletGH)
+void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayerAlive)
 {
 	if ( !isPlayerAlive )
 	{
@@ -145,8 +146,7 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 		waterGun.push_back(new Weapon_WaterGun(x, y, 16,
 											   bulletSpeed,
 											   GRAVITY, 0,
-											   isLeftWard,
-											   waterBulletGH));
+											   isLeftWard));
 	}
 
 	// êÖíe

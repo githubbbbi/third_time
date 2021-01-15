@@ -11,10 +11,8 @@ private:
 	float shakeX, shakeY;
 	float shakeAddX, shakeAddY;
 
-	int particleGH;
-
 public:
-	EffectManager(int particleGH);
+	EffectManager();
 	~EffectManager();
 
 	// XVˆ—

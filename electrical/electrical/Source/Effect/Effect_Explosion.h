@@ -15,8 +15,6 @@ private:
 
 	int number;
 
-	int graphHandle;
-
 	// ˆÚ“®
 	void Move();
 
@@ -24,7 +22,7 @@ private:
 	void Erase();
 
 public:
-	Effect_Explosion(float x, float y, int blendDecrease, int particleGH);
+	Effect_Explosion(float x, float y, int blendDecrease);
 
 	// XVˆ—
 	void Update();

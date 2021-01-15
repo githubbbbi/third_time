@@ -1,13 +1,13 @@
 #include "DxLib.h"
 #include <math.h>
 #include "Effect_Explosion.h"
+#include "../Resource/Graphic.h"
 
-Effect_Explosion::Effect_Explosion(float x, float y, int blendDecrease, int particleGH)
+Effect_Explosion::Effect_Explosion(float x, float y, int blendDecrease)
 {
 	this->x = x;
 	this->y = y;
 	this->blendDecrease = blendDecrease;
-	this->graphHandle = particleGH;
 
 	number = rand() % 10 + 1;
 	randAngle = (double)(rand() % 360);
@@ -79,7 +79,7 @@ void Effect_Explosion::Draw(int scrollX, int scrollY)
 	}
 
 	DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
-				  exRate, 0.0, graphHandle, true);
+				  exRate, 0.0, Graphic::GetParticle(), true);
 
 	SetDrawBright(255, 255, 255);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

@@ -7,21 +7,17 @@
 // コンストラクタ
 SceneGame::SceneGame()
 {
-	// キャラクターインスタンス生成
+	// キャラクター
 	charaManager = new Chara_Manager;
 
-	// ステージインスタンス生成
-	int mapGH[e_MAP_KIND_NUM];
-	LoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
-				 e_MAP_KIND_NUM, e_MAP_KIND_NUM, 1, CHIP_SIZE, CHIP_SIZE, mapGH);
-	stage = new Stage(mapGH);
+	// ステージ
+	stage = new Stage();
 
-	// 背景
+	// 背景(テスト用)
 	backgroundGH = LoadGraph("Resource/Graphic/Background/background.png");
 
 	// エフェクト
-	int particleGH = LoadGraph("Resource/Graphic/Effects/particle.png");
-	effects = new EffectManager(particleGH);
+	effects = new EffectManager();
 
 	scrollX = 0;
 	scrollY = 0;

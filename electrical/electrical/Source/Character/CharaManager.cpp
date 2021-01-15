@@ -5,14 +5,6 @@
 
 Chara_Manager::Chara_Manager()
 {
-	playerGH = LoadGraph("Resource/Graphic/Character/Player/player.png");
-	enemyBombGH = LoadGraph("Resource/Graphic/Character/Enemy/enemy_bomb.png");
-	enemyElectricGH = LoadGraph("Resource/Graphic/Character/Enemy/enemy_gun.png");
-	enemyWaterGH = LoadGraph("Resource/Graphic/Character/Enemy/enemy_gun.png");
-	electricGunGH = LoadGraph("Resource/Graphic/Weapon/electricGun.png");
-	waterBulletGH = LoadGraph("Resource/Graphic/Weapon/waterGun.png");
-
-
 	explosionX = 0.0f;
 	explosionY = 0.0f;
 
@@ -22,7 +14,7 @@ Chara_Manager::Chara_Manager()
 	// プレイヤー生成
 	player = new Chara_Player(startX, startY, 32,
 							  P_WIDTH, P_HEIGHT,
-							  P_NORMAL_SPEED, 100, 1, playerGH);
+							  P_NORMAL_SPEED, 100, 1);
 }
 
 Chara_Manager::~Chara_Manager()
@@ -60,7 +52,7 @@ void Chara_Manager::EnemyManager()
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, 0.0f, 32,
 													E_BOMB_WIDTH, E_BOMB_HEIGHT,
-													E_BOMB_NORMAL_SPEED, 2, 10, enemyBombGH));
+													E_BOMB_NORMAL_SPEED, 2, 10));
 		}
 
 		// 銃エネミー
@@ -68,7 +60,7 @@ void Chara_Manager::EnemyManager()
 		{
 			enemyElectric.push_back(new Chara_EnemyElectric(WIN_WIDTH / 2.0f, 0.0f, 32,
 															E_GUN_WIDTH, E_GUN_HEIGHT,
-															E_GUN_NORMAL_SPEED, 2, 2, enemyElectricGH));
+															E_GUN_NORMAL_SPEED, 2, 2));
 		}
 
 		// 水弾エネミー
@@ -76,7 +68,7 @@ void Chara_Manager::EnemyManager()
 		{
 			enemyWater.push_back(new Chara_EnemyWater(WIN_WIDTH / 2.0f, 0.0f, 32,
 													  E_WATER_WIDTH, E_WATER_HEIGHT,
-													  0.0f, 2, 2, enemyWaterGH));
+													  0.0f, 2, 2));
 		}
 	}
 
@@ -163,19 +155,19 @@ void Chara_Manager::CharaCollision()
 void Chara_Manager::WeaponManager()
 {
 	// プレイヤー攻撃
-	player->WeaponManager(electricGunGH);
+	player->WeaponManager();
 
 	// 銃エネミー攻撃
 	for ( unsigned int i = 0; i < enemyElectric.size(); i++ )
 	{
-		enemyElectric[i]->WeaponManager(electricGunGH);
+		enemyElectric[i]->WeaponManager();
 	}
 
 	// 水弾エネミー攻撃
 	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
 	{
 		enemyWater[i]->WeaponManager(player->GetPosX(), player->GetPosY(),
-									 player->GetIsAlive(), waterBulletGH);
+									 player->GetIsAlive());
 	}
 }
 

@@ -18,7 +18,7 @@ private:
 
 public:
 	Chara_EnemyBomb(float x, float y, int radius, int width, int height,
-					float speed, int hp, int attackPower, int graphHandle);
+					float speed, int hp, int attackPower);
 	~Chara_EnemyBomb();
 
 	// ‰Šú‰»ˆ—

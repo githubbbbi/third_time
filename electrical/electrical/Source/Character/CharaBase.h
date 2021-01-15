@@ -1,5 +1,6 @@
 #pragma once
 
+extern const int CHARA_SIZE;		// キャラクタのサイズ
 extern const float GRAVITY;			// 重力
 extern const float JUMP_POWER;		// ジャンプ力
 extern const int INVICIBLE_TIME;	// 無敵時間
@@ -18,7 +19,6 @@ protected:
 	int radius;				// 半径
 	int width;				// 横幅
 	int height;				// 縦幅
-	int graphHandle;		// 画像ハンドル
 	int hp;					// HP
 	int attackPower;		// 攻撃力
 	bool isAlive;			// 生存フラグ
@@ -77,7 +77,7 @@ protected:
 public:
 	// コンストラクタ宣言
 	CharaBase(float x, float y, int radius, int width, int height,
-			  float speed, int hp, int attackPower, int graphHandle);
+			  float speed, int hp, int attackPower);
 
 	// キャラクタのジャンプ
 	void CharaJump();

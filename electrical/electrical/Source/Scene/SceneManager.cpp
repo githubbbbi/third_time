@@ -3,11 +3,14 @@
 #include "SceneGame.h"
 #include "../Input/InputManager.h"
 #include "../Mask/Mask.h"
+#include "../Resource/Graphic.h"
 
 SceneManager::SceneManager()
 {
 	nowScene = std::make_unique<SceneTitle>();
 	scene = e_TITLE;
+
+	Graphic::Load();
 
 	// マスクセット
 	Mask::SetMask();

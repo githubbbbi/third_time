@@ -44,14 +44,14 @@ private:
 
 public:
 	Chara_Player(float x, float y, int radius, int width, int height,
-				 float speed, int hp, int attackPower, int graphHandle);
+				 float speed, int hp, int attackPower);
 	~Chara_Player();
 
 	// ‰Šú‰»ˆ—
 	void Initialize();
 
 	// •Šíˆ—ŠÇ—
-	void WeaponManager(int electricGunGH);
+	void WeaponManager();
 
 	// XVˆ—
 	void Update();

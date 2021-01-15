@@ -12,7 +12,6 @@ protected:
 	int radius;				// 半径
 	float speedX;			// スピードX
 	float speedY;			// スピードY
-	int graphHandle;		// 画像ハンドル
 	int mapHitFrame;			// マップチップにヒットしているフレーム数
 	int eraseFrame;			// マップチップにヒットしてから消去するフレーム数
 	bool isAlive;			// 発射フラグ
@@ -24,7 +23,7 @@ protected:
 
 public:
 	WeaponBase(float x, float y, int radius, float speedX, float speedY,
-			   int eraseFrame, bool isCharaLeftWard, int graphHandle);
+			   int eraseFrame, bool isCharaLeftWard);
 
 
 	// 弾がヒットした場合の処理

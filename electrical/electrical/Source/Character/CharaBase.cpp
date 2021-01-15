@@ -4,13 +4,14 @@
 #include "../Define/Define.h"
 #include "../Stage/Stage.h"
 
+const int CHARA_SIZE = 56;
 const float GRAVITY = 0.850f;
 const float JUMP_POWER = -13.0f;
 const int INVICIBLE_TIME = 60;
 
 // コンストラクタ
 CharaBase::CharaBase(float x, float y, int radius, int width, int height,
-					 float speed, int hp, int attackPower, int graphHandle)
+					 float speed, int hp, int attackPower)
 {
 	this->x = x;
 	this->y = y;
@@ -18,7 +19,6 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	this->radius = radius;
 	this->width = width;
 	this->height = height;
-	this->graphHandle = graphHandle;
 
 	this->hp = hp;
 	this->attackPower = attackPower;

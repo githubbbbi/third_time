@@ -28,12 +28,6 @@
     <Filter Include="ヘッダー ファイル\System">
       <UniqueIdentifier>{d6430350-248f-4e2f-8301-c0f57e876151}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Task">
-      <UniqueIdentifier>{92752cf9-b411-45e5-afad-da168c0bb572}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Task">
-      <UniqueIdentifier>{56b1da09-427e-495a-9509-1fdbb0800ec8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Character">
       <UniqueIdentifier>{719836e7-e069-4832-8997-c99492995b0c}</UniqueIdentifier>
     </Filter>
@@ -76,6 +70,12 @@
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{54243b31-0834-4b01-afd4-11da31ffee9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Resource">
+      <UniqueIdentifier>{0ba5a88b-701c-403d-8b3a-227de221b816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Resource">
+      <UniqueIdentifier>{802674f7-f9a3-4b21-a081-82d91895fcb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -89,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="Source\System\System.cpp">
       <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Task\GameMain.cpp">
-      <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Utility.cpp">
       <Filter>ソース ファイル\Utility</Filter>
@@ -159,6 +156,9 @@
     <ClCompile Include="Source\Scene\SceneBase.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Resource\Graphic.cpp">
+      <Filter>ソース ファイル\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -172,9 +172,6 @@
     </ClInclude>
     <ClInclude Include="Source\System\System.h">
       <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Task\GameMain.h">
-      <Filter>ヘッダー ファイル\Task</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Utility.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
@@ -241,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\SceneManager.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Graphic.h">
+      <Filter>ヘッダー ファイル\Resource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

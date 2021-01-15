@@ -2,12 +2,10 @@
 #include "EffectManager.h"
 #include "Effect_Shake.h"
 
-EffectManager::EffectManager(int particleGH)
+EffectManager::EffectManager()
 {
 	shakeX = shakeY = 0.0f;
 	shakeAddX = shakeAddY = 0.0f;
-
-	this->particleGH = particleGH;
 }
 
 EffectManager::~EffectManager()
@@ -86,6 +84,6 @@ void EffectManager::Explosion(float x, float y)
 {
 	for ( int i = 0; i < 100; i++ )
 	{
-		explosion.push_back(new Effect_Explosion(x, y, 9, particleGH));
+		explosion.push_back(new Effect_Explosion(x, y, 9));
 	}
 }

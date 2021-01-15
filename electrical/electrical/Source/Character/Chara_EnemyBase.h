@@ -19,7 +19,7 @@ protected:
 
 public:
 	Chara_EnemyBase(float x, float y, int radius, int width, int height,
-					float speed, int hp, int attackPower, int graphHandle);
+					float speed, int hp, int attackPower);
 
 	// “G‚Ì“–‚½‚è”»’è
 	void EnemiesCollision();

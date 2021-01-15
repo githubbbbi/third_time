@@ -4,6 +4,7 @@
 #include"../Character/Chara_Manager.h"
 #include"../Stage/Stage.h"
 #include "../Utility/Utility.h"
+#include "../Resource/Graphic.h"
 
 const int E_GUN_WIDTH = 50;
 const int E_GUN_HEIGHT = 50;
@@ -11,8 +12,8 @@ const float E_GUN_NORMAL_SPEED = 2.0f;
 const float E_GUN_DASH_SPEED = 4.0f;
 
 Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width, int height,
-										 float speed, int hp, int attackPower, int graphHandle):
-	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
+										 float speed, int hp, int attackPower):
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower)
 {
 	shotBulletNum = 0;
 	bulletInterval = 0;
@@ -148,7 +149,7 @@ void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scro
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+					  1.0, 0.0, Graphic::GetEnemyElectric(), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
@@ -161,7 +162,7 @@ void Chara_EnemyElectric::HitAttack(int index)
 }
 
 // 攻撃処理の管理
-void Chara_EnemyElectric::WeaponManager(int electricGunGH)
+void Chara_EnemyElectric::WeaponManager()
 {
 	// 弾のインターバルを測るカウント
 	bulletInterval++;
@@ -178,8 +179,7 @@ void Chara_EnemyElectric::WeaponManager(int electricGunGH)
 		electricGun.push_back(new Weapon_ElectricGun(x, y, 16,
 													 EG_SPEED,
 													 0.0f, 2,
-													 isLeftWard,
-													 electricGunGH));
+													 isLeftWard));
 	}
 
 	// 電気銃

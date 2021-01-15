@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Stage.h"
+#include "../Resource/Graphic.h"
 
 int Stage::mapData[MAP_COUNT_Y][MAP_COUNT_X] = {
 			{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -21,13 +22,8 @@ int Stage::mapData[MAP_COUNT_Y][MAP_COUNT_X] = {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-Stage::Stage(int mapGH[])
+Stage::Stage()
 {
-	for ( int i = 0; i < e_MAP_KIND_NUM; i++ )
-	{
-		this->mapGH[i] = mapGH[i];
-	}
-
 	graphIndex = 0;
 }
 
@@ -61,7 +57,7 @@ void Stage::MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int s
 	{
 		DrawGraph(x * CHIP_SIZE + (int)shakeX - scrollX,
 			y * CHIP_SIZE + (int)shakeX - scrollY,
-			mapGH[graphIndex], true);
+			Graphic::GetMap(graphIndex), true);
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "../Define/Define.h"
 #include "../Stage/Stage.h"
 #include "../Utility/Utility.h"
+#include "../Resource/Graphic.h"
 
 const int E_BOMB_WIDTH = 50;
 const int E_BOMB_HEIGHT = 50;
@@ -10,8 +11,8 @@ const float E_BOMB_NORMAL_SPEED = 1.0f;
 const float E_BOMB_DASH_SPEED = 8.0f;
 
 Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius, int width, int height,
-								 float speed, int hp, int attackPower, int graphHandle):
-	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
+								 float speed, int hp, int attackPower):
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower)
 {
 
 }
@@ -110,7 +111,7 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+					  1.0, 0.0, Graphic::GetEnemyBomb(), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

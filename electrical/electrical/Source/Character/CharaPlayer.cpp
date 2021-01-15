@@ -3,6 +3,7 @@
 #include "../Define/Define.h"
 #include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
+#include "../Resource/Graphic.h"
 
 const int P_WIDTH = 50;
 const int P_HEIGHT = 50;
@@ -14,8 +15,8 @@ const int P_MAX_BATTERY = 100;
 const int P_CONSUMPTION_BULLET_NUM = 5;
 
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
-						   float speed, int hp, int attackPower, int graphHandle):
-	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
+						   float speed, int hp, int attackPower):
+	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
 {
 	padInputX = 0;
 	padInputY = 0;
@@ -289,7 +290,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, graphHandle, true, isLeftWard);
+					  1.0, 0.0, Graphic::GetPlayer(), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
@@ -341,7 +342,7 @@ void Chara_Player::HitAttack(int index)
 }
 
 // çUåÇèàóùÇÃä«óù
-void Chara_Player::WeaponManager(int electricGunGH)
+void Chara_Player::WeaponManager()
 {
 	// ê∂ê¨
 	if ( IsAttack() && isAlive )
@@ -349,8 +350,7 @@ void Chara_Player::WeaponManager(int electricGunGH)
 		electricGun.push_back(new Weapon_ElectricGun(x, y, 16,
 													 EG_SPEED,
 													 0.0f, 2,
-													 isLeftWard,
-													 electricGunGH));
+													 isLeftWard));
 	}
 
 	// ìdãCèe

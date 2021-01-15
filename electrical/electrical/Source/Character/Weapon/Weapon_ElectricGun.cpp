@@ -2,13 +2,14 @@
 #include "Weapon_ElectricGun.h"
 #include "../../Define/Define.h"
 #include "../../Utility/Utility.h"
+#include "../..//Resource/Graphic.h"
 
 const float EG_SPEED = 10.0f;
 const int EG_ALIVE_TIME = 30;
 
 Weapon_ElectricGun::Weapon_ElectricGun(float x, float y, int radius, float speedX, float speedY,
-									   int eraseFrame, bool isCharaLeftWard, int graphHandle):
-	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard, graphHandle)
+									   int eraseFrame, bool isCharaLeftWard):
+	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard)
 {
 	exRate = 1.0;
 	aliveTimer = 0;
@@ -82,6 +83,6 @@ void Weapon_ElectricGun::Draw(int scrollX, int scrollY)
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
-					  exRate, 0.0, graphHandle, true, isLeftWard);
+					  exRate, 0.0, Graphic::GetElectricGun(), true, isLeftWard);
 	}
 }

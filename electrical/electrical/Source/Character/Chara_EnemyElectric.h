@@ -28,7 +28,7 @@ private:
 
 public:
 	Chara_EnemyElectric(float x, float y, int radius, int width, int height,
-						float speed, int hp, int attackPower, int graphHandle);
+						float speed, int hp, int attackPower);
 	~Chara_EnemyElectric();
 
 	// ‰Šú‰»ˆ—
@@ -41,7 +41,7 @@ public:
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
 	// •Šíˆ—ŠÇ—
-	void WeaponManager(int electricGunGH);
+	void WeaponManager();
 
 	// UŒ‚ƒqƒbƒg
 	void HitAttack(int index);

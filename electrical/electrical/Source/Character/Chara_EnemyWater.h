@@ -25,7 +25,7 @@ private:
 
 public:
 	Chara_EnemyWater(float x, float y, int radius, int width, int height,
-					 float speed, int hp, int attackPower, int graphHandle);
+					 float speed, int hp, int attackPower);
 	~Chara_EnemyWater();
 
 	// ‰Šú‰»ˆ—
@@ -41,7 +41,7 @@ public:
 	void HitAttack(int index);
 
 	// •Šíˆ—ŠÇ—
-	void WeaponManager(float playerX, float playerY, bool isPlayerAlive, int electricGunGH);
+	void WeaponManager(float playerX, float playerY, bool isPlayerAlive);
 
 	// …’e‚Ì—v‘f”
 	unsigned int GetGunSize();

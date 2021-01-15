@@ -14,13 +14,6 @@ private:
 	std::vector<Chara_EnemyElectric *>enemyElectric;
 	std::vector<Chara_EnemyWater *>enemyWater;
 
-	int playerGH;			// プレイヤー
-	int electricGunGH;		// 電気銃
-	int waterBulletGH;		// 水弾
-	int enemyBombGH;		// 爆弾エネミー
-	int enemyElectricGH;	// 銃エネミー
-	int enemyWaterGH;		// 水弾エネミー
-
 	float explosionX;		// 爆発の中心となる座標
 	float explosionY;		// 爆発の中心となる座標
 

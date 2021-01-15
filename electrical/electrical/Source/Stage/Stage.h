@@ -14,7 +14,6 @@ enum MapChip
 class Stage
 {
 private:
-	int mapGH[e_MAP_KIND_NUM];
 	int graphIndex;
 
 	static int mapData[MAP_COUNT_Y][MAP_COUNT_X];
@@ -23,7 +22,7 @@ private:
 	void MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int scrollY);
 
 public:
-	Stage(int mapGH[]);
+	Stage();
 
 	// XVˆ—
 	void Update();

@@ -2,7 +2,7 @@
 #include "../../Utility/Utility.h"
 
 WeaponBase::WeaponBase(float x, float y, int radius, float speedX, float speedY,
-					   int eraseFrame, bool isCharaLeftWard, int graphHandle)
+					   int eraseFrame, bool isCharaLeftWard)
 {
 	this->x = x;
 	this->y = y;
@@ -11,7 +11,6 @@ WeaponBase::WeaponBase(float x, float y, int radius, float speedX, float speedY,
 	this->speedY = speedY;
 	this->eraseFrame = eraseFrame;
 	this->isLeftWard = isCharaLeftWard;
-	this->graphHandle = graphHandle;
 
 	oldX = x;
 	oldY = y;

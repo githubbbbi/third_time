@@ -15,7 +15,7 @@ private:
 
 public:
 	Weapon_WaterGun(float x, float y, int radius, float speedX, float speedY,
-					int eraseFrame, bool isCharaLeftWard, int graphHandle);
+					int eraseFrame, bool isCharaLeftWard);
 
 	// XVˆ—
 	void Update();

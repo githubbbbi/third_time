@@ -1,10 +1,11 @@
 #include <math.h>
 #include "Chara_EnemyBase.h"
 #include"../stage/stage.h"
+#include "../Resource/Graphic.h"
 
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
-								 float speed, int hp, int attackPower, int graphHandle):
-	CharaBase(x, y, radius, width, height, speed, hp, attackPower, graphHandle)
+								 float speed, int hp, int attackPower):
+	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
 {
 
 }
