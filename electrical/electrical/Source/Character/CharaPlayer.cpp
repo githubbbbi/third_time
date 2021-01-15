@@ -290,7 +290,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, Graphic::GetPlayer(), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetPlayer(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

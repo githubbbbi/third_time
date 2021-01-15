@@ -83,6 +83,6 @@ void Weapon_ElectricGun::Draw(int scrollX, int scrollY)
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
-					  exRate, 0.0, Graphic::GetElectricGun(), true, isLeftWard);
+					  exRate, 0.0, Graphic::GetInstance()->GetElectricGun(), true, isLeftWard);
 	}
 }

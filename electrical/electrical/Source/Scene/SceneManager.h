@@ -20,6 +20,7 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+	void Finalize();
 
 	// ƒQ[ƒ€I—¹
 	bool GetIsGameEnd();

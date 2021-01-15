@@ -64,6 +64,8 @@ bool System::MainLoop()
 // 終了処理
 void System::Finalize()
 {
+	scene->Finalize();
+
 	// Dxライブラリ終了処理
 	DxLib_End();
 }

@@ -56,8 +56,8 @@ void Stage::MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int s
 	if ( graphIndex != e_MAP_NONE )
 	{
 		DrawGraph(x * CHIP_SIZE + (int)shakeX - scrollX,
-			y * CHIP_SIZE + (int)shakeX - scrollY,
-			Graphic::GetMap(graphIndex), true);
+				  y * CHIP_SIZE + (int)shakeX - scrollY,
+				  Graphic::GetInstance()->GetMap(graphIndex), true);
 	}
 }
 

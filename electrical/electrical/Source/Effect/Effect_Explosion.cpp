@@ -79,7 +79,7 @@ void Effect_Explosion::Draw(int scrollX, int scrollY)
 	}
 
 	DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
-				  exRate, 0.0, Graphic::GetParticle(), true);
+				  exRate, 0.0, Graphic::GetInstance()->GetParticle(), true);
 
 	SetDrawBright(255, 255, 255);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

@@ -32,6 +32,8 @@ protected:
 	float s;				// 彩度(saturation)	:0~255
 	float v;				// 明度(value)		:0~255
 
+	int graphIndex;			// 画像添え字
+
 	int cBlinkingTimer;		// 色点滅タイマー
 	int cBlinkingCounter;	// 色点滅回数カウンター
 	bool isCBlinking;		// 色点滅フラグ

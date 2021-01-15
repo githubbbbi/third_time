@@ -42,6 +42,8 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	s = 0.0f;
 	v = 255.0f;
 
+	graphIndex = 0;
+
 	cBlinkingTimer = 0;
 	cBlinkingCounter = 0;
 	isCBlinking = false;

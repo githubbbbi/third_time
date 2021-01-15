@@ -1,20 +1,11 @@
 #include "DxLib.h"
 #include "Graphic.h"
+#include "../Character/CharaBase.h"
 
-std::vector<int> Graphic::images = { 0 };
-
-int Graphic::player = 0;
-int Graphic::enemyBomb = 0;
-int Graphic::enemyElectric = 0;
-int Graphic::enemyWater = 0;
-int Graphic::electricGun = 0;
-int Graphic::waterGun = 0;
-int Graphic::particle = 0;
-int Graphic::map[] = { 0 };
-
-void Graphic::Load()
+Graphic::Graphic()
 {
-	player = myLoadGraph("Resource/Graphic/Character/Player/player.png");
+	myLoadDivGraph("Resource/Graphic/Character/Player/player.png",
+				   6, 6, 1, CHARA_SIZE, CHARA_SIZE, player);
 	enemyBomb = myLoadGraph("Resource/Graphic/Character/Enemy/bomb.png");
 	enemyElectric = myLoadGraph("Resource/Graphic/Character/Enemy/electric.png");
 	enemyWater = myLoadGraph("Resource/Graphic/Character/Enemy/water.png");
@@ -22,7 +13,7 @@ void Graphic::Load()
 	waterGun = myLoadGraph("Resource/Graphic/Weapon/waterGun.png");
 	particle = myLoadGraph("Resource/Graphic/Effects/particle.png");
 	myLoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
-				 e_MAP_KIND_NUM, e_MAP_KIND_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
+				   e_MAP_KIND_NUM, e_MAP_KIND_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
 }
 
 // ç°Ç‹Ç≈ÉçÅ[ÉhÇµÇΩâÊëúÇâï˙Ç∑ÇÈ
@@ -56,9 +47,9 @@ int Graphic::myLoadDivGraph(const char *fileName, int n,
 	return temp;
 }
 
-int Graphic::GetPlayer()
+int Graphic::GetPlayer(int index)
 {
-	return player;
+	return player[index];
 }
 
 int Graphic::GetEnemyBomb()

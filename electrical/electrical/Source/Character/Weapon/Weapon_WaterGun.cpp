@@ -65,6 +65,6 @@ void Weapon_WaterGun::Draw(int scrollX, int scrollY)
 	if ( isAlive )
 	{
 		DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
-					  1.0, 0.0, Graphic::GetWaterGun(), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetWaterGun(), true, isLeftWard);
 	}
 }

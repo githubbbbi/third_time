@@ -10,7 +10,7 @@ SceneManager::SceneManager()
 	nowScene = std::make_unique<SceneTitle>();
 	scene = e_TITLE;
 
-	Graphic::Load();
+	Graphic::GetInstance()->Load();
 
 	// マスクセット
 	Mask::SetMask();
@@ -20,6 +20,33 @@ SceneManager::SceneManager()
 void SceneManager::Initialize()
 {
 	nowScene->Initialize();
+}
+
+// シーン遷移
+void SceneManager::SceneChange()
+{
+	if ( !nowScene->GetIsSceneChange() )
+	{
+		return;
+	}
+
+	switch ( scene )
+	{
+		case e_TITLE:
+			nowScene.reset(new SceneGame);
+			scene = e_GAME;
+			break;
+
+		case e_GAME:
+			nowScene.reset(new SceneTitle);
+			scene = e_TITLE;
+			break;
+
+		case e_ENDING:
+			//nowScene.reset(new SceneTitle);
+			//scene = e_TITLE;
+			break;
+	}
 }
 
 // 更新処理
@@ -48,31 +75,11 @@ void SceneManager::Draw()
 	Mask::LoopMask();
 }
 
-// シーン遷移
-void SceneManager::SceneChange()
+// 終了処理
+void SceneManager::Finalize()
 {
-	if ( !nowScene->GetIsSceneChange() )
-	{
-		return;
-	}
-
-	switch ( scene )
-	{
-		case e_TITLE:
-			nowScene.reset(new SceneGame);
-			scene = e_GAME;
-			break;
-
-		case e_GAME:
-			nowScene.reset(new SceneTitle);
-			scene = e_TITLE;
-			break;
-
-		case e_ENDING:
-			//nowScene.reset(new SceneTitle);
-			//scene = e_TITLE;
-			break;
-	}
+	// 画像解放
+	Graphic::GetInstance()->Release();
 }
 
 // ゲーム終了
