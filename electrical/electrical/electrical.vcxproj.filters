@@ -159,9 +159,6 @@
     <ClCompile Include="Source\Resource\Graphic.cpp">
       <Filter>ソース ファイル\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character\Animation.cpp">
-      <Filter>ソース ファイル\Character</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -244,9 +241,6 @@
     </ClInclude>
     <ClInclude Include="Source\Resource\Graphic.h">
       <Filter>ヘッダー ファイル\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Character\Animation.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

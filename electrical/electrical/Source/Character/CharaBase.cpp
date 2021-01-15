@@ -284,6 +284,8 @@ void CharaBase::KnockBack()
 		// 色点滅終了でノックバック終了
 		else
 		{
+			// 状態を変更
+			state = e_STATE_IDLE;
 			isKnockBack = false;
 		}
 	}
@@ -337,6 +339,9 @@ void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 	{
 		isInvicible = true;
 	}
+
+	// 現在の状態はダメージを受けている
+	state = e_STATE_RECIEVE_DAMAGE;
 }
 
 // X座標を取得

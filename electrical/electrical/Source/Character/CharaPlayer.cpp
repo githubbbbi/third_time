@@ -49,6 +49,34 @@ void Chara_Player::Initialize()
 	shotBulletNum = 0;
 }
 
+// テスト用
+void Chara_Player::Animation()
+{
+	static int index = 0;
+	int waitTime = 10;
+	static int wait = waitTime;
+	static int motion[] = { 0,1,2,3 };
+
+
+	if ( state == e_STATE_WALK )
+	{
+		waitTime = 10;
+	}
+	else if ( state == e_STATE_DASH )
+	{
+		waitTime = 4;
+	}
+
+	if ( --wait <= 0 )
+	{
+		index++;
+		index %= 4;
+		wait = waitTime;
+	}
+
+	graphIndex = motion[index];
+}
+
 // 入力での移動
 void Chara_Player::InputMove()
 {
@@ -70,10 +98,12 @@ void Chara_Player::InputMove()
 		  InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
 		!InputManager::IsInputNow(e_FIXED_DIRECTION) )
 	{
+		state = e_STATE_DASH;
 		speed = P_DASH_SPEED;
 	}
 	else
 	{
+		state = e_STATE_WALK;
 		speed = P_NORMAL_SPEED;
 	}
 
@@ -257,6 +287,7 @@ void Chara_Player::Update()
 {
 	if ( isAlive )
 	{
+		Animation();
 		Move();
 		BatteryManager();
 		HpManager();

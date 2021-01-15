@@ -132,7 +132,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Character\Animation.cpp" />
     <ClCompile Include="Source\Character\CharaBase.cpp" />
     <ClCompile Include="Source\Character\CharaManager.cpp" />
     <ClCompile Include="Source\Character\CharaPlayer.cpp" />
@@ -162,7 +161,6 @@
     <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Character\Animation.h" />
     <ClInclude Include="Source\Character\CharaBase.h" />
     <ClInclude Include="Source\Character\Chara_EnemyBase.h" />
     <ClInclude Include="Source\Character\Chara_EnemyBomb.h" />

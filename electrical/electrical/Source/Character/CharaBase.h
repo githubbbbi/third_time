@@ -5,6 +5,16 @@ extern const float GRAVITY;			// 重力
 extern const float JUMP_POWER;		// ジャンプ力
 extern const int INVICIBLE_TIME;	// 無敵時間
 
+enum CharaState
+{
+	e_STATE_IDLE,				// 待機
+	e_STATE_WALK,				// 歩き
+	e_STATE_DASH,				// ダッシュ
+	e_STATE_JUMP,				// ジャンプ
+	e_STATE_ATTACK,				// 攻撃
+	e_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
+};
+
 class CharaBase
 {
 protected:
@@ -32,6 +42,7 @@ protected:
 	float s;				// 彩度(saturation)	:0~255
 	float v;				// 明度(value)		:0~255
 
+	int state;				// 現在の状態(待機、走りなど)
 	int graphIndex;			// 画像添え字
 
 	int cBlinkingTimer;		// 色点滅タイマー
