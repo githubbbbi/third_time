@@ -23,7 +23,8 @@ const int P_MOTION[e_P_STATE_NUM][4] =
 	{ 20, 21, 22, 23 },
 	{ 24, 25, 26, 27 },
 	{ 28, 29, 30, 31 },
-	{ 32, 33, 34, 35 }
+	{ 32, 33, 34, 35 },
+	{ 36, 37, 38, 39 }
 };
 
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
@@ -68,16 +69,19 @@ void Chara_Player::Initialize()
 // アニメーション
 void Chara_Player::LocalAnimation()
 {
-	static int wait = 10;
+	int wait = 10;
 	const int num = 4;
 
-	if ( fabsf(speed) == P_NORMAL_SPEED )
+	if ( moveX != 0.0f || moveY != 0.0f )
 	{
-		wait = 10;
-	}
-	else
-	{
-		wait = 6;
+		if ( fabsf(speed) == P_NORMAL_SPEED )
+		{
+			wait = 10;
+		}
+		else if( fabsf(speed) == P_DASH_SPEED )
+		{
+			wait = 6;
+		}
 	}
 
 	int *p = (int *)P_MOTION;
@@ -340,6 +344,12 @@ void Chara_Player::State()
 				state = e_P_STATE_DASH_ATTACK;
 			}
 		}
+
+		// ジャンプ
+		if ( isJump || isFall )
+		{
+			state = e_P_STATE_JUMP_ATTACK;
+		}
 	}
 
 	// ダメーを受ける(色点滅中)
@@ -411,7 +421,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
 
 	DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "state:%d", state);
-	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
+	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
 }
 
 // 攻撃

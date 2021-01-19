@@ -15,6 +15,7 @@ enum PlayerState
 	e_P_STATE_STOP_ATTACK,			// とまって攻撃
 	e_P_STATE_WALK_ATTACK,			// 歩き攻撃
 	e_P_STATE_DASH_ATTACK,			// ダッシュ攻撃
+	e_P_STATE_JUMP_ATTACK,			// ジャンプ攻撃
 	e_P_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
 	e_P_STATE_NUM
 };
