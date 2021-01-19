@@ -17,6 +17,7 @@ Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width
 {
 	shotBulletNum = 0;
 	bulletInterval = 0;
+	shotLength = 0;
 	isTargetLock = false;
 }
 
@@ -54,9 +55,13 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 
 	if ( isPlayerAlive )
 	{
+		if ( shotLength == 0 )
+		{
+			shotLength = GetRand(150) + 100;
+		}
+
 		// ŽË’ö“à‚ÅŽ~‚Ü‚é ŠÔ‚ÉƒuƒƒbƒN‚ª‚ ‚ê‚Î‚Æ‚Ü‚ç‚È‚¢
-		if ( playerX - x + radius >= 200 ||
-			x - radius - playerX >= 200 || IsBlock(playerX) )
+		if ( fabsf(playerX - x + radius) >= shotLength || IsBlock(playerX) )
 		{
 			moveX += speed;
 

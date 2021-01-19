@@ -18,6 +18,7 @@ private:
 
 	int shotBulletNum;		// Œ‚‚Á‚½’e”
 	int bulletInterval;		// e‚ğŒ‚‚ÂŠÔŠu
+	int shotLength;
 	bool isTargetLock;		// ”ÍˆÍ“à‚Ìƒtƒ‰ƒO
 
 	// ©“®ˆÚ“®
