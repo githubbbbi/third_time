@@ -78,7 +78,7 @@ void Chara_Player::LocalAnimation()
 		{
 			wait = 10;
 		}
-		else if( fabsf(speed) == P_DASH_SPEED )
+		else if ( fabsf(speed) == P_DASH_SPEED )
 		{
 			wait = 6;
 		}
@@ -420,7 +420,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
 
-	DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "state:%d", state);
+	//DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
 }
 
@@ -460,7 +460,14 @@ void Chara_Player::WeaponManager()
 	// ê∂ê¨
 	if ( IsAttack() && isAlive )
 	{
-		electricGun.push_back(new Weapon_ElectricGun(x, y, 16,
+		int xx = 16;
+		if ( isLeftWard )
+		{
+			xx *= -1;
+		}
+
+		electricGun.push_back(new Weapon_ElectricGun(x + xx, y,
+													 16,
 													 EG_SPEED,
 													 0.0f, 2,
 													 isLeftWard));
