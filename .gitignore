@@ -49,3 +49,7 @@ Thumbs.db
 *.wmv
 
 .vs/
+
+[url "github:"]
+    InsteadOf = https://github.com/
+    InsteadOf = git@github.com:
