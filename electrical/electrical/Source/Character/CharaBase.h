@@ -5,17 +5,6 @@ extern const float GRAVITY;			// 重力
 extern const float JUMP_POWER;		// ジャンプ力
 extern const int INVICIBLE_TIME;	// 無敵時間
 
-enum CharaState
-{
-	e_STATE_IDLE,				// 待機
-	e_STATE_WALK,				// 歩き
-	e_STATE_DASH,				// ダッシュ
-	e_STATE_JUMP,				// ジャンプ
-	e_STATE_ATTACK,				// 攻撃
-	e_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
-	e_STATE_NUM
-};
-
 class CharaBase
 {
 protected:
@@ -36,6 +25,8 @@ protected:
 	bool isLeftWard;		// 左向きフラグ
 	bool isJump;			// ジャンプフラグ
 	bool isFall;			// 落下フラグ
+	int attackMotionFrame;	// 攻撃モーションフレーム
+	bool isAttack;			// 攻撃フラグ
 	float r;				// 赤色				:0~255
 	float g;				// 緑色				:0~255
 	float b;				// 青色				:0~255
@@ -87,6 +78,9 @@ protected:
 
 	// 無敵の処理
 	void Invicible();
+
+	// 攻撃モーション
+	void AttackMotion();
 
 public:
 	// コンストラクタ宣言

@@ -1,11 +1,10 @@
 #include "DxLib.h"
 #include "Graphic.h"
-#include "../Character/CharaBase.h"
 
 Graphic::Graphic()
 {
 	MyLoadDivGraph("Resource/Graphic/Character/Player/player.png",
-				   6, 6, 1, CHARA_SIZE, CHARA_SIZE, player);
+				   4 * e_P_STATE_NUM, 4, e_P_STATE_NUM, CHARA_SIZE, CHARA_SIZE, player);
 	enemyBomb = MyLoadGraph("Resource/Graphic/Character/Enemy/bomb.png");
 	enemyElectric = MyLoadGraph("Resource/Graphic/Character/Enemy/electric.png");
 	enemyWater = MyLoadGraph("Resource/Graphic/Character/Enemy/water.png");
@@ -13,7 +12,7 @@ Graphic::Graphic()
 	waterGun = MyLoadGraph("Resource/Graphic/Weapon/waterGun.png");
 	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
 	MyLoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
-				   e_MAP_KIND_NUM, e_MAP_KIND_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
+				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
 }
 
 // ç°Ç‹Ç≈ÉçÅ[ÉhÇµÇΩâÊëúÇâï˙Ç∑ÇÈ

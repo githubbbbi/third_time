@@ -10,11 +10,21 @@ const int P_HEIGHT = 50;
 const float P_NORMAL_SPEED = 3.0f;
 const float P_DASH_SPEED = 5.0f;
 const int BATTERY_DCREASE_TIME = 60 * 1;
-const int BATTERY_CHARGE_TIME = (60 * 1) / 2;
+const int BATTERY_CHARGE_TIME = 60 * 1;
 const int P_MAX_BATTERY = 100;
 const int P_CONSUMPTION_BULLET_NUM = 5;
-
-const int P_MOTION[] = { 0,1,2,3 };
+const int P_MOTION[e_P_STATE_NUM][4] =
+{
+	{  0,  1,  2,  3 },
+	{  4,  5,  6,  7 },
+	{  8,  9, 10, 11 },
+	{ 12, 13, 14, 15 },
+	{ 16, 17, 18, 19 },
+	{ 20, 21, 22, 23 },
+	{ 24, 25, 26, 27 },
+	{ 28, 29, 30, 31 },
+	{ 32, 33, 34, 35 }
+};
 
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 						   float speed, int hp, int attackPower):
@@ -58,23 +68,20 @@ void Chara_Player::Initialize()
 // アニメーション
 void Chara_Player::LocalAnimation()
 {
-	static int wait = 50;
-	int num = 4;
-	
-	if ( state == e_STATE_IDLE )
+	static int wait = 10;
+	const int num = 4;
+
+	if ( fabsf(speed) == P_NORMAL_SPEED )
 	{
 		wait = 10;
 	}
-	else if ( state == e_STATE_WALK )
-	{
-		wait = 10;
-	}
-	else if ( state == e_STATE_DASH )
+	else
 	{
 		wait = 6;
 	}
 
-	graphIndex = anim->AnimationLoop(P_MOTION, wait, num);// *(state + 1);
+	int *p = (int *)P_MOTION;
+	graphIndex = anim->AnimationLoop(p, state, wait, num);
 }
 
 // 入力での移動
@@ -98,12 +105,10 @@ void Chara_Player::InputMove()
 		  InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
 		!InputManager::IsInputNow(e_FIXED_DIRECTION) )
 	{
-		state = e_STATE_DASH;
 		speed = P_DASH_SPEED;
 	}
 	else if ( padInputX != 0 || padInputY != 0 )
 	{
-		state = e_STATE_WALK;
 		speed = P_NORMAL_SPEED;
 	}
 
@@ -190,7 +195,7 @@ void Chara_Player::ChangeGraphicDirection()
 void Chara_Player::BatteryDecrease()
 {
 	// 移動中
-	if ( moveX != 0.0f || moveY != 0.0f || isJump )
+	if ( moveX != 0.0f || moveY != 0.0f || isJump || isFall )
 	{
 		batteryTimer++;
 		if ( batteryTimer > BATTERY_DCREASE_TIME )
@@ -199,9 +204,10 @@ void Chara_Player::BatteryDecrease()
 			battery--;
 
 			// タイマーリセット
-			batteryChargeTimer = 0;
 			batteryTimer = 0;
 		}
+
+		batteryChargeTimer = 0;
 	}
 
 	// 撃った弾数が一定数を超える
@@ -218,26 +224,28 @@ void Chara_Player::BatteryCharge()
 {
 	if ( battery == P_MAX_BATTERY )
 	{
+		batteryChargeTimer = 0;
 		return;
 	}
 
 	// 移動中でない
 	if ( moveX == 0.0f && moveY == 0.0f && (!isJump || !isFall) )
 	{
+		const int charge = 60;
 		// 一定時間チャージでチャージ量が増加
-		if ( batteryChargeTimer < 60 * 3 )
+		if ( batteryChargeTimer < charge * 3 )
 		{
 			batteryChargeTimer++;
 		}
-		else if ( batteryChargeTimer < 60 * 6 )
+		else if ( batteryChargeTimer < charge * 6 )
 		{
 			batteryChargeTimer += 2;
 		}
-		else if ( batteryChargeTimer < 60 * 9 )
+		else if ( batteryChargeTimer < charge * 9 )
 		{
 			batteryChargeTimer += 3;
 		}
-		else if ( batteryChargeTimer < 60 * 12 )
+		else if ( batteryChargeTimer < charge * 12 )
 		{
 			batteryChargeTimer += 5;
 		}
@@ -278,19 +286,82 @@ void Chara_Player::BatteryManager()
 	}
 }
 
+// 状態
+void Chara_Player::State()
+{
+	// 待機
+	if ( moveX == 0.0f && moveY == 0.0f )
+	{
+		state = e_P_STATE_IDLE;
+	}
+	else
+	{
+		// 歩き
+		if ( fabsf(speed) == P_NORMAL_SPEED )
+		{
+			state = e_P_STATE_WALK;
+		}
+		// ダッシュ
+		else
+		{
+			state = e_P_STATE_DASH;
+		}
+	}
+
+	// 充電
+	if ( batteryChargeTimer > BATTERY_CHARGE_TIME )
+	{
+		state = e_P_STATE_CHARGE;
+	}
+
+	// ジャンプ
+	if ( isJump || isFall )
+	{
+		state = e_P_STATE_JUMP;
+	}
+
+	// 攻撃
+	if ( isAttack )
+	{
+		if ( moveX == 0.0f )
+		{
+			state = e_P_STATE_STOP_ATTACK;
+		}
+		else
+		{
+			// 歩き
+			if ( fabsf(speed) == P_NORMAL_SPEED )
+			{
+				state = e_P_STATE_WALK_ATTACK;
+			}
+			// ダッシュ
+			else
+			{
+				state = e_P_STATE_DASH_ATTACK;
+			}
+		}
+	}
+
+	// ダメーを受ける(色点滅中)
+	if ( isCBlinking )
+	{
+		state = e_P_STATE_RECIEVE_DAMAGE;
+	}
+}
+
 // 更新処理
 void Chara_Player::Update()
 {
 	if ( isAlive )
 	{
-		state = e_STATE_IDLE;
-
 		Move();
 		BatteryManager();
 		HpManager();
+		AttackMotion();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		Invicible();
+		State();
 
 		// 向き固定ボタンが押されていない
 		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
@@ -340,13 +411,14 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
 
 	DrawFormatString((int)x - scrollX, (int)y - 20 - scrollY, GetColor(255, 255, 255), "state:%d", state);
+	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
 }
 
 // 攻撃
 bool Chara_Player::IsAttack()
 {
-	// 死亡時は攻撃できない
-	if ( !isAlive )
+	// 死亡時または攻撃を受けているときは攻撃できない
+	if ( !isAlive || isCBlinking )
 	{
 		return false;
 	}
@@ -355,8 +427,10 @@ bool Chara_Player::IsAttack()
 	{
 		// 撃った弾数を増やす
 		shotBulletNum++;
-
 		batteryChargeTimer = 0;
+		attackMotionFrame = 0;
+
+		isAttack = true;
 
 		return true;
 	}

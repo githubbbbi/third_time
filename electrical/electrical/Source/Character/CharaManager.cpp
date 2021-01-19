@@ -8,7 +8,7 @@ Chara_Manager::Chara_Manager()
 	explosionX = 0.0f;
 	explosionY = 0.0f;
 
-	float startX = WIN_WIDTH / 2.0f;
+	float startX = 0.0f + CHIP_SIZE * 2.0f;
 	float startY = 0.0f;
 
 	// プレイヤー生成
@@ -45,12 +45,15 @@ void Chara_Manager::EnemyManager()
 {
 	// テスト用
 	{
+		float startX = 0.0f + CHIP_SIZE * 2.0f;
+		float startY = 0.0f;
+
 		static int timer = 0;
 		timer++;
 		// 爆弾エネミー
 		if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
 		{
-			enemyBomb.push_back(new Chara_EnemyBomb(WIN_WIDTH / 2.0f, 0.0f, 32,
+			enemyBomb.push_back(new Chara_EnemyBomb(startX, startY, 32,
 													E_BOMB_WIDTH, E_BOMB_HEIGHT,
 													E_BOMB_NORMAL_SPEED, 2, 10));
 		}
@@ -58,7 +61,7 @@ void Chara_Manager::EnemyManager()
 		// 銃エネミー
 		if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
 		{
-			enemyElectric.push_back(new Chara_EnemyElectric(WIN_WIDTH / 2.0f, 0.0f, 32,
+			enemyElectric.push_back(new Chara_EnemyElectric(startX, startY, 32,
 															E_GUN_WIDTH, E_GUN_HEIGHT,
 															E_GUN_NORMAL_SPEED, 2, 2));
 		}
@@ -66,7 +69,7 @@ void Chara_Manager::EnemyManager()
 		// 水弾エネミー
 		if ( CheckHitKey(KEY_INPUT_C) && timer % 30 == 0 )
 		{
-			enemyWater.push_back(new Chara_EnemyWater(WIN_WIDTH / 2.0f, 0.0f, 32,
+			enemyWater.push_back(new Chara_EnemyWater(startX, startY, 32,
 													  E_WATER_WIDTH, E_WATER_HEIGHT,
 													  0.0f, 2, 2));
 		}
@@ -292,11 +295,11 @@ void Chara_Manager::AttackCollision()
 		{
 			if ( !player->GetIsInvicible() &&
 				Utility::IsCircleCollision(enemyWater[i]->GetGunPosX(j),
-											enemyWater[i]->GetGunPosY(j),
-											enemyWater[i]->GetGunRadius(j) - 8,
-											player->GetPosX(),
-											player->GetPosY(),
-											player->GetRadius() - 4) )
+										   enemyWater[i]->GetGunPosY(j),
+										   enemyWater[i]->GetGunRadius(j) - 8,
+										   player->GetPosX(),
+										   player->GetPosY(),
+										   player->GetRadius() - 4) )
 			{
 				enemyWater[i]->HitAttack(j);
 				player->ReceiveDamage(enemyWater[i]->GetAttackPower(),

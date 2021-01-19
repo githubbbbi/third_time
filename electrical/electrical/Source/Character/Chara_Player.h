@@ -5,16 +5,29 @@
 #include "Weapon/Weapon_ElectricGun.h"
 #include "Animation.h"
 
-extern const int P_WIDTH;					// 横幅
-extern const int P_HEIGHT;					// 縦幅
-extern const float P_NORMAL_SPEED;			// 通常スピード
-extern const float P_DASH_SPEED;			// ダッシュスピード
-extern const int BATTERY_DCREASE_TIME;		// バッテリー減少タイム
-extern const int BATTERY_CHARGE_TIME;		// バッテリーチャージタイム
-extern const int P_MAX_BATTERY;				// 最大バッテリー
-extern const int P_CONSUMPTION_BULLET_NUM;	// 電力を消費する弾数
+enum PlayerState
+{
+	e_P_STATE_IDLE,					// 待機
+	e_P_STATE_CHARGE,				// 充電
+	e_P_STATE_WALK,					// 歩き
+	e_P_STATE_DASH,					// ダッシュ
+	e_P_STATE_JUMP,					// ジャンプ
+	e_P_STATE_STOP_ATTACK,			// とまって攻撃
+	e_P_STATE_WALK_ATTACK,			// 歩き攻撃
+	e_P_STATE_DASH_ATTACK,			// ダッシュ攻撃
+	e_P_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
+	e_P_STATE_NUM
+};
 
-extern const int P_MOTION[];				// モーション
+extern const int P_WIDTH;						// 横幅
+extern const int P_HEIGHT;						// 縦幅
+extern const float P_NORMAL_SPEED;				// 通常スピード
+extern const float P_DASH_SPEED;				// ダッシュスピード
+extern const int BATTERY_DCREASE_TIME;			// バッテリー減少タイム
+extern const int BATTERY_CHARGE_TIME;			// バッテリーチャージタイム
+extern const int P_MAX_BATTERY;					// 最大バッテリー
+extern const int P_CONSUMPTION_BULLET_NUM;		// 電力を消費する弾数
+extern const int P_MOTION[e_P_STATE_NUM][4];	// モーション
 
 class Chara_Player:public CharaBase
 {
@@ -48,6 +61,9 @@ private:
 
 	// バッテリー管理
 	void BatteryManager();
+
+	// 状態
+	void State();
 
 public:
 	Chara_Player(float x, float y, int radius, int width, int height,

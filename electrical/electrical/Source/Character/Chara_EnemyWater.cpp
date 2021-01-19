@@ -73,6 +73,9 @@ void Chara_EnemyWater::Update(float playerX, float playerY)
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
+		AttackMotion();
+		State();
+		LocalAnimation();
 	}
 
 	// HSVÇ©ÇÁRGBÇ…ïœä∑
@@ -147,6 +150,8 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 											   bulletSpeed,
 											   GRAVITY, 0,
 											   isLeftWard));
+
+		isAttack = true;
 	}
 
 	// êÖíe

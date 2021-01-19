@@ -33,8 +33,13 @@ void SceneManager::SceneChange()
 	switch ( scene )
 	{
 		case e_TITLE:
+			scene = e_INITIALIZE;
+			break;
+
+		case e_INITIALIZE:
 			nowScene.reset(new SceneGame);
 			scene = e_GAME;
+			nowScene->Initialize();
 			break;
 
 		case e_GAME:

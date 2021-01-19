@@ -2,9 +2,10 @@
 
 enum Scene
 {
-	e_TITLE,	// タイトル
-	e_GAME,		// ゲーム
-	e_ENDING,	// エンディング
+	e_TITLE,		// タイトル
+	e_INITIALIZE,	// 初期化
+	e_GAME,			// ゲーム
+	e_ENDING,		// エンディング
 };
 
 class SceneBase

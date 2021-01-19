@@ -6,7 +6,7 @@ Animation::Animation()
 	waitTime = 0;
 }
 
-int Animation::AnimationLoop(const int motion[], int wait, int num)
+int Animation::AnimationLoop(const int *motion, const int state, int wait, int num)
 {
 	if ( ++waitTime >= wait )
 	{
@@ -15,5 +15,5 @@ int Animation::AnimationLoop(const int motion[], int wait, int num)
 		waitTime = 0;
 	}
 
-	return motion[index];
+	return motion[state * num + index];
 }

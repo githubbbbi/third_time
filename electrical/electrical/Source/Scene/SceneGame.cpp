@@ -13,9 +13,6 @@ SceneGame::SceneGame()
 	// ステージ
 	stage = new Stage();
 
-	// 背景(テスト用)
-	backgroundGH = LoadGraph("Resource/Graphic/Background/background.png");
-
 	// エフェクト
 	effects = new EffectManager();
 
@@ -34,6 +31,12 @@ SceneGame::~SceneGame()
 // 初期化処理
 void SceneGame::Initialize()
 {
+	// ステージ
+	if ( !stage->Initialize() )
+	{
+		isGameEnd = true;
+	}
+
 	// キャラクター
 	charaManager->Initialize();
 
@@ -105,9 +108,7 @@ void SceneGame::Update()
 void SceneGame::Draw()
 {
 	// 背景
-	DrawRotaGraph(WIN_WIDTH / 2 - (int)effects->GetShakeX() - scrollX,
-				  WIN_HEIGHT / 2 - (int)effects->GetShakeY() - scrollY,
-				  1.0, 0.0, backgroundGH, true);
+
 
 	// ステージ
 	stage->Draw(effects->GetShakeX(),

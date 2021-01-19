@@ -59,6 +59,8 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 		{
 			speed = -E_BOMB_DASH_SPEED;
 		}
+
+		isAttack = true;
 	}
 	// 違う時、スピードをノーマルに戻す
 	else
@@ -97,6 +99,9 @@ void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 		HpManager();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
+		AttackMotion();
+		State();
+		LocalAnimation();
 	}
 
 	// HSVからRGBに変換

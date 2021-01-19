@@ -37,12 +37,15 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	isJump = false;
 	isFall = false;
 
+	attackMotionFrame = 0;
+	isAttack = false;
+
 	r = g = b = 255.0f;
 	h = 0.0f;
 	s = 0.0f;
 	v = 255.0f;
 
-	state = e_STATE_IDLE;
+	state = 0;
 	graphIndex = 0;
 
 	cBlinkingTimer = 0;
@@ -68,7 +71,6 @@ void CharaBase::CharaJump()
 {
 	if ( !isJump && !isFall )
 	{
-		state = e_STATE_JUMP;
 		gravity = JUMP_POWER;
 		isJump = true;
 	}
@@ -80,8 +82,6 @@ void CharaBase::CharaRiseFall()
 	// 上昇&落下
 	if ( isJump || isFall )
 	{
-		state = e_STATE_JUMP;
-
 		// 落下速度を増やす
 		gravity += GRAVITY;
 
@@ -288,8 +288,6 @@ void CharaBase::KnockBack()
 		// 色点滅終了でノックバック終了
 		else
 		{
-			// 状態を変更
-			state = e_STATE_IDLE;
 			isKnockBack = false;
 		}
 	}
@@ -311,6 +309,21 @@ void CharaBase::Invicible()
 	{
 		invicibleTimer = 0;
 		isInvicible = false;
+	}
+}
+
+// 攻撃モーション
+void CharaBase::AttackMotion()
+{
+	if ( !isAttack )
+	{
+		return;
+	}
+
+	if ( attackMotionFrame++ > 30 )
+	{
+		attackMotionFrame = 0;
+		isAttack = false;
 	}
 }
 
@@ -343,9 +356,6 @@ void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 	{
 		isInvicible = true;
 	}
-
-	// 現在の状態はダメージを受けている
-	state = e_STATE_RECIEVE_DAMAGE;
 }
 
 // X座標を取得

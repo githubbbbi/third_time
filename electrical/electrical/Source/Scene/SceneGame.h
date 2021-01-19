@@ -12,7 +12,6 @@ private:
 	Stage *stage;
 	EffectManager *effects;
 
-	int backgroundGH;			// 背景画像
 	int scrollX, scrollY;		// スクロール量
 
 	// エフェクト管理

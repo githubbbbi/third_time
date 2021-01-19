@@ -112,6 +112,7 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 	}
 }
 
+// à⁄ìÆ
 void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 {
 	ChangeDirection();
@@ -129,6 +130,9 @@ void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAliv
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
+		AttackMotion();
+		State();
+		LocalAnimation();
 	}
 
 	// HSVÇ©ÇÁRGBÇ…ïœä∑
@@ -180,6 +184,8 @@ void Chara_EnemyElectric::WeaponManager()
 													 EG_SPEED,
 													 0.0f, 2,
 													 isLeftWard));
+
+		isAttack = true;
 	}
 
 	// ìdãCèe
