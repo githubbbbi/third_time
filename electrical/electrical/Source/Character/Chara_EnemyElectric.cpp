@@ -118,6 +118,12 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 		}
 	}
 
+	// 動いている場合こうげきしていない
+	if ( moveX != 0.0f || moveY != 0.0f )
+	{
+		isAttack = false;
+	}
+
 	// プレイヤーが死んでる場合は、弾撃たない
 	if ( !isPlayerAlive )
 	{

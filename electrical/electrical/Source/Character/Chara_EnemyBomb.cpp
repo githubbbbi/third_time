@@ -81,6 +81,8 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 			speed = -EB_NORMAL_SPEED;
 		}
 
+		isAttack = false;
+
 		// ƒWƒƒƒ“ƒv
 		Jump();
 	}
