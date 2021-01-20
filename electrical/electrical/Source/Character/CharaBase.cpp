@@ -154,10 +154,14 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 
 	// 接地判定
 	// キャラクタの左下または右下が地面であるか調べる
-	if ( Stage::GetMapParam(x - hitWidth,
-							y + hitHeight + 1.0f) == e_MAP_BLOCK ||
-		Stage::GetMapParam(x + hitWidth,
-						   y + hitHeight + 1.0f) == e_MAP_BLOCK )
+	if ( (Stage::GetMapParam(x - hitWidth,
+							 y + hitHeight + 1.0f) == e_MAP_BLOCK ||
+		  Stage::GetMapParam(x + hitWidth,
+							 y + hitHeight + 1.0f) == e_MAP_BLOCK) ||
+		(Stage::GetMapParam(x - hitWidth,
+							y + hitHeight + 1.0f) == e_MAP_THIN_FLOOR ||
+		 Stage::GetMapParam(x + hitWidth,
+							y + hitHeight + 1.0f) == e_MAP_THIN_FLOOR) )
 	{
 		// 足場がある場合、接地中
 		isFall = false;

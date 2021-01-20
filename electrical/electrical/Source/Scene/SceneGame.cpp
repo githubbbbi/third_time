@@ -18,6 +18,9 @@ SceneGame::SceneGame()
 
 	scrollX = 0;
 	scrollY = 0;
+
+	screenX = 0;
+	screenY = 0;
 }
 
 // デストラクタ
@@ -41,6 +44,13 @@ void SceneGame::Initialize()
 	charaManager->Initialize();
 
 	isSceneChange = false;
+}
+
+// スクリーン座標を求める
+void SceneGame::Screen()
+{
+	screenX = scrollX + WIN_WIDTH / 2;
+	screenY = scrollY + WIN_HEIGHT / 2;
 }
 
 // エフェクト管理
@@ -84,6 +94,9 @@ void SceneGame::GameEnd()
 // 更新処理
 void SceneGame::Update()
 {
+	// スクリーン座標を求める
+	Screen();
+
 	// エフェクト
 	LocalEffectManager();
 
@@ -112,7 +125,8 @@ void SceneGame::Draw()
 
 	// ステージ
 	stage->Draw(effects->GetShakeX(),
-				effects->GetShakeY(), scrollX, scrollY);
+				effects->GetShakeY(),
+				scrollX, scrollY, screenX, screenY);
 
 	// キャラクター
 	charaManager->Draw(effects->GetShakeX(),
@@ -120,6 +134,8 @@ void SceneGame::Draw()
 
 	// エフェクト
 	effects->Draw(scrollX, scrollY);
+
+	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2, GetColor(255, 255, 255), "%d,%d", screenX, screenY);
 }
 
 // 終了処理

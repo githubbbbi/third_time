@@ -7,8 +7,8 @@ enum MapChip
 {
 	e_MAP_NONE = -1,	// なし
 	e_MAP_BLOCK,		// ブロック
-	e_MAP_FIELD,		// テスト用
-	e_MAP_NUM			// 種類
+	e_MAP_THIN_FLOOR,	// 薄い床
+	e_MAP_NUM
 };
 
 class Stage
@@ -31,7 +31,8 @@ public:
 	void Update();
 
 	// 描画処理
-	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
+	void Draw(float shakeX, float shakeY,
+			  int scrollX, int scrollY, int screenX, int screenY);
 
 	//マップチップの値を取得
 	static int GetMapParam(float x, float y);

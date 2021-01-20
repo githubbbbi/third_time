@@ -12,7 +12,11 @@ private:
 	Stage *stage;
 	EffectManager *effects;
 
-	int scrollX, scrollY;		// スクロール量
+	int scrollX, scrollY;	// スクロール量
+	int screenX, screenY;	// スクリーン中心座標
+
+	// スクリーン座標を求める
+	void Screen();
 
 	// エフェクト管理
 	// 「Local」はEffectManagerクラスと名前が被らないよう

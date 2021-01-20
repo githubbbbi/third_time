@@ -38,28 +38,22 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 int Utility::MapHitCheck(float x, float y,
 						 float *moveX, float *moveY)
 {
-	// 変数宣言
-	// キャラクタの移動量を足す
-	float addX, addY;
-
-	// マップチップ上下左右の座標
-	RECT map;
+	const float value = 1.0f;
 
 	// 座標に移動量を足す
-	addX = x + *moveX;
-	addY = y + *moveY;
+	float addX = x + *moveX;
+	float addY = y + *moveY;
 
 	// ブロックに当たっているかチェック
 	if ( Stage::GetMapParam(addX, addY) == e_MAP_BLOCK )
 	{
 		// 当たっていた場合、壁から離す
 		// ブロックの上下左右の座標を計算
+		RECT map;
 		map.left = ((int)addX / CHIP_SIZE) * CHIP_SIZE;				// 左辺のX座標
 		map.right = ((int)addX / CHIP_SIZE + 1) * CHIP_SIZE - 1;	// 右辺のX座標
 		map.top = ((int)addY / CHIP_SIZE) * CHIP_SIZE;				// 上辺のY座標
 		map.bottom = ((int)addY / CHIP_SIZE + 1) * CHIP_SIZE;		// 下辺のY座標
-
-		const float value = 1.0f;
 
 		// 上辺に衝突 moveYが0.0fより大きい場合、下に進もうとしている
 		if ( *moveY > 0.0f )
@@ -99,6 +93,25 @@ int Utility::MapHitCheck(float x, float y,
 
 			// 右辺に衝突したと返す
 			return e_HIT_RIGHT;
+		}
+	}
+
+	// 薄い床
+	if ( Stage::GetMapParam(addX, addY) == e_MAP_THIN_FLOOR )
+	{
+		// 上辺のY座標
+		int mapTop = ((int)addY / CHIP_SIZE) * CHIP_SIZE;
+		if ( addY < mapTop )
+		{
+			// 上辺に衝突 moveYが0.0fより大きい場合、下に進もうとしている
+			if ( *moveY > 0.0f )
+			{
+				// 移動量を補正
+				*moveY = (float)mapTop - y - value;
+
+				// 上辺に衝突したと返す
+				return e_HIT_TOP;
+			}
 		}
 	}
 
@@ -144,9 +157,9 @@ bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
 // スクロール
 void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
 {
-	// 指定座標を中心にスクロール量を決定
-	*scrollX = centerX - WIN_WIDTH / 2;
-	*scrollY = centerY - WIN_HEIGHT / 2;
+	// スクリーン座標より端に行くとスクロール
+	*scrollX = (centerX / WIN_WIDTH) * WIN_WIDTH;
+	*scrollY = (centerY / WIN_HEIGHT) * WIN_HEIGHT;
 
 	// X方向
 	// マップの左端より左にはいかない
