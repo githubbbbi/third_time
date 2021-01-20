@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Animation.h"
+
 extern const int CHARA_SIZE;		// キャラクタのサイズ
 extern const float GRAVITY;			// 重力
 extern const float JUMP_POWER;		// ジャンプ力
@@ -7,6 +9,9 @@ extern const int INVICIBLE_TIME;	// 無敵時間
 
 class CharaBase
 {
+private:
+	Animation *anim;
+
 protected:
 	float x;				// 中心座標
 	float y;				// 中心座標
@@ -25,7 +30,6 @@ protected:
 	bool isLeftWard;		// 左向きフラグ
 	bool isJump;			// ジャンプフラグ
 	bool isFall;			// 落下フラグ
-	int attackMotionFrame;	// 攻撃モーションフレーム
 	bool isAttack;			// 攻撃フラグ
 	float r;				// 赤色				:0~255
 	float g;				// 緑色				:0~255
@@ -79,13 +83,16 @@ protected:
 	// 無敵の処理
 	void Invicible();
 
-	// 攻撃モーション
-	void AttackMotion();
+	// アニメーション
+	void LocalAnimation(const int MOTION[][4], const float NORMAL_SPEED);
 
 public:
 	// コンストラクタ宣言
 	CharaBase(float x, float y, int radius, int width, int height,
 			  float speed, int hp, int attackPower);
+
+	// デストラクタ
+	~CharaBase();
 
 	// キャラクタのジャンプ
 	void CharaJump();

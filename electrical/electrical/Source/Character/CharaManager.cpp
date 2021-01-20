@@ -54,23 +54,23 @@ void Chara_Manager::EnemyManager()
 		if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
 		{
 			enemyBomb.push_back(new Chara_EnemyBomb(startX, startY, 32,
-													E_BOMB_WIDTH, E_BOMB_HEIGHT,
-													E_BOMB_NORMAL_SPEED, 2, 10));
+													EB_WIDTH, EB_HEIGHT,
+													EB_NORMAL_SPEED, 2, 10));
 		}
 
 		// 銃エネミー
 		if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
 		{
 			enemyElectric.push_back(new Chara_EnemyElectric(startX, startY, 32,
-															E_GUN_WIDTH, E_GUN_HEIGHT,
-															E_GUN_NORMAL_SPEED, 2, 2));
+															EE_WIDTH, EE_HEIGHT,
+															EE_NORMAL_SPEED, 2, 2));
 		}
 
 		// 水弾エネミー
 		if ( CheckHitKey(KEY_INPUT_C) && timer % 30 == 0 )
 		{
 			enemyWater.push_back(new Chara_EnemyWater(startX, startY, 32,
-													  E_WATER_WIDTH, E_WATER_HEIGHT,
+													  EW_WIDTH, EW_HEIGHT,
 													  0.0f, 2, 2));
 		}
 	}
@@ -215,7 +215,7 @@ void Chara_Manager::AttackCollision()
 									   player->GetPosY(),
 									   player->GetRadius() - 8) )
 		{
-			if ( fabsf(enemyBomb[i]->GetSpeed()) == E_BOMB_DASH_SPEED )
+			if ( fabsf(enemyBomb[i]->GetSpeed()) == EB_DASH_SPEED )
 			{
 				enemyBomb[i]->HitAttack();
 				player->ReceiveDamage(enemyBomb[i]->GetAttackPower(),

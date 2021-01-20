@@ -3,20 +3,22 @@
 #include <vector>
 #include "../Stage/Stage.h"
 #include "../Character/Chara_Player.h"
-#include "../Character/Chara_EnemyBase.h"
+#include "../Character/Chara_EnemyBomb.h"
+#include "../Character/Chara_EnemyElectric.h"
+#include "../Character/Chara_EnemyWater.h"
 
 class Graphic
 {
 private:
 	std::vector<int> images;
-	int player[4 * e_P_STATE_NUM];	// プレイヤー
-	int enemyBomb;					// 爆弾エネミー
-	int enemyElectric;				// 銃エネミー
-	int enemyWater;					// 水弾エネミー
-	int electricGun;				// 電気銃
-	int waterGun;					// 水銃
-	int particle;					// パーティクル
-	int map[e_MAP_NUM];				// マップ
+	int player[4 * e_P_STATE_NUM];			// プレイヤー
+	int enemyBomb[4 * e_EB_STATE_NUM];		// 爆弾エネミー
+	int enemyElectric[4 * e_EE_STATE_NUM];	// 銃エネミー
+	int enemyWater[4 * e_EW_STATE_NUM];		// 水弾エネミー
+	int electricGun;						// 電気銃
+	int waterGun;							// 水銃
+	int particle;							// パーティクル
+	int map[e_MAP_NUM];						// マップ
 
 	int MyLoadGraph(const char *filename);
 	int MyLoadDivGraph(const char *fileName, int n,
@@ -39,9 +41,9 @@ public:
 	void Release();
 
 	int GetPlayer(int index);
-	int GetEnemyBomb();
-	int GetEnemyElectric();
-	int GetEnemyWater();
+	int GetEnemyBomb(int index);
+	int GetEnemyElectric(int index);
+	int GetEnemyWater(int index);
 	int GetElectricGun();
 	int GetWaterGun();
 	int GetParticle();

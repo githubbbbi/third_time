@@ -4,10 +4,18 @@
 #include "Chara_EnemyBase.h"
 #include "Weapon/Weapon_WaterGun.h"
 
-extern const int E_WATER_WIDTH;		// 横幅
-extern const int E_WATER_HEIGHT;	// 縦幅
+enum EnemyWaterState
+{
+	e_EW_STATE_IDLE,				// 待機
+	e_EW_STATE_ATTACK,				// 攻撃
+	e_EW_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
+	e_EW_STATE_NUM
+};
 
-extern const int BULLET_INTERVAL;
+extern const int EW_WIDTH;						// 横幅
+extern const int EW_HEIGHT;						// 縦幅
+extern const int EW_BULLET_INTERVAL;			// 間隔
+extern const int EW_MOTION[e_EW_STATE_NUM][4];	// モーション
 
 class Chara_EnemyWater:public Chara_EnemyBase
 {
@@ -22,6 +30,9 @@ private:
 
 	// 向きを変更
 	void ChangeDirection(float playerX);
+
+	// 状態
+	void State();
 
 public:
 	Chara_EnemyWater(float x, float y, int radius, int width, int height,

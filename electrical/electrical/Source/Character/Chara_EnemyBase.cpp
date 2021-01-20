@@ -3,20 +3,10 @@
 #include"../stage/stage.h"
 #include "../Resource/Graphic.h"
 
-const int E_MOTION[e_E_STATE_NUM][4] =
-{
-	{  0,  1,  2,  3 },
-	{  4,  5,  6,  7 },
-	{  8,  9, 10, 11 },
-	{ 12, 13, 14, 15 },
-	{ 16, 17, 18, 19 }
-};
-
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
 								 float speed, int hp, int attackPower):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
 {
-	anim = new Animation;
 }
 
 // ジャンプする
@@ -122,56 +112,4 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 
 
 	return false;
-}
-
-// 状態
-void Chara_EnemyBase::State()
-{
-	// 待機
-	if ( moveX == 0.0f && moveY == 0.0f )
-	{
-		state = e_E_STATE_IDLE;
-	}
-	else
-	{
-		// 歩き
-		state = e_E_STATE_WALK;
-	}
-
-	// ジャンプ
-	if ( isJump || isFall )
-	{
-		state = e_E_STATE_JUMP;
-	}
-
-	// 攻撃
-	if ( isAttack )
-	{
-		state = e_E_STATE_ATTACK;
-	}
-
-	// ダメーを受ける(色点滅中)
-	if ( isCBlinking )
-	{
-		state = e_P_STATE_RECIEVE_DAMAGE;
-	}
-}
-
-// アニメーション
-void Chara_EnemyBase::LocalAnimation()
-{
-	static int wait = 10;
-	const int num = 4;
-
-	if ( fabsf(speed) == P_NORMAL_SPEED )
-	{
-		wait = 10;
-	}
-	else
-	{
-		wait = 6;
-	}
-
-	int *p = (int *)P_MOTION;
-	graphIndex = anim->AnimationLoop(p, state, wait, num);
 }

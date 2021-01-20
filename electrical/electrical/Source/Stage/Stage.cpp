@@ -45,11 +45,6 @@ void Stage::MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int s
 			graphIndex = 0;
 			break;
 
-		case e_MAP_THIN_FLOOR:
-			// îñÇ¢è∞
-			graphIndex = 1;
-			break;
-
 		default:
 			graphIndex = e_MAP_NONE;
 			break;
@@ -60,8 +55,6 @@ void Stage::MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int s
 		DrawGraph(x * CHIP_SIZE + (int)shakeX - scrollX,
 				  y * CHIP_SIZE + (int)shakeX - scrollY,
 				  Graphic::GetInstance()->GetMap(graphIndex), true);
-
-		DrawFormatString(x * CHIP_SIZE - scrollX, y * CHIP_SIZE - scrollY, GetColor(255, 255, 255), "%d,%d", x, y);
 	}
 }
 
@@ -71,9 +64,9 @@ void Stage::Draw(float shakeX, float shakeY,
 {
 	// ÉXÉNÉäÅ[ÉìÇ…âfÇ¡ÇƒÇ¢ÇÈïîï™ÇæÇØÇï`âÊ
 	int mapLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE + 1;
+	int mapRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
 	int mapTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE + 1;
+	int mapBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
 
 	for ( int y = mapTop; y < mapBottom; y++ )
 	{
@@ -96,17 +89,6 @@ int Stage::GetMapParam(float x, float y)
 		mapX >= MAP_COUNT_X ||
 		mapY >= MAP_COUNT_Y )
 	{
-		return e_MAP_NONE;
-	}
-
-	// îñÇ¢è∞
-	if ( mapData[mapY][mapX] == e_MAP_THIN_FLOOR )
-	{
-		if ( y <= mapY * CHIP_SIZE - CHARA_SIZE / 2 )
-		{
-			return e_MAP_THIN_FLOOR;
-		}
-
 		return e_MAP_NONE;
 	}
 

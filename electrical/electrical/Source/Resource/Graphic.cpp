@@ -5,9 +5,12 @@ Graphic::Graphic()
 {
 	MyLoadDivGraph("Resource/Graphic/Character/Player/player.png",
 				   4 * e_P_STATE_NUM, 4, e_P_STATE_NUM, CHARA_SIZE, CHARA_SIZE, player);
-	enemyBomb = MyLoadGraph("Resource/Graphic/Character/Enemy/bomb.png");
-	enemyElectric = MyLoadGraph("Resource/Graphic/Character/Enemy/electric.png");
-	enemyWater = MyLoadGraph("Resource/Graphic/Character/Enemy/water.png");
+	MyLoadDivGraph("Resource/Graphic/Character/Enemy/bomb.png",
+				   4 * e_EB_STATE_NUM, 4, e_EB_STATE_NUM, CHARA_SIZE, CHARA_SIZE, enemyBomb);
+	MyLoadDivGraph("Resource/Graphic/Character/Enemy/electric.png",
+				   4 * e_EE_STATE_NUM, 4, e_EE_STATE_NUM, CHARA_SIZE, CHARA_SIZE, enemyElectric);
+	MyLoadDivGraph("Resource/Graphic/Character/Enemy/water.png",
+				   4 * e_EW_STATE_NUM, 4, e_EW_STATE_NUM, CHARA_SIZE, CHARA_SIZE, enemyWater);
 	electricGun = MyLoadGraph("Resource/Graphic/Weapon/electricGun.png");
 	waterGun = MyLoadGraph("Resource/Graphic/Weapon/waterGun.png");
 	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
@@ -51,19 +54,19 @@ int Graphic::GetPlayer(int index)
 	return player[index];
 }
 
-int Graphic::GetEnemyBomb()
+int Graphic::GetEnemyBomb(int index)
 {
-	return enemyBomb;
+	return enemyBomb[index];
 }
 
-int Graphic::GetEnemyElectric()
+int Graphic::GetEnemyElectric(int index)
 {
-	return enemyElectric;
+	return enemyElectric[index];
 }
 
-int Graphic::GetEnemyWater()
+int Graphic::GetEnemyWater(int index)
 {
-	return enemyWater;
+	return enemyWater[index];
 }
 
 int Graphic::GetElectricGun()

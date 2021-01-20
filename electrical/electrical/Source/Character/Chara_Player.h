@@ -3,7 +3,6 @@
 #include <vector>
 #include "CharaBase.h"
 #include "Weapon/Weapon_ElectricGun.h"
-#include "Animation.h"
 
 enum PlayerState
 {
@@ -34,7 +33,6 @@ class Chara_Player:public CharaBase
 {
 private:
 	std::vector<Weapon_ElectricGun *> electricGun;
-	Animation *anim;
 
 	int padInputX, padInputY;	// パッドレバーの入力量(キーボードの矢印キーの入力量も取得できる)
 	int battery;				// バッテリー
@@ -42,8 +40,7 @@ private:
 	int batteryChargeTimer;		// バッテリーチャージタイマー
 	int shotBulletNum;			// 撃った弾数
 
-	// アニメーション
-	void LocalAnimation();
+	int attackMotionFrame;	// 攻撃モーションフレーム
 
 	// 入力での移動
 	void InputMove();
@@ -62,6 +59,9 @@ private:
 
 	// バッテリー管理
 	void BatteryManager();
+
+	// 攻撃モーション
+	void AttackMotion();
 
 	// 状態
 	void State();

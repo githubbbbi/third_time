@@ -6,8 +6,15 @@
 #include "../Utility/Utility.h"
 #include "../Resource/Graphic.h"
 
-const int E_WATER_WIDTH = 50;
-const int E_WATER_HEIGHT = 50;
+const int EW_WIDTH = 50;
+const int EW_HEIGHT = 50;
+const int EW_BULLET_INTERVAL = 70;
+const int EW_MOTION[e_EW_STATE_NUM][4] =
+{
+	{  0,  1,  2,  3 },
+	{  4,  5,  6,  7 },
+	{  8,  9, 10, 11 }
+};
 
 Chara_EnemyWater::Chara_EnemyWater(float x, float y, int radius, int width, int height,
 								   float speed, int hp, int attackPower):
@@ -63,6 +70,28 @@ void Chara_EnemyWater::ChangeDirection(float playerX)
 	}
 }
 
+// 状態
+void Chara_EnemyWater::State()
+{
+	// 待機
+	if ( moveX == 0.0f && moveY == 0.0f )
+	{
+		state = e_EW_STATE_IDLE;
+	}
+
+	// 攻撃
+	if ( isAttack )
+	{
+		state = e_EW_STATE_ATTACK;
+	}
+
+	// ダメーを受ける(色点滅中)
+	if ( isCBlinking )
+	{
+		state = e_EW_STATE_RECIEVE_DAMAGE;
+	}
+}
+
 // 更新処理
 void Chara_EnemyWater::Update(float playerX, float playerY)
 {
@@ -73,9 +102,8 @@ void Chara_EnemyWater::Update(float playerX, float playerY)
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
-		AttackMotion();
 		State();
-		LocalAnimation();
+		LocalAnimation(EW_MOTION, 0.0f);
 	}
 
 	// HSVからRGBに変換
@@ -96,7 +124,7 @@ void Chara_EnemyWater::Draw(float shakeX, float shakeY, int scrollX, int scrollY
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyWater(), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyWater(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
@@ -120,13 +148,13 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 	bulletInterval++;
 
 	// インターバルの初期化
-	if ( bulletInterval > BULLET_INTERVAL )
+	if ( bulletInterval > EW_BULLET_INTERVAL || isCBlinking )
 	{
 		bulletInterval = 0;
 	}
 
 	// 生成
-	if ( bulletInterval == BULLET_INTERVAL )
+	if ( bulletInterval == EW_BULLET_INTERVAL )
 	{
 		double a = (double)x - playerX;
 		double b = (double)y - playerY;
@@ -146,7 +174,13 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 			bulletSpeed = 5.0f;
 		}
 
-		waterGun.push_back(new Weapon_WaterGun(x, y, 16,
+		int xx = 16;
+		if ( isLeftWard )
+		{
+			xx *= -1;
+		}
+
+		waterGun.push_back(new Weapon_WaterGun(x + xx, y + 8, 16,
 											   bulletSpeed,
 											   GRAVITY, 0,
 											   isLeftWard));

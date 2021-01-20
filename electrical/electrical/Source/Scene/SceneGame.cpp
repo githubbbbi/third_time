@@ -136,6 +136,7 @@ void SceneGame::Draw()
 	effects->Draw(scrollX, scrollY);
 
 	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2, GetColor(255, 255, 255), "%d,%d", screenX, screenY);
+	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 20, GetColor(255, 255, 255), "%d,%d", scrollX, scrollY);
 }
 
 // èIóπèàóù

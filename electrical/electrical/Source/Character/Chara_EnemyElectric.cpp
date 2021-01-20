@@ -6,10 +6,18 @@
 #include "../Utility/Utility.h"
 #include "../Resource/Graphic.h"
 
-const int E_GUN_WIDTH = 50;
-const int E_GUN_HEIGHT = 50;
-const float E_GUN_NORMAL_SPEED = 2.0f;
-const float E_GUN_DASH_SPEED = 4.0f;
+const int EE_WIDTH = 50;
+const int EE_HEIGHT = 50;
+const float EE_NORMAL_SPEED = 2.0f;
+const float EE_DASH_SPEED = 4.0f;
+const int EE_BULLET_INTERVAL = 70;
+const int EE_MOTION[e_EE_STATE_NUM][4] =
+{
+	{  0,  1,  2,  3 },
+	{  4,  5,  6,  7 },
+	{  8,  9, 10, 11 },
+	{ 12, 13, 14, 15 }
+};
 
 Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width, int height,
 										 float speed, int hp, int attackPower):
@@ -125,6 +133,35 @@ void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
+// 状態
+void Chara_EnemyElectric::State()
+{
+	// 待機
+	if ( moveX != 0.0f || moveY != 0.0f )
+	{
+		// 歩き
+		state = e_EE_STATE_WALK;
+	}
+
+	// ジャンプ
+	if ( isJump || isFall )
+	{
+		state = e_EE_STATE_JUMP;
+	}
+
+	// 攻撃
+	if ( isAttack )
+	{
+		state = e_EE_STATE_ATTACK;
+	}
+
+	// ダメーを受ける(色点滅中)
+	if ( isCBlinking )
+	{
+		state = e_EE_STATE_RECIEVE_DAMAGE;
+	}
+}
+
 // 更新処理
 void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAlive)
 {
@@ -135,9 +172,8 @@ void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAliv
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
-		AttackMotion();
 		State();
-		LocalAnimation();
+		LocalAnimation(EE_MOTION, EE_NORMAL_SPEED);
 	}
 
 	// HSVからRGBに変換
@@ -158,7 +194,7 @@ void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scro
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
@@ -177,15 +213,15 @@ void Chara_EnemyElectric::WeaponManager()
 	bulletInterval++;
 
 	// インターバルの初期化
-	if ( bulletInterval > BULLET_INTERVAL )
+	if ( bulletInterval > EE_BULLET_INTERVAL || isCBlinking )
 	{
 		bulletInterval = 0;
 	}
 
 	// 生成
-	if ( bulletInterval == BULLET_INTERVAL && isTargetLock )
+	if ( bulletInterval == EE_BULLET_INTERVAL && isTargetLock )
 	{
-		electricGun.push_back(new Weapon_ElectricGun(x, y, 16,
+		electricGun.push_back(new Weapon_ElectricGun(x, y + 8, 16,
 													 EG_SPEED,
 													 0.0f, 2,
 													 isLeftWard));

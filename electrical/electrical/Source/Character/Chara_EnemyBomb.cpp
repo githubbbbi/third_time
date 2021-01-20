@@ -5,10 +5,17 @@
 #include "../Utility/Utility.h"
 #include "../Resource/Graphic.h"
 
-const int E_BOMB_WIDTH = 50;
-const int E_BOMB_HEIGHT = 50;
-const float E_BOMB_NORMAL_SPEED = 1.0f;
-const float E_BOMB_DASH_SPEED = 8.0f;
+const int EB_WIDTH = 50;
+const int EB_HEIGHT = 50;
+const float EB_NORMAL_SPEED = 1.0f;
+const float EB_DASH_SPEED = 8.0f;
+const int EB_MOTION[e_EB_STATE_NUM][4] =
+{
+	{  0,  1,  2,  3 },
+	{  4,  5,  6,  7 },
+	{  8,  9, 10, 11 },
+	{ 12, 13, 14, 15 }
+};
 
 Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius, int width, int height,
 								 float speed, int hp, int attackPower):
@@ -53,11 +60,11 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 	{
 		if ( speed > 0 )
 		{
-			speed = E_BOMB_DASH_SPEED;
+			speed = EB_DASH_SPEED;
 		}
 		else
 		{
-			speed = -E_BOMB_DASH_SPEED;
+			speed = -EB_DASH_SPEED;
 		}
 
 		isAttack = true;
@@ -67,11 +74,11 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 	{
 		if ( speed > 0 )
 		{
-			speed = E_BOMB_NORMAL_SPEED;
+			speed = EB_NORMAL_SPEED;
 		}
 		else
 		{
-			speed = -E_BOMB_NORMAL_SPEED;
+			speed = -EB_NORMAL_SPEED;
 		}
 
 		// ジャンプ
@@ -89,6 +96,34 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
+// 状態
+void Chara_EnemyBomb::State()
+{
+	// 歩き
+	if ( moveX != 0.0f || moveY != 0.0f )
+	{
+		state = e_EB_STATE_WALK;
+	}
+
+	// ジャンプ
+	if ( isJump || isFall )
+	{
+		state = e_EB_STATE_JUMP;
+	}
+
+	// 攻撃
+	if ( isAttack )
+	{
+		state = e_EB_STATE_ATTACK;
+	}
+
+	// ダメーを受ける(色点滅中)
+	if ( isCBlinking )
+	{
+		state = e_EB_STATE_RECIEVE_DAMAGE;
+	}
+}
+
 // 更新処理
 void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 {
@@ -99,9 +134,8 @@ void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 		HpManager();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
-		AttackMotion();
 		State();
-		LocalAnimation();
+		LocalAnimation(EB_MOTION, EB_NORMAL_SPEED);
 	}
 
 	// HSVからRGBに変換
@@ -116,7 +150,7 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyBomb(), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyBomb(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

@@ -2,10 +2,20 @@
 
 #include "Chara_EnemyBase.h"
 
-extern const int E_BOMB_WIDTH;			// 横幅
-extern const int E_BOMB_HEIGHT;			// 縦幅
-extern const float E_BOMB_NORMAL_SPEED;	// 通常スピード
-extern const float E_BOMB_DASH_SPEED;	// ダッシュスピード
+enum EnemyBombState
+{
+	e_EB_STATE_WALK,				// 歩き
+	e_EB_STATE_JUMP,				// ジャンプ
+	e_EB_STATE_ATTACK,				// 攻撃
+	e_EB_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
+	e_EB_STATE_NUM
+};
+
+extern const int EB_WIDTH;						// 横幅
+extern const int EB_HEIGHT;						// 縦幅
+extern const float EB_NORMAL_SPEED;				// 通常スピード
+extern const float EB_DASH_SPEED;				// ダッシュスピード
+extern const int EB_MOTION[e_EB_STATE_NUM][4];	// モーション
 
 class Chara_EnemyBomb:public Chara_EnemyBase
 {
@@ -15,6 +25,9 @@ private:
 
 	// 移動
 	void Move(float playerX, float playerY, bool isPlayerAlive);
+
+	// 状態
+	void State();
 
 public:
 	Chara_EnemyBomb(float x, float y, int radius, int width, int height,

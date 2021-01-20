@@ -96,25 +96,6 @@ int Utility::MapHitCheck(float x, float y,
 		}
 	}
 
-	// 薄い床
-	if ( Stage::GetMapParam(addX, addY) == e_MAP_THIN_FLOOR )
-	{
-		// 上辺のY座標
-		int mapTop = ((int)addY / CHIP_SIZE) * CHIP_SIZE;
-		if ( addY < mapTop )
-		{
-			// 上辺に衝突 moveYが0.0fより大きい場合、下に進もうとしている
-			if ( *moveY > 0.0f )
-			{
-				// 移動量を補正
-				*moveY = (float)mapTop - y - value;
-
-				// 上辺に衝突したと返す
-				return e_HIT_TOP;
-			}
-		}
-	}
-
 	// 終了 どこにも当たらなかった
 	return e_HIT_NOT;
 }

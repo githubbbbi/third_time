@@ -37,8 +37,7 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
-
-	anim = new Animation;
+	attackMotionFrame = 0;
 }
 
 Chara_Player::~Chara_Player()
@@ -49,8 +48,6 @@ Chara_Player::~Chara_Player()
 		delete electricGun[i];
 		electricGun.erase(electricGun.begin() + i);
 	}
-
-	delete anim;
 }
 
 // 初期化処理
@@ -64,28 +61,6 @@ void Chara_Player::Initialize()
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
-}
-
-// アニメーション
-void Chara_Player::LocalAnimation()
-{
-	int wait = 10;
-	const int num = 4;
-
-	if ( moveX != 0.0f || moveY != 0.0f )
-	{
-		if ( fabsf(speed) == P_NORMAL_SPEED )
-		{
-			wait = 10;
-		}
-		else if ( fabsf(speed) == P_DASH_SPEED )
-		{
-			wait = 6;
-		}
-	}
-
-	int *p = (int *)P_MOTION;
-	graphIndex = anim->AnimationLoop(p, state, wait, num);
 }
 
 // 入力での移動
@@ -290,6 +265,21 @@ void Chara_Player::BatteryManager()
 	}
 }
 
+// 攻撃モーション
+void Chara_Player::AttackMotion()
+{
+	if ( !isAttack )
+	{
+		return;
+	}
+
+	if ( attackMotionFrame++ > 30 )
+	{
+		attackMotionFrame = 0;
+		isAttack = false;
+	}
+}
+
 // 状態
 void Chara_Player::State()
 {
@@ -379,7 +369,7 @@ void Chara_Player::Update()
 			ChangeGraphicDirection();
 		}
 
-		LocalAnimation();
+		LocalAnimation(P_MOTION, P_NORMAL_SPEED);
 	}
 
 	// HSVからRGBに変換

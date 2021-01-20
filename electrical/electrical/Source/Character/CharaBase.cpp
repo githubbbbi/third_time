@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include <math.h>
 #include "CharaBase.h"
 #include "../Utility/Utility.h"
 #include "../Define/Define.h"
@@ -37,7 +38,6 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	isJump = false;
 	isFall = false;
 
-	attackMotionFrame = 0;
 	isAttack = false;
 
 	r = g = b = 255.0f;
@@ -64,6 +64,14 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 
 	blendMode = DX_BLENDMODE_NOBLEND;
 	blendValue = 0;
+
+	anim = new Animation;
+}
+
+// デストラクタ
+CharaBase::~CharaBase()
+{
+	delete anim;
 }
 
 // キャラクタのジャンプ
@@ -157,11 +165,7 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	if ( (Stage::GetMapParam(x - hitWidth,
 							 y + hitHeight + 1.0f) == e_MAP_BLOCK ||
 		  Stage::GetMapParam(x + hitWidth,
-							 y + hitHeight + 1.0f) == e_MAP_BLOCK) ||
-		(Stage::GetMapParam(x - hitWidth,
-							y + hitHeight + 1.0f) == e_MAP_THIN_FLOOR ||
-		 Stage::GetMapParam(x + hitWidth,
-							y + hitHeight + 1.0f) == e_MAP_THIN_FLOOR) )
+							 y + hitHeight + 1.0f) == e_MAP_BLOCK) )
 	{
 		// 足場がある場合、接地中
 		isFall = false;
@@ -316,19 +320,23 @@ void CharaBase::Invicible()
 	}
 }
 
-// 攻撃モーション
-void CharaBase::AttackMotion()
+// アニメーション
+void CharaBase::LocalAnimation(const int MOTION[][4], const float NORMAL_SPEED)
 {
-	if ( !isAttack )
+	int wait = 10;
+	const int num = 4;
+
+	if ( fabsf(speed) == NORMAL_SPEED )
 	{
-		return;
+		wait = 10;
+	}
+	else
+	{
+		wait = 6;
 	}
 
-	if ( attackMotionFrame++ > 30 )
-	{
-		attackMotionFrame = 0;
-		isAttack = false;
-	}
+	int *p = (int *)MOTION;
+	graphIndex = anim->AnimationLoop(p, state, wait, num);
 }
 
 // ダメージを受ける

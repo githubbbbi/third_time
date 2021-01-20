@@ -7,7 +7,6 @@ enum MapChip
 {
 	e_MAP_NONE = -1,	// Ç»Çµ
 	e_MAP_BLOCK,		// ÉuÉçÉbÉN
-	e_MAP_THIN_FLOOR,	// îñÇ¢è∞
 	e_MAP_NUM
 };
 
