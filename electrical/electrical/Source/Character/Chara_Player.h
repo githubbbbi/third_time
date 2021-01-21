@@ -29,6 +29,8 @@ extern const int P_MAX_BATTERY;					// 最大バッテリー
 extern const int P_CONSUMPTION_BULLET_NUM;		// 電力を消費する弾数
 extern const int P_MOTION[e_P_STATE_NUM][4];	// モーション
 
+const int P_MAX_HP = 100;						// 最大HP
+
 class Chara_Player:public CharaBase
 {
 private:
@@ -40,7 +42,9 @@ private:
 	int batteryChargeTimer;		// バッテリーチャージタイマー
 	int shotBulletNum;			// 撃った弾数
 
-	int attackMotionFrame;	// 攻撃モーションフレーム
+	int attackMotionFrame;		// 攻撃モーションフレーム
+
+	int uiHandle;				// UIのグラフィックを保存
 
 	// 入力での移動
 	void InputMove();

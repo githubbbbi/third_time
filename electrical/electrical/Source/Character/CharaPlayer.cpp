@@ -38,6 +38,7 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 	attackMotionFrame = 0;
+	uiHandle = LoadGraph("Resource/Graphic/UI/UI.png");
 }
 
 Chara_Player::~Chara_Player()
@@ -457,9 +458,26 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
+	// UI
+	for (int i = 0; i < 100; i++)
+	{
+		if (i <= ((double)hp / P_MAX_HP) * 100.0 && hp != 0)
+		{
+			DrawLine(82 + (int)(i * 2.6), 25, 114 + (int)(i * 2.6), 57, GetColor(0xF0 - (100 - i), 0x30, 0x30), 2);
+		}
+
+		if (i <= ((double)battery / P_MAX_BATTERY) * 100.0 && battery != 0)
+		{
+			DrawLine(110 + (int)(i * 2.4), 66, 90 + (int)(i * 2.4), 86, GetColor(0x30, 0xF0 - (100 - i), 0x30), 2);
+		}
+	}
+
+	DrawGraph(20, 20, uiHandle, TRUE);
+
+	DrawFormatString(180, 32, GetColor(255, 255, 255), "%d% / 100", hp);
+	DrawFormatString(180, 70, GetColor(255, 255, 255), "%d% / 100", battery);
+
 	// デバッグ用
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "hp:%d%", hp);
-	DrawFormatString(0, 20, GetColor(255, 255, 255), "battery:%d%", battery);
 	DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
 	DrawFormatString(80, 160, GetColor(255, 255, 255), "r:%f", r);
