@@ -5,7 +5,7 @@
 #include "../Utility/Utility.h"
 #include "../Resource/Graphic.h"
 
-const int P_WIDTH = 50;
+const int P_WIDTH = 30;
 const int P_HEIGHT = 50;
 const float P_NORMAL_SPEED = 3.0f;
 const float P_DASH_SPEED = 5.0f;
@@ -265,6 +265,66 @@ void Chara_Player::BatteryManager()
 	}
 }
 
+// UŒ‚
+bool Chara_Player::IsAttack()
+{
+	// €–S‚Ü‚½‚ÍUŒ‚‚ğó‚¯‚Ä‚¢‚é‚Æ‚«‚ÍUŒ‚‚Å‚«‚È‚¢
+	if ( !isAlive || isCBlinking )
+	{
+		return false;
+	}
+
+	if ( InputManager::IsInputTrigger(e_ATTACK) )
+	{
+		// Œ‚‚Á‚½’e”‚ğ‘‚â‚·
+		shotBulletNum++;
+		batteryChargeTimer = 0;
+		attackMotionFrame = 0;
+
+		isAttack = true;
+
+		return true;
+	}
+
+	return false;
+}
+
+// UŒ‚ˆ—‚ÌŠÇ—
+void Chara_Player::WeaponManager()
+{
+	// ¶¬
+	if ( IsAttack() && isAlive )
+	{
+		int xx = 16;
+		if ( isLeftWard )
+		{
+			xx *= -1;
+		}
+
+		electricGun.push_back(new Weapon_ElectricGun(x + xx, y,
+													 16,
+													 EG_SPEED,
+													 0.0f, 2,
+													 isLeftWard));
+	}
+
+	// “d‹Ce
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
+	{
+		electricGun[i]->Update();
+	}
+
+	// “d‹Ceíœ
+	for ( int i = electricGun.size() - 1; i >= 0; i-- )
+	{
+		if ( !electricGun[i]->GetIsAlive() )
+		{
+			delete electricGun[i];
+			electricGun.erase(electricGun.begin() + i);
+		}
+	}
+}
+
 // UŒ‚ƒ‚[ƒVƒ‡ƒ“
 void Chara_Player::AttackMotion()
 {
@@ -357,6 +417,7 @@ void Chara_Player::Update()
 		Move();
 		BatteryManager();
 		HpManager();
+		WeaponManager();
 		AttackMotion();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
@@ -369,7 +430,7 @@ void Chara_Player::Update()
 			ChangeGraphicDirection();
 		}
 
-		LocalAnimation(P_MOTION, P_NORMAL_SPEED);
+		LocalAnimation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
 	}
 
 	// HSV‚©‚çRGB‚É•ÏŠ·
@@ -410,74 +471,14 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
 
-	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
+	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
-}
-
-// UŒ‚
-bool Chara_Player::IsAttack()
-{
-	// €–S‚Ü‚½‚ÍUŒ‚‚ğó‚¯‚Ä‚¢‚é‚Æ‚«‚ÍUŒ‚‚Å‚«‚È‚¢
-	if ( !isAlive || isCBlinking )
-	{
-		return false;
-	}
-
-	if ( InputManager::IsInputTrigger(e_ATTACK) )
-	{
-		// Œ‚‚Á‚½’e”‚ğ‘‚â‚·
-		shotBulletNum++;
-		batteryChargeTimer = 0;
-		attackMotionFrame = 0;
-
-		isAttack = true;
-
-		return true;
-	}
-
-	return false;
 }
 
 // UŒ‚ƒqƒbƒg
 void Chara_Player::HitAttack(int index)
 {
 	electricGun[index]->Hit();
-}
-
-// UŒ‚ˆ—‚ÌŠÇ—
-void Chara_Player::WeaponManager()
-{
-	// ¶¬
-	if ( IsAttack() && isAlive )
-	{
-		int xx = 16;
-		if ( isLeftWard )
-		{
-			xx *= -1;
-		}
-
-		electricGun.push_back(new Weapon_ElectricGun(x + xx, y,
-													 16,
-													 EG_SPEED,
-													 0.0f, 2,
-													 isLeftWard));
-	}
-
-	// “d‹Ce
-	for ( unsigned int i = 0; i < electricGun.size(); i++ )
-	{
-		electricGun[i]->Update();
-	}
-
-	// “d‹Ceíœ
-	for ( int i = electricGun.size() - 1; i >= 0; i-- )
-	{
-		if ( !electricGun[i]->GetIsAlive() )
-		{
-			delete electricGun[i];
-			electricGun.erase(electricGun.begin() + i);
-		}
-	}
 }
 
 // “d‹Ce‚Ì—v‘f”

@@ -14,6 +14,9 @@ const int INVICIBLE_TIME = 60;
 CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 					 float speed, int hp, int attackPower)
 {
+	anim = new Animation;
+
+	// 変数の初期化
 	this->x = x;
 	this->y = y;
 	this->speed = speed;
@@ -64,8 +67,6 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 
 	blendMode = DX_BLENDMODE_NOBLEND;
 	blendValue = 0;
-
-	anim = new Animation;
 }
 
 // デストラクタ
@@ -85,7 +86,7 @@ void CharaBase::CharaJump()
 }
 
 // キャラクタの上昇&落下
-void CharaBase::CharaRiseFall()
+void CharaBase::CharaRiseAndFall()
 {
 	// 上昇&落下
 	if ( isJump || isFall )
@@ -111,7 +112,7 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	oldY = y;
 
 	// 上昇&落下
-	CharaRiseFall();
+	CharaRiseAndFall();
 
 	// XまたはY方向の移動量について考慮しない場合に用いる
 	float dummy = 0.0f;
@@ -321,18 +322,22 @@ void CharaBase::Invicible()
 }
 
 // アニメーション
-void CharaBase::LocalAnimation(const int MOTION[][4], const float NORMAL_SPEED)
+void CharaBase::LocalAnimation(const int MOTION[][4],
+							   const float NORMAL_SPEED, const float DASH_SPEED)
 {
 	int wait = 10;
 	const int num = 4;
 
-	if ( fabsf(speed) == NORMAL_SPEED )
+	if ( moveX != 0.0f || moveY != 0.0f )
 	{
-		wait = 10;
-	}
-	else
-	{
-		wait = 6;
+		if ( fabsf(speed) == NORMAL_SPEED )
+		{
+			wait = 10;
+		}
+		else if ( fabsf(speed) == DASH_SPEED )
+		{
+			wait = 6;
+		}
 	}
 
 	int *p = (int *)MOTION;

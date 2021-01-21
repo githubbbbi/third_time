@@ -1,5 +1,8 @@
 #include "DxLib.h"
 #include "Chara_Manager.h"
+#include "Chara_EnemyBomb.h"
+#include "Chara_EnemyElectric.h"
+#include "Chara_EnemyWater.h"
 #include "../Define/Define.h"
 #include "../Utility/Utility.h"
 
@@ -21,107 +24,81 @@ Chara_Manager::~Chara_Manager()
 {
 	delete player;
 
-	for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
+	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
-		delete enemyBomb[i];
-		enemyBomb.erase(enemyBomb.begin() + i);
-	}
-
-	for ( int i = enemyElectric.size() - 1; i >= 0; i-- )
-	{
-		delete enemyElectric[i];
-		enemyElectric.erase(enemyElectric.begin() + i);
+		delete enemys[i];
+		enemys.erase(enemys.begin() + i);
 	}
 }
 
 // 初期化処理
 void Chara_Manager::Initialize()
 {
+	player->Initialize();
 
+	// エネミーは全て消去しちゃう
+	for ( int i = enemys.size() - 1; i >= 0; i-- )
+	{
+		delete enemys[i];
+		enemys.erase(enemys.begin() + i);
+	}
+}
+
+// エネミーの生成
+void Chara_Manager::EnemySpawn(int screenX, int screenY)
+{
+	// テスト用
+	float startX = 0.0f + CHIP_SIZE * 2.0f;
+	float startY = 0.0f;
+	static int timer = 0;
+	timer++;
+
+	// 爆弾エネミー
+	if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
+	{
+		enemys.push_back(new Chara_EnemyBomb(startX, startY, 32,
+											 EB_WIDTH, EB_HEIGHT,
+											 EB_NORMAL_SPEED, 2, 10));
+	}
+
+	// 銃エネミー
+	if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
+	{
+		enemys.push_back(new Chara_EnemyElectric(startX, startY, 32,
+												 EE_WIDTH, EE_HEIGHT,
+												 EE_NORMAL_SPEED, 2, 2));
+	}
+
+	// 水弾エネミー
+	if ( CheckHitKey(KEY_INPUT_C) && timer % 30 == 0 )
+	{
+		enemys.push_back(new Chara_EnemyWater(startX, startY, 32,
+											  EW_WIDTH, EW_HEIGHT,
+											  0.0f, 2, 2));
+	}
 }
 
 // エネミー管理
-void Chara_Manager::EnemyManager()
+void Chara_Manager::EnemyManager(int screenX, int screenY)
 {
-	// テスト用
-	{
-		float startX = 0.0f + CHIP_SIZE * 2.0f;
-		float startY = 0.0f;
+	// エネミーの出現
+	EnemySpawn(screenX, screenY);
 
-		static int timer = 0;
-		timer++;
-		// 爆弾エネミー
-		if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
+	// 更新処理
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	{
+		enemys[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
+	}
+
+	// スクリーン外に出た場合消去
+	/*for ( int i = enemys.size() - 1; i >= 0; i-- )
+	{
+		if ( enemys[i]->GetIsAlive() )
 		{
-			enemyBomb.push_back(new Chara_EnemyBomb(startX, startY, 32,
-													EB_WIDTH, EB_HEIGHT,
-													EB_NORMAL_SPEED, 2, 10));
+			delete enemys[i];
+			enemys.erase(enemys.begin() + i);
 		}
-
-		// 銃エネミー
-		if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
-		{
-			enemyElectric.push_back(new Chara_EnemyElectric(startX, startY, 32,
-															EE_WIDTH, EE_HEIGHT,
-															EE_NORMAL_SPEED, 2, 2));
-		}
-
-		// 水弾エネミー
-		if ( CheckHitKey(KEY_INPUT_C) && timer % 30 == 0 )
-		{
-			enemyWater.push_back(new Chara_EnemyWater(startX, startY, 32,
-													  EW_WIDTH, EW_HEIGHT,
-													  0.0f, 2, 2));
-		}
-	}
-
-	// 爆弾エネミー
-	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
-	{
-		enemyBomb[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
-	}
-
-	//for ( int i = enemyBomb.size() - 1; i >= 0; i-- )
-	//{
-	//	// 死亡後画面外に出た場合、エネミー削除
-	//	if ( !enemyBomb[i]->GetIsAlive() )
-	//	{
-	//		delete enemyBomb[i];
-	//		enemyBomb.erase(enemyBomb.begin() + i);
-	//	}
-	//}
-
-	// 銃エネミー
-	for ( unsigned int i = 0; i < enemyElectric.size(); i++ )
-	{
-		enemyElectric[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
-	}
-
-	//for ( int i = enemyGun.size() - 1; i >= 0; i-- )
-	//{
-	//	// 死亡後画面外に出た場合、エネミー削除
-	//	if ( !enemyGun[i]->GetIsAlive() )
-	//	{
-	//		delete enemyGun[i];
-	//		enemyGun.erase(enemyGun.begin() + i);
-	//	}
-	//}
-
-	// 水弾エネミー
-	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
-	{
-		enemyWater[i]->Update(player->GetPosX(), player->GetPosY());
-	}
-
-	//for ( int i = enemyWater.size() - 1; i >= 0; i-- )
-	//{
-	//	// 死亡後画面外に出た場合、エネミー削除
-	//	if ( !enemyWater[i]->GetIsAlive() )
-	//	{
-	//		delete enemyWater[i];
-	//		enemyWater.erase(enemyWater.begin() + i);
-	//	}
-	//}
+	}*/
 }
 
 // キャラクタ同士の当たり判定
@@ -132,46 +109,26 @@ void Chara_Manager::CharaCollision()
 		return;
 	}
 
-	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
-	{
-		// プレイヤーと敵との判定
-		if ( !enemyBomb[i]->GetIsAlive() )
-		{
-			continue;
-		}
+	//for ( unsigned int i = 0; i < enemys.size(); i++ )
+	//{
+	//	// プレイヤーと敵との判定
+	//	if ( !enemys[i]->GetIsAlive() )
+	//	{
+	//		continue;
+	//	}
 
-		/*if ( Utility::IsRectCollision(enemyBomb[i]->GetPosX(),
-									  enemyBomb[i]->GetPosY(),
-									  enemyBomb[i]->GetWidth(),
-									  enemyBomb[i]->GetHeight(),
-									  player->GetPosX(),
-									  player->GetPosY(),
-									  player->GetWidth(),
-									  player->GetHeight()) )
-		{
-			player->CharactersCollision();
-		}*/
-	}
-}
-
-// 武器処理管理
-void Chara_Manager::WeaponManager()
-{
-	// プレイヤー攻撃
-	player->WeaponManager();
-
-	// 銃エネミー攻撃
-	for ( unsigned int i = 0; i < enemyElectric.size(); i++ )
-	{
-		enemyElectric[i]->WeaponManager();
-	}
-
-	// 水弾エネミー攻撃
-	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
-	{
-		enemyWater[i]->WeaponManager(player->GetPosX(), player->GetPosY(),
-									 player->GetIsAlive());
-	}
+	//	if ( Utility::IsRectCollision(enemys[i]->GetPosX(),
+	//								  enemys[i]->GetPosY(),
+	//								  enemys[i]->GetWidth(),
+	//								  enemys[i]->GetHeight(),
+	//								  player->GetPosX(),
+	//								  player->GetPosY(),
+	//								  player->GetWidth(),
+	//								  player->GetHeight()) )
+	//	{
+	//		player->CharactersCollision();
+	//	}
+	//}
 }
 
 // 攻撃の当たり判定
@@ -182,10 +139,10 @@ void Chara_Manager::AttackCollision()
 		return;
 	}
 
-	// 爆弾エネミー
-	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
+	// エネミー
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		if ( !enemyBomb[i]->GetIsAlive() )
+		if ( !enemys[i]->GetIsAlive() )
 		{
 			continue;
 		}
@@ -193,124 +150,56 @@ void Chara_Manager::AttackCollision()
 		// プレイヤーの攻撃との当たり判定
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
-			if ( Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
-											enemyBomb[i]->GetPosY(),
-											enemyBomb[i]->GetRadius() - 8,
+			if ( Utility::IsCircleCollision(enemys[i]->GetPosX(),
+											enemys[i]->GetPosY(),
+											enemys[i]->GetRadius() - 8,
 											player->GetGunPosX(j),
 											player->GetGunPosY(j),
 											player->GetGunRadius(j) - 4) )
 			{
-				enemyBomb[i]->ReceiveDamage(player->GetAttackPower(),
-											player->GetIsGunLeftWard(j));
+				enemys[i]->ReceiveDamage(player->GetAttackPower(),
+										 player->GetIsGunLeftWard(j));
 				player->HitAttack(j);
 			}
 		}
 
-		// 爆弾エネミーがダッシュ状態だったら、プレイヤーにダメージが入り敵が消える
-		if ( !player->GetIsInvicible() &&
-			Utility::IsCircleCollision(enemyBomb[i]->GetPosX(),
-									   enemyBomb[i]->GetPosY(),
-									   enemyBomb[i]->GetRadius() - 8,
+		if ( player->GetIsInvicible() )
+		{
+			return;
+		}
+
+		// エネミーの攻撃とプレイヤーの当たり判定
+		if ( Utility::IsCircleCollision(enemys[i]->GetAttackPosX(),
+									   enemys[i]->GetAttackPosY(),
+									   enemys[i]->GetAttackRadius() - 8,
 									   player->GetPosX(),
 									   player->GetPosY(),
-									   player->GetRadius() - 8) )
+									   player->GetRadius() - 4) )
 		{
-			if ( fabsf(enemyBomb[i]->GetSpeed()) == EB_DASH_SPEED )
-			{
-				enemyBomb[i]->HitAttack();
-				player->ReceiveDamage(enemyBomb[i]->GetAttackPower(),
-									  enemyBomb[i]->GetIsLeftWard());
-			}
+			enemys[i]->HitAttack();
+			player->ReceiveDamage(enemys[i]->GetAttackPower(),
+								  enemys[i]->GetIsAttackLeftWard());
 		}
-	}
-
-	// 銃エネミー
-	for ( unsigned int i = 0; i < enemyElectric.size(); i++ )
-	{
-		if ( !enemyElectric[i]->GetIsAlive() )
-		{
-			continue;
-		}
-
-		// プレイヤーの攻撃との当たり判定
-		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
-		{
-			if ( Utility::IsCircleCollision(enemyElectric[i]->GetPosX(),
-											enemyElectric[i]->GetPosY(),
-											enemyElectric[i]->GetRadius() - 8,
-											player->GetGunPosX(j),
-											player->GetGunPosY(j),
-											player->GetGunRadius(j) - 4) )
-			{
-				enemyElectric[i]->ReceiveDamage(player->GetAttackPower(),
-												player->GetIsGunLeftWard(j));
-				player->HitAttack(j);
-			}
-		}
-
-		// エネミーの攻撃とプレイヤーの当たり判定
-		for ( unsigned int j = 0; j < enemyElectric[i]->GetGunSize(); j++ )
+		/*for ( unsigned int j = 0; j < enemys[i]->GetGunSize(); j++ )
 		{
 			if ( !player->GetIsInvicible() &&
-				Utility::IsCircleCollision(enemyElectric[i]->GetGunPosX(j),
-										   enemyElectric[i]->GetGunPosY(j),
-										   enemyElectric[i]->GetGunRadius(j) - 8,
+				Utility::IsCircleCollision(enemys[i]->GetGunPosX(j),
+										   enemys[i]->GetGunPosY(j),
+										   enemys[i]->GetGunRadius(j) - 8,
 										   player->GetPosX(),
 										   player->GetPosY(),
 										   player->GetRadius() - 4) )
 			{
-				enemyElectric[i]->HitAttack(j);
-				player->ReceiveDamage(enemyElectric[i]->GetAttackPower(),
-									  enemyElectric[i]->GetIsGunLeftWard(j));
+				enemys[i]->HitAttack(j);
+				player->ReceiveDamage(enemys[i]->GetAttackPower(),
+									  enemys[i]->GetIsGunLeftWard(j));
 			}
-		}
-	}
-
-	// 水弾エネミー
-	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
-	{
-		if ( !enemyWater[i]->GetIsAlive() )
-		{
-			continue;
-		}
-
-		// プレイヤーの攻撃との当たり判定
-		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
-		{
-			if ( Utility::IsCircleCollision(enemyWater[i]->GetPosX(),
-											enemyWater[i]->GetPosY(),
-											enemyWater[i]->GetRadius() - 8,
-											player->GetGunPosX(j),
-											player->GetGunPosY(j),
-											player->GetGunRadius(j) - 4) )
-			{
-				enemyWater[i]->ReceiveDamage(player->GetAttackPower(),
-											 player->GetIsGunLeftWard(j));
-				player->HitAttack(j);
-			}
-		}
-
-		// エネミーの攻撃とプレイヤーの当たり判定
-		for ( unsigned int j = 0; j < enemyWater[i]->GetGunSize(); j++ )
-		{
-			if ( !player->GetIsInvicible() &&
-				Utility::IsCircleCollision(enemyWater[i]->GetGunPosX(j),
-										   enemyWater[i]->GetGunPosY(j),
-										   enemyWater[i]->GetGunRadius(j) - 8,
-										   player->GetPosX(),
-										   player->GetPosY(),
-										   player->GetRadius() - 4) )
-			{
-				enemyWater[i]->HitAttack(j);
-				player->ReceiveDamage(enemyWater[i]->GetAttackPower(),
-									  enemyWater[i]->GetIsGunLeftWard(j));
-			}
-		}
+		}*/
 	}
 }
 
 // 更新処理
-void Chara_Manager::Update()
+void Chara_Manager::Update(int screenX, int screenY)
 {
 	// プレイヤー
 	player->Update();
@@ -318,11 +207,8 @@ void Chara_Manager::Update()
 	//キャラの当たり判定
 	CharaCollision();
 
-	// 武器処理
-	WeaponManager();
-
 	// エネミー
-	EnemyManager();
+	EnemyManager(screenX, screenY);
 
 	// 攻撃の当たり判定
 	AttackCollision();
@@ -334,28 +220,16 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	// プレイヤー
 	player->Draw(shakeX, shakeY, scrollX, scrollY);
 
-	// 爆弾エネミー
-	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
+	// エネミー
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		enemyBomb[i]->Draw(shakeX, shakeY, scrollX, scrollY);
-	}
-
-	// 銃エネミー
-	for ( unsigned int i = 0; i < enemyElectric.size(); i++ )
-	{
-		enemyElectric[i]->Draw(shakeX, shakeY, scrollX, scrollY);
-	}
-
-	// 水弾エネミー
-	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
-	{
-		enemyWater[i]->Draw(shakeX, shakeY, scrollX, scrollY);
+		enemys[i]->Draw(shakeX, shakeY, scrollX, scrollY);
 	}
 
 	// デバッグ用
-	DrawFormatString(50, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 爆弾エネミーの数:%d", enemyBomb.size());
-	DrawFormatString(50, 120, GetColor(255, 255, 255), "Aキーでエネミー生成 銃エネミーの数:%d", enemyElectric.size());
-	DrawFormatString(50, 140, GetColor(255, 255, 255), "Cキーでエネミー生成 水弾エネミーの数:%d", enemyWater.size());
+	DrawFormatString(50, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 爆弾エネミーの数:%d", enemys.size());
+	DrawFormatString(50, 120, GetColor(255, 255, 255), "Aキーでエネミー生成 銃エネミーの数:%d", enemys.size());
+	DrawFormatString(50, 140, GetColor(255, 255, 255), "Cキーでエネミー生成 水弾エネミーの数:%d", enemys.size());
 	/*DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f", player->GetPosY());
 	if ( enemyBomb.size() >= 1 )
 	{
@@ -388,70 +262,36 @@ float Chara_Manager::GetExplosionPosY()
 	return explosionY;
 }
 
-// エネミーの死亡
-bool Chara_Manager::GetIsEnemyDeath()
+// キャラクターの死亡
+bool Chara_Manager::GetIsCharaDeath()
 {
-	// 爆弾エネミー
-	for ( unsigned int i = 0; i < enemyBomb.size(); i++ )
+	// プレイヤー
+	if ( !player->GetIsAlive() )
 	{
-		if ( enemyBomb[i]->GetIsAlive() )
-		{
-			continue;
-		}
+		// 座標を取得
+		explosionX = player->GetPosX();
+		explosionY = player->GetPosY();
 
-		if ( !enemyBomb[i]->GetIsAlive() )
-		{
-			// 座標を取得
-			explosionX = enemyBomb[i]->GetPosX();
-			explosionY = enemyBomb[i]->GetPosY();
-
-			// エネミーを消去
-			delete enemyBomb[i];
-			enemyBomb.erase(enemyBomb.begin() + i);
-
-			return true;
-		}
+		return true;
 	}
 
-	// 銃エネミー
-	for ( unsigned int i = 0; i < enemyElectric.size(); i++ )
+	// エネミー
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		if ( enemyElectric[i]->GetIsAlive() )
+		if ( enemys[i]->GetIsAlive() )
 		{
 			continue;
 		}
 
-		if ( !enemyElectric[i]->GetIsAlive() )
+		if ( !enemys[i]->GetIsAlive() )
 		{
 			// 座標を取得
-			explosionX = enemyElectric[i]->GetPosX();
-			explosionY = enemyElectric[i]->GetPosY();
+			explosionX = enemys[i]->GetPosX();
+			explosionY = enemys[i]->GetPosY();
 
 			// エネミーを消去
-			delete enemyElectric[i];
-			enemyElectric.erase(enemyElectric.begin() + i);
-
-			return true;
-		}
-	}
-
-	// 水弾エネミー
-	for ( unsigned int i = 0; i < enemyWater.size(); i++ )
-	{
-		if ( enemyWater[i]->GetIsAlive() )
-		{
-			continue;
-		}
-
-		if ( !enemyWater[i]->GetIsAlive() )
-		{
-			// 座標を取得
-			explosionX = enemyWater[i]->GetPosX();
-			explosionY = enemyWater[i]->GetPosY();
-
-			// エネミーを消去
-			delete enemyWater[i];
-			enemyWater.erase(enemyWater.begin() + i);
+			delete enemys[i];
+			enemys.erase(enemys.begin() + i);
 
 			return true;
 		}

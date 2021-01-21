@@ -3,6 +3,7 @@
 #include "../Define/Define.h"
 #include "../Utility/Utility.h"
 #include "../Input/InputManager.h"
+#include "../Background/Background.h"
 
 // コンストラクタ
 SceneGame::SceneGame()
@@ -56,8 +57,8 @@ void SceneGame::Screen()
 // エフェクト管理
 void SceneGame::LocalEffectManager()
 {
-	// エネミーの死亡エフェクト
-	if ( charaManager->GetIsEnemyDeath() )
+	// キャラクターの死亡エフェクト
+	if ( charaManager->GetIsCharaDeath() )
 	{
 		// シェイク
 		effects->Shake();
@@ -108,7 +109,7 @@ void SceneGame::Update()
 	stage->Update();
 
 	// キャラクター
-	charaManager->Update();
+	charaManager->Update(screenX, screenY);
 
 	// シーン遷移
 	SceneChange();
@@ -121,7 +122,8 @@ void SceneGame::Update()
 void SceneGame::Draw()
 {
 	// 背景
-
+	Background back;
+	back.Draw(effects->GetShakeX(), effects->GetShakeY());
 
 	// ステージ
 	stage->Draw(effects->GetShakeX(),

@@ -7,6 +7,10 @@ Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int he
 								 float speed, int hp, int attackPower):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
 {
+	attackX = 0.0f;
+	attackY = 0.0f;
+	attackRadius = 0;
+	isAttackLeftWard = isLeftWard;
 }
 
 // ƒWƒƒƒ“ƒv‚·‚é
@@ -110,6 +114,25 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 		}
 	}
 
-
 	return false;
+}
+
+float Chara_EnemyBase::GetAttackPosX()
+{
+	return attackX;
+}
+
+float Chara_EnemyBase::GetAttackPosY()
+{
+	return attackY;
+}
+
+int Chara_EnemyBase::GetAttackRadius()
+{
+	return attackRadius;
+}
+
+bool Chara_EnemyBase::GetIsAttackLeftWard()
+{
+	return isAttackLeftWard;
 }

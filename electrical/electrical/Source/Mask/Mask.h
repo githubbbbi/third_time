@@ -3,7 +3,6 @@
 class Mask
 {
 private:
-	static int graphHandle;
 	static int screenHandle;
 
 	static double sizeRate;

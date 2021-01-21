@@ -9,7 +9,6 @@
 const int EE_WIDTH = 50;
 const int EE_HEIGHT = 50;
 const float EE_NORMAL_SPEED = 2.0f;
-const float EE_DASH_SPEED = 4.0f;
 const int EE_BULLET_INTERVAL = 70;
 const int EE_MOTION[e_EE_STATE_NUM][4] =
 {
@@ -27,6 +26,8 @@ Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width
 	bulletInterval = 0;
 	shotLength = 0;
 	isTargetLock = false;
+
+	gunIndex = 0;
 }
 
 Chara_EnemyElectric::~Chara_EnemyElectric()
@@ -37,12 +38,6 @@ Chara_EnemyElectric::~Chara_EnemyElectric()
 		delete electricGun[i];
 		electricGun.erase(electricGun.begin() + i);
 	}
-}
-
-// 初期化処理
-void Chara_EnemyElectric::Initialize()
-{
-
 }
 
 // 自動移動
@@ -139,79 +134,6 @@ void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
-// 状態
-void Chara_EnemyElectric::State()
-{
-	// 待機
-	if ( moveX != 0.0f || moveY != 0.0f )
-	{
-		// 歩き
-		state = e_EE_STATE_WALK;
-	}
-
-	// ジャンプ
-	if ( isJump || isFall )
-	{
-		state = e_EE_STATE_JUMP;
-	}
-
-	// 攻撃
-	if ( isAttack )
-	{
-		state = e_EE_STATE_ATTACK;
-	}
-
-	// ダメーを受ける(色点滅中)
-	if ( isCBlinking )
-	{
-		state = e_EE_STATE_RECIEVE_DAMAGE;
-	}
-}
-
-// 更新処理
-void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAlive)
-{
-	if ( isAlive )
-	{
-		Move(playerX, playerY, isPlayerAlive);
-		ChangeGraphicDirection();
-		HpZero();
-		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
-		KnockBack();
-		State();
-		LocalAnimation(EE_MOTION, EE_NORMAL_SPEED);
-	}
-
-	// HSVからRGBに変換
-	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
-}
-
-// 描画処理
-void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
-{
-	// 電気銃
-	for ( unsigned int i = 0; i < electricGun.size(); i++ )
-	{
-		electricGun[i]->Draw(scrollX, scrollY);
-	}
-
-	if ( isAlive )
-	{
-		SetDrawBlendMode(blendMode, blendValue);
-		SetDrawBright((int)r, (int)g, (int)b);
-		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(graphIndex), true, isLeftWard);
-		SetDrawBright(255, 255, 255);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-}
-
-// 攻撃ヒット
-void Chara_EnemyElectric::HitAttack(int index)
-{
-	electricGun[index]->Hit();
-}
-
 // 攻撃処理の管理
 void Chara_EnemyElectric::WeaponManager()
 {
@@ -253,32 +175,106 @@ void Chara_EnemyElectric::WeaponManager()
 	}
 }
 
-// 電気銃の要素数
-unsigned int Chara_EnemyElectric::GetGunSize()
+// 攻撃管理
+void Chara_EnemyElectric::AttackManager(float playerX, float playerY, bool isPlayerAlive)
 {
-	return electricGun.size();
+	if ( !isPlayerAlive )
+	{
+		return;
+	}
+
+	// プレイヤーと一番距離が近いものを調べる
+	float d = 10000.0f;
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
+	{
+
+	}
+
+	if ( gunIndex >= (int)electricGun.size() )
+	{
+		return;
+	}
+
+	attackRadius = electricGun[gunIndex]->GetRadius();
+	isAttackLeftWard = electricGun[gunIndex]->GetIsLeftWard();
 }
 
-// 電気銃のX座標取得
-float Chara_EnemyElectric::GetGunPosX(int index)
+// 状態
+void Chara_EnemyElectric::State()
 {
-	return electricGun[index]->GetPosX();
+	// 待機
+	if ( moveX != 0.0f || moveY != 0.0f )
+	{
+		// 歩き
+		state = e_EE_STATE_WALK;
+	}
+
+	// ジャンプ
+	if ( isJump || isFall )
+	{
+		state = e_EE_STATE_JUMP;
+	}
+
+	// 攻撃
+	if ( isAttack )
+	{
+		state = e_EE_STATE_ATTACK;
+	}
+
+	// ダメーを受ける(色点滅中)
+	if ( isCBlinking )
+	{
+		state = e_EE_STATE_RECIEVE_DAMAGE;
+	}
 }
 
-// 電気銃のY座標取得
-float Chara_EnemyElectric::GetGunPosY(int index)
+// 更新処理
+void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAlive)
 {
-	return electricGun[index]->GetPosY();
+	if ( isAlive )
+	{
+		Move(playerX, playerY, isPlayerAlive);
+		ChangeGraphicDirection();
+		HpZero();
+		WeaponManager();
+		AttackManager(playerX, playerY, isPlayerAlive);
+		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
+		KnockBack();
+		State();
+		LocalAnimation(EE_MOTION, EE_NORMAL_SPEED, 0.0f);
+	}
+
+	// HSVからRGBに変換
+	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
 }
 
-// 電気銃のradius取得
-int Chara_EnemyElectric::GetGunRadius(int index)
+// 描画処理
+void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 {
-	return electricGun[index]->GetRadius();
+	// 電気銃
+	for ( unsigned int i = 0; i < electricGun.size(); i++ )
+	{
+		electricGun[i]->Draw(scrollX, scrollY);
+	}
+
+	if ( isAlive )
+	{
+		SetDrawBlendMode(blendMode, blendValue);
+		SetDrawBright((int)r, (int)g, (int)b);
+		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(graphIndex), true, isLeftWard);
+		SetDrawBright(255, 255, 255);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
-// 電気銃のisLeftWard取得
-bool Chara_EnemyElectric::GetIsGunLeftWard(int index)
+// 攻撃ヒット
+void Chara_EnemyElectric::HitAttack()
 {
-	return electricGun[index]->GetIsLeftWard();
+	if ( gunIndex >= (int)electricGun.size() )
+	{
+		return;
+	}
+
+	electricGun[gunIndex]->Hit();
 }

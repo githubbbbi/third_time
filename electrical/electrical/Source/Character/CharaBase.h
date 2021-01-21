@@ -59,7 +59,7 @@ protected:
 	int blendValue;			// ブレンド値
 
 	// キャラクタの上昇&落下
-	void CharaRiseFall();
+	void CharaRiseAndFall();
 
 	// キャラの移動
 	void CharaMove(float hitWidth, float hitHeight);
@@ -84,7 +84,8 @@ protected:
 	void Invicible();
 
 	// アニメーション
-	void LocalAnimation(const int MOTION[][4], const float NORMAL_SPEED);
+	void LocalAnimation(const int MOTION[][4],
+						const float NORMAL_SPEED, const float DASH_SPEED);
 
 public:
 	// コンストラクタ宣言

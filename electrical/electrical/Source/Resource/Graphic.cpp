@@ -3,6 +3,7 @@
 
 Graphic::Graphic()
 {
+	mask = MyLoadGraph("Resource/Graphic/Mask/mask.png");
 	MyLoadDivGraph("Resource/Graphic/Character/Player/player.png",
 				   4 * e_P_STATE_NUM, 4, e_P_STATE_NUM, CHARA_SIZE, CHARA_SIZE, player);
 	MyLoadDivGraph("Resource/Graphic/Character/Enemy/bomb.png",
@@ -14,8 +15,9 @@ Graphic::Graphic()
 	electricGun = MyLoadGraph("Resource/Graphic/Weapon/electricGun.png");
 	waterGun = MyLoadGraph("Resource/Graphic/Weapon/waterGun.png");
 	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
-	MyLoadDivGraph("Resource/Graphic/MapChip/mapChip.png",
+	MyLoadDivGraph("Resource/Graphic/MapChip/map_chip.png",
 				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
+	background = MyLoadGraph("Resource/Graphic/Background/background.png");
 }
 
 // ç°Ç‹Ç≈ÉçÅ[ÉhÇµÇΩâÊëúÇâï˙Ç∑ÇÈ
@@ -47,6 +49,11 @@ int Graphic::MyLoadDivGraph(const char *fileName, int n,
 	}
 
 	return temp;
+}
+
+int Graphic::GetMask()
+{
+	return mask;
 }
 
 int Graphic::GetPlayer(int index)
@@ -87,4 +94,9 @@ int Graphic::GetParticle()
 int Graphic::GetMap(int index)
 {
 	return map[index];
+}
+
+int Graphic::GetBackground()
+{
+	return background;
 }

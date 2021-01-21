@@ -76,6 +76,12 @@
     <Filter Include="ソース ファイル\Resource">
       <UniqueIdentifier>{802674f7-f9a3-4b21-a081-82d91895fcb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Background">
+      <UniqueIdentifier>{82210500-5033-4621-9ec7-251c9180f5eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Background">
+      <UniqueIdentifier>{a6036690-ac60-47e9-bd37-4bdacc289c14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -165,6 +171,9 @@
     <ClCompile Include="Source\Resource\CSV.cpp">
       <Filter>ソース ファイル\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Background\Background.cpp">
+      <Filter>ソース ファイル\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -253,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="Source\Resource\CSV.h">
       <Filter>ヘッダー ファイル\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Background\Background.h">
+      <Filter>ヘッダー ファイル\Background</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

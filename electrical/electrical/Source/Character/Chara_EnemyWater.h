@@ -25,8 +25,16 @@ private:
 	int bulletInterval;		// e‚ğŒ‚‚ÂŠÔŠu
 	float bulletSpeed;		// e‚ÌƒXƒs[ƒh
 
+	int gunIndex;			// e‚ÌƒCƒ“ƒfƒbƒNƒX
+
 	// ˆÚ“®
 	void Move();
+
+	// •Šíˆ—ŠÇ—
+	void WeaponManager(float playerX, float playerY, bool isPlayerAlive);
+
+	// UŒ‚ŠÇ—
+	void AttackManager(float playerX, float playerY, bool isPlayerAlive);
 
 	// Œü‚«‚ğ•ÏX
 	void ChangeDirection(float playerX);
@@ -39,33 +47,11 @@ public:
 					 float speed, int hp, int attackPower);
 	~Chara_EnemyWater();
 
-	// ‰Šú‰»ˆ—
-	void Initialize();
-
 	// XVˆ—
-	void Update(float playerX, float playerY);
+	void Update(float playerX, float playerY, bool isPlayerAlive) override;
 
 	// •`‰æˆ—
-	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY) override;
 
-	// UŒ‚ƒqƒbƒg
-	void HitAttack(int index);
-
-	// •Šíˆ—ŠÇ—
-	void WeaponManager(float playerX, float playerY, bool isPlayerAlive);
-
-	// …’e‚Ì—v‘f”
-	unsigned int GetGunSize();
-
-	// …’e‚ÌXÀ•Wæ“¾
-	float GetGunPosX(int index);
-
-	// …’e‚ÌYÀ•Wæ“¾
-	float GetGunPosY(int index);
-
-	// …’e‚Ìradiusæ“¾
-	int GetGunRadius(int index);
-
-	// …e‚ÌisLeftWardæ“¾
-	bool GetIsGunLeftWard(int index);
+	void HitAttack() override;
 };

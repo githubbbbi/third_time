@@ -1,9 +1,9 @@
 #include "DxLib.h"
 #include "Mask.h"
 #include "../Define/Define.h"
+#include "../Resource/Graphic.h"
 
 // 変数初期化
-int Mask::graphHandle = -1;
 int Mask::screenHandle = -1;
 
 double Mask::sizeRate = 0.0;
@@ -11,9 +11,6 @@ double Mask::sizeRate = 0.0;
 // マスクのセット
 void Mask::SetMask()
 {
-	// マスク画像
-	graphHandle = LoadGraph("Resource/Graphic/Mask/mask.png");
-
 	// アルファチャンネル付きの描画対象グラフィックハンドルを作成
 	screenHandle = MakeScreen(WIN_WIDTH, WIN_HEIGHT, TRUE);
 
@@ -50,7 +47,7 @@ void Mask::DrawMask()
 
 	// マスク画像描画
 	DrawRotaGraph(WIN_WIDTH / 2, WIN_HEIGHT / 2,
-				  sizeRate, 0.0, graphHandle, true);
+				  sizeRate, 0.0, Graphic::GetInstance()->GetMask(), true);
 
 	// 描画先を裏画面に変更
 	SetDrawScreen(DX_SCREEN_BACK);

@@ -26,23 +26,23 @@ private:
 	// ˆÚ“®
 	void Move(float playerX, float playerY, bool isPlayerAlive);
 
+	// UŒ‚ŠÇ—
+	void AttackManager(bool isPlayerAlive);
+
 	// ó‘Ô
 	void State();
 
 public:
 	Chara_EnemyBomb(float x, float y, int radius, int width, int height,
 					float speed, int hp, int attackPower);
-	~Chara_EnemyBomb();
-
-	// ‰Šú‰»ˆ—
-	void Initialize();
+	~Chara_EnemyBomb() = default;
 
 	// XVˆ—
-	void Update(float playerX, float playerY, bool isPlayerAlive);
+	void Update(float playerX, float playerY, bool isPlayerAlive) override;
 
 	// •`‰æˆ—
-	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY) override;
 
 	// UŒ‚ƒqƒbƒg
-	void HitAttack();
+	void HitAttack() override;
 };

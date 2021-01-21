@@ -5,6 +5,11 @@
 class Chara_EnemyBase:public CharaBase
 {
 protected:
+	float attackX;			// UŒ‚’†SÀ•W
+	float attackY;			// UŒ‚’†SÀ•W
+	int attackRadius;		// UŒ‚”¼Œa
+	bool isAttackLeftWard;	// UŒ‚¶Œü‚«ƒtƒ‰ƒO
+
 	// ƒWƒƒƒ“ƒv‚·‚é
 	void Jump();
 
@@ -20,4 +25,14 @@ protected:
 public:
 	Chara_EnemyBase(float x, float y, int radius, int width, int height,
 					float speed, int hp, int attackPower);
+
+	virtual void Update(float playerX, float playerY, bool isPlayerAlive) = 0;
+	virtual void Draw(float shakeX, float shakeY, int scrollX, int scrollY) = 0;
+
+	virtual void HitAttack() = 0;
+
+	float GetAttackPosX();
+	float GetAttackPosY();
+	int GetAttackRadius();
+	bool GetIsAttackLeftWard();
 };

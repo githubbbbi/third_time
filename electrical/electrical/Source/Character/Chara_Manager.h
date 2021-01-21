@@ -2,29 +2,25 @@
 
 #include <vector>
 #include "Chara_Player.h"
-#include "Chara_EnemyBomb.h"
-#include "Chara_EnemyElectric.h"
-#include "Chara_EnemyWater.h"
+#include "Chara_EnemyBase.h"
 
 class Chara_Manager
 {
 private:
 	Chara_Player *player;
-	std::vector<Chara_EnemyBomb *>enemyBomb;
-	std::vector<Chara_EnemyElectric *>enemyElectric;
-	std::vector<Chara_EnemyWater *>enemyWater;
+	std::vector<Chara_EnemyBase *>enemys;
 
 	float explosionX;		// 爆発の中心となる座標
 	float explosionY;		// 爆発の中心となる座標
 
+	// エネミーの生成
+	void EnemySpawn(int screenX, int screenY);
+
 	// エネミー管理
-	void EnemyManager();
+	void EnemyManager(int screenX, int screenY);
 
 	// キャラクタ同士の当たり判定
 	void CharaCollision();
-
-	// 攻撃処理管理
-	void WeaponManager();
 
 	// 攻撃の当たり判定
 	void AttackCollision();
@@ -37,7 +33,7 @@ public:
 	void Initialize();
 
 	// 更新処理
-	void Update();
+	void Update(int screenX, int screenY);
 
 	// 描画処理
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
@@ -52,6 +48,6 @@ public:
 	// 爆発の中心となるY座標を取得
 	float GetExplosionPosY();
 
-	// エネミーの死亡を取得
-	bool GetIsEnemyDeath();
+	// キャラクターの死亡を取得
+	bool GetIsCharaDeath();
 };

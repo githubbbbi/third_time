@@ -57,8 +57,17 @@ private:
 	// バッテリーチャージ
 	void BatteryCharge();
 
+	// バッテリーゼロ
+	bool BatteryZero();
+
 	// バッテリー管理
 	void BatteryManager();
+
+	// 攻撃
+	bool IsAttack();
+
+	// 武器処理管理
+	void WeaponManager();
 
 	// 攻撃モーション
 	void AttackMotion();
@@ -74,17 +83,11 @@ public:
 	// 初期化処理
 	void Initialize();
 
-	// 武器処理管理
-	void WeaponManager();
-
 	// 更新処理
 	void Update();
 
 	// 描画処理
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
-
-	// 攻撃
-	bool IsAttack();
 
 	// 攻撃ヒット
 	void HitAttack(int index);

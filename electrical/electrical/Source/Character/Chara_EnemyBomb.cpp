@@ -24,18 +24,6 @@ Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius, int width, int he
 
 }
 
-Chara_EnemyBomb::~Chara_EnemyBomb()
-{
-
-}
-
-// ‰Šú‰»ˆ—
-void Chara_EnemyBomb::Initialize()
-{
-	moveX = 0.0f;
-	moveY = 0.0f;
-}
-
 // ©“®ˆÚ“®
 void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 {
@@ -98,6 +86,28 @@ void Chara_EnemyBomb::Move(float playerX, float playerY, bool isPlayerAlive)
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
 
+// UŒ‚ŠÇ—
+void Chara_EnemyBomb::AttackManager(bool isPlayerAlive)
+{
+	if ( !isPlayerAlive )
+	{
+		return;
+	}
+
+	if ( isAttack )
+	{
+		attackX = x;
+		attackY = y;
+		attackRadius = radius;
+		isAttackLeftWard = isLeftWard;
+	}
+	else
+	{
+		attackX = 0.0f;
+		attackY = 0.0f;
+	}
+}
+
 // ó‘Ô
 void Chara_EnemyBomb::State()
 {
@@ -132,12 +142,13 @@ void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 	if ( isAlive )
 	{
 		Move(playerX, playerY, isPlayerAlive);
+		AttackManager(isPlayerAlive);
 		ChangeGraphicDirection();
 		HpManager();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		State();
-		LocalAnimation(EB_MOTION, EB_NORMAL_SPEED);
+		LocalAnimation(EB_MOTION, EB_NORMAL_SPEED, EB_DASH_SPEED);
 	}
 
 	// HSV‚©‚çRGB‚É•ÏŠ·
