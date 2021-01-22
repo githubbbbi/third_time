@@ -19,7 +19,7 @@ protected:
 	bool isLeftWard;		// 左向きフラグ
 
 	// マップチップとの当たり判定を考慮した移動
-	void BulletMove();
+	void BulletMove(bool isHitCalc);
 
 public:
 	WeaponBase(float x, float y, int radius, float speedX, float speedY,

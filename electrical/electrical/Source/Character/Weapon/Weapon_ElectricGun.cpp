@@ -35,7 +35,7 @@ void Weapon_ElectricGun::Move()
 
 	moveY += speedY;
 
-	BulletMove();
+	BulletMove(true);
 }
 
 // è¡ãé

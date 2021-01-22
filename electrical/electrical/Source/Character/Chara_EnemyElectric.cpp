@@ -186,25 +186,12 @@ void Chara_EnemyElectric::AttackManager(float playerX, float playerY, bool isPla
 		return;
 	}
 
-	// 電気銃の座標を取得
-	std::vector<float> vx, vy;
-	for ( unsigned int i = 0; i < electricGun.size(); i++ )
-	{
-		vx.push_back(electricGun[i]->GetPosX());
-		vy.push_back(electricGun[i]->GetPosY());
-	}
-
 	// プレイヤーと一番距離が近いものを並べ替え、先頭にもってくる
-	std::sort(vx.begin(), vx.end(),
-			  [playerX](float x1, float x2)->bool
+	std::sort(electricGun.begin(), electricGun.end(),
+			  [playerX, playerY](Weapon_ElectricGun *a, Weapon_ElectricGun *b)
 	{
-		return fabsf(playerX - x1) < fabsf(playerX - x1);
-	});
-	
-	std::sort(vy.begin(), vy.end(),
-			  [playerY](float y1, float y2)->bool
-	{
-		return fabsf(playerY - y1) < fabsf(playerY - y1);
+		return fabsf(playerX - a->GetPosX()) < fabsf(playerX - b->GetPosX()) &&
+			fabsf(playerY - a->GetPosY()) < fabsf(playerY - b->GetPosY());
 	});
 
 	if ( electricGun.size() <= 0 )
@@ -212,8 +199,8 @@ void Chara_EnemyElectric::AttackManager(float playerX, float playerY, bool isPla
 		return;
 	}
 
-	attackX = vx[0];
-	attackY = vy[0];
+	attackX = electricGun[0]->GetPosX();
+	attackY = electricGun[0]->GetPosY();
 	attackRadius = electricGun[0]->GetRadius();
 	isAttackLeftWard = electricGun[0]->GetIsLeftWard();
 }

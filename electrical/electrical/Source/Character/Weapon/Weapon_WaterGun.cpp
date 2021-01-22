@@ -13,7 +13,7 @@ Weapon_WaterGun::Weapon_WaterGun(float x, float y, int radius, float speedX, flo
 	moveY = -10.0f;
 }
 
-// ブロックとの当たり判定を考慮した移動
+// ブロックとの当たり判定を考慮しない移動
 void Weapon_WaterGun::Move()
 {
 	// 移動量初期化
@@ -32,7 +32,7 @@ void Weapon_WaterGun::Move()
 
 	moveY += speedY;
 
-	BulletMove();
+	BulletMove(false);
 }
 
 // 消去
@@ -41,12 +41,6 @@ void Weapon_WaterGun::Erase()
 	// 画面外に出たら消去
 	if ( x + radius < 0 ||
 		x - radius > MAP_COUNT_X * CHIP_SIZE )
-	{
-		isAlive = false;
-	}
-
-	// マップに当たったら消去
-	if ( isMapHit )
 	{
 		isAlive = false;
 	}

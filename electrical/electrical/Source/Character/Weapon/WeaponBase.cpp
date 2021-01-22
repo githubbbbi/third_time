@@ -24,7 +24,7 @@ WeaponBase::WeaponBase(float x, float y, int radius, float speedX, float speedY,
 }
 
 // マップチップとの当たり判定
-void WeaponBase::BulletMove()
+void WeaponBase::BulletMove(bool isHitCalc)
 {
 	// ダミー
 	float dummy = 0.0f;
@@ -36,40 +36,49 @@ void WeaponBase::BulletMove()
 	oldX = x;
 	oldY = y;
 
-	// 上下の移動量をチェック
-	Utility::MapHitCheck(x - hitLength, y + hitLength, &dummy, &moveY);	// 左下
-	Utility::MapHitCheck(x + hitLength, y + hitLength, &dummy, &moveY);	// 右下
-	Utility::MapHitCheck(x - hitLength, y - hitLength, &dummy, &moveY);	// 左上
-	Utility::MapHitCheck(x + hitLength, y - hitLength, &dummy, &moveY);	// 右上
+	if ( isHitCalc )
+	{
+		// 上下の移動量をチェック
+		Utility::MapHitCheck(x - hitLength, y + hitLength, &dummy, &moveY);	// 左下
+		Utility::MapHitCheck(x + hitLength, y + hitLength, &dummy, &moveY);	// 右下
+		Utility::MapHitCheck(x - hitLength, y - hitLength, &dummy, &moveY);	// 左上
+		Utility::MapHitCheck(x + hitLength, y - hitLength, &dummy, &moveY);	// 右上
+	}
 
 	// 上下移動量を加える
 	y += moveY;
 
-	// 左右の移動量をチェック
-	Utility::MapHitCheck(x - hitLength, y + hitLength, &moveX, &dummy);	// 左下
-	Utility::MapHitCheck(x + hitLength, y + hitLength, &moveX, &dummy);	// 右下
-	Utility::MapHitCheck(x - hitLength, y - hitLength, &moveX, &dummy);	// 左上
-	Utility::MapHitCheck(x + hitLength, y - hitLength, &moveX, &dummy);	// 右上
+	if ( isHitCalc )
+	{
+		// 左右の移動量をチェック
+		Utility::MapHitCheck(x - hitLength, y + hitLength, &moveX, &dummy);	// 左下
+		Utility::MapHitCheck(x + hitLength, y + hitLength, &moveX, &dummy);	// 右下
+		Utility::MapHitCheck(x - hitLength, y - hitLength, &moveX, &dummy);	// 左上
+		Utility::MapHitCheck(x + hitLength, y - hitLength, &moveX, &dummy);	// 右上
+	}
 
 	// 左右移動量を加える
 	x += moveX;
 
-	// 1フレーム前の座標と等しい場合マップヒット
-	// X座標
-	if ( speedX != 0.0f && x == oldX )
+	if ( isHitCalc )
 	{
-		mapHitFrame++;
-	}
-	// Y座標
-	else if ( speedY != 0.0f && y == oldY )
-	{
-		mapHitFrame++;
-	}
+		// 1フレーム前の座標と等しい場合マップヒット
+		// X座標
+		if ( speedX != 0.0f && x == oldX )
+		{
+			mapHitFrame++;
+		}
+		// Y座標
+		else if ( speedY != 0.0f && y == oldY )
+		{
+			mapHitFrame++;
+		}
 
-	// ヒット後Xフレーム経過で弾を消去
-	if ( mapHitFrame > eraseFrame )
-	{
-		isMapHit = true;
+		// ヒット後Xフレーム経過で弾を消去
+		if ( mapHitFrame > eraseFrame )
+		{
+			isMapHit = true;
+		}
 	}
 }
 

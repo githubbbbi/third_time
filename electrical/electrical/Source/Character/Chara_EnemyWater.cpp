@@ -121,25 +121,17 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 // 攻撃管理
 void Chara_EnemyWater::AttackManager(float playerX, float playerY, bool isPlayerAlive)
 {
-	// 水銃の座標を取得
-	std::vector<float> vx, vy;
-	for ( unsigned int i = 0; i < waterGun.size(); i++ )
+	if ( !isPlayerAlive )
 	{
-		vx.push_back(waterGun[i]->GetPosX());
-		vy.push_back(waterGun[i]->GetPosY());
+		return;
 	}
 
 	// プレイヤーと一番距離が近いものを並べ替え、先頭にもってくる
-	std::sort(vx.begin(), vx.end(),
-			  [playerX](float x1, float x2)->bool
+	std::sort(waterGun.begin(), waterGun.end(),
+			  [playerX, playerY](Weapon_WaterGun *a, Weapon_WaterGun *b)
 	{
-		return fabsf(playerX - x1) < fabsf(playerX - x1);
-	});
-
-	std::sort(vy.begin(), vy.end(),
-			  [playerY](float y1, float y2)->bool
-	{
-		return fabsf(playerY - y1) < fabsf(playerY - y1);
+		return fabsf(playerX - a->GetPosX()) < fabsf(playerX - b->GetPosX()) &&
+			fabsf(playerY - a->GetPosY()) < fabsf(playerY - b->GetPosY());
 	});
 
 	if ( waterGun.size() <= 0 )
@@ -147,8 +139,8 @@ void Chara_EnemyWater::AttackManager(float playerX, float playerY, bool isPlayer
 		return;
 	}
 
-	attackX = vx[0];
-	attackY = vy[0];
+	attackX = waterGun[0]->GetPosX();;
+	attackY = waterGun[0]->GetPosY();;
 	attackRadius = waterGun[0]->GetRadius();
 	isAttackLeftWard = waterGun[0]->GetIsLeftWard();
 }
