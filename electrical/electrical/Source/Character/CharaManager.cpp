@@ -238,7 +238,7 @@ void Chara_Manager::AttackCollision()
 
 		if ( player->GetIsInvicible() )
 		{
-			return;
+			continue;
 		}
 
 		// エネミーの攻撃とプレイヤーの当たり判定
