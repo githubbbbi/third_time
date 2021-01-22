@@ -39,6 +39,7 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 	attackMotionFrame = 0;
+	isBatteryZero = false;
 }
 
 Chara_Player::~Chara_Player()
@@ -67,8 +68,18 @@ void Chara_Player::Initialize()
 // 入力での移動
 void Chara_Player::InputMove()
 {
+	// ノックバック時は動けない
 	if ( isKnockBack )
 	{
+		return;
+	}
+
+	// バッテリーがゼロの時は動けない
+	if ( isBatteryZero )
+	{
+		moveX = 0.0f;
+		moveY = 0.0f;
+
 		return;
 	}
 
@@ -174,6 +185,13 @@ void Chara_Player::ChangeGraphicDirection()
 // バッテリー減少
 void Chara_Player::BatteryDecrease()
 {
+	// ダメージを受けているときは処理を行わない
+	if ( isCBlinking )
+	{
+		batteryTimer = 0;
+		return;
+	}
+
 	// 移動中
 	if ( moveX != 0.0f || moveY != 0.0f || isJump || isFall )
 	{
@@ -212,7 +230,8 @@ void Chara_Player::BatteryDecrease()
 // バッテリーチャージ
 void Chara_Player::BatteryCharge()
 {
-	if ( battery == P_MAX_BATTERY )
+	// バッテリーが最大またはダメージを受けたときは処理を行わない
+	if ( battery == P_MAX_BATTERY || isCBlinking )
 	{
 		batteryChargeTimer = 0;
 		return;
@@ -257,11 +276,28 @@ void Chara_Player::BatteryCharge()
 	}
 }
 
+// バッテリーゼロ
+void Chara_Player::BatteryZero()
+{
+	if ( !isBatteryZero )
+	{
+		return;
+	}
+
+	// 一度バッテリーがゼロになると
+	// バッテリーが最大になるまでゼロフラグは解除されない
+	if ( battery == P_MAX_BATTERY )
+	{
+		isBatteryZero = false;
+	}
+}
+
 // バッテリー管理
 void Chara_Player::BatteryManager()
 {
 	BatteryDecrease();
 	BatteryCharge();
+	BatteryZero();
 
 	// バッテリーは最大値を超えない
 	if ( battery > P_MAX_BATTERY )
@@ -273,6 +309,7 @@ void Chara_Player::BatteryManager()
 	if ( battery < 0 )
 	{
 		battery = 0;
+		isBatteryZero = true;
 	}
 }
 
@@ -377,6 +414,12 @@ void Chara_Player::State()
 	if ( batteryChargeTimer > BATTERY_CHARGE_TIME )
 	{
 		state = e_P_STATE_CHARGE;
+	}
+
+	// バッテリーゼロ
+	if ( isBatteryZero )
+	{
+		//state = e_P_STATE_BATTERY_ZERO;
 	}
 
 	// ジャンプ

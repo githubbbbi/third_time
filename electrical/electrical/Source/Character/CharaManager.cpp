@@ -48,13 +48,11 @@ void Chara_Manager::Initialize()
 void Chara_Manager::EnemySpawn(int screenX, int screenY)
 {
 	// テスト用
-	float startX = 0.0f + CHIP_SIZE * 2.0f;
-	float startY = 0.0f;
-	static int timer = 0;
-	timer++;
+	float startX = 32.0f + CHIP_SIZE * 2.0f;
+	float startY = 32.0f;
 
 	// 爆弾エネミー
-	if ( CheckHitKey(KEY_INPUT_B) && timer % 30 == 0 )
+	if ( CheckHitKey(KEY_INPUT_B) )
 	{
 		enemys.push_back(new Chara_EnemyBomb(startX, startY, 32,
 											 EB_WIDTH, EB_HEIGHT,
@@ -62,7 +60,7 @@ void Chara_Manager::EnemySpawn(int screenX, int screenY)
 	}
 
 	// 銃エネミー
-	if ( CheckHitKey(KEY_INPUT_A) && timer % 30 == 0 )
+	if ( CheckHitKey(KEY_INPUT_A) )
 	{
 		enemys.push_back(new Chara_EnemyElectric(startX, startY, 32,
 												 EE_WIDTH, EE_HEIGHT,
@@ -70,7 +68,7 @@ void Chara_Manager::EnemySpawn(int screenX, int screenY)
 	}
 
 	// 水弾エネミー
-	if ( CheckHitKey(KEY_INPUT_C) && timer % 30 == 0 )
+	if ( CheckHitKey(KEY_INPUT_C) )
 	{
 		enemys.push_back(new Chara_EnemyWater(startX, startY, 32,
 											  EW_WIDTH, EW_HEIGHT,
@@ -90,45 +88,54 @@ void Chara_Manager::EnemyManager(int screenX, int screenY)
 		enemys[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
 	}
 
+	int screenLeft = screenX - WIN_WIDTH / 2;
+	int screenRight = screenX + WIN_WIDTH / 2;
+	int screenTop = screenY - WIN_HEIGHT / 2;
+	int screenBottom = screenY + WIN_HEIGHT / 2;
+
 	// スクリーン外に出た場合消去
-	/*for ( int i = enemys.size() - 1; i >= 0; i-- )
+	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
-		if ( enemys[i]->GetIsAlive() )
+		if ( (enemys[i]->GetPosX() + enemys[i]->GetRadius() < screenLeft ||
+			  enemys[i]->GetPosX() - enemys[i]->GetRadius() > screenRight) ||
+			(enemys[i]->GetPosY() + enemys[i]->GetRadius() < screenTop ||
+			 enemys[i]->GetPosY() - enemys[i]->GetRadius() > screenBottom) )
 		{
 			delete enemys[i];
 			enemys.erase(enemys.begin() + i);
 		}
-	}*/
+	}
 }
 
 // キャラクタ同士の当たり判定
 void Chara_Manager::CharaCollision()
 {
-	if ( !player->GetIsAlive() )
+	if ( !player->GetIsAlive() || player->GetIsInvicible() )
 	{
 		return;
 	}
 
-	//for ( unsigned int i = 0; i < enemys.size(); i++ )
-	//{
-	//	// プレイヤーと敵との判定
-	//	if ( !enemys[i]->GetIsAlive() )
-	//	{
-	//		continue;
-	//	}
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	{
+		if ( !enemys[i]->GetIsAlive() )
+		{
+			continue;
+		}
 
-	//	if ( Utility::IsRectCollision(enemys[i]->GetPosX(),
-	//								  enemys[i]->GetPosY(),
-	//								  enemys[i]->GetWidth(),
-	//								  enemys[i]->GetHeight(),
-	//								  player->GetPosX(),
-	//								  player->GetPosY(),
-	//								  player->GetWidth(),
-	//								  player->GetHeight()) )
-	//	{
-	//		player->CharactersCollision();
-	//	}
-	//}
+		// プレイヤーと敵との判定
+		if ( Utility::IsRectCollision(enemys[i]->GetPosX(),
+									  enemys[i]->GetPosY(),
+									  enemys[i]->GetWidth(),
+									  enemys[i]->GetHeight(),
+									  player->GetPosX(),
+									  player->GetPosY(),
+									  player->GetWidth(),
+									  player->GetHeight()) )
+		{
+			player->ReceiveDamage(2, !player->GetIsLeftWard());
+			break;
+		}
+	}
 }
 
 // 攻撃の当たり判定
@@ -170,11 +177,11 @@ void Chara_Manager::AttackCollision()
 
 		// エネミーの攻撃とプレイヤーの当たり判定
 		if ( Utility::IsCircleCollision(enemys[i]->GetAttackPosX(),
-									   enemys[i]->GetAttackPosY(),
-									   enemys[i]->GetAttackRadius() - 8,
-									   player->GetPosX(),
-									   player->GetPosY(),
-									   player->GetRadius() - 4) )
+										enemys[i]->GetAttackPosY(),
+										enemys[i]->GetAttackRadius() - 8,
+										player->GetPosX(),
+										player->GetPosY(),
+										player->GetRadius() - 4) )
 		{
 			enemys[i]->HitAttack();
 			player->ReceiveDamage(enemys[i]->GetAttackPower(),
@@ -212,9 +219,10 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	}
 
 	// デバッグ用
-	DrawFormatString(50, 100, GetColor(255, 255, 255), "Bキーでエネミー生成 爆弾エネミーの数:%d", enemys.size());
-	DrawFormatString(50, 120, GetColor(255, 255, 255), "Aキーでエネミー生成 銃エネミーの数:%d", enemys.size());
-	DrawFormatString(50, 140, GetColor(255, 255, 255), "Cキーでエネミー生成 水弾エネミーの数:%d", enemys.size());
+	DrawString(50, 100, "Bキーでエネミー生成", GetColor(255, 255, 255));
+	DrawString(50, 120, "Aキーでエネミー生成", GetColor(255, 255, 255));
+	DrawString(50, 140, "Cキーでエネミー生成", GetColor(255, 255, 255));
+	DrawFormatString(50, 160, GetColor(255, 255, 255), "エネミーの数:%d", enemys.size());
 	/*DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f", player->GetPosY());
 	if ( enemyBomb.size() >= 1 )
 	{

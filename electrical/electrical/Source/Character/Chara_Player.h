@@ -8,6 +8,7 @@ enum PlayerState
 {
 	e_P_STATE_IDLE,					// 待機
 	e_P_STATE_CHARGE,				// 充電
+	//e_P_STATE_BATTERY_ZERO,			// バッテリーゼロ
 	e_P_STATE_WALK,					// 歩き
 	e_P_STATE_DASH,					// ダッシュ
 	e_P_STATE_JUMP,					// ジャンプ
@@ -41,6 +42,7 @@ private:
 	int batteryChargeTimer;		// バッテリーチャージタイマー
 	int shotBulletNum;			// 撃った弾数
 
+	bool isBatteryZero;			// バッテリーゼロフラグ
 	int attackMotionFrame;		// 攻撃モーションフレーム
 
 	// 入力での移動
@@ -59,7 +61,7 @@ private:
 	void BatteryCharge();
 
 	// バッテリーゼロ
-	bool BatteryZero();
+	void BatteryZero();
 
 	// バッテリー管理
 	void BatteryManager();
