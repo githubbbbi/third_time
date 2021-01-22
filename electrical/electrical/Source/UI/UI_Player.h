@@ -5,7 +5,8 @@ class UI_Player
 private:
 
 	// lineの構造体の宣言
-	typedef struct {
+	typedef struct
+	{
 		float x;		// lineの中心座標
 		float y;		// lineの中心座標
 		float size;		// lineの縦、横の長さ
@@ -22,14 +23,13 @@ private:
 	int x;	// 画像ハンドル中心座標
 	int y;	// 画像ハンドル中心座標
 
+	// hpの残量に合わせて色を変える
+	void ChangeHSV(int hp, int maxHp);
+
 public:
 	UI_Player();
 	~UI_Player() = default;
 
 	void Update(int hp, int maxHp, int battery, int maxBattery);
 	void Draw(int hp, int maxHp, int battery, int maxBattery);
-
-private:
-	// hpの残量に合わせて色を変える 50以上で緑、20以上で黄色、1以上で赤
-	void ChangeHSV(int hp);
 };
