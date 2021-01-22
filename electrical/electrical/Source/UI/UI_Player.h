@@ -3,14 +3,24 @@
 class UI_Player
 {
 private:
-	int x;		// 中心座標
-	int y;		// 中心座標
-	float r;	// 赤色				:0~255
-	float g;	// 緑色				:0~255
-	float b;	// 青色				:0~255
-	float h;	// 色相(hue)			:0~360
-	float s;	// 彩度(saturation)	:0~255
-	float v;	// 明度(value)		:0~255
+
+	// lineの構造体の宣言
+	typedef struct {
+		float x;		// lineの中心座標
+		float y;		// lineの中心座標
+		float size;		// lineの縦、横の長さ
+	}Line;
+
+	Line line[2];
+
+	int x;			// 中心座標
+	int y;			// 中心座標
+	float r;		// 赤色				:0~255
+	float g;		// 緑色				:0~255
+	float b;		// 青色				:0~255
+	float h;		// 色相(hue)			:0~360
+	float s;		// 彩度(saturation)	:0~255
+	float v;		// 明度(value)		:0~255
 
 public:
 	UI_Player();

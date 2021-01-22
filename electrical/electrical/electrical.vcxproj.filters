@@ -180,10 +180,10 @@
     <ClCompile Include="Source\Background\Background.cpp">
       <Filter>ソース ファイル\Background</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\UI_Player.cpp">
+    <ClCompile Include="Source\UI\UI_Manager.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\UI_Manager.cpp">
+    <ClCompile Include="Source\UI\UI_Player.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -278,10 +278,10 @@
     <ClInclude Include="Source\Background\Background.h">
       <Filter>ヘッダー ファイル\Background</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UI\UI_Player.h">
+    <ClInclude Include="Source\UI\UI_Manager.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UI\UI_Manager.h">
+    <ClInclude Include="Source\UI\UI_Player.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
