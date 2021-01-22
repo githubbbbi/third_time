@@ -32,31 +32,25 @@ void UI_Player::Draw(int hp, int maxHp, int battery, int maxBattery)
 	{
 		if (i <= ((float)hp / (float)maxHp) * 100.0f && hp > 0)
 		{
-			// グラデーションを表現
-			SetDrawBright((int)r - (100 - i), (int)g, (int)b);
-
 			// HPバーの描画
 			DrawLineAA(line[0].x + i * 2.6f,
 						line[0].y,
 						line[0].x + line[0].size + i * 2.6f,
 						line[0].y + line[0].size,
-						GetColor(0xFF, 0xFF, 0xFF), 3);
+						GetColor((int)r - (100 - i), (int)g, (int)b), 3);
 		}
 
 		if (i <= ((float)battery / (float)maxBattery) * 100.0f && battery > 0)
 		{
-			// グラデーションを表現  rとgを入れ替えて、新しく変数を作らずに色を変えている
-			SetDrawBright((int)g, (int)r - (100 - i), (int)b);
 
 			// BATTERYバーの描画
+			// rとgを入れ替えて、新しく変数を作らずに色を変えている
 			DrawLineAA(line[1].x + line[1].size + i * 2.3f,
 						line[1].y,
 						line[1].x + i * 2.3f,
 						line[1].y + line[1].size,
-						GetColor(0xFF, 0xFF, 0xFF), 3);
+						GetColor((int)g, (int)r - (100 - i), (int)b), 3);
 		}
-
-		SetDrawBright(255, 255, 255);
 	}
 
 	// UI画像
