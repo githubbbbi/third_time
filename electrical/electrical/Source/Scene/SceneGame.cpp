@@ -9,13 +9,16 @@
 SceneGame::SceneGame()
 {
 	// キャラクター
-	charaManager = new Chara_Manager;
+	characters = new Chara_Manager;
 
 	// ステージ
 	stage = new Stage();
 
 	// エフェクト
 	effects = new EffectManager();
+
+	// UI
+	ui = new UI_Manager;
 
 	scrollX = 0;
 	scrollY = 0;
@@ -27,9 +30,10 @@ SceneGame::SceneGame()
 // デストラクタ
 SceneGame::~SceneGame()
 {
-	delete charaManager;
+	delete characters;
 	delete stage;
 	delete effects;
+	delete ui;
 }
 
 // 初期化処理
@@ -42,7 +46,7 @@ void SceneGame::Initialize()
 	}
 
 	// キャラクター
-	charaManager->Initialize();
+	characters->Initialize();
 
 	isSceneChange = false;
 }
@@ -58,14 +62,14 @@ void SceneGame::Screen()
 void SceneGame::LocalEffectManager()
 {
 	// キャラクターの死亡エフェクト
-	if ( charaManager->GetIsCharaDeath() )
+	if ( characters->GetIsCharaDeath() )
 	{
 		// シェイク
 		effects->Shake();
 
 		// 爆発
-		effects->Explosion(charaManager->GetExplosionPosX(),
-						   charaManager->GetExplosionPosY());
+		effects->Explosion(characters->GetExplosionPosX(),
+						   characters->GetExplosionPosY());
 	}
 
 	// エフェクト
@@ -102,14 +106,18 @@ void SceneGame::Update()
 	LocalEffectManager();
 
 	// スクロール
-	Utility::Scroll((int)charaManager->GetScrollCenterX(),
-					(int)charaManager->GetScrollCenterY(), &scrollX, &scrollY);
+	Utility::Scroll((int)characters->GetScrollCenterX(),
+					(int)characters->GetScrollCenterY(), &scrollX, &scrollY);
 
 	// ステージ
 	stage->Update();
 
 	// キャラクター
-	charaManager->Update(screenX, screenY);
+	characters->Update(screenX, screenY);
+
+	// UI
+	ui->Update(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
+			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery());
 
 	// シーン遷移
 	SceneChange();
@@ -131,11 +139,15 @@ void SceneGame::Draw()
 				scrollX, scrollY, screenX, screenY);
 
 	// キャラクター
-	charaManager->Draw(effects->GetShakeX(),
-					   effects->GetShakeY(), scrollX, scrollY);
+	characters->Draw(effects->GetShakeX(),
+					 effects->GetShakeY(), scrollX, scrollY);
 
 	// エフェクト
 	effects->Draw(scrollX, scrollY);
+
+	// UI
+	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
+			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery());
 
 	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2, GetColor(255, 255, 255), "%d,%d", screenX, screenY);
 	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 20, GetColor(255, 255, 255), "%d,%d", scrollX, scrollY);

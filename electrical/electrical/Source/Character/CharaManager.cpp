@@ -299,3 +299,27 @@ bool Chara_Manager::GetIsCharaDeath()
 
 	return false;
 }
+
+// プレイヤーのHPを取得
+int Chara_Manager::GetPlayerHp()
+{
+	return player->GetHp();
+}
+
+// プレイヤーの最大HPを取得
+int Chara_Manager::GetPlayerMaxHp()
+{
+	return P_MAX_HP;
+}
+
+// プレイヤーの最大バッテリーを取得
+int Chara_Manager::GetPlayerBattery()
+{
+	return player->GetBattery();
+}
+
+// プレイヤーのバッテリーを取得
+int Chara_Manager::GetPlayerMaxBattery()
+{
+	return P_MAX_BATTERY;
+}

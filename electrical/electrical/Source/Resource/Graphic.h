@@ -21,6 +21,7 @@ private:
 	int particle;							// パーティクル
 	int map[e_MAP_NUM];						// マップ
 	int background;							// 背景
+	int uiPlayer;							// プレイヤーUI
 
 	int MyLoadGraph(const char *filename);
 	int MyLoadDivGraph(const char *fileName, int n,
@@ -52,4 +53,5 @@ public:
 	int GetParticle();
 	int GetMap(int index);
 	int GetBackground();
+	int GetUIPlayer();
 };

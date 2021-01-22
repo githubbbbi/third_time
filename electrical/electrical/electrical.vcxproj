@@ -161,6 +161,8 @@
     <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\System\SettingDxLib.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
+    <ClCompile Include="Source\UI\UI_Manager.cpp" />
+    <ClCompile Include="Source\UI\UI_Player.cpp" />
     <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +195,8 @@
     <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\System\SettingDxLib.h" />
     <ClInclude Include="Source\System\System.h" />
+    <ClInclude Include="Source\UI\UI_Manager.h" />
+    <ClInclude Include="Source\UI\UI_Player.h" />
     <ClInclude Include="Source\Utility\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

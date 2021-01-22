@@ -271,7 +271,7 @@ void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scro
 // UŒ‚ƒqƒbƒg
 void Chara_EnemyElectric::HitAttack()
 {
-	if ( gunIndex >= (int)electricGun.size() )
+	if ( electricGun.size() > 0 )
 	{
 		return;
 	}

@@ -18,6 +18,7 @@ Graphic::Graphic()
 	MyLoadDivGraph("Resource/Graphic/MapChip/map_chip.png",
 				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
 	background = MyLoadGraph("Resource/Graphic/Background/background.png");
+	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
 }
 
 // ¡‚Ü‚Åƒ[ƒh‚µ‚½‰æ‘œ‚ğ‰ğ•ú‚·‚é
@@ -99,4 +100,9 @@ int Graphic::GetMap(int index)
 int Graphic::GetBackground()
 {
 	return background;
+}
+
+int Graphic::GetUIPlayer()
+{
+	return uiPlayer;
 }

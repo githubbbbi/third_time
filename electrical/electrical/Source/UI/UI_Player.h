@@ -1,0 +1,21 @@
+#pragma once
+
+class UI_Player
+{
+private:
+	int x;		// 中心座標
+	int y;		// 中心座標
+	float r;	// 赤色				:0~255
+	float g;	// 緑色				:0~255
+	float b;	// 青色				:0~255
+	float h;	// 色相(hue)			:0~360
+	float s;	// 彩度(saturation)	:0~255
+	float v;	// 明度(value)		:0~255
+
+public:
+	UI_Player();
+	~UI_Player() = default;
+
+	void Update(int hp, int maxHp, int battery, int maxBattery);
+	void Draw(int hp, int maxHp, int battery, int maxBattery);
+};

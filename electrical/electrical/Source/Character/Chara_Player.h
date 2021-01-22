@@ -25,11 +25,10 @@ extern const float P_NORMAL_SPEED;				// 通常スピード
 extern const float P_DASH_SPEED;				// ダッシュスピード
 extern const int BATTERY_DCREASE_TIME;			// バッテリー減少タイム
 extern const int BATTERY_CHARGE_TIME;			// バッテリーチャージタイム
+extern const int P_MAX_HP;						// 最大HP
 extern const int P_MAX_BATTERY;					// 最大バッテリー
 extern const int P_CONSUMPTION_BULLET_NUM;		// 電力を消費する弾数
 extern const int P_MOTION[e_P_STATE_NUM][4];	// モーション
-
-const int P_MAX_HP = 100;						// 最大HP
 
 class Chara_Player:public CharaBase
 {
@@ -43,8 +42,6 @@ private:
 	int shotBulletNum;			// 撃った弾数
 
 	int attackMotionFrame;		// 攻撃モーションフレーム
-
-	int uiHandle;				// UIのグラフィックを保存
 
 	// 入力での移動
 	void InputMove();
@@ -110,4 +107,10 @@ public:
 
 	// 電気銃のisLeftWardを取得
 	bool GetIsGunLeftWard(int index);
+
+	// HPを取得
+	int GetHp();
+
+	// バッテリーを取得
+	int GetBattery();
 };

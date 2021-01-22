@@ -82,6 +82,12 @@
     <Filter Include="ソース ファイル\Background">
       <UniqueIdentifier>{a6036690-ac60-47e9-bd37-4bdacc289c14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{f9493895-c7b6-478d-8c48-f728112901cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{b68be7a6-f1b3-46ff-a8c2-7a01fff9ac1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -174,6 +180,12 @@
     <ClCompile Include="Source\Background\Background.cpp">
       <Filter>ソース ファイル\Background</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UI\UI_Player.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\UI_Manager.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -265,6 +277,12 @@
     </ClInclude>
     <ClInclude Include="Source\Background\Background.h">
       <Filter>ヘッダー ファイル\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\UI_Player.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\UI_Manager.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

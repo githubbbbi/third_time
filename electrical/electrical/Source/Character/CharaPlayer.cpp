@@ -11,6 +11,7 @@ const float P_NORMAL_SPEED = 3.0f;
 const float P_DASH_SPEED = 5.0f;
 const int BATTERY_DCREASE_TIME = 60 * 1;
 const int BATTERY_CHARGE_TIME = 60 * 1;
+const int P_MAX_HP = 100;
 const int P_MAX_BATTERY = 100;
 const int P_CONSUMPTION_BULLET_NUM = 5;
 const int P_MOTION[e_P_STATE_NUM][4] =
@@ -38,7 +39,6 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 	attackMotionFrame = 0;
-	uiHandle = LoadGraph("Resource/Graphic/UI/UI.png");
 }
 
 Chara_Player::~Chara_Player()
@@ -177,7 +177,17 @@ void Chara_Player::BatteryDecrease()
 	// 移動中
 	if ( moveX != 0.0f || moveY != 0.0f || isJump || isFall )
 	{
-		batteryTimer++;
+		// 歩き
+		if ( fabsf(speed) == P_NORMAL_SPEED )
+		{
+			batteryTimer++;
+		}
+		// ダッシュ
+		else
+		{
+			batteryTimer += 3;
+		}
+
 		if ( batteryTimer > BATTERY_DCREASE_TIME )
 		{
 			// バッテリー減少
@@ -296,7 +306,7 @@ void Chara_Player::WeaponManager()
 	// 生成
 	if ( IsAttack() && isAlive )
 	{
-		int xx = 16;
+		int xx = 24;
 		if ( isLeftWard )
 		{
 			xx *= -1;
@@ -458,27 +468,10 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	// UI
-	for (int i = 0; i < 100; i++)
-	{
-		if (i <= ((double)hp / P_MAX_HP) * 100.0 && hp != 0)
-		{
-			DrawLine(82 + (int)(i * 2.6), 25, 114 + (int)(i * 2.6), 57, GetColor(0xF0 - (100 - i), 0x30, 0x30), 2);
-		}
 
-		if (i <= ((double)battery / P_MAX_BATTERY) * 100.0 && battery != 0)
-		{
-			DrawLine(110 + (int)(i * 2.4), 66, 90 + (int)(i * 2.4), 86, GetColor(0x30, 0xF0 - (100 - i), 0x30), 2);
-		}
-	}
-
-	DrawGraph(20, 20, uiHandle, TRUE);
-
-	DrawFormatString(180, 32, GetColor(255, 255, 255), "%d% / 100", hp);
-	DrawFormatString(180, 70, GetColor(255, 255, 255), "%d% / 100", battery);
 
 	// デバッグ用
-	DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
+	/*DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
 	DrawFormatString(80, 160, GetColor(255, 255, 255), "r:%f", r);
 	DrawFormatString(80, 180, GetColor(255, 255, 255), "g:%f", g);
@@ -487,7 +480,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 260, GetColor(255, 255, 255), "s:%f", s);
 	DrawFormatString(80, 280, GetColor(255, 255, 255), "v:%f", v);
 	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
-	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);
+	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);*/
 
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
@@ -527,4 +520,16 @@ int Chara_Player::GetGunRadius(int index)
 bool Chara_Player::GetIsGunLeftWard(int index)
 {
 	return electricGun[index]->GetIsLeftWard();
+}
+
+// HPを取得
+int Chara_Player::GetHp()
+{
+	return hp;
+}
+
+// バッテリーを取得
+int Chara_Player::GetBattery()
+{
+	return battery;
 }

@@ -4,13 +4,15 @@
 #include "../Character/Chara_Manager.h"
 #include "../Stage/Stage.h"
 #include "../Effect/EffectManager.h"
+#include "../UI/UI_Manager.h"
 
 class SceneGame:public SceneBase
 {
 private:
-	Chara_Manager *charaManager;
+	Chara_Manager *characters;
 	Stage *stage;
 	EffectManager *effects;
+	UI_Manager *ui;
 
 	int scrollX, scrollY;	// スクロール量
 	int screenX, screenY;	// スクリーン中心座標

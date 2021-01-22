@@ -206,7 +206,7 @@ void Chara_EnemyWater::Draw(float shakeX, float shakeY, int scrollX, int scrollY
 // UŒ‚ƒqƒbƒg
 void Chara_EnemyWater::HitAttack()
 {
-	if ( gunIndex >= waterGun.size() )
+	if ( waterGun.size() > 0 )
 	{
 		return;
 	}
