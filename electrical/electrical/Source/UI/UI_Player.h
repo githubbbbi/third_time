@@ -28,4 +28,8 @@ public:
 
 	void Update(int hp, int maxHp, int battery, int maxBattery);
 	void Draw(int hp, int maxHp, int battery, int maxBattery);
+
+private:
+	// hpの残量に合わせて色を変える 50以上で緑、20以上で黄色、1以上で赤
+	void ChangeHSV(int hp);
 };
