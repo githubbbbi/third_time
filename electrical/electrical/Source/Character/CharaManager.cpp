@@ -5,9 +5,19 @@
 #include "Chara_EnemyWater.h"
 #include "../Define/Define.h"
 #include "../Utility/Utility.h"
+#include "../Resource/CSV.h"
 
 Chara_Manager::Chara_Manager()
 {
+	for ( int y = 0; y < MAP_COUNT_Y; y++ )
+	{
+		for ( int x = 0; x < MAP_COUNT_X; x++ )
+		{
+			spawnData[y][x] = -1;
+			isEnemySpawn[y][x] = false;
+		}
+	}
+
 	explosionX = 0.0f;
 	explosionY = 0.0f;
 
@@ -32,8 +42,9 @@ Chara_Manager::~Chara_Manager()
 }
 
 // 初期化処理
-void Chara_Manager::Initialize()
+bool Chara_Manager::Initialize()
 {
+	// プレイヤー
 	player->Initialize();
 
 	// エネミーは全て消去しちゃう
@@ -42,45 +53,97 @@ void Chara_Manager::Initialize()
 		delete enemys[i];
 		enemys.erase(enemys.begin() + i);
 	}
+
+	// ファイル読み込み
+	if ( !LoadFile() )
+	{
+		return false;
+	}
+
+	return true;
+}
+
+// ファイル読み込み
+bool Chara_Manager::LoadFile()
+{
+	// 読み込むファイル名を格納する
+	char fileName[512];
+	sprintf_s(fileName, sizeof(fileName),
+			  "Resource/Data/Spawn_Position/enemy_stage%d.csv", 1);
+
+	// ファイルが読み込めない場合、false
+	int *p = (int *)spawnData;
+	if ( !CSV::LoadFile(fileName,
+						MAP_COUNT_X, MAP_COUNT_Y, p) )
+	{
+		return false;
+	}
+
+	return true;
 }
 
 // エネミーの生成
-void Chara_Manager::EnemySpawn(int screenX, int screenY)
+void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 {
-	// テスト用
-	float startX = 32.0f + CHIP_SIZE * 2.0f;
-	float startY = 32.0f;
+	// スクリーンに映っている部分だけ
+	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
 
-	// 爆弾エネミー
-	if ( CheckHitKey(KEY_INPUT_B) )
+	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{
-		enemys.push_back(new Chara_EnemyBomb(startX, startY, 32,
-											 EB_WIDTH, EB_HEIGHT,
-											 EB_NORMAL_SPEED, 2, 10));
-	}
+		for ( int x = mapChipLeft; x < mapChipRight; x++ )
+		{
+			// 湧いてる場合はスキップ
+			if ( isEnemySpawn[y][x] )
+			{
+				continue;
+			}
 
-	// 銃エネミー
-	if ( CheckHitKey(KEY_INPUT_A) )
-	{
-		enemys.push_back(new Chara_EnemyElectric(startX, startY, 32,
-												 EE_WIDTH, EE_HEIGHT,
-												 EE_NORMAL_SPEED, 2, 2));
-	}
+			// スポーン位置
+			float spawnX = (float)(x * CHIP_SIZE) + CHARA_SIZE / 2;
+			float spawnY = (float)(y * CHIP_SIZE) + CHARA_SIZE / 2;
 
-	// 水弾エネミー
-	if ( CheckHitKey(KEY_INPUT_C) )
-	{
-		enemys.push_back(new Chara_EnemyWater(startX, startY, 32,
-											  EW_WIDTH, EW_HEIGHT,
-											  0.0f, 2, 2));
+			switch ( spawnData[y][x] )
+			{
+				case e_EnemyBomb:
+					// 爆弾エネミー
+					enemys.push_back(new Chara_EnemyBomb(spawnX, spawnY,
+														 32, EB_WIDTH, EB_HEIGHT,
+														 EB_NORMAL_SPEED, 2, 10, x, y));
+
+					isEnemySpawn[y][x] = true;
+					break;
+
+				case e_EnemyElectric:
+					// 銃エネミー
+					enemys.push_back(new Chara_EnemyElectric(spawnX, spawnY,
+															 32, EE_WIDTH, EE_HEIGHT,
+															 EE_NORMAL_SPEED, 2, 2, x, y));
+					isEnemySpawn[y][x] = true;
+					break;
+
+				case e_EnemyWater:
+					// 水弾エネミー
+					enemys.push_back(new Chara_EnemyWater(spawnX, spawnY,
+														  32, EW_WIDTH, EW_HEIGHT,
+														  0.0f, 2, 2, x, y));
+					isEnemySpawn[y][x] = true;
+					break;
+
+				default:
+					break;
+			}
+		}
 	}
 }
 
 // エネミー管理
 void Chara_Manager::EnemyManager(int screenX, int screenY)
 {
-	// エネミーの出現
-	EnemySpawn(screenX, screenY);
+	// エネミーの生成
+	EnemyGenerate(screenX, screenY);
 
 	// 更新処理
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
@@ -88,19 +151,22 @@ void Chara_Manager::EnemyManager(int screenX, int screenY)
 		enemys[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
 	}
 
-	int screenLeft = screenX - WIN_WIDTH / 2;
-	int screenRight = screenX + WIN_WIDTH / 2;
-	int screenTop = screenY - WIN_HEIGHT / 2;
-	int screenBottom = screenY + WIN_HEIGHT / 2;
+	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
 
-	// スクリーン外に出た場合消去
+	// 消去
 	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
-		if ( (enemys[i]->GetPosX() + enemys[i]->GetRadius() < screenLeft ||
-			  enemys[i]->GetPosX() - enemys[i]->GetRadius() > screenRight) ||
-			(enemys[i]->GetPosY() + enemys[i]->GetRadius() < screenTop ||
-			 enemys[i]->GetPosY() - enemys[i]->GetRadius() > screenBottom) )
+		// スポーン位置がスクリーン外の場合
+		if ( (enemys[i]->GetMapChipX() < mapChipLeft ||
+			  enemys[i]->GetMapChipX() > mapChipRight) ||
+			(enemys[i]->GetMapChipY() < mapChipTop ||
+			 enemys[i]->GetMapChipY() > mapChipBottom) )
 		{
+			isEnemySpawn[enemys[i]->GetMapChipY()][enemys[i]->GetMapChipX()] = false;
+
 			delete enemys[i];
 			enemys.erase(enemys.begin() + i);
 		}
@@ -219,10 +285,7 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	}
 
 	// デバッグ用
-	DrawString(50, 100, "Bキーでエネミー生成", GetColor(255, 255, 255));
-	DrawString(50, 120, "Aキーでエネミー生成", GetColor(255, 255, 255));
-	DrawString(50, 140, "Cキーでエネミー生成", GetColor(255, 255, 255));
-	DrawFormatString(50, 160, GetColor(255, 255, 255), "エネミーの数:%d", enemys.size());
+	DrawFormatString(100, 150, GetColor(255, 255, 255), "エネミーの数:%d", enemys.size());
 	/*DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f", player->GetPosY());
 	if ( enemyBomb.size() >= 1 )
 	{
@@ -259,11 +322,13 @@ float Chara_Manager::GetExplosionPosY()
 bool Chara_Manager::GetIsCharaDeath()
 {
 	// プレイヤー
-	if ( !player->GetIsAlive() )
+	if ( !player->GetIsAlive() && !player->GetIsExplosion() )
 	{
 		// 座標を取得
 		explosionX = player->GetPosX();
 		explosionY = player->GetPosY();
+
+		player->Explosion();
 
 		return true;
 	}
@@ -276,15 +341,13 @@ bool Chara_Manager::GetIsCharaDeath()
 			continue;
 		}
 
-		if ( !enemys[i]->GetIsAlive() )
+		if ( !enemys[i]->GetIsAlive() && !enemys[i]->GetIsExplosion() )
 		{
 			// 座標を取得
 			explosionX = enemys[i]->GetPosX();
 			explosionY = enemys[i]->GetPosY();
 
-			// エネミーを消去
-			delete enemys[i];
-			enemys.erase(enemys.begin() + i);
+			enemys[i]->Explosion();
 
 			return true;
 		}

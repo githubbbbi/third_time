@@ -20,8 +20,8 @@ const int EE_MOTION[e_EE_STATE_NUM][4] =
 };
 
 Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width, int height,
-										 float speed, int hp, int attackPower):
-	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower)
+										 float speed, int hp, int attackPower, int mapChipX, int mapChipY):
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, mapChipX, mapChipY)
 {
 	shotBulletNum = 0;
 	bulletInterval = 0;
@@ -137,7 +137,10 @@ void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
 void Chara_EnemyElectric::WeaponManager()
 {
 	// 弾のインターバルを測るカウント
-	bulletInterval++;
+	if ( isAlive )
+	{
+		bulletInterval++;
+	}
 
 	// インターバルの初期化
 	if ( bulletInterval > EE_BULLET_INTERVAL || isCBlinking )
@@ -242,13 +245,14 @@ void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAliv
 		Move(playerX, playerY, isPlayerAlive);
 		ChangeGraphicDirection();
 		HpZero();
-		WeaponManager();
-		AttackManager(playerX, playerY, isPlayerAlive);
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		State();
 		LocalAnimation(EE_MOTION, EE_NORMAL_SPEED, 0.0f);
 	}
+
+	WeaponManager();
+	AttackManager(playerX, playerY, isPlayerAlive);
 
 	// HSVからRGBに変換
 	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);

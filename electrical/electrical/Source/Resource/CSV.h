@@ -8,5 +8,5 @@ private:
 
 public:
 	static bool LoadFile(const char *fileName,
-						 int num, int x, int y, int *data);
+						 int x, int y, int *data);
 };

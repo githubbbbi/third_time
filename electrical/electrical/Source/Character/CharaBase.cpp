@@ -65,6 +65,8 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	invicibleTimer = 0;
 	isInvicible = false;
 
+	isExplosion = false;
+
 	blendMode = DX_BLENDMODE_NOBLEND;
 	blendValue = 0;
 }
@@ -375,6 +377,12 @@ void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 	}
 }
 
+// îöî≠
+void CharaBase::Explosion()
+{
+	isExplosion = true;
+}
+
 // Xç¿ïWÇéÊìæ
 float CharaBase::GetPosX()
 {
@@ -444,4 +452,9 @@ bool CharaBase::GetIsLeftWard()
 bool CharaBase::GetIsInvicible()
 {
 	return isInvicible;
+}
+
+bool CharaBase::GetIsExplosion()
+{
+	return isExplosion;
 }

@@ -3,15 +3,11 @@
 #include "CSV.h"
 
 bool CSV::LoadFile(const char *fileName,
-				   int num, int x, int y, int *data)
+				   int x, int y, int *data)
 {
-	// 読み込むファイル名を格納する
-	char file[512];
-	sprintf_s(file, sizeof(file), fileName, num);
-
 	// ファイルを開く
 	FILE *fp;
-	fopen_s(&fp, file, "r");
+	fopen_s(&fp, fileName, "r");
 
 	// ファイルが開けないもしくは存在しない
 	if ( fp == nullptr )

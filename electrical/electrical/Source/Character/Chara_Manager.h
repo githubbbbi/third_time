@@ -3,6 +3,15 @@
 #include <vector>
 #include "Chara_Player.h"
 #include "Chara_EnemyBase.h"
+#include "../Define/Define.h"
+
+enum EnemysInfo
+{
+	e_EnemyBomb,		// ボム兵
+	e_EnemyElectric,	// 電気銃エネミー
+	e_EnemyWater,		// 水銃エネミー
+	e_EnemyNum
+};
 
 class Chara_Manager
 {
@@ -10,11 +19,17 @@ private:
 	Chara_Player *player;
 	std::vector<Chara_EnemyBase *>enemys;
 
-	float explosionX;		// 爆発の中心となる座標
-	float explosionY;		// 爆発の中心となる座標
+	int spawnData[MAP_COUNT_Y][MAP_COUNT_X];		// スポーンデータ
+	bool isEnemySpawn[MAP_COUNT_Y][MAP_COUNT_X];	// エネミースポーンフラグ
+
+	float explosionX;								// 爆発の中心となる座標
+	float explosionY;								// 爆発の中心となる座標
+
+	// ファイル読み込み
+	bool LoadFile();
 
 	// エネミーの生成
-	void EnemySpawn(int screenX, int screenY);
+	void EnemyGenerate(int screenX, int screenY);
 
 	// エネミー管理
 	void EnemyManager(int screenX, int screenY);
@@ -30,7 +45,7 @@ public:
 	~Chara_Manager();
 
 	// 初期化処理
-	void Initialize();
+	bool Initialize();
 
 	// 更新処理
 	void Update(int screenX, int screenY);

@@ -42,7 +42,7 @@ private:
 
 public:
 	Chara_EnemyWater(float x, float y, int radius, int width, int height,
-					 float speed, int hp, int attackPower);
+					 float speed, int hp, int attackPower, int mapChipX, int mapChipY);
 	~Chara_EnemyWater();
 
 	// XVˆ—

@@ -18,8 +18,8 @@ const int EW_MOTION[e_EW_STATE_NUM][4] =
 };
 
 Chara_EnemyWater::Chara_EnemyWater(float x, float y, int radius, int width, int height,
-								   float speed, int hp, int attackPower):
-	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower)
+								   float speed, int hp, int attackPower, int mapChipX, int mapChipY):
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, mapChipX, mapChipY)
 {
 	bulletInterval = 0;
 	bulletSpeed = 0.0f;
@@ -54,7 +54,10 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 	}
 
 	// 弾のインターバルを測るカウント
-	bulletInterval++;
+	if ( isAlive )
+	{
+		bulletInterval++;
+	}
 
 	// インターバルの初期化
 	if ( bulletInterval > EW_BULLET_INTERVAL || isCBlinking )
@@ -195,13 +198,14 @@ void Chara_EnemyWater::Update(float playerX, float playerY, bool isPlayerAlive)
 		Move();
 		ChangeDirection(playerX);
 		HpZero();
-		WeaponManager(playerX, playerY, isPlayerAlive);
-		AttackManager(playerX, playerY, isPlayerAlive);
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		State();
 		LocalAnimation(EW_MOTION, 0.0f, 0.0f);
 	}
+
+	WeaponManager(playerX, playerY, isPlayerAlive);
+	AttackManager(playerX, playerY, isPlayerAlive);
 
 	// HSVからRGBに変換
 	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);

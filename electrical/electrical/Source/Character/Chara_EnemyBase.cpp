@@ -4,9 +4,11 @@
 #include "../Resource/Graphic.h"
 
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
-								 float speed, int hp, int attackPower):
+								 float speed, int hp, int attackPower, int mapChipX, int mapChipY):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
 {
+	this->mapChipX = mapChipX;
+	this->mapChipY = mapChipY;
 	attackX = 0.0f;
 	attackY = 0.0f;
 	attackRadius = 0;
@@ -115,6 +117,16 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 	}
 
 	return false;
+}
+
+int Chara_EnemyBase::GetMapChipX()
+{
+	return mapChipX;
+}
+
+int Chara_EnemyBase::GetMapChipY()
+{
+	return mapChipY;
 }
 
 float Chara_EnemyBase::GetAttackPosX()

@@ -471,7 +471,6 @@ void Chara_Player::Update()
 		Move();
 		BatteryManager();
 		HpManager();
-		WeaponManager();
 		AttackMotion();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
@@ -486,6 +485,8 @@ void Chara_Player::Update()
 
 		LocalAnimation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
 	}
+
+	WeaponManager();
 
 	// HSV‚©‚çRGB‚É•ÏŠ·
 	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);

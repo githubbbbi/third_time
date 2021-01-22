@@ -46,7 +46,10 @@ void SceneGame::Initialize()
 	}
 
 	// キャラクター
-	characters->Initialize();
+	if ( !characters->Initialize() )
+	{
+		isGameEnd = true;
+	}
 
 	isSceneChange = false;
 }
@@ -147,7 +150,7 @@ void SceneGame::Draw()
 
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery());
+			 characters->GetPlayerBattery(), characters->GetPlayerMaxBattery());
 
 	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2, GetColor(255, 255, 255), "%d,%d", screenX, screenY);
 	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 20, GetColor(255, 255, 255), "%d,%d", scrollX, scrollY);

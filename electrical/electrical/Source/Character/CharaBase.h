@@ -55,6 +55,8 @@ protected:
 	int invicibleTimer;		// 無敵時間
 	bool isInvicible;		// 無敵フラグ
 
+	bool isExplosion;		// 爆発フラグ
+
 	int blendMode;			// ブレンドモード
 	int blendValue;			// ブレンド値
 
@@ -101,6 +103,9 @@ public:
 	// ダメージを受ける
 	void ReceiveDamage(int attackPower, bool isAttackLeftWard);
 
+	// 爆発
+	void Explosion();
+
 	// X座標を取得
 	float GetPosX();
 
@@ -136,4 +141,7 @@ public:
 
 	// isInvicibleを取得
 	bool GetIsInvicible();
+
+	// isExplosionを取得
+	bool GetIsExplosion();
 };

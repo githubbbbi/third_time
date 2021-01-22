@@ -13,10 +13,14 @@ Stage::Stage()
 // 初期化処理
 bool Stage::Initialize()
 {
+	// 読み込むファイル名を格納する
+	char fileName[512];
+	sprintf_s(fileName, sizeof(fileName),
+			  "Resource/Data/Stage/stage%d.csv", 1);
+
 	// ファイルが読み込めない場合、false
 	int *p = (int *)mapData;
-	if ( !CSV::LoadFile("Resource/Data/Stage/stage%d.csv",
-						1, MAP_COUNT_X, MAP_COUNT_Y, p) )
+	if ( !CSV::LoadFile(fileName, MAP_COUNT_X, MAP_COUNT_Y, p) )
 	{
 		return false;
 	}
@@ -31,7 +35,8 @@ void Stage::Update()
 }
 
 // マップ描画
-void Stage::MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int scrollY)
+void Stage::MapDraw(int x, int y,
+					float shakeX, float shakeY, int scrollX, int scrollY)
 {
 	switch ( mapData[y][x] )
 	{
@@ -63,14 +68,14 @@ void Stage::Draw(float shakeX, float shakeY,
 				 int scrollX, int scrollY, int screenX, int screenY)
 {
 	// スクリーンに映っている部分だけを描画
-	int mapLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
 
-	for ( int y = mapTop; y < mapBottom; y++ )
+	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{
-		for ( int x = mapLeft; x < mapRight; x++ )
+		for ( int x = mapChipLeft; x < mapChipRight; x++ )
 		{
 			MapDraw(x, y, shakeX, shakeY, scrollX, scrollY);
 		}

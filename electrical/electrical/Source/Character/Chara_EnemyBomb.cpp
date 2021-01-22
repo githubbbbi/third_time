@@ -18,8 +18,8 @@ const int EB_MOTION[e_EB_STATE_NUM][4] =
 };
 
 Chara_EnemyBomb::Chara_EnemyBomb(float x, float y, int radius, int width, int height,
-								 float speed, int hp, int attackPower):
-	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower)
+								 float speed, int hp, int attackPower, int mapChipX, int mapChipY):
+	Chara_EnemyBase(x, y, radius, width, height, speed, hp, attackPower, mapChipX, mapChipY)
 {
 
 }
