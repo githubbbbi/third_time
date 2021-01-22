@@ -29,8 +29,6 @@ private:
 	int shotLength;
 	bool isTargetLock;		// 範囲内のフラグ
 
-	int gunIndex;			// 銃のインデックス
-
 	// 自動移動
 	void AutoMove(float playerX, float playerY, bool isPlayerAlive);
 

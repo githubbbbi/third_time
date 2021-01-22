@@ -180,21 +180,6 @@ void Chara_Manager::AttackCollision()
 			player->ReceiveDamage(enemys[i]->GetAttackPower(),
 								  enemys[i]->GetIsAttackLeftWard());
 		}
-		/*for ( unsigned int j = 0; j < enemys[i]->GetGunSize(); j++ )
-		{
-			if ( !player->GetIsInvicible() &&
-				Utility::IsCircleCollision(enemys[i]->GetGunPosX(j),
-										   enemys[i]->GetGunPosY(j),
-										   enemys[i]->GetGunRadius(j) - 8,
-										   player->GetPosX(),
-										   player->GetPosY(),
-										   player->GetRadius() - 4) )
-			{
-				enemys[i]->HitAttack(j);
-				player->ReceiveDamage(enemys[i]->GetAttackPower(),
-									  enemys[i]->GetIsGunLeftWard(j));
-			}
-		}*/
 	}
 }
 

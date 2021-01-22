@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include <algorithm>
 #include "Chara_EnemyElectric.h"
 #include "../Define/Define.h"
 #include"../Character/Chara_Manager.h"
@@ -26,8 +27,6 @@ Chara_EnemyElectric::Chara_EnemyElectric(float x, float y, int radius, int width
 	bulletInterval = 0;
 	shotLength = 0;
 	isTargetLock = false;
-
-	gunIndex = 0;
 }
 
 Chara_EnemyElectric::~Chara_EnemyElectric()
@@ -168,6 +167,10 @@ void Chara_EnemyElectric::WeaponManager()
 	{
 		if ( !electricGun[i]->GetIsAlive() )
 		{
+			// 攻撃座標をリセット
+			attackX = 0.0f;
+			attackY = 0.0f;
+
 			delete electricGun[i];
 			electricGun.erase(electricGun.begin() + i);
 		}
@@ -183,20 +186,36 @@ void Chara_EnemyElectric::AttackManager(float playerX, float playerY, bool isPla
 		return;
 	}
 
-	// プレイヤーと一番距離が近いものを調べる
-	float d = 10000.0f;
+	// 電気銃の座標を取得
+	std::vector<float> vx, vy;
 	for ( unsigned int i = 0; i < electricGun.size(); i++ )
 	{
-
+		vx.push_back(electricGun[i]->GetPosX());
+		vy.push_back(electricGun[i]->GetPosY());
 	}
 
-	if ( gunIndex >= (int)electricGun.size() )
+	// プレイヤーと一番距離が近いものを並べ替え、先頭にもってくる
+	std::sort(vx.begin(), vx.end(),
+			  [playerX](float x1, float x2)->bool
+	{
+		return fabsf(playerX - x1) < fabsf(playerX - x1);
+	});
+	
+	std::sort(vy.begin(), vy.end(),
+			  [playerY](float y1, float y2)->bool
+	{
+		return fabsf(playerY - y1) < fabsf(playerY - y1);
+	});
+
+	if ( electricGun.size() <= 0 )
 	{
 		return;
 	}
 
-	attackRadius = electricGun[gunIndex]->GetRadius();
-	isAttackLeftWard = electricGun[gunIndex]->GetIsLeftWard();
+	attackX = vx[0];
+	attackY = vy[0];
+	attackRadius = electricGun[0]->GetRadius();
+	isAttackLeftWard = electricGun[0]->GetIsLeftWard();
 }
 
 // 状態
@@ -271,10 +290,10 @@ void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scro
 // 攻撃ヒット
 void Chara_EnemyElectric::HitAttack()
 {
-	if ( electricGun.size() > 0 )
+	if ( electricGun.size() <= 0 )
 	{
 		return;
 	}
 
-	electricGun[gunIndex]->Hit();
+	electricGun[0]->Hit();
 }

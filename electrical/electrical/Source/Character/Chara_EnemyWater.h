@@ -25,8 +25,6 @@ private:
 	int bulletInterval;		// 銃を撃つ間隔
 	float bulletSpeed;		// 銃のスピード
 
-	int gunIndex;			// 銃のインデックス
-
 	// 移動
 	void Move();
 

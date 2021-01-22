@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include <algorithm>
 #include "Chara_EnemyWater.h"
 #include "../Define/Define.h"
 #include"../Character/Chara_Manager.h"
@@ -22,7 +23,6 @@ Chara_EnemyWater::Chara_EnemyWater(float x, float y, int radius, int width, int 
 {
 	bulletInterval = 0;
 	bulletSpeed = 0.0f;
-	gunIndex = 0;
 }
 
 Chara_EnemyWater::~Chara_EnemyWater()
@@ -108,17 +108,49 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 	{
 		if ( !waterGun[i]->GetIsAlive() )
 		{
+			// 攻撃座標をリセット
+			attackX = 0.0f;
+			attackY = 0.0f;
+
 			delete waterGun[i];
 			waterGun.erase(waterGun.begin() + i);
 		}
-
 	}
 }
 
 // 攻撃管理
 void Chara_EnemyWater::AttackManager(float playerX, float playerY, bool isPlayerAlive)
 {
+	// 水銃の座標を取得
+	std::vector<float> vx, vy;
+	for ( unsigned int i = 0; i < waterGun.size(); i++ )
+	{
+		vx.push_back(waterGun[i]->GetPosX());
+		vy.push_back(waterGun[i]->GetPosY());
+	}
 
+	// プレイヤーと一番距離が近いものを並べ替え、先頭にもってくる
+	std::sort(vx.begin(), vx.end(),
+			  [playerX](float x1, float x2)->bool
+	{
+		return fabsf(playerX - x1) < fabsf(playerX - x1);
+	});
+
+	std::sort(vy.begin(), vy.end(),
+			  [playerY](float y1, float y2)->bool
+	{
+		return fabsf(playerY - y1) < fabsf(playerY - y1);
+	});
+
+	if ( waterGun.size() <= 0 )
+	{
+		return;
+	}
+
+	attackX = vx[0];
+	attackY = vy[0];
+	attackRadius = waterGun[0]->GetRadius();
+	isAttackLeftWard = waterGun[0]->GetIsLeftWard();
 }
 
 // 向きを変更
@@ -206,10 +238,10 @@ void Chara_EnemyWater::Draw(float shakeX, float shakeY, int scrollX, int scrollY
 // 攻撃ヒット
 void Chara_EnemyWater::HitAttack()
 {
-	if ( waterGun.size() > 0 )
+	if ( waterGun.size() <= 0 )
 	{
 		return;
 	}
 
-	waterGun[gunIndex]->Hit();
+	waterGun[0]->Hit();
 }
