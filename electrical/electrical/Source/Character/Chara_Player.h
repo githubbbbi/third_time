@@ -8,7 +8,6 @@ enum PlayerState
 {
 	e_P_STATE_IDLE,					// 待機
 	e_P_STATE_CHARGE,				// 充電
-	//e_P_STATE_BATTERY_ZERO,			// バッテリーゼロ
 	e_P_STATE_WALK,					// 歩き
 	e_P_STATE_DASH,					// ダッシュ
 	e_P_STATE_JUMP,					// ジャンプ
@@ -17,6 +16,7 @@ enum PlayerState
 	e_P_STATE_DASH_ATTACK,			// ダッシュ攻撃
 	e_P_STATE_JUMP_ATTACK,			// ジャンプ攻撃
 	e_P_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
+	e_P_STATE_BATTERY_ZERO,			// バッテリーゼロ
 	e_P_STATE_NUM
 };
 

@@ -25,7 +25,8 @@ const int P_MOTION[e_P_STATE_NUM][4] =
 	{ 24, 25, 26, 27 },
 	{ 28, 29, 30, 31 },
 	{ 32, 33, 34, 35 },
-	{ 36, 37, 38, 39 }
+	{ 36, 37, 38, 39 },
+	{ 40, 41, 42, 43 }
 };
 
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
@@ -34,7 +35,7 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 {
 	padInputX = 0;
 	padInputY = 0;
-	battery = 100;
+	battery = 10;
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
@@ -258,9 +259,13 @@ void Chara_Player::BatteryCharge()
 		{
 			batteryChargeTimer += 5;
 		}
+		else if ( batteryChargeTimer < charge * 15 )
+		{
+			batteryChargeTimer += 10;
+		}
 		else
 		{
-			batteryChargeTimer += 6;
+			batteryChargeTimer += 20;
 		}
 
 		// ƒoƒbƒeƒŠ[ã¸
@@ -316,8 +321,8 @@ void Chara_Player::BatteryManager()
 // UŒ‚
 bool Chara_Player::IsAttack()
 {
-	// Ž€–SŽž‚Ü‚½‚ÍUŒ‚‚ðŽó‚¯‚Ä‚¢‚é‚Æ‚«‚ÍUŒ‚‚Å‚«‚È‚¢
-	if ( !isAlive || isCBlinking )
+	// Ž€–SŽž‚Ü‚½‚ÍUŒ‚‚ðŽó‚¯‚Ä‚¢‚é‚Æ‚«‚Ü‚½‚Í‚ÍƒoƒbƒeƒŠ[ƒ[ƒ‚ÌŽž‚ÍUŒ‚‚Å‚«‚È‚¢
+	if ( !isAlive || isCBlinking || isBatteryZero )
 	{
 		return false;
 	}
@@ -416,12 +421,6 @@ void Chara_Player::State()
 		state = e_P_STATE_CHARGE;
 	}
 
-	// ƒoƒbƒeƒŠ[ƒ[ƒ
-	if ( isBatteryZero )
-	{
-		//state = e_P_STATE_BATTERY_ZERO;
-	}
-
 	// ƒWƒƒƒ“ƒv
 	if ( isJump || isFall )
 	{
@@ -456,6 +455,12 @@ void Chara_Player::State()
 		}
 	}
 
+	// ƒoƒbƒeƒŠ[ƒ[ƒ
+	if ( isBatteryZero )
+	{
+		state = e_P_STATE_BATTERY_ZERO;
+	}
+
 	// ƒ_ƒ[‚ðŽó‚¯‚é(F“_–Å’†)
 	if ( isCBlinking )
 	{
@@ -485,7 +490,7 @@ void Chara_Player::Update()
 
 		LocalAnimation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
 	}
-
+	
 	WeaponManager();
 
 	// HSV‚©‚çRGB‚É•ÏŠ·
@@ -527,7 +532,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);*/
 
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
-	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "attackMotionFrame:%d", attackMotionFrame);
+	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 }
 
 // UŒ‚ƒqƒbƒg

@@ -327,9 +327,10 @@ void CharaBase::Invicible()
 void CharaBase::LocalAnimation(const int MOTION[][4],
 							   const float NORMAL_SPEED, const float DASH_SPEED)
 {
-	int wait = 10;
 	const int num = 4;
+	int wait = 10;
 
+	// ˆÚ“®’†
 	if ( moveX != 0.0f || moveY != 0.0f )
 	{
 		if ( fabsf(speed) == NORMAL_SPEED )
