@@ -7,6 +7,7 @@
 #include "../Utility/Utility.h"
 #include "../Resource/CSV.h"
 
+// コンストラクタ
 Chara_Manager::Chara_Manager()
 {
 	for ( int y = 0; y < MAP_COUNT_Y; y++ )
@@ -30,6 +31,7 @@ Chara_Manager::Chara_Manager()
 							  P_NORMAL_SPEED, 100, 1);
 }
 
+// デストラクタ
 Chara_Manager::~Chara_Manager()
 {
 	delete player;
@@ -41,17 +43,53 @@ Chara_Manager::~Chara_Manager()
 	}
 }
 
+// ファイル読み込み
+bool Chara_Manager::LoadFile()
+{
+	// 読み込むファイル名を格納する
+	char fileName[512];
+	sprintf_s(fileName, sizeof(fileName),
+			  "Resource/Data/Spawn_Position/spawn_stage%d.csv", 1);
+
+	// ファイルが読み込めない場合、false
+	int *p = (int *)spawnData;
+	if ( !CSV::LoadFile(fileName,
+						MAP_COUNT_X, MAP_COUNT_Y, p) )
+	{
+		return false;
+	}
+
+	return true;
+}
+
+// プレイヤーのスポーン
+void Chara_Manager::PlayerSpawn()
+{
+	for ( int y = 0; y < MAP_COUNT_Y; y++ )
+	{
+		for ( int x = 0; x < MAP_COUNT_X; x++ )
+		{
+			if ( spawnData[y][x] == e_CharaPlayer )
+			{
+				float spawnX = (float)(x * CHARA_SIZE + CHARA_SIZE / 2);
+				float spawnY = (float)(y * CHARA_SIZE + CHARA_SIZE / 2);
+				player->Spawn(spawnX, spawnY);
+				return;
+			}
+		}
+	}
+}
+
 // 初期化処理
 bool Chara_Manager::Initialize()
 {
-	// プレイヤー
-	player->Initialize();
-
-	// エネミーは全て消去しちゃう
-	for ( int i = enemys.size() - 1; i >= 0; i-- )
+	for ( int y = 0; y < MAP_COUNT_Y; y++ )
 	{
-		delete enemys[i];
-		enemys.erase(enemys.begin() + i);
+		for ( int x = 0; x < MAP_COUNT_X; x++ )
+		{
+			spawnData[y][x] = -1;
+			isEnemySpawn[y][x] = false;
+		}
 	}
 
 	// ファイル読み込み
@@ -60,23 +98,17 @@ bool Chara_Manager::Initialize()
 		return false;
 	}
 
-	return true;
-}
+	// プレイヤー
+	player->Initialize();
 
-// ファイル読み込み
-bool Chara_Manager::LoadFile()
-{
-	// 読み込むファイル名を格納する
-	char fileName[512];
-	sprintf_s(fileName, sizeof(fileName),
-			  "Resource/Data/Spawn_Position/enemy_stage%d.csv", 1);
+	// プレイヤーのスポーン
+	PlayerSpawn();
 
-	// ファイルが読み込めない場合、false
-	int *p = (int *)spawnData;
-	if ( !CSV::LoadFile(fileName,
-						MAP_COUNT_X, MAP_COUNT_Y, p) )
+	// エネミーは全て消去しちゃう
+	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
-		return false;
+		delete enemys[i];
+		enemys.erase(enemys.begin() + i);
 	}
 
 	return true;
@@ -107,7 +139,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 
 			switch ( spawnData[y][x] )
 			{
-				case e_EnemyBomb:
+				case e_CharaEnemyBomb:
 					// 爆弾エネミー
 					enemys.push_back(new Chara_EnemyBomb(spawnX, spawnY,
 														 32, EB_WIDTH, EB_HEIGHT,
@@ -116,7 +148,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					isEnemySpawn[y][x] = true;
 					break;
 
-				case e_EnemyElectric:
+				case e_CharaEnemyElectric:
 					// 銃エネミー
 					enemys.push_back(new Chara_EnemyElectric(spawnX, spawnY,
 															 32, EE_WIDTH, EE_HEIGHT,
@@ -124,7 +156,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					isEnemySpawn[y][x] = true;
 					break;
 
-				case e_EnemyWater:
+				case e_CharaEnemyWater:
 					// 水弾エネミー
 					enemys.push_back(new Chara_EnemyWater(spawnX, spawnY,
 														  32, EW_WIDTH, EW_HEIGHT,

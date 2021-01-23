@@ -35,7 +35,7 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 {
 	padInputX = 0;
 	padInputY = 0;
-	battery = 10;
+	battery = 100;
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
@@ -490,7 +490,7 @@ void Chara_Player::Update()
 
 		LocalAnimation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
 	}
-	
+
 	WeaponManager();
 
 	// HSVからRGBに変換
@@ -532,13 +532,20 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);*/
 
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
-	DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "state:%d", state);
+	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 }
 
 // 攻撃ヒット
 void Chara_Player::HitAttack(int index)
 {
 	electricGun[index]->Hit();
+}
+
+// スポーン
+void Chara_Player::Spawn(float x, float y)
+{
+	this->x = x;
+	this->y = y;
 }
 
 // 電気銃の要素数

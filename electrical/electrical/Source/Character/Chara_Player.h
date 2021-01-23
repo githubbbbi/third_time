@@ -92,6 +92,9 @@ public:
 	// 描画処理
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
 
+	// スポーン
+	void Spawn(float x, float y);
+
 	// 攻撃ヒット
 	void HitAttack(int index);
 

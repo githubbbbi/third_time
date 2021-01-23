@@ -15,5 +15,5 @@ const int MAP_WIDTH = 9600;
 const int MAP_HEIGHT = 2700;
 
 // マップチップの数
-const int MAP_COUNT_X = MAP_WIDTH / CHIP_SIZE;
+const int MAP_COUNT_X = MAP_WIDTH / CHIP_SIZE - 1;
 const int MAP_COUNT_Y = MAP_HEIGHT / CHIP_SIZE;

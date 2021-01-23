@@ -5,12 +5,13 @@
 #include "Chara_EnemyBase.h"
 #include "../Define/Define.h"
 
-enum EnemysInfo
+enum CharaInfo
 {
-	e_EnemyBomb,		// ボム兵
-	e_EnemyElectric,	// 電気銃エネミー
-	e_EnemyWater,		// 水銃エネミー
-	e_EnemyNum
+	e_CharaPlayer,			// プレイヤー
+	e_CharaEnemyBomb,		// ボム兵
+	e_CharaEnemyElectric,	// 電気銃エネミー
+	e_CharaEnemyWater,		// 水銃エネミー
+	e_CharaCharaNum
 };
 
 class Chara_Manager
@@ -28,6 +29,9 @@ private:
 	// ファイル読み込み
 	bool LoadFile();
 
+	// プレイヤーのスポーン
+	void PlayerSpawn();
+	
 	// エネミーの生成
 	void EnemyGenerate(int screenX, int screenY);
 
