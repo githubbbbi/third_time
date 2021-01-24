@@ -4,7 +4,6 @@
 
 SceneTitle::SceneTitle()
 {
-
 }
 
 // ‰Šú‰»ˆ—
@@ -16,8 +15,10 @@ void SceneTitle::Initialize()
 // ƒV[ƒ“‘JˆÚ
 void SceneTitle::SceneChange()
 {
+	// ‰Šú‰»ˆ—‚Ö‘JˆÚ
 	if ( InputManager::IsInputRelease(e_START) )
 	{
+		nextScene = e_INITIALIZE;
 		isSceneChange = true;
 	}
 }

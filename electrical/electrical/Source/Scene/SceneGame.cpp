@@ -82,11 +82,13 @@ void SceneGame::LocalEffectManager()
 // シーン遷移
 void SceneGame::SceneChange()
 {
-	// テスト用
-	/*if ( InputManager::IsInputRelease(e_START) )
+	// 残機がありプレイヤーが死亡→初期化処理
+	if ( !characters->GetPlayerIsAlive() &&
+		characters->GetPlayerRemainingNum() > 0 )
 	{
+		nextScene = e_INITIALIZE;
 		isSceneChange = true;
-	}*/
+	}
 }
 
 // ゲーム終了

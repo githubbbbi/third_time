@@ -84,4 +84,7 @@ public:
 
 	// プレイヤーの残機を取得
 	int GetPlayerRemainingNum();
+
+	// プレイヤーisAliveを取得
+	bool GetPlayerIsAlive();
 };

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneGameOver.h"
 #include "../Input/InputManager.h"
 #include "../Mask/Mask.h"
 #include "../Resource/Graphic.h"
@@ -30,26 +31,59 @@ void SceneManager::SceneChange()
 		return;
 	}
 
+	// シーン遷移
 	switch ( scene )
 	{
 		case e_TITLE:
-			scene = e_INITIALIZE;
+			scene = nowScene->GetNextScene();
 			break;
 
 		case e_INITIALIZE:
+			// 初期化処理後はゲーム
 			nowScene.reset(new SceneGame);
-			scene = e_GAME;
 			nowScene->Initialize();
+			scene = e_GAME;
 			break;
 
 		case e_GAME:
-			nowScene.reset(new SceneTitle);
-			scene = e_TITLE;
+			scene = nowScene->GetNextScene();
+			break;
+
+		case e_GAMEOVER:
+			// タイトルに戻る
+			//scene = nowScene->GetNextScene();
 			break;
 
 		case e_ENDING:
 			//nowScene.reset(new SceneTitle);
-			//scene = e_TITLE;
+			//scene = nowScene->GetNextScene();
+			break;
+
+		default:
+			break;
+	}
+
+	// シーンを生成
+	switch ( scene )
+	{
+		case e_TITLE:
+			nowScene.reset(new SceneTitle);
+			break;
+
+		case e_GAME:
+			// ゲームシーンはシーン遷移の初期化シーンで行っているので
+			// ここでは行わない
+			break;
+
+		case e_GAMEOVER:
+			nowScene.reset(new SceneGameOver);
+			break;
+
+		case e_ENDING:
+			//nowScene.reset(new SceneEnding);
+			break;
+
+		default:
 			break;
 	}
 }

@@ -19,6 +19,7 @@ Graphic::Graphic()
 				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
 	background = MyLoadGraph("Resource/Graphic/Background/background.png");
 	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
+	uiManipulationMethod = MyLoadGraph("Resource/Graphic/UI/UI_manipulation_method.png");
 }
 
 // ¡‚Ü‚Åƒ[ƒh‚µ‚½‰æ‘œ‚ğ‰ğ•ú‚·‚é
@@ -105,4 +106,9 @@ int Graphic::GetBackground()
 int Graphic::GetUIPlayer()
 {
 	return uiPlayer;
+}
+
+int Graphic::GetUIManipulationMethod()
+{
+	return uiManipulationMethod;
 }

@@ -417,3 +417,9 @@ int Chara_Manager::GetPlayerRemainingNum()
 {
 	return player->GetRemainingNum();
 }
+
+// ƒvƒŒƒCƒ„[isAlive‚ðŽæ“¾
+bool Chara_Manager::GetPlayerIsAlive()
+{
+	return player->GetIsAlive();
+}

@@ -6,9 +6,8 @@
 class SceneManager
 {
 private:
-	// 現在のシーン
-	std::unique_ptr<SceneBase> nowScene;
-	Scene scene;
+	std::unique_ptr<SceneBase> nowScene;	// 現在処理を行っているシーン
+	Scene scene;							// 現在のシーン
 
 	// シーン遷移
 	void SceneChange();
