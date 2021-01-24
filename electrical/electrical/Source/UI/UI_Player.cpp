@@ -10,7 +10,7 @@ UI_Player::UI_Player()
 				0.0f, 230.0f, 230.0f };
 	line[1] = { 95.0f, 66.0f, 20.0f,
 				255.0f, 255.0f, 255.0f,
-				30.0f, 230.0f, 200.0f };
+				210.0f, 230.0f, 200.0f };
 
 	x = 20;
 	y = 20;
@@ -52,8 +52,8 @@ void UI_Player::Draw(int hp, int maxHp, int battery, int maxBattery)
 					   line[0].y,
 					   line[0].x + line[0].size + i * 2.6f,
 					   line[0].y + line[0].size,
-					   GetColor((int)line[0].r - (50 - i / 2),
-								(int)line[0].g - (50 - i / 2), (int)line[0].b), 3);
+					   GetColor((int)line[0].r - (50 - i),
+								(int)line[0].g - (50 - i), (int)line[0].b), 3);
 		}
 		else if ( ((float)hp / (float)maxHp) * 100.0f > 0 )
 		{
@@ -61,7 +61,7 @@ void UI_Player::Draw(int hp, int maxHp, int battery, int maxBattery)
 					   line[0].y,
 					   line[0].x + line[0].size + i * 2.6f,
 					   line[0].y + line[0].size,
-					   GetColor((int)line[0].r - (50 - i),
+					   GetColor((int)line[0].r - (50 - i / 2),
 								(int)line[0].g, (int)line[0].b), 3);
 		}
 	}
@@ -71,12 +71,13 @@ void UI_Player::Draw(int hp, int maxHp, int battery, int maxBattery)
 	{
 		if ( battery > 0 )
 		{
+			// ÂF‚É•`‰æ
 			DrawLineAA(line[1].x + line[1].size + i * 2.3f,
 					   line[1].y,
 					   line[1].x + i * 2.3f,
 					   line[1].y + line[1].size,
-					   GetColor((int)line[1].r + i / 2,
-								(int)line[1].g + i * 3 / 10, (int)line[1].b), 3);
+					   GetColor((int)line[1].r,
+								(int)line[1].g - (40 - i / 2), (int)line[1].b - (80 - i)), 3);
 		}
 	}
 
