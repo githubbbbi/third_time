@@ -411,3 +411,9 @@ int Chara_Manager::GetPlayerMaxBattery()
 {
 	return P_MAX_BATTERY;
 }
+
+// プレイヤーの残機を取得
+int Chara_Manager::GetPlayerRemainingNum()
+{
+	return player->GetRemainingNum();
+}

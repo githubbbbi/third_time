@@ -40,6 +40,7 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 	attackMotionFrame = 0;
+	remainingNum = 3;
 	isBatteryZero = false;
 }
 
@@ -531,6 +532,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);*/
 
+	DrawFormatString(150, 130, GetColor(255, 255, 255), "残機:%d", remainingNum);
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 }
@@ -588,4 +590,10 @@ int Chara_Player::GetHp()
 int Chara_Player::GetBattery()
 {
 	return battery;
+}
+
+// 残機を取得
+int Chara_Player::GetRemainingNum()
+{
+	return remainingNum;
 }

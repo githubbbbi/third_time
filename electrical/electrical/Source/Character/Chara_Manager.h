@@ -70,15 +70,18 @@ public:
 	// キャラクターの死亡を取得
 	bool GetIsCharaDeath();
 
-	// HPを取得
+	// プレイヤーのHPを取得
 	int GetPlayerHp();
 
-	// 最大HPを取得
+	// プレイヤーの最大HPを取得
 	int GetPlayerMaxHp();
 
-	// 最大バッテリーを取得
+	// プレイヤーの最大バッテリーを取得
 	int GetPlayerBattery();
 
-	// バッテリーを取得
+	// プレイヤーのバッテリーを取得
 	int GetPlayerMaxBattery();
+
+	// プレイヤーの残機を取得
+	int GetPlayerRemainingNum();
 };
