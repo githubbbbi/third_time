@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "SceneTitle.h"
 #include "../Input/InputManager.h"
+#include "../Resource/Graphic.h"
 
 SceneTitle::SceneTitle()
 {
@@ -15,7 +16,7 @@ void SceneTitle::Initialize()
 // ƒV[ƒ“‘JˆÚ
 void SceneTitle::SceneChange()
 {
-	// ‰Šú‰»ˆ—‚Ö‘JˆÚ
+	// ƒƒCƒ“ƒQ[ƒ€‚Ö‘JˆÚ
 	if ( InputManager::IsInputRelease(e_START) )
 	{
 		nextScene = e_GAME;

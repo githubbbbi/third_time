@@ -4,7 +4,7 @@
 #include "../Resource/Graphic.h"
 
 const double EX_RATE_SPEED = 2.0;
-const double MAX_EX_RATE = 200.0;
+const double MAX_EX_RATE = 75.0;
 const double MIN_EX_RATE = 0.0;
 
 // •Ï”‰Šú‰»

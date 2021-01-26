@@ -21,7 +21,7 @@ bool SettingDxLib::DxLibInit()
 	SetWindowSizeExtendRate(1.5);
 
 	// 画面の背景色を設定する
-	SetBackgroundColor(0x00, 0x0, 0x00);
+	SetBackgroundColor(0x00, 0x0, 0x55);
 
 	// (ダブルバッファ)描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);

@@ -155,6 +155,7 @@
     <ClCompile Include="Source\Resource\CSV.cpp" />
     <ClCompile Include="Source\Resource\Graphic.cpp" />
     <ClCompile Include="Source\Scene\SceneBase.cpp" />
+    <ClCompile Include="Source\Scene\SceneEnding.cpp" />
     <ClCompile Include="Source\Scene\SceneGame.cpp" />
     <ClCompile Include="Source\Scene\SceneGameOver.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Source\Resource\CSV.h" />
     <ClInclude Include="Source\Resource\Graphic.h" />
     <ClInclude Include="Source\Scene\SceneBase.h" />
+    <ClInclude Include="Source\Scene\SceneEnding.h" />
     <ClInclude Include="Source\Scene\SceneGame.h" />
     <ClInclude Include="Source\Scene\SceneGameOver.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />

@@ -2,6 +2,7 @@
 #include "SceneTitle.h"
 #include "SceneGame.h"
 #include "SceneGameOver.h"
+#include "SceneEnding.h"
 #include "../Input/InputManager.h"
 #include "../Mask/Mask.h"
 #include "../Resource/Graphic.h"
@@ -79,21 +80,18 @@ void SceneManager::SceneChange()
 			break;
 
 		case e_GAMEOVER:
-			// タイトルに戻る
 			scene = nowScene->GetNextScene();
 			break;
 
 		case e_ENDING:
-			// タイトルに戻る
-			//nowScene.reset(new SceneTitle);
-			//scene = nowScene->GetNextScene();
+			scene = nowScene->GetNextScene();
 			break;
 
 		default:
 			break;
 	}
 
-	// シーンを生成し初期化処理を行う
+	// 遷移後のシーンを生成し初期化処理を行う
 	switch ( scene )
 	{
 		case e_TITLE:
@@ -112,7 +110,7 @@ void SceneManager::SceneChange()
 			break;
 
 		case e_ENDING:
-			//nowScene.reset(new SceneEnding);
+			nowScene.reset(new SceneEnding);
 			nowScene->Initialize();
 			break;
 

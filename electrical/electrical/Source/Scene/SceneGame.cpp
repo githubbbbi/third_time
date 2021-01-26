@@ -103,8 +103,7 @@ void SceneGame::SceneChange()
 	// プレイヤーがゴール→エンディング
 	if ( characters->GetPlayerIsGoal() )
 	{
-		nextScene = e_GAME;// テスト用
-		//nextScene = e_ENDING;
+		nextScene = e_ENDING;
 		isSceneChange = true;
 		return;
 	}
