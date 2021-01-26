@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Effect_Explosion.h"
 #include "../Resource/Graphic.h"
+#include "../Utility/Utility.h"
 
 Effect_Explosion::Effect_Explosion(float x, float y, int blendDecrease)
 {
@@ -15,17 +16,27 @@ Effect_Explosion::Effect_Explosion(float x, float y, int blendDecrease)
 	if ( number < 10 )
 	{
 		speed = (float)(rand() % 3);
-		exRate = (double)(rand() % 5 + 3) / 10.0;
+		exRate = ((double)(rand() % 5) + 3.0) / 10.0;
+		h = 50.0f;
+		s = 255.0f;
+		v = 200.0f;
 	}
 	else
 	{
 		speed = (float)(rand() % 2);
-		exRate = (double)(rand() % 2 + 1) / 10.0;
+		exRate = ((double)(rand() % 2) + 1.0) / 10.0;
+		h = 0.0f;
+		s = 0.0f;
+		v = 200.0f;
 	}
 
 	frame = 0;
 	blendValue = 255;
 	isActive = true;
+
+	r = 255.0f;
+	g = 255.0f;
+	b = 255.0f;
 }
 
 // ˆÚ“®
@@ -58,6 +69,8 @@ void Effect_Explosion::Update()
 {
 	Move();
 	Erase();
+
+	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
 }
 
 // •`‰æˆ—
@@ -69,14 +82,7 @@ void Effect_Explosion::Draw(int scrollX, int scrollY)
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ADD, blendValue);
-	if ( number < 10 )
-	{
-		SetDrawBright(255, 64, 0);
-	}
-	else
-	{
-		SetDrawBright(255, 255, 255);
-	}
+	SetDrawBright((int)r, (int)g, (int)b);
 
 	DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
 				  exRate, 0.0, Graphic::GetInstance()->GetParticle(), true);
