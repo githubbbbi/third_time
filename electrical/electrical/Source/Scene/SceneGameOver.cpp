@@ -26,7 +26,7 @@ void SceneGameOver::SceneChange()
 // ƒQ[ƒ€I—¹
 void SceneGameOver::GameEnd()
 {
-	if ( InputManager::IsInputRelease(e_PAUSE) )
+	if ( InputManager::IsInputRelease(e_EXIT) )
 	{
 		isGameEnd = true;
 	}

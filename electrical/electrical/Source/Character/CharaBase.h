@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Animation.h"
+#include "CharaAnimation.h"
 
 extern const int CHARA_SIZE;		// キャラクタのサイズ
 extern const float GRAVITY;			// 重力
@@ -9,7 +9,7 @@ extern const int INVICIBLE_TIME;	// 無敵時間
 class CharaBase
 {
 private:
-	Animation *anim;
+	CharaAnimation *anim;
 
 protected:
 	float x;				// 中心座標
@@ -88,8 +88,8 @@ protected:
 	void Invicible();
 
 	// アニメーション
-	void LocalAnimation(const int MOTION[][4],
-						const float NORMAL_SPEED, const float DASH_SPEED);
+	void Animation(const int MOTION[][4],
+				   const float NORMAL_SPEED, const float DASH_SPEED);
 
 public:
 	// コンストラクタ宣言

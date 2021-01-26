@@ -201,7 +201,7 @@ void Chara_EnemyWater::Update(float playerX, float playerY, bool isPlayerAlive)
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		State();
-		LocalAnimation(EW_MOTION, 0.0f, 0.0f);
+		Animation(EW_MOTION, 0.0f, 0.0f);
 	}
 
 	WeaponManager(playerX, playerY, isPlayerAlive);

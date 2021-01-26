@@ -18,7 +18,7 @@ void SceneTitle::SceneChange()
 	// ‰Šú‰»ˆ—‚Ö‘JˆÚ
 	if ( InputManager::IsInputRelease(e_START) )
 	{
-		nextScene = e_INITIALIZE;
+		nextScene = e_GAME;
 		isSceneChange = true;
 	}
 }
@@ -26,7 +26,7 @@ void SceneTitle::SceneChange()
 // ƒQ[ƒ€I—¹
 void SceneTitle::GameEnd()
 {
-	if ( InputManager::IsInputRelease(e_PAUSE) )
+	if ( InputManager::IsInputRelease(e_EXIT) )
 	{
 		isGameEnd = true;
 	}

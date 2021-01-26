@@ -148,7 +148,7 @@ void Chara_EnemyBomb::Update(float playerX, float playerY, bool isPlayerAlive)
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		State();
-		LocalAnimation(EB_MOTION, EB_NORMAL_SPEED, EB_DASH_SPEED);
+		Animation(EB_MOTION, EB_NORMAL_SPEED, EB_DASH_SPEED);
 	}
 
 	// HSV‚©‚çRGB‚É•ÏŠ·

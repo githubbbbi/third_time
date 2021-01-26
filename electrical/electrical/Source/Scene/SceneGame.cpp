@@ -12,10 +12,10 @@ SceneGame::SceneGame()
 	characters = new Chara_Manager;
 
 	// ステージ
-	stage = new Stage();
+	stage = new Stage;
 
 	// エフェクト
-	effects = new EffectManager();
+	effects = new EffectManager;
 
 	// UI
 	ui = new UI_Manager;
@@ -82,27 +82,38 @@ void SceneGame::LocalEffectManager()
 // シーン遷移
 void SceneGame::SceneChange()
 {
-	// 残機がありプレイヤーが死亡→初期化処理
+	// プレイヤーが死亡かつ残機があり→初期化処理
 	if ( !characters->GetPlayerIsAlive() &&
 		characters->GetPlayerRemainingNum() > 0 )
 	{
-		nextScene = e_INITIALIZE;
+		nextScene = e_GAME;
 		isSceneChange = true;
+		return;
+	}
+
+	// プレイヤーが死亡かつ残機がなし→ゲームオーバー
+	if ( !characters->GetPlayerIsAlive() &&
+		characters->GetPlayerRemainingNum() <= 0 )
+	{
+		nextScene = e_GAMEOVER;
+		isSceneChange = true;
+		return;
 	}
 
 	// プレイヤーがゴール→エンディング
 	if ( characters->GetPlayerIsGoal() )
 	{
-		nextScene = e_INITIALIZE;// テスト用
+		nextScene = e_GAME;// テスト用
+		//nextScene = e_ENDING;
 		isSceneChange = true;
+		return;
 	}
 }
 
 // ゲーム終了
 void SceneGame::GameEnd()
 {
-	// テスト用
-	if ( InputManager::IsInputRelease(e_PAUSE) )
+	if ( InputManager::IsInputRelease(e_EXIT) )
 	{
 		isGameEnd = true;
 	}
@@ -120,9 +131,6 @@ void SceneGame::Update()
 	// スクロール
 	Utility::Scroll((int)characters->GetScrollCenterX(),
 					(int)characters->GetScrollCenterY(), &scrollX, &scrollY);
-
-	// ステージ
-	stage->Update();
 
 	// キャラクター
 	characters->Update(screenX, screenY);

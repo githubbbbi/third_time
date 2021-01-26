@@ -27,9 +27,6 @@ public:
 	// ‰Šú‰»ˆ—
 	bool Initialize();
 
-	// XVˆ—
-	void Update();
-
 	// •`‰æˆ—
 	void Draw(float shakeX, float shakeY,
 			  int scrollX, int scrollY, int screenX, int screenY);

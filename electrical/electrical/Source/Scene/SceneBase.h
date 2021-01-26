@@ -4,7 +4,6 @@ enum Scene
 {
 	e_NONE,
 	e_TITLE,		// タイトル
-	e_INITIALIZE,	// 初期化
 	e_GAME,			// ゲーム
 	e_GAMEOVER,		// ゲームオーバー
 	e_ENDING,		// エンディング

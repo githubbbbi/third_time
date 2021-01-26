@@ -28,12 +28,6 @@ bool Stage::Initialize()
 	return true;
 }
 
-// 更新処理
-void Stage::Update()
-{
-
-}
-
 // マップ描画
 void Stage::MapDraw(int x, int y,
 					float shakeX, float shakeY, int scrollX, int scrollY)

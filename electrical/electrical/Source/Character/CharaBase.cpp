@@ -13,7 +13,7 @@ const int INVICIBLE_TIME = 60;
 CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 					 float speed, int hp, int attackPower)
 {
-	anim = new Animation;
+	anim = new CharaAnimation;
 
 	// 変数の初期化
 	this->x = x;
@@ -323,7 +323,7 @@ void CharaBase::Invicible()
 }
 
 // アニメーション
-void CharaBase::LocalAnimation(const int MOTION[][4],
+void CharaBase::Animation(const int MOTION[][4],
 							   const float NORMAL_SPEED, const float DASH_SPEED)
 {
 	const int num = 4;

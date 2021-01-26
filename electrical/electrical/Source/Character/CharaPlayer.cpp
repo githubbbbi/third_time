@@ -86,6 +86,15 @@ void Chara_Player::InputMove()
 		return;
 	}
 
+	// ÉSÅ[ÉãÇµÇΩå„ÇÕìÆÇØÇ»Ç¢
+	if ( IsGoal() )
+	{
+		moveX = 0.0f;
+		moveY = 0.0f;
+
+		return;
+	}
+
 	// èâä˙âª
 	moveX = 0.0f;
 	moveY = 0.0f;
@@ -506,7 +515,7 @@ void Chara_Player::Update()
 			ChangeGraphicDirection();
 		}
 
-		LocalAnimation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
+		Animation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
 	}
 
 	WeaponManager();

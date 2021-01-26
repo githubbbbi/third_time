@@ -248,7 +248,7 @@ void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAliv
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);
 		KnockBack();
 		State();
-		LocalAnimation(EE_MOTION, EE_NORMAL_SPEED, 0.0f);
+		Animation(EE_MOTION, EE_NORMAL_SPEED, 0.0f);
 	}
 
 	WeaponManager();
