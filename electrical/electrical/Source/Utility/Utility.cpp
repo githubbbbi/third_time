@@ -142,11 +142,58 @@ bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
 }
 
 // スクロール
-void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
+void Utility::Scroll(int centerX, int centerY,
+					 int *scrollX, int *scrollY, bool *isScroll)
 {
+	// スクロールスピード
+	const int scrollSpeed = 20;
+
+	// フラグ初期化
+	*isScroll = false;
+
 	// スクリーン座標より端に行くとスクロール
-	*scrollX = (centerX / WIN_WIDTH) * WIN_WIDTH;
-	*scrollY = (centerY / WIN_HEIGHT) * WIN_HEIGHT;
+	// 左スクロール
+	if ( *scrollX > (centerX / WIN_WIDTH) * WIN_WIDTH )
+	{
+		*scrollX -= scrollSpeed;
+		*isScroll = true;
+	}
+	// 右スクロール
+	else if ( *scrollX < (centerX / WIN_WIDTH) * WIN_WIDTH )
+	{
+		*scrollX += scrollSpeed;
+		*isScroll = true;
+	}
+
+	// 上スクロース
+	if ( *scrollY > (centerY / WIN_HEIGHT) * WIN_HEIGHT )
+	{
+		*scrollY -= scrollSpeed;
+		*isScroll = true;
+	}
+	// 下スクロール
+	else if ( *scrollY < (centerY / WIN_HEIGHT) * WIN_HEIGHT )
+	{
+		*scrollY += scrollSpeed;
+		*isScroll = true;
+	}
+
+
+	// 右スクロール＆上スクロースしたときのみ
+	// スクロール量をウィンドウサイズの倍数に調整
+	// X方向
+	int x = *scrollX - (centerX / WIN_WIDTH) * WIN_WIDTH;
+	if ( x > 0 )
+	{
+		*scrollX -= x;
+	}
+
+	// Y方向
+	int y = *scrollY - (centerY / WIN_HEIGHT) * WIN_HEIGHT;
+	if ( y > 0 )
+	{
+		*scrollY -= y;
+	}
 
 	// X方向
 	// マップの左端より左にはいかない
@@ -154,9 +201,8 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
 	{
 		*scrollX = 0;
 	}
-
 	// マップの右端より右にはいかない
-	if ( *scrollX + WIN_WIDTH > MAP_COUNT_X * CHIP_SIZE )
+	else if ( *scrollX + WIN_WIDTH > MAP_COUNT_X * CHIP_SIZE )
 	{
 		*scrollX = MAP_COUNT_X * CHIP_SIZE - WIN_WIDTH;
 	}
@@ -167,9 +213,8 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY)
 	{
 		*scrollY = 0;
 	}
-
 	// マップの下端より下にはいかない
-	if ( *scrollY + WIN_HEIGHT > MAP_COUNT_Y * CHIP_SIZE )
+	else if ( *scrollY + WIN_HEIGHT > MAP_COUNT_Y * CHIP_SIZE )
 	{
 		*scrollY = MAP_COUNT_Y * CHIP_SIZE - WIN_HEIGHT;
 	}

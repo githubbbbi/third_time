@@ -43,7 +43,7 @@ void Stage::MapDraw(int x, int y,
 			// ブロック
 			graphIndex = e_MAP_BLOCK;
 			break;
-		
+
 		case e_MAP_GOAL:
 			// ゴール
 			graphIndex = e_MAP_GOAL;
@@ -66,11 +66,31 @@ void Stage::MapDraw(int x, int y,
 void Stage::Draw(float shakeX, float shakeY,
 				 int scrollX, int scrollY, int screenX, int screenY)
 {
-	// スクリーンに映っている部分だけを描画
-	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
+	// スクリーンに映っている部分(1ブロック分多く)だけを描画
+	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE - 1;
+	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE + 1;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE - 1;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE + 1;
+
+	if ( mapChipLeft < 0 )
+	{
+		mapChipLeft = 0;
+	}
+
+	if ( mapChipRight > MAP_COUNT_X )
+	{
+		mapChipRight = MAP_COUNT_X;
+	}
+
+	if ( mapChipTop < 0 )
+	{
+		mapChipTop = 0;
+	}
+
+	if ( mapChipBottom > MAP_COUNT_Y )
+	{
+		mapChipBottom = MAP_COUNT_Y;
+	}
 
 	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{

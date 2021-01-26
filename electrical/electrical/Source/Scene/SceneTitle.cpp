@@ -13,6 +13,18 @@ void SceneTitle::Initialize()
 	isSceneChange = false;
 }
 
+// ライティング更新処理
+void SceneTitle::LightingUpdate()
+{
+
+}
+
+// ライティング描画処理
+void SceneTitle::LightingDraw()
+{
+
+}
+
 // シーン遷移
 void SceneTitle::SceneChange()
 {
@@ -36,6 +48,7 @@ void SceneTitle::GameEnd()
 // 更新処理
 void SceneTitle::Update()
 {
+	LightingUpdate();
 	SceneChange();
 	GameEnd();
 }
@@ -43,6 +56,7 @@ void SceneTitle::Update()
 // 描画処理
 void SceneTitle::Draw()
 {
+	LightingDraw();
 	DrawString(500, 100, "TITLE", GetColor(255, 255, 255));
 	DrawString(500, 200, "space", GetColor(255, 255, 255));
 }

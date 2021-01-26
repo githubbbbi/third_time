@@ -22,9 +22,9 @@ SceneGame::SceneGame()
 
 	scrollX = 0;
 	scrollY = 0;
-
 	screenX = 0;
 	screenY = 0;
+	isScroll = false;
 }
 
 // デストラクタ
@@ -124,15 +124,19 @@ void SceneGame::Update()
 	// スクリーン座標を求める
 	Screen();
 
+	// スクロール
+	Utility::Scroll((int)characters->GetScrollCenterX(),
+					(int)characters->GetScrollCenterY(),
+					&scrollX, &scrollY, &isScroll);
+
 	// エフェクト
 	LocalEffectManager();
 
-	// スクロール
-	Utility::Scroll((int)characters->GetScrollCenterX(),
-					(int)characters->GetScrollCenterY(), &scrollX, &scrollY);
-
-	// キャラクター
-	characters->Update(screenX, screenY);
+	// キャラクター スクロール中は更新処理を行わない
+	if ( !isScroll )
+	{
+		characters->Update(screenX, screenY);
+	}
 
 	// UI
 	ui->Update(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),

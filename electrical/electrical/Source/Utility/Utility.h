@@ -35,7 +35,7 @@ public:
 
 	// ƒXƒNƒ[ƒ‹
 	static void Scroll(int centerX, int centerY,
-					   int *scrollX, int *scrollY);
+					   int *scrollX, int *scrollY, bool *isScroll);
 
 	// HSV‚©‚çRGB‚É•ÏŠ·
 	static void ConvertHSVtoRGB(float *r, float *g, float *b,

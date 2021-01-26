@@ -16,6 +16,7 @@ private:
 
 	int scrollX, scrollY;	// スクロール量
 	int screenX, screenY;	// スクリーン中心座標
+	bool isScroll;			// スクロールフラグ
 
 	// スクリーン座標を求める
 	void Screen();
