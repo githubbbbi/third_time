@@ -4,7 +4,6 @@
 
 extern const int CHARA_SIZE;		// キャラクタのサイズ
 extern const float GRAVITY;			// 重力
-extern const float JUMP_POWER;		// ジャンプ力
 extern const int INVICIBLE_TIME;	// 無敵時間
 
 class CharaBase
@@ -60,11 +59,14 @@ protected:
 	int blendMode;			// ブレンドモード
 	int blendValue;			// ブレンド値
 
+	// キャラクタのジャンプ
+	void CharaJump(float jumpPower);
+
 	// キャラクタの上昇&落下
 	void CharaRiseAndFall();
 
 	// キャラの移動
-	void CharaMove(float hitWidth, float hitHeight);
+	void CharaMove(float hitHalfWidth, float hitHalfHeight);
 
 	// HP(バッテリー)が0
 	void HpZero();
@@ -96,9 +98,6 @@ public:
 
 	// デストラクタ
 	~CharaBase();
-
-	// キャラクタのジャンプ
-	void CharaJump();
 
 	// ダメージを受ける
 	void ReceiveDamage(int attackPower, bool isAttackLeftWard);

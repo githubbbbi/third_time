@@ -7,6 +7,7 @@ enum MapChip
 {
 	e_MAP_NONE = -1,	// なし
 	e_MAP_BLOCK,		// ブロック
+	e_MAP_GOAL,			// ゴール
 	e_MAP_NUM
 };
 

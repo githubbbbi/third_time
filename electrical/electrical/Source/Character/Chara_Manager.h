@@ -87,4 +87,7 @@ public:
 
 	// プレイヤーisAliveを取得
 	bool GetPlayerIsAlive();
+
+	// プレイヤーのゴールフラグを取得
+	bool GetPlayerIsGoal();
 };

@@ -62,7 +62,7 @@ int Utility::MapHitCheck(float x, float y,
 			*moveY = (float)map.top - y - value;
 
 			// 上辺に衝突したと返す
-			return e_HIT_TOP;
+			return e_HIT_BLOCK_TOP;
 		}
 
 		// 下辺に衝突
@@ -72,7 +72,7 @@ int Utility::MapHitCheck(float x, float y,
 			*moveY = (float)map.bottom - y + value;
 
 			// 下辺に衝突したと返す
-			return e_HIT_BOTTOM;
+			return e_HIT_BLOCK_BOTTOM;
 		}
 
 		// 左辺に衝突
@@ -82,7 +82,7 @@ int Utility::MapHitCheck(float x, float y,
 			*moveX = (float)map.left - x - value;
 
 			// 左辺に衝突したと返す
-			return e_HIT_LEFT;
+			return e_HIT_BLOCK_LEFT;
 		}
 
 		// 右辺に衝突
@@ -92,8 +92,14 @@ int Utility::MapHitCheck(float x, float y,
 			*moveX = (float)map.right - x + value;;
 
 			// 右辺に衝突したと返す
-			return e_HIT_RIGHT;
+			return e_HIT_BLOCK_RIGHT;
 		}
+	}
+
+	// ゴールとの判定
+	if ( Stage::GetMapParam(addX, addY) == e_MAP_GOAL )
+	{
+		return e_HIT_GOAL;
 	}
 
 	// 終了 どこにも当たらなかった

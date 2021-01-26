@@ -3,11 +3,12 @@
 // マップチップの当たり判定
 enum MapHit
 {
-	e_HIT_NOT,
-	e_HIT_LEFT,
-	e_HIT_RIGHT,
-	e_HIT_TOP,
-	e_HIT_BOTTOM
+	e_HIT_NOT,			// なし
+	e_HIT_BLOCK_LEFT,	// ブロックの左側
+	e_HIT_BLOCK_RIGHT,	// ブロックの右側
+	e_HIT_BLOCK_TOP,	// ブロックの上側
+	e_HIT_BLOCK_BOTTOM,	// ブロックの下側
+	e_HIT_GOAL			// ゴール
 };
 
 class Utility

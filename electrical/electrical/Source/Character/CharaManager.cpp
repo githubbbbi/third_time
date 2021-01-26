@@ -22,11 +22,8 @@ Chara_Manager::Chara_Manager()
 	explosionX = 0.0f;
 	explosionY = 0.0f;
 
-	float startX = 0.0f + CHIP_SIZE * 2.0f;
-	float startY = 0.0f;
-
 	// プレイヤー生成
-	player = new Chara_Player(startX, startY, 32,
+	player = new Chara_Player(0.0f, 0.0f, 32,
 							  P_WIDTH, P_HEIGHT,
 							  P_NORMAL_SPEED, 100, 1);
 }
@@ -422,4 +419,10 @@ int Chara_Manager::GetPlayerRemainingNum()
 bool Chara_Manager::GetPlayerIsAlive()
 {
 	return player->GetIsAlive();
+}
+
+// プレイヤーのゴールフラグを取得
+bool Chara_Manager::GetPlayerIsGoal()
+{
+	return player->GetIsGoal();
 }

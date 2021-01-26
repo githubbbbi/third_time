@@ -2,6 +2,9 @@
 
 #include "CharaBase.h"
 
+
+extern const float E_JUMP_POWER;	// ƒWƒƒƒ“ƒv—Í
+
 class Chara_EnemyBase:public CharaBase
 {
 protected:

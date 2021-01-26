@@ -47,7 +47,12 @@ void Stage::MapDraw(int x, int y,
 
 		case e_MAP_BLOCK:
 			// ブロック
-			graphIndex = 0;
+			graphIndex = e_MAP_BLOCK;
+			break;
+		
+		case e_MAP_GOAL:
+			// ゴール
+			graphIndex = e_MAP_GOAL;
 			break;
 
 		default:

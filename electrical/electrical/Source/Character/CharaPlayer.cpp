@@ -9,6 +9,7 @@ const int P_WIDTH = 30;
 const int P_HEIGHT = 50;
 const float P_NORMAL_SPEED = 3.0f;
 const float P_DASH_SPEED = 5.0f;
+const float P_JUMP_POWER = -15.0f;
 const int BATTERY_DCREASE_TIME = 60 * 1;
 const int BATTERY_CHARGE_TIME = 60 * 1;
 const int P_MAX_HP = 100;
@@ -145,15 +146,15 @@ void Chara_Player::InputMove()
 	if ( InputManager::IsInputTrigger(e_JUMP) )
 	{
 		// ジャンプの初期化
-		CharaJump();
+		CharaJump(P_JUMP_POWER);
 	}
 
 	// ジャンプ上昇中中にキーが離された場合ジャンプを中止
-	if ( isJump && gravity < JUMP_POWER / 2.0f )
+	if ( isJump && gravity < P_JUMP_POWER / 2.0f )
 	{
 		if ( InputManager::IsInputNo(e_JUMP) )
 		{
-			gravity = JUMP_POWER / 1.5f;
+			gravity = P_JUMP_POWER / 1.5f;
 			isJump = false;
 		}
 	}
@@ -239,35 +240,10 @@ void Chara_Player::BatteryCharge()
 		return;
 	}
 
-	// 移動中でない
-	if ( moveX == 0.0f && moveY == 0.0f && (!isJump || !isFall) )
+	// 移動中でないかつ攻撃中でない
+	if ( moveX == 0.0f && moveY == 0.0f && (!isJump || !isFall) && !isAttack )
 	{
-		const int charge = 60;
-		// 一定時間チャージでチャージ量が増加
-		if ( batteryChargeTimer < charge * 3 )
-		{
-			batteryChargeTimer++;
-		}
-		else if ( batteryChargeTimer < charge * 6 )
-		{
-			batteryChargeTimer += 2;
-		}
-		else if ( batteryChargeTimer < charge * 9 )
-		{
-			batteryChargeTimer += 3;
-		}
-		else if ( batteryChargeTimer < charge * 12 )
-		{
-			batteryChargeTimer += 5;
-		}
-		else if ( batteryChargeTimer < charge * 15 )
-		{
-			batteryChargeTimer += 10;
-		}
-		else
-		{
-			batteryChargeTimer += 20;
-		}
+		batteryChargeTimer += 15;
 
 		// バッテリー上昇
 		if ( batteryChargeTimer % BATTERY_CHARGE_TIME == 0 )
@@ -332,8 +308,10 @@ bool Chara_Player::IsAttack()
 	{
 		// 撃った弾数を増やす
 		shotBulletNum++;
-		batteryChargeTimer = 0;
 		attackMotionFrame = 0;
+
+		// 充電しない
+		batteryChargeTimer = 0;
 
 		isAttack = true;
 
@@ -392,6 +370,45 @@ void Chara_Player::AttackMotion()
 		attackMotionFrame = 0;
 		isAttack = false;
 	}
+}
+
+// ゴールに入っているかの判定
+bool Chara_Player::IsGoal()
+{
+	float dummy = 0.0f;
+	const int hitHalfWidth = P_WIDTH / 2;
+	const int hitHalfHeight = P_HEIGHT / 2;
+
+	// 一か所でも含まれていないとreturn
+	// 左下
+	if ( Utility::MapHitCheck(x - hitHalfWidth, y + hitHalfHeight,
+							  &dummy, &dummy) != e_HIT_GOAL )
+	{
+		return false;
+	}
+
+	// 右下
+	if ( Utility::MapHitCheck(x + hitHalfWidth, y + hitHalfHeight,
+							  &dummy, &dummy) != e_HIT_GOAL )
+	{
+		return false;
+	}
+
+	// 左上
+	if ( Utility::MapHitCheck(x - hitHalfWidth, y - hitHalfHeight,
+							  &dummy, &dummy) != e_HIT_GOAL )
+	{
+		return false;
+	}
+
+	// 右上
+	if ( Utility::MapHitCheck(x + hitHalfWidth, y - hitHalfHeight,
+							  &dummy, &dummy) != e_HIT_GOAL )
+	{
+		return false;
+	}
+
+	return true;
 }
 
 // 状態
@@ -533,6 +550,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);*/
 
 	DrawFormatString(150, 130, GetColor(255, 255, 255), "残機:%d", remainingNum);
+	DrawFormatString(150, 110, GetColor(255, 255, 255), "ゴールフラグ:%d", IsGoal());
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
 	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 }
@@ -596,4 +614,10 @@ int Chara_Player::GetBattery()
 int Chara_Player::GetRemainingNum()
 {
 	return remainingNum;
+}
+
+// ゴール判定を取得
+bool Chara_Player::GetIsGoal()
+{
+	return IsGoal();
 }

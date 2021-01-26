@@ -24,6 +24,7 @@ extern const int P_WIDTH;						// 横幅
 extern const int P_HEIGHT;						// 縦幅
 extern const float P_NORMAL_SPEED;				// 通常スピード
 extern const float P_DASH_SPEED;				// ダッシュスピード
+extern const float P_JUMP_POWER;				// ジャンプ力
 extern const int BATTERY_DCREASE_TIME;			// バッテリー減少タイム
 extern const int BATTERY_CHARGE_TIME;			// バッテリーチャージタイム
 extern const int P_MAX_HP;						// 最大HP
@@ -77,6 +78,9 @@ private:
 	// 攻撃モーション
 	void AttackMotion();
 
+	// ゴールに入っているかの判定
+	bool IsGoal();
+
 	// 状態
 	void State();
 
@@ -123,4 +127,7 @@ public:
 
 	// 残機を取得
 	int GetRemainingNum();
+
+	// ゴール判定を取得
+	bool GetIsGoal();
 };

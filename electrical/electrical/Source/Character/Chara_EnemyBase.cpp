@@ -3,6 +3,8 @@
 #include"../stage/stage.h"
 #include "../Resource/Graphic.h"
 
+const float E_JUMP_POWER = -13.0f;
+
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
 								 float speed, int hp, int attackPower, int mapChipX, int mapChipY):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
@@ -30,7 +32,7 @@ void Chara_EnemyBase::Jump()
 		 (Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
 		  Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
 	{
-		CharaJump();
+		CharaJump(E_JUMP_POWER);
 	}
 }
 

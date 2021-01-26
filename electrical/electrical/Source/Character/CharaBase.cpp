@@ -7,7 +7,6 @@
 
 const int CHARA_SIZE = 56;
 const float GRAVITY = 0.850f;
-const float JUMP_POWER = -13.0f;
 const int INVICIBLE_TIME = 60;
 
 // コンストラクタ
@@ -78,11 +77,11 @@ CharaBase::~CharaBase()
 }
 
 // キャラクタのジャンプ
-void CharaBase::CharaJump()
+void CharaBase::CharaJump(float jumpPower)
 {
 	if ( !isJump && !isFall )
 	{
-		gravity = JUMP_POWER;
+		gravity = jumpPower;
 		isJump = true;
 	}
 }
@@ -107,7 +106,7 @@ void CharaBase::CharaRiseAndFall()
 }
 
 // キャラクタの移動
-void CharaBase::CharaMove(float hitWidth, float hitHeight)
+void CharaBase::CharaMove(float hitHalfWidth, float hitHalfHeight)
 {
 	// 1フレーム前の座標取得
 	oldX = x;
@@ -124,29 +123,29 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 
 	// 上下の移動量をチェック
 	// 左下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x - hitWidth, y + hitHeight,
-							  &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x - hitHalfWidth, y + hitHalfHeight,
+							  &dummy, &moveY) == e_HIT_BLOCK_TOP )
 	{
 		gravity = 0.0f;
 	}
 
 	// 右下 ブロックの上辺に着地した場合、落下停止
-	if ( Utility::MapHitCheck(x + hitWidth, y + hitHeight,
-							  &dummy, &moveY) == e_HIT_TOP )
+	if ( Utility::MapHitCheck(x + hitHalfWidth, y + hitHalfHeight,
+							  &dummy, &moveY) == e_HIT_BLOCK_TOP )
 	{
 		gravity = 0.0f;
 	}
 
 	// 左上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x - hitWidth, y - hitHeight,
-							  &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x - hitHalfWidth, y - hitHalfHeight,
+							  &dummy, &moveY) == e_HIT_BLOCK_BOTTOM )
 	{
 		gravity = GRAVITY;
 	}
 
 	// 右上 ブロックの下辺に衝突した場合、落下
-	if ( Utility::MapHitCheck(x + hitWidth, y - hitHeight,
-							  &dummy, &moveY) == e_HIT_BOTTOM )
+	if ( Utility::MapHitCheck(x + hitHalfWidth, y - hitHalfHeight,
+							  &dummy, &moveY) == e_HIT_BLOCK_BOTTOM )
 	{
 		gravity = GRAVITY;
 	}
@@ -155,20 +154,20 @@ void CharaBase::CharaMove(float hitWidth, float hitHeight)
 	y += moveY;
 
 	// 左右の移動量をチェック
-	Utility::MapHitCheck(x - hitWidth, y + hitHeight, &moveX, &dummy);	// 左下
-	Utility::MapHitCheck(x + hitWidth, y + hitHeight, &moveX, &dummy);	// 右下
-	Utility::MapHitCheck(x - hitWidth, y - hitHeight, &moveX, &dummy);	// 左上
-	Utility::MapHitCheck(x + hitWidth, y - hitHeight, &moveX, &dummy);	// 右上
+	Utility::MapHitCheck(x - hitHalfWidth, y + hitHalfHeight, &moveX, &dummy);	// 左下
+	Utility::MapHitCheck(x + hitHalfWidth, y + hitHalfHeight, &moveX, &dummy);	// 右下
+	Utility::MapHitCheck(x - hitHalfWidth, y - hitHalfHeight, &moveX, &dummy);	// 左上
+	Utility::MapHitCheck(x + hitHalfWidth, y - hitHalfHeight, &moveX, &dummy);	// 右上
 
 	// 左右移動量を加える
 	x += moveX;
 
 	// 接地判定
 	// キャラクタの左下または右下が地面であるか調べる
-	if ( (Stage::GetMapParam(x - hitWidth,
-							 y + hitHeight + 1.0f) == e_MAP_BLOCK ||
-		  Stage::GetMapParam(x + hitWidth,
-							 y + hitHeight + 1.0f) == e_MAP_BLOCK) )
+	if ( (Stage::GetMapParam(x - hitHalfWidth,
+							 y + hitHalfHeight + 1.0f) == e_MAP_BLOCK ||
+		  Stage::GetMapParam(x + hitHalfWidth,
+							 y + hitHalfHeight + 1.0f) == e_MAP_BLOCK) )
 	{
 		// 足場がある場合、接地中
 		isFall = false;

@@ -89,6 +89,13 @@ void SceneGame::SceneChange()
 		nextScene = e_INITIALIZE;
 		isSceneChange = true;
 	}
+
+	// プレイヤーがゴール→エンディング
+	if ( characters->GetPlayerIsGoal() )
+	{
+		nextScene = e_INITIALIZE;// テスト用
+		isSceneChange = true;
+	}
 }
 
 // ゲーム終了
