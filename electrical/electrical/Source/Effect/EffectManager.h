@@ -3,6 +3,7 @@
 #include <vector>
 #include "Effect_Explosion.h"
 
+// このクラスではメインゲームで使用するエフェクトのみを管理する
 class EffectManager
 {
 private:

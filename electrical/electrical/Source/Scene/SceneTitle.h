@@ -1,18 +1,19 @@
 #pragma once
 
 #include "SceneBase.h"
+#include <vector>
+#include "../Effect/Effect_Ligthning.h"
 
 class SceneTitle:public SceneBase
 {
 private:
-	// ここ↓↓↓↓に変数宣言(書き終わったら消していいよ)
+	std::vector<Effect_Lightning *> lightnings;
 
+	// ライトニング更新処理
+	void LightningUpdate();
 
-	// ライティング更新処理
-	void LightingUpdate();
-	
-	// ライティング描画処理
-	void LightingDraw();
+	// ライトニング描画処理
+	void LightningDraw();
 
 	// シーン遷移
 	void SceneChange();
@@ -22,7 +23,7 @@ private:
 
 public:
 	SceneTitle();
-	~SceneTitle() = default;
+	~SceneTitle();
 
 	void Initialize() override;
 	void Update() override;

@@ -7,52 +7,57 @@ SceneTitle::SceneTitle()
 {
 }
 
+SceneTitle::~SceneTitle()
+{
+}
+
 // 初期化処理
 void SceneTitle::Initialize()
 {
 	isSceneChange = false;
 }
 
-// ライティング更新処理
-void SceneTitle::LightingUpdate()
+// ライトニング更新処理
+void SceneTitle::LightningUpdate()
 {
-	// 最大生成数50個(wall系は雷反射用のタイトル周りの四角の値)
+	// 最大生成数50個(wall系は稲妻反射用のタイトル周りの四角の値)
+	int wallX1 = 0;
+	int wallY1 = 0;
+	int wallX2 = 100;
+	int wallY2 = 100;
+	if ( lightnings.size() <= 50 )
+	{
+		// 1フレーム3個
+		for ( int i = 0; i < 3; i++ )
+		{
+			lightnings.push_back(new Effect_Lightning(wallX1, wallY1, wallX2, wallY2));
+		}
+	}
 
-	//if ( lightnings.size() <= 50 )
-	//{
-	//	// 1フレーム3個
-	//	for ( int i = 0; i < 3; i++ )
-	//	{
-	//		lightnings.push_back(new Lightning(wallX, wallY, wallX2, wallY2));
-	//	}
-	//}
+	// 更新　初期化
+	for ( unsigned int i = 0; i < lightnings.size(); i++ )
+	{
+		lightnings[i]->Update();
+	}
 
-	//// 更新　初期化
-	//for ( unsigned int i = 0; i < lightnings.size(); i++ )
-	//{
-	//	lightnings[i]->Initialize();
-	//	lightnings[i]->Update();
-	//}
-
-	//// 消去(is付いてないないや　ごめん）
-	//for ( int i = lightnings.size() - 1; i >= 0; i-- )
-	//{
-	//	if ( lightnings[i]->LengthOver() )
-	//	{
-	//		delete lightnings[i];
-	//		lightnings.erase(lightnings.begin() + i);
-	//	}
-	//}
+	// 消去(is付いてないないや　ごめん）←別にいいよ
+	for ( int i = lightnings.size() - 1; i >= 0; i-- )
+	{
+		if ( lightnings[i]->IsLengthOver() )
+		{
+			delete lightnings[i];
+			lightnings.erase(lightnings.begin() + i);
+		}
+	}
 }
 
-// ライティング描画処理
-void SceneTitle::LightingDraw()
+// ライトニング描画処理
+void SceneTitle::LightningDraw()
 {
-	// 雷
-	/*for ( unsigned int i = 0; i < lightnings.size(); i++ )
+	for ( unsigned int i = 0; i < lightnings.size(); i++ )
 	{
 		lightnings[i]->Draw();
-	}*/
+	}
 }
 
 // シーン遷移
@@ -78,7 +83,7 @@ void SceneTitle::GameEnd()
 // 更新処理
 void SceneTitle::Update()
 {
-	LightingUpdate();
+	LightningUpdate();
 	SceneChange();
 	GameEnd();
 }
@@ -86,7 +91,7 @@ void SceneTitle::Update()
 // 描画処理
 void SceneTitle::Draw()
 {
-	LightingDraw();
+	LightningDraw();
 	DrawString(500, 100, "TITLE", GetColor(255, 255, 255));
 	DrawString(500, 200, "space", GetColor(255, 255, 255));
 }

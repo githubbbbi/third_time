@@ -146,6 +146,7 @@
     <ClCompile Include="Source\Character\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Source\Effect\EffectManager.cpp" />
     <ClCompile Include="Source\Effect\Effect_Explosion.cpp" />
+    <ClCompile Include="Source\Effect\Effect_Ligthning.cpp" />
     <ClCompile Include="Source\Effect\Effect_Shake.cpp" />
     <ClCompile Include="Source\Input\InputKey.cpp" />
     <ClCompile Include="Source\Input\InputManager.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Source\Define\Define.h" />
     <ClInclude Include="Source\Effect\EffectManager.h" />
     <ClInclude Include="Source\Effect\Effect_Explosion.h" />
+    <ClInclude Include="Source\Effect\Effect_Ligthning.h" />
     <ClInclude Include="Source\Effect\Effect_Shake.h" />
     <ClInclude Include="Source\Input\InputKey.h" />
     <ClInclude Include="Source\Input\InputManager.h" />
