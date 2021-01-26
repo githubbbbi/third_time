@@ -20,11 +20,11 @@ void SceneTitle::Initialize()
 // ライトニング更新処理
 void SceneTitle::LightningUpdate()
 {
-	// 最大生成数50個(wall系は稲妻反射用のタイトル周りの四角の値)
-	int wallX1 = 0;
-	int wallY1 = 0;
-	int wallX2 = 100;
-	int wallY2 = 100;
+	// 最大生成数50個
+	int wallX1 = 170;
+	int wallY1 = 150;
+	int wallX2 = 760;
+	int wallY2 = 250;
 	if ( lightnings.size() <= 50 )
 	{
 		// 1フレーム3個
@@ -34,13 +34,13 @@ void SceneTitle::LightningUpdate()
 		}
 	}
 
-	// 更新　初期化
+	// 更新
 	for ( unsigned int i = 0; i < lightnings.size(); i++ )
 	{
 		lightnings[i]->Update();
 	}
 
-	// 消去(is付いてないないや　ごめん）←別にいいよ
+	// 消去
 	for ( int i = lightnings.size() - 1; i >= 0; i-- )
 	{
 		if ( lightnings[i]->IsLengthOver() )
@@ -92,6 +92,6 @@ void SceneTitle::Update()
 void SceneTitle::Draw()
 {
 	LightningDraw();
-	DrawString(500, 100, "TITLE", GetColor(255, 255, 255));
-	DrawString(500, 200, "space", GetColor(255, 255, 255));
+	//DrawString(500, 100, "TITLE", GetColor(255, 255, 255));
+	//DrawString(500, 200, "space", GetColor(255, 255, 255));
 }
