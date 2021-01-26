@@ -146,7 +146,14 @@ void Utility::Scroll(int centerX, int centerY,
 					 int *scrollX, int *scrollY, bool *isScroll)
 {
 	// スクロールスピード
-	const int scrollSpeed = 20;
+	const int scrollSpeedX = 20;
+	const int scrollSpeedY = 15;
+
+	// 右スクロールフラグ
+	bool isRightScroll = false;
+
+	// 下スクロールフラグ
+	bool isBottomScroll = false;
 
 	// フラグ初期化
 	*isScroll = false;
@@ -155,44 +162,52 @@ void Utility::Scroll(int centerX, int centerY,
 	// 左スクロール
 	if ( *scrollX > (centerX / WIN_WIDTH) * WIN_WIDTH )
 	{
-		*scrollX -= scrollSpeed;
+		*scrollX -= scrollSpeedX;
 		*isScroll = true;
 	}
 	// 右スクロール
 	else if ( *scrollX < (centerX / WIN_WIDTH) * WIN_WIDTH )
 	{
-		*scrollX += scrollSpeed;
+		*scrollX += scrollSpeedX;
 		*isScroll = true;
+		isRightScroll = true;
 	}
 
 	// 上スクロース
 	if ( *scrollY > (centerY / WIN_HEIGHT) * WIN_HEIGHT )
 	{
-		*scrollY -= scrollSpeed;
+		*scrollY -= scrollSpeedY;
 		*isScroll = true;
 	}
 	// 下スクロール
 	else if ( *scrollY < (centerY / WIN_HEIGHT) * WIN_HEIGHT )
 	{
-		*scrollY += scrollSpeed;
+		*scrollY += scrollSpeedY;
 		*isScroll = true;
+		isBottomScroll = true;
 	}
 
 
-	// 右スクロール＆上スクロースしたときのみ
+	// 右スクロール＆下スクロースしたときのみ
 	// スクロール量をウィンドウサイズの倍数に調整
 	// X方向
-	int x = *scrollX - (centerX / WIN_WIDTH) * WIN_WIDTH;
-	if ( x > 0 )
+	if ( isRightScroll )
 	{
-		*scrollX -= x;
+		int x = *scrollX - (centerX / WIN_WIDTH) * WIN_WIDTH;
+		if ( x > 0 )
+		{
+			*scrollX -= x;
+		}
 	}
 
 	// Y方向
-	int y = *scrollY - (centerY / WIN_HEIGHT) * WIN_HEIGHT;
-	if ( y > 0 )
+	if ( isBottomScroll )
 	{
-		*scrollY -= y;
+		int y = *scrollY - (centerY / WIN_HEIGHT) * WIN_HEIGHT;
+		if ( y > 0 )
+		{
+			*scrollY -= y;
+		}
 	}
 
 	// X方向

@@ -66,11 +66,11 @@ void Stage::MapDraw(int x, int y,
 void Stage::Draw(float shakeX, float shakeY,
 				 int scrollX, int scrollY, int screenX, int screenY)
 {
-	// スクリーンに映っている部分(1ブロック分多く)だけを描画
+	// スクリーンに映っている部分(1または2ブロック分多く)だけを描画
 	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE - 1;
-	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE + 1;
+	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE + 2;
 	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE - 1;
-	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE + 1;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE + 2;
 
 	if ( mapChipLeft < 0 )
 	{
