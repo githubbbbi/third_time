@@ -273,7 +273,7 @@ void Chara_Manager::AttackCollision()
 		// エネミーの攻撃とプレイヤーの当たり判定
 		if ( Utility::IsCircleCollision(enemys[i]->GetAttackPosX(),
 										enemys[i]->GetAttackPosY(),
-										enemys[i]->GetAttackRadius() - 8,
+										enemys[i]->GetAttackRadius() - 4,
 										player->GetPosX(),
 										player->GetPosY(),
 										player->GetRadius() - 4) )
@@ -294,8 +294,11 @@ void Chara_Manager::Update(int screenX, int screenY)
 	//キャラの当たり判定
 	CharaCollision();
 
-	// エネミー
-	EnemyManager(screenX, screenY);
+	// エネミー プレイヤーがゴール時は処理を行わない
+	if ( !player->GetIsGoal() )
+	{
+		EnemyManager(screenX, screenY);
+	}
 
 	// 攻撃の当たり判定
 	AttackCollision();
@@ -312,15 +315,6 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	{
 		enemys[i]->Draw(shakeX, shakeY, scrollX, scrollY);
 	}
-
-	// デバッグ用
-	DrawFormatString(100, 150, GetColor(255, 255, 255), "エネミーの数:%d", enemys.size());
-	/*DrawFormatString(300, 200, GetColor(255, 255, 255), "プレイヤーのY座標%f", player->GetPosY());
-	if ( enemyBomb.size() >= 1 )
-	{
-		DrawFormatString(300, 220, GetColor(255, 255, 255), "敵のX座標%f", enemyBomb[0]->GetPosX());
-		DrawFormatString(300, 240, GetColor(255, 255, 255), "敵のY座標%f", enemyBomb[0]->GetPosY());
-	}*/
 }
 
 // スクロールの中心X座標を取得
@@ -407,12 +401,6 @@ int Chara_Manager::GetPlayerBattery()
 int Chara_Manager::GetPlayerMaxBattery()
 {
 	return P_MAX_BATTERY;
-}
-
-// プレイヤーの残機を取得
-int Chara_Manager::GetPlayerRemainingNum()
-{
-	return player->GetRemainingNum();
 }
 
 // プレイヤーisAliveを取得

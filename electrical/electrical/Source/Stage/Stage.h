@@ -5,10 +5,14 @@
 // マップチップに対応する値
 enum MapChip
 {
-	e_MAP_NONE = -1,	// なし
-	e_MAP_BLOCK,		// ブロック
-	e_MAP_GOAL,			// ゴール
-	e_MAP_NUM
+	e_MAP_NONE = -1,			// なし
+	e_MAP_BLOCK,				// ブロック
+	e_MAP_GOAL_LEFT_BOTTOM,		// ゴール左下
+	e_MAP_GOAL_RIGHT_BOTTOM,	// ゴール右下
+	e_MAP_GOAL_LEFT_TOP,		// ゴール左上
+	e_MAP_GOAL_RIGHT_TOP,		// ゴール左上
+	e_MAP_NUM,					// マップチップ数
+	e_MAP_GOAL					// ゴール
 };
 
 class Stage

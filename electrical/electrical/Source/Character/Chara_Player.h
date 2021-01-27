@@ -17,6 +17,7 @@ enum PlayerState
 	e_P_STATE_JUMP_ATTACK,			// ジャンプ攻撃
 	e_P_STATE_RECIEVE_DAMAGE,		// ダメージを受ける
 	e_P_STATE_BATTERY_ZERO,			// バッテリーゼロ
+	e_P_STATE_GOAL,					// ゴール
 	e_P_STATE_NUM
 };
 
@@ -45,8 +46,6 @@ private:
 
 	bool isBatteryZero;			// バッテリーゼロフラグ
 	int attackMotionFrame;		// 攻撃モーションフレーム
-
-	int remainingNum;			// 残機
 
 	// 入力での移動
 	void InputMove();
@@ -124,9 +123,6 @@ public:
 
 	// バッテリーを取得
 	int GetBattery();
-
-	// 残機を取得
-	int GetRemainingNum();
 
 	// ゴール判定を取得
 	bool GetIsGoal();

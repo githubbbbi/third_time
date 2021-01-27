@@ -55,7 +55,7 @@ int Utility::MapHitCheck(float x, float y,
 		map.top = ((int)addY / CHIP_SIZE) * CHIP_SIZE;				// 上辺のY座標
 		map.bottom = ((int)addY / CHIP_SIZE + 1) * CHIP_SIZE;		// 下辺のY座標
 
-		// 上辺に衝突 moveYが0.0fより大きい場合、下に進もうとしている
+		// 上辺に衝突
 		if ( *moveY > 0.0f )
 		{
 			// 移動量を補正

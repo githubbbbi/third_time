@@ -16,10 +16,12 @@ Graphic::Graphic()
 	waterGun = MyLoadGraph("Resource/Graphic/Weapon/waterGun.png");
 	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
 	MyLoadDivGraph("Resource/Graphic/MapChip/map_chip.png",
-				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, map);
+				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, mapChip);
 	background = MyLoadGraph("Resource/Graphic/Background/background.png");
 	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
 	uiManipulationMethod = MyLoadGraph("Resource/Graphic/UI/UI_manipulation_method.png");
+	title = MyLoadGraph("Resource/Graphic/Title/title.png");
+	uiTitle = MyLoadGraph("Resource/Graphic/UI/UI_title.png");
 }
 
 // ç°Ç‹Ç≈ÉçÅ[ÉhÇµÇΩâÊëúÇâï˙Ç∑ÇÈ
@@ -93,9 +95,9 @@ int Graphic::GetParticle()
 	return particle;
 }
 
-int Graphic::GetMap(int index)
+int Graphic::GetMapChip(int index)
 {
-	return map[index];
+	return mapChip[index];
 }
 
 int Graphic::GetBackground()
@@ -111,4 +113,14 @@ int Graphic::GetUIPlayer()
 int Graphic::GetUIManipulationMethod()
 {
 	return uiManipulationMethod;
+}
+
+int Graphic::GetTitle()
+{
+	return title;
+}
+
+int Graphic::GetUITitle()
+{
+	return uiTitle;
 }

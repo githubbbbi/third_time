@@ -31,6 +31,8 @@ public:
 	Chara_EnemyBase(float x, float y, int radius, int width, int height,
 					float speed, int hp, int attackPower, int mapChipX, int mapChipY);
 
+	virtual ~Chara_EnemyBase() = default;
+
 	virtual void Update(float playerX, float playerY, bool isPlayerAlive) = 0;
 	virtual void Draw(float shakeX, float shakeY, int scrollX, int scrollY) = 0;
 

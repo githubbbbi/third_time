@@ -82,9 +82,6 @@ public:
 	// プレイヤーのバッテリーを取得
 	int GetPlayerMaxBattery();
 
-	// プレイヤーの残機を取得
-	int GetPlayerRemainingNum();
-
 	// プレイヤーisAliveを取得
 	bool GetPlayerIsAlive();
 

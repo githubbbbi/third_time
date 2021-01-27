@@ -3,11 +3,18 @@
 #include "SceneBase.h"
 #include <vector>
 #include "../Effect/Effect_Ligthning.h"
+#include "../UI/UI_Title.h"
 
 class SceneTitle:public SceneBase
 {
 private:
 	std::vector<Effect_Lightning *> lightnings;
+	UI_Title *ui;
+
+	int x;		// 中心座標
+	int y;		// 中心座標
+	int width;	// 横幅
+	int height;	// 縦幅
 
 	// ライトニング更新処理
 	void LightningUpdate();

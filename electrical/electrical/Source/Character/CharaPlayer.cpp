@@ -27,7 +27,8 @@ const int P_MOTION[e_P_STATE_NUM][4] =
 	{ 28, 29, 30, 31 },
 	{ 32, 33, 34, 35 },
 	{ 36, 37, 38, 39 },
-	{ 40, 41, 42, 43 }
+	{ 40, 41, 42, 43 },
+	{ 44, 45, 46, 47 }
 };
 
 Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
@@ -41,7 +42,6 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
 	attackMotionFrame = 0;
-	remainingNum = 3;
 	isBatteryZero = false;
 }
 
@@ -307,8 +307,14 @@ void Chara_Player::BatteryManager()
 // 攻撃
 bool Chara_Player::IsAttack()
 {
-	// 死亡時または攻撃を受けているときまたははバッテリーゼロの時は攻撃できない
+	// 死亡時または攻撃を受けているときまたはバッテリーゼロの時は攻撃できない
 	if ( !isAlive || isCBlinking || isBatteryZero )
+	{
+		return false;
+	}
+
+	// ゴール時は攻撃できない
+	if ( IsGoal() )
 	{
 		return false;
 	}
@@ -493,6 +499,12 @@ void Chara_Player::State()
 	{
 		state = e_P_STATE_RECIEVE_DAMAGE;
 	}
+
+	// ゴール
+	if ( IsGoal() )
+	{
+		state = e_P_STATE_GOAL;
+	}
 }
 
 // 更新処理
@@ -543,25 +555,6 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
-
-
-
-	// デバッグ用
-	/*DrawFormatString(0, 60, GetColor(255, 255, 255), "gravity:%f%", gravity);
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "moveX:%f%", moveX);
-	DrawFormatString(80, 160, GetColor(255, 255, 255), "r:%f", r);
-	DrawFormatString(80, 180, GetColor(255, 255, 255), "g:%f", g);
-	DrawFormatString(80, 200, GetColor(255, 255, 255), "b:%f", b);
-	DrawFormatString(80, 240, GetColor(255, 255, 255), "h:%f", h);
-	DrawFormatString(80, 260, GetColor(255, 255, 255), "s:%f", s);
-	DrawFormatString(80, 280, GetColor(255, 255, 255), "v:%f", v);
-	DrawFormatString(80, 300, GetColor(255, 255, 255), "invicibleTimer:%d", invicibleTimer);
-	DrawFormatString(80, 320, GetColor(255, 255, 255), "blendMode:%d", blendMode);*/
-
-	DrawFormatString(150, 130, GetColor(255, 255, 255), "残機:%d", remainingNum);
-	DrawFormatString(150, 110, GetColor(255, 255, 255), "ゴールフラグ:%d", IsGoal());
-	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "x:%.2f,y+height:%.2f", x, y + height);
-	//DrawFormatString((int)x - scrollX, (int)y - 40 - scrollY, GetColor(255, 255, 255), "state:%d", state);
 }
 
 // 攻撃ヒット
@@ -617,12 +610,6 @@ int Chara_Player::GetHp()
 int Chara_Player::GetBattery()
 {
 	return battery;
-}
-
-// 残機を取得
-int Chara_Player::GetRemainingNum()
-{
-	return remainingNum;
 }
 
 // ゴール判定を取得

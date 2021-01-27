@@ -97,7 +97,7 @@ public:
 			  float speed, int hp, int attackPower);
 
 	// デストラクタ
-	~CharaBase();
+	virtual ~CharaBase();
 
 	// ダメージを受ける
 	void ReceiveDamage(int attackPower, bool isAttackLeftWard);

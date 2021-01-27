@@ -19,10 +19,12 @@ private:
 	int electricGun;						// 電気銃
 	int waterGun;							// 水銃
 	int particle;							// パーティクル
-	int map[e_MAP_NUM];						// マップ
+	int mapChip[e_MAP_NUM];					// マップチップ
 	int background;							// 背景
 	int uiPlayer;							// プレイヤーUI
 	int uiManipulationMethod;				// 操作方法UI
+	int title;								// タイトル
+	int uiTitle;								// タイトルUI
 
 	int MyLoadGraph(const char *filename);
 	int MyLoadDivGraph(const char *fileName, int n,
@@ -52,8 +54,10 @@ public:
 	int GetElectricGun();
 	int GetWaterGun();
 	int GetParticle();
-	int GetMap(int index);
+	int GetMapChip(int index);
 	int GetBackground();
 	int GetUIPlayer();
 	int GetUIManipulationMethod();
+	int GetTitle();
+	int GetUITitle();
 };

@@ -82,20 +82,10 @@ void SceneGame::LocalEffectManager()
 // シーン遷移
 void SceneGame::SceneChange()
 {
-	// プレイヤーが死亡かつ残機があり→初期化処理
-	if ( !characters->GetPlayerIsAlive() &&
-		characters->GetPlayerRemainingNum() > 0 )
+	// プレイヤーが死亡→初期化処理
+	if ( !characters->GetPlayerIsAlive()  )
 	{
 		nextScene = e_GAME;
-		isSceneChange = true;
-		return;
-	}
-
-	// プレイヤーが死亡かつ残機がなし→ゲームオーバー
-	if ( !characters->GetPlayerIsAlive() &&
-		characters->GetPlayerRemainingNum() <= 0 )
-	{
-		nextScene = e_GAMEOVER;
 		isSceneChange = true;
 		return;
 	}
@@ -103,6 +93,14 @@ void SceneGame::SceneChange()
 	// プレイヤーがゴール→エンディング
 	if ( characters->GetPlayerIsGoal() )
 	{
+		// 一定時間経過
+		static int timer = 0;
+		if ( timer++ < 30 )
+		{
+			return;
+		}
+
+		timer = 0;
 		nextScene = e_ENDING;
 		isSceneChange = true;
 		return;
@@ -171,9 +169,6 @@ void SceneGame::Draw()
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
 			 characters->GetPlayerBattery(), characters->GetPlayerMaxBattery());
-
-	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2, GetColor(255, 255, 255), "%d,%d", screenX, screenY);
-	DrawFormatString(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 20, GetColor(255, 255, 255), "%d,%d", scrollX, scrollY);
 }
 
 // 終了処理

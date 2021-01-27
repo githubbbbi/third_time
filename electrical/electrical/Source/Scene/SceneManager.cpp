@@ -1,7 +1,6 @@
 #include "SceneManager.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
-#include "SceneGameOver.h"
 #include "SceneEnding.h"
 #include "../Input/InputManager.h"
 #include "../Mask/Mask.h"
@@ -12,10 +11,17 @@ SceneManager::SceneManager()
 	nowScene = std::make_unique<SceneTitle>();
 	scene = e_TITLE;
 
+	// 画像の読み込み
 	Graphic::GetInstance()->Load();
 
 	// マスクセット
 	Mask::SetMask();
+}
+
+SceneManager::~SceneManager()
+{
+	// delete
+	nowScene.reset();
 }
 
 // 初期化処理
@@ -69,29 +75,9 @@ void SceneManager::SceneChange()
 	}
 
 	// シーン遷移
-	switch ( scene )
-	{
-		case e_TITLE:
-			scene = nowScene->GetNextScene();
-			break;
+	scene = nowScene->GetNextScene();
 
-		case e_GAME:
-			scene = nowScene->GetNextScene();
-			break;
-
-		case e_GAMEOVER:
-			scene = nowScene->GetNextScene();
-			break;
-
-		case e_ENDING:
-			scene = nowScene->GetNextScene();
-			break;
-
-		default:
-			break;
-	}
-
-	// 遷移後のシーンを生成し初期化処理を行う
+	// 遷移後のシーンを生成し初期化処理を行う(同時に遷移前のシーンも削除も行う)
 	switch ( scene )
 	{
 		case e_TITLE:
@@ -101,11 +87,6 @@ void SceneManager::SceneChange()
 
 		case e_GAME:
 			nowScene.reset(new SceneGame);
-			nowScene->Initialize();
-			break;
-
-		case e_GAMEOVER:
-			nowScene.reset(new SceneGameOver);
 			nowScene->Initialize();
 			break;
 

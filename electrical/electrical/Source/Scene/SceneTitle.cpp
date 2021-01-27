@@ -2,13 +2,26 @@
 #include "SceneTitle.h"
 #include "../Input/InputManager.h"
 #include "../Resource/Graphic.h"
+#include "../Define/Define.h"
+#include "../Background/Background.h"
 
 SceneTitle::SceneTitle()
 {
+	ui = new UI_Title;
+	GetGraphSize(Graphic::GetInstance()->GetTitle(), &width, &height);
+	x = WIN_WIDTH / 2;
+	y = WIN_HEIGHT / 2 - height / 2;
 }
 
 SceneTitle::~SceneTitle()
 {
+	for ( int i = lightnings.size() - 1; i >= 0; i-- )
+	{
+		delete lightnings[i];
+		lightnings.erase(lightnings.begin() + i);
+	}
+
+	delete ui;
 }
 
 // 初期化処理
@@ -20,11 +33,12 @@ void SceneTitle::Initialize()
 // ライトニング更新処理
 void SceneTitle::LightningUpdate()
 {
+	const int wallX1 = x - width / 2;
+	const int wallY1 = y - height / 2;
+	const int wallX2 = x + width / 2;
+	const int wallY2 = y + height / 2;
+
 	// 最大生成数50個
-	int wallX1 = 170;
-	int wallY1 = 150;
-	int wallX2 = 760;
-	int wallY2 = 250;
 	if ( lightnings.size() <= 50 )
 	{
 		// 1フレーム3個
@@ -84,6 +98,9 @@ void SceneTitle::GameEnd()
 void SceneTitle::Update()
 {
 	LightningUpdate();
+
+	// タイトルUI シーン遷移時に点滅、そうでなければ明滅
+	ui->Update(!isSceneChange, isSceneChange);
 	SceneChange();
 	GameEnd();
 }
@@ -91,7 +108,13 @@ void SceneTitle::Update()
 // 描画処理
 void SceneTitle::Draw()
 {
+	// 背景
+	Background back;
+	back.Draw(0.0f, 0.0f);
+
 	LightningDraw();
-	//DrawString(500, 100, "TITLE", GetColor(255, 255, 255));
-	//DrawString(500, 200, "space", GetColor(255, 255, 255));
+	DrawRotaGraph(x, y, 1.0, 0.0,
+				  Graphic::GetInstance()->GetTitle(), true);
+
+	ui->Draw();
 }

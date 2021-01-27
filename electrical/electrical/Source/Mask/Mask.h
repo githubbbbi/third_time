@@ -1,8 +1,9 @@
 #pragma once
 
-extern const double EX_RATE_SPEED;	// 拡大スピード
-extern const double MAX_EX_RATE;	// 最大拡大率
-extern const double MIN_EX_RATE;	// 最小拡大率
+extern const double EX_RATE_UP_SPEED;	// 拡大スピード
+extern const double EX_RATE_DOWN_SPEED;	// 収縮スピード
+extern const double MAX_EX_RATE;		// 最大拡大率
+extern const double MIN_EX_RATE;		// 最小拡大率
 
 class Mask
 {

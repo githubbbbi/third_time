@@ -3,8 +3,9 @@
 #include "../Define/Define.h"
 #include "../Resource/Graphic.h"
 
-const double EX_RATE_SPEED = 2.0;
-const double MAX_EX_RATE = 75.0;
+const double EX_RATE_UP_SPEED = 1.0;
+const double EX_RATE_DOWN_SPEED = 1.5;
+const double MAX_EX_RATE = 125.0;
 const double MIN_EX_RATE = 0.0;
 
 // ïœêîèâä˙âª
@@ -32,7 +33,7 @@ bool Mask::MaskScaleUp()
 {
 	if ( exRate < MAX_EX_RATE )
 	{
-		exRate += EX_RATE_SPEED;
+		exRate += EX_RATE_UP_SPEED;
 	}
 	else if ( exRate >= MAX_EX_RATE )
 	{
@@ -50,7 +51,7 @@ bool Mask::MaskScaleDown()
 
 	if ( exRate > MIN_EX_RATE )
 	{
-		exRate -= EX_RATE_SPEED;
+		exRate -= EX_RATE_DOWN_SPEED;
 	}
 	else if ( exRate <= MIN_EX_RATE )
 	{

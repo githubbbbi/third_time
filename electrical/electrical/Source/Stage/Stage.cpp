@@ -43,10 +43,24 @@ void Stage::MapDraw(int x, int y,
 			// ブロック
 			graphIndex = e_MAP_BLOCK;
 			break;
+		case e_MAP_GOAL_LEFT_BOTTOM:
+			// ゴール左下
+			graphIndex = e_MAP_GOAL_LEFT_BOTTOM;
+			break;
 
-		case e_MAP_GOAL:
-			// ゴール
-			graphIndex = e_MAP_GOAL;
+		case e_MAP_GOAL_RIGHT_BOTTOM:
+			// ゴール右下
+			graphIndex = e_MAP_GOAL_RIGHT_BOTTOM;
+			break;
+
+		case e_MAP_GOAL_LEFT_TOP:
+			// ゴール左上
+			graphIndex = e_MAP_GOAL_LEFT_TOP;
+			break;
+
+		case e_MAP_GOAL_RIGHT_TOP:
+			// ゴール右上
+			graphIndex = e_MAP_GOAL_RIGHT_TOP;
 			break;
 
 		default:
@@ -58,7 +72,7 @@ void Stage::MapDraw(int x, int y,
 	{
 		DrawGraph(x * CHIP_SIZE + (int)shakeX - scrollX,
 				  y * CHIP_SIZE + (int)shakeX - scrollY,
-				  Graphic::GetInstance()->GetMap(graphIndex), true);
+				  Graphic::GetInstance()->GetMapChip(graphIndex), true);
 	}
 }
 
@@ -66,10 +80,10 @@ void Stage::MapDraw(int x, int y,
 void Stage::Draw(float shakeX, float shakeY,
 				 int scrollX, int scrollY, int screenX, int screenY)
 {
-	// スクリーンに映っている部分(1または2ブロック分多く)だけを描画
-	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE - 1;
+	// スクリーンに映っている部分(2ブロック分多く)だけを描画
+	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE - 2;
 	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE + 2;
-	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE - 1;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE - 2;
 	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE + 2;
 
 	if ( mapChipLeft < 0 )
@@ -114,6 +128,15 @@ int Stage::GetMapParam(float x, float y)
 		mapY >= MAP_COUNT_Y )
 	{
 		return e_MAP_NONE;
+	}
+
+	// ゴールのマップチップはまとめてゴールと返す
+	if ( mapData[mapY][mapX] == e_MAP_GOAL_LEFT_BOTTOM ||
+		mapData[mapY][mapX] == e_MAP_GOAL_RIGHT_BOTTOM ||
+		mapData[mapY][mapX] == e_MAP_GOAL_LEFT_TOP ||
+		mapData[mapY][mapX] == e_MAP_GOAL_RIGHT_TOP )
+	{
+		return e_MAP_GOAL;
 	}
 
 	// マップチップ配列の値を返す

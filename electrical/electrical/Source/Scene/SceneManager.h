@@ -20,7 +20,7 @@ private:
 
 public:
 	SceneManager();
-	~SceneManager() = default;
+	~SceneManager();
 
 	void Initialize();
 	void Update();

@@ -158,7 +158,6 @@
     <ClCompile Include="Source\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Scene\SceneEnding.cpp" />
     <ClCompile Include="Source\Scene\SceneGame.cpp" />
-    <ClCompile Include="Source\Scene\SceneGameOver.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\SceneTitle.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />
@@ -167,6 +166,7 @@
     <ClCompile Include="Source\UI\UI_Manager.cpp" />
     <ClCompile Include="Source\UI\UI_ManipulationMethod.cpp" />
     <ClCompile Include="Source\UI\UI_Player.cpp" />
+    <ClCompile Include="Source\UI\UI_Title.cpp" />
     <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,7 +196,6 @@
     <ClInclude Include="Source\Scene\SceneBase.h" />
     <ClInclude Include="Source\Scene\SceneEnding.h" />
     <ClInclude Include="Source\Scene\SceneGame.h" />
-    <ClInclude Include="Source\Scene\SceneGameOver.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />
     <ClInclude Include="Source\Scene\SceneTitle.h" />
     <ClInclude Include="Source\Stage\Stage.h" />
@@ -205,6 +204,7 @@
     <ClInclude Include="Source\UI\UI_Manager.h" />
     <ClInclude Include="Source\UI\UI_ManipulationMethod.h" />
     <ClInclude Include="Source\UI\UI_Player.h" />
+    <ClInclude Include="Source\UI\UI_Title.h" />
     <ClInclude Include="Source\Utility\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
