@@ -155,6 +155,8 @@
     <ClCompile Include="Source\Mask\Mask.cpp" />
     <ClCompile Include="Source\Resource\CSV.cpp" />
     <ClCompile Include="Source\Resource\Graphic.cpp" />
+    <ClCompile Include="Source\Resource\Sound_BGM.cpp" />
+    <ClCompile Include="Source\Resource\Sound_SE.cpp" />
     <ClCompile Include="Source\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Scene\SceneEnding.cpp" />
     <ClCompile Include="Source\Scene\SceneGame.cpp" />
@@ -193,6 +195,8 @@
     <ClInclude Include="Source\Mask\Mask.h" />
     <ClInclude Include="Source\Resource\CSV.h" />
     <ClInclude Include="Source\Resource\Graphic.h" />
+    <ClInclude Include="Source\Resource\Sound_BGM.h" />
+    <ClInclude Include="Source\Resource\Sound_SE.h" />
     <ClInclude Include="Source\Scene\SceneBase.h" />
     <ClInclude Include="Source\Scene\SceneEnding.h" />
     <ClInclude Include="Source\Scene\SceneGame.h" />

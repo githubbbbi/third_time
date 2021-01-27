@@ -19,9 +19,11 @@ Graphic::Graphic()
 				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, mapChip);
 	background = MyLoadGraph("Resource/Graphic/Background/background.png");
 	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
-	uiManipulationMethod = MyLoadGraph("Resource/Graphic/UI/UI_manipulation_method.png");
+	MyLoadDivGraph("Resource/Graphic/UI/UI_manipulation_method.png",
+				   2, 2, 1, 144, 176, uiManipulationMethod);
 	title = MyLoadGraph("Resource/Graphic/Title/title.png");
-	uiTitle = MyLoadGraph("Resource/Graphic/UI/UI_title.png");
+	MyLoadDivGraph("Resource/Graphic/UI/UI_title.png",
+				   1, 1, 1, 103, 24, uiTitle);
 }
 
 // ç°Ç‹Ç≈ÉçÅ[ÉhÇµÇΩâÊëúÇâï˙Ç∑ÇÈ
@@ -110,9 +112,9 @@ int Graphic::GetUIPlayer()
 	return uiPlayer;
 }
 
-int Graphic::GetUIManipulationMethod()
+int Graphic::GetUIManipulationMethod(int index)
 {
-	return uiManipulationMethod;
+	return uiManipulationMethod[index];
 }
 
 int Graphic::GetTitle()
@@ -120,7 +122,7 @@ int Graphic::GetTitle()
 	return title;
 }
 
-int Graphic::GetUITitle()
+int Graphic::GetUITitle(int index)
 {
-	return uiTitle;
+	return uiTitle[index];
 }

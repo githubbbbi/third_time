@@ -8,20 +8,23 @@ UI_Manager::UI_Manager()
 
 // 更新処理
 void UI_Manager::Update(int playerHp, int playerMaxHp,
-						int playerBattery, int playerMaxBattery)
+						int playerBattery, int playerMaxBattery, bool isDrawUIMM)
 {
-	uiPlayer->Update(playerHp, playerMaxHp, 
+	uiPlayer->Update(playerHp, playerMaxHp,
 					 playerBattery, playerMaxBattery);
+
+	// 操作方法
+	uiMainpulation->Update(isDrawUIMM);
 }
 
 // 描画処理
 void UI_Manager::Draw(int playerHp, int playerMaxHp,
-					  int playerBattery, int playerMaxBattery)
+					  int playerBattery, int playerMaxBattery, bool isDrawUIMM)
 {
 	// プレイヤー
 	uiPlayer->Draw(playerHp, playerMaxHp,
-					 playerBattery, playerMaxBattery);
+				   playerBattery, playerMaxBattery);
 
 	// 操作方法
-	uiMainpulation->Draw();
+	uiMainpulation->Draw(isDrawUIMM);
 }

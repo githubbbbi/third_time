@@ -5,13 +5,14 @@
 // パッドのキーコンフィグ
 enum PadConfig
 {
-	e_PAD_MOVE_LEFT = PAD_INPUT_LEFT,		// 左移動
-	e_PAD_MOVE_RIGHT = PAD_INPUT_RIGHT,		// 右移動
-	e_PAD_JUMP = PAD_INPUT_1,				// ジャンプ
-	e_PAD_ATTACK = PAD_INPUT_3,				// 攻撃
-	e_PAD_FIXED_DIRECTION = PAD_INPUT_6,	// 向き固定
-	e_PAD_START = PAD_INPUT_1,				// ゲーム開始
-	e_PAD_EXIT = PAD_INPUT_8,				// ゲーム終了
+	e_PAD_MOVE_LEFT = PAD_INPUT_LEFT,	// 左移動
+	e_PAD_MOVE_RIGHT = PAD_INPUT_RIGHT,	// 右移動
+	e_PAD_JUMP = PAD_INPUT_1,			// ジャンプ
+	e_PAD_ATTACK = PAD_INPUT_3,			// 攻撃
+	e_PAD_FIXED = PAD_INPUT_6,			// 向き固定
+	e_PAD_HELP = PAD_INPUT_4,			// ヘルプ(操作方法を表示)
+	e_PAD_START = PAD_INPUT_1,			// ゲーム開始
+	e_PAD_EXIT = PAD_INPUT_8,			// ゲーム終了
 };
 
 class InputPad

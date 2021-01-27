@@ -106,7 +106,7 @@ void Chara_Player::InputMove()
 	// ダッシュ
 	if ( (InputManager::IsInputBarrage(e_MOVE_LEFT) ||
 		  InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
-		!InputManager::IsInputNow(e_FIXED_DIRECTION) )
+		!InputManager::IsInputNow(e_FIXED) )
 	{
 		speed = P_DASH_SPEED;
 	}
@@ -116,7 +116,7 @@ void Chara_Player::InputMove()
 	}
 
 	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
-	if ( InputManager::IsInputNow(e_FIXED_DIRECTION) )
+	if ( InputManager::IsInputNow(e_FIXED) )
 	{
 		// 左向き
 		if ( isLeftWard )
@@ -507,6 +507,22 @@ void Chara_Player::State()
 	}
 }
 
+// バッテリーボックスの更新処理
+void Chara_Player::BatteryBoxUpdate()
+{
+
+
+	// HSVからRGBに変換
+	Utility::ConvertHSVtoRGB(&batteryBox.r, &batteryBox.g, &batteryBox.b,
+							 batteryBox.h, batteryBox.s, batteryBox.v);
+}
+
+// バッテリーボックスの描画処理
+void Chara_Player::BatteryBoxDraw()
+{
+	
+}
+
 // 更新処理
 void Chara_Player::Update()
 {
@@ -521,8 +537,11 @@ void Chara_Player::Update()
 		Invicible();
 		State();
 
+		// バッテリー
+		BatteryBoxUpdate();
+
 		// 向き固定ボタンが押されていない
-		if ( !InputManager::IsInputNow(e_FIXED_DIRECTION) )
+		if ( !InputManager::IsInputNow(e_FIXED) )
 		{
 			ChangeGraphicDirection();
 		}
@@ -545,13 +564,16 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		electricGun[i]->Draw(scrollX, scrollY);
 	}
 
-	// プレイヤー
 	if ( isAlive )
 	{
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
+		// プレイヤー
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
 					  1.0, 0.0, Graphic::GetInstance()->GetPlayer(graphIndex), true, isLeftWard);
+
+		// バッテリー
+		BatteryBoxDraw();
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

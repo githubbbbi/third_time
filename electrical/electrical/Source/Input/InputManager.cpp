@@ -30,9 +30,13 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_KEY_ATTACK;
 		}
-		else if ( key == e_FIXED_DIRECTION )
+		else if ( key == e_FIXED )
 		{
-			keyCode = e_KEY_FIXED_DIRECTION;
+			keyCode = e_KEY_FIXED;
+		}
+		else if ( key == e_HELP )
+		{
+			keyCode = e_KEY_HELP;
 		}
 		else if ( key == e_START )
 		{
@@ -67,9 +71,13 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_PAD_ATTACK;
 		}
-		else if ( key == e_FIXED_DIRECTION )
+		else if ( key == e_FIXED )
 		{
-			keyCode = e_PAD_FIXED_DIRECTION;
+			keyCode = e_PAD_FIXED;
+		}
+		else if ( key == e_HELP )
+		{
+			keyCode = e_PAD_HELP;
 		}
 		else if ( key == e_START )
 		{
@@ -247,4 +255,16 @@ int InputManager::GetPadInputX()
 int InputManager::GetPadInputY()
 {
 	return InputPad::GetInputY();
+}
+
+// isInputKey‚ðŽæ“¾
+bool InputManager::GetIsInputKey()
+{
+	return isInputKey;
+}
+
+// isInputPad‚ðŽæ“¾
+bool InputManager::GetIsInputPad()
+{
+	return isInputPad;
 }

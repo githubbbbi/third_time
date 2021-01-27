@@ -47,6 +47,22 @@ private:
 	bool isBatteryZero;			// バッテリーゼロフラグ
 	int attackMotionFrame;		// 攻撃モーションフレーム
 
+	// バッテリーボックス
+	typedef struct
+	{
+		RECT boxPos;	// 上下左右の座標
+		int widht;		// 横幅
+		int height;		// 縦幅
+		float r;		// 赤色				:0~255
+		float g;		// 緑色				:0~255
+		float b;		// 青色				:0~255
+		float h;		// 色相(hue)			:0~360
+		float s;		// 彩度(saturation)	:0~255
+		float v;		// 明度(value)		:0~255
+	} BatteryBox;
+
+	BatteryBox batteryBox;
+
 	// 入力での移動
 	void InputMove();
 
@@ -82,6 +98,12 @@ private:
 
 	// 状態
 	void State();
+
+	// バッテリーボックスの更新処理
+	void BatteryBoxUpdate();
+
+	// バッテリーボックスの描画処理
+	void BatteryBoxDraw();
 
 public:
 	Chara_Player(float x, float y, int radius, int width, int height,

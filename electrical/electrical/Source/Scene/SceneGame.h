@@ -17,6 +17,14 @@ private:
 	int scrollX, scrollY;	// スクロール量
 	int screenX, screenY;	// スクリーン中心座標
 	bool isScroll;			// スクロールフラグ
+	bool isDrawUIMM;		// 操作方法UI描画フラグ
+
+	float r;		// 赤色				:0~255
+	float g;		// 緑色				:0~255
+	float b;		// 青色				:0~255
+	float h;		// 色相(hue)			:0~360
+	float s;		// 彩度(saturation)	:0~255
+	float v;		// 明度(value)		:0~255
 
 	// スクリーン座標を求める
 	void Screen();
@@ -24,6 +32,9 @@ private:
 	// エフェクト管理
 	// 「Local」はEffectManagerクラスと名前が被らないよう
 	void LocalEffectManager();
+
+	// UI管理
+	void LoaclUIManager();
 
 	// シーン遷移
 	void SceneChange();

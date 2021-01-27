@@ -22,9 +22,9 @@ private:
 	int mapChip[e_MAP_NUM];					// マップチップ
 	int background;							// 背景
 	int uiPlayer;							// プレイヤーUI
-	int uiManipulationMethod;				// 操作方法UI
+	int uiManipulationMethod[2];			// 操作方法UI
 	int title;								// タイトル
-	int uiTitle;								// タイトルUI
+	int uiTitle[2];							// タイトルUI
 
 	int MyLoadGraph(const char *filename);
 	int MyLoadDivGraph(const char *fileName, int n,
@@ -57,7 +57,7 @@ public:
 	int GetMapChip(int index);
 	int GetBackground();
 	int GetUIPlayer();
-	int GetUIManipulationMethod();
+	int GetUIManipulationMethod(int index);
 	int GetTitle();
-	int GetUITitle();
+	int GetUITitle(int index);
 };

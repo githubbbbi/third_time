@@ -6,7 +6,8 @@ enum
 	e_MOVE_RIGHT,		// 右移動
 	e_JUMP,				// ジャンプ
 	e_ATTACK,			// 攻撃
-	e_FIXED_DIRECTION,	// 向き固定
+	e_FIXED,			// 向き固定
+	e_HELP,				// ヘルプ(操作方法を表示)
 	e_START,			// ゲーム開始
 	e_EXIT,				// ゲーム終了
 	e_NO_INPUT = -1,	// 入力なし
@@ -49,4 +50,10 @@ public:
 
 	// padのinputXを取得
 	static int GetPadInputY();
+
+	// isInputKeyを取得
+	static bool GetIsInputKey();
+	
+	// isInputPadを取得
+	static bool GetIsInputPad();
 };

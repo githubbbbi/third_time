@@ -2,12 +2,14 @@
 #include "UI_Title.h"
 #include "../Define/Define.h"
 #include "../Resource/Graphic.h"
+#include "../Input/InputManager.h"
 
 UI_Title::UI_Title()
 {
 	x = WIN_WIDTH / 2;
 	y = WIN_HEIGHT / 2 + WIN_HEIGHT / 4;
 	trasparency = 255;
+	graphIndex = 0;
 }
 
 // 更新処理
@@ -42,6 +44,17 @@ void UI_Title::Update(bool isBlinking, bool isFlashing)
 			timer = 0;
 		}
 	}
+
+	// 入力がキーボードの場合
+	if ( InputManager::GetIsInputKey() )
+	{
+		graphIndex = 0;
+	}
+	// パッドの場合
+	else if ( InputManager::GetIsInputPad() )
+	{
+		graphIndex = 1;
+	}
 }
 
 // 描画処理
@@ -49,6 +62,6 @@ void UI_Title::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, trasparency);
 	DrawRotaGraph(x, y, 1.5, 0.0,
-				  Graphic::GetInstance()->GetUITitle(), true);
+				  Graphic::GetInstance()->GetUITitle(graphIndex), true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

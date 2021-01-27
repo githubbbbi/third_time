@@ -7,6 +7,7 @@ private:
 	int x;				// 中心座標
 	int y;				// 中心座標
 	int trasparency;	// 透過度
+	int graphIndex;		// グラフインデックス
 
 public:
 	UI_Title();
