@@ -19,7 +19,7 @@ void Mask::SetMask()
 	screenHandle = MakeScreen(WIN_WIDTH, WIN_HEIGHT, TRUE);
 
 	// マスク画像のサイズを設定
-	exRate = MAX_EX_RATE;
+	exRate = MIN_EX_RATE;
 
 	// マスク機能の初期化を行う
 	CreateMaskScreen();

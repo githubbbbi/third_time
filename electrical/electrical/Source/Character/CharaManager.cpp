@@ -134,22 +134,37 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 			float spawnX = (float)(x * CHIP_SIZE) + CHARA_SIZE / 2;
 			float spawnY = (float)(y * CHIP_SIZE) + CHARA_SIZE / 2;
 
+			// スピード(プレイヤーへ向かう)
+			float playerX = player->GetPosX();
+			auto Speed = [playerX, x]()
+			{
+				if ( playerX < x * CHIP_SIZE )
+				{
+					return -1.0f;
+				}
+
+				return 1.0f;
+			};
+			float speed = Speed();
+
 			switch ( spawnData[y][x] )
 			{
 				case e_CharaEnemyBomb:
 					// 爆弾エネミー
+					speed *= EB_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyBomb(spawnX, spawnY,
 														 32, EB_WIDTH, EB_HEIGHT,
-														 EB_NORMAL_SPEED, 2, 10, x, y));
+														 speed, 2, 10, x, y));
 
 					isEnemySpawn[y][x] = true;
 					break;
 
 				case e_CharaEnemyElectric:
 					// 銃エネミー
+					speed *= EE_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyElectric(spawnX, spawnY,
 															 32, EE_WIDTH, EE_HEIGHT,
-															 EE_NORMAL_SPEED, 2, 2, x, y));
+															 speed, 2, 2, x, y));
 					isEnemySpawn[y][x] = true;
 					break;
 
