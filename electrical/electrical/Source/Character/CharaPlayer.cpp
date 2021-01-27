@@ -43,6 +43,17 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	shotBulletNum = 0;
 	attackMotionFrame = 0;
 	isBatteryZero = false;
+
+	batteryBox.boxPosLeft = 0.0f;
+	batteryBox.boxPosRight = 0.0f;
+	batteryBox.boxPosTop = 0.0f;
+	batteryBox.boxPosBottom = 0.0f;
+	batteryBox.r = 255.0f;
+	batteryBox.g = 255.0f;
+	batteryBox.b = 255.0f;
+	batteryBox.h = 210.0f;
+	batteryBox.s = 230.0f;
+	batteryBox.v = 200.0f;
 }
 
 Chara_Player::~Chara_Player()
@@ -510,7 +521,20 @@ void Chara_Player::State()
 // バッテリーボックスの更新処理
 void Chara_Player::BatteryBoxUpdate()
 {
+	// 左向き
+	if (isLeftWard)
+	{
+		batteryBox.boxPosLeft = x + 1.0f;
+	}
+	// 右向き
+	else
+	{
+		batteryBox.boxPosLeft = x - 19.0f;
+	}
 
+	batteryBox.boxPosRight = batteryBox.boxPosLeft + 18.0f;
+	batteryBox.boxPosTop = y + 18.0f - 30.0f * ((float)battery / (float)P_MAX_BATTERY);
+	batteryBox.boxPosBottom = y + 18.0f;
 
 	// HSVからRGBに変換
 	Utility::ConvertHSVtoRGB(&batteryBox.r, &batteryBox.g, &batteryBox.b,
@@ -518,9 +542,13 @@ void Chara_Player::BatteryBoxUpdate()
 }
 
 // バッテリーボックスの描画処理
-void Chara_Player::BatteryBoxDraw()
+void Chara_Player::BatteryBoxDraw(float shakeX, float shakeY, int scrollX, int scrollY)
 {
-	
+	DrawBox((int)(batteryBox.boxPosLeft + shakeX) - scrollX,
+			(int)(batteryBox.boxPosTop + shakeY) - scrollY,
+			(int)(batteryBox.boxPosRight + shakeX) - scrollX,
+			(int)(batteryBox.boxPosBottom + shakeY) - scrollY,
+			GetColor((int)batteryBox.r, (int)batteryBox.g, (int)batteryBox.b), true);
 }
 
 // 更新処理
@@ -568,12 +596,13 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	{
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
+		// バッテリー
+		BatteryBoxDraw(shakeX, shakeY, scrollX, scrollY);
+
 		// プレイヤー
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
 					  1.0, 0.0, Graphic::GetInstance()->GetPlayer(graphIndex), true, isLeftWard);
 
-		// バッテリー
-		BatteryBoxDraw();
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

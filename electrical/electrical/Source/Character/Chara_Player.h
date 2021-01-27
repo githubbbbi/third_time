@@ -50,15 +50,16 @@ private:
 	// バッテリーボックス
 	typedef struct
 	{
-		RECT boxPos;	// 上下左右の座標
-		int widht;		// 横幅
-		int height;		// 縦幅
-		float r;		// 赤色				:0~255
-		float g;		// 緑色				:0~255
-		float b;		// 青色				:0~255
-		float h;		// 色相(hue)			:0~360
-		float s;		// 彩度(saturation)	:0~255
-		float v;		// 明度(value)		:0~255
+		float boxPosLeft;	// バッテリーの左座標
+		float boxPosRight;	// バッテリーの右座標
+		float boxPosTop;	// バッテリーの上座標
+		float boxPosBottom;	// バッテリーの下座標
+		float r;			// 赤色				:0~255
+		float g;			// 緑色				:0~255
+		float b;			// 青色				:0~255
+		float h;			// 色相(hue)			:0~360
+		float s;			// 彩度(saturation)	:0~255
+		float v;			// 明度(value)		:0~255
 	} BatteryBox;
 
 	BatteryBox batteryBox;
@@ -103,7 +104,7 @@ private:
 	void BatteryBoxUpdate();
 
 	// バッテリーボックスの描画処理
-	void BatteryBoxDraw();
+	void BatteryBoxDraw(float shakeX, float shakeY, int scrollX, int scrollY);
 
 public:
 	Chara_Player(float x, float y, int radius, int width, int height,
