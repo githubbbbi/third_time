@@ -4,6 +4,7 @@
 #include "../Input/InputManager.h"
 #include "../Utility/Utility.h"
 #include "../Resource/Graphic.h"
+#include "../Resource/Sound_SE.h"
 
 const int P_WIDTH = 30;
 const int P_HEIGHT = 50;
@@ -79,6 +80,75 @@ void Chara_Player::Initialize()
 	shotBulletNum = 0;
 }
 
+// 移動入力があるかの判定
+bool Chara_Player::IsInputMove()
+{
+	return (padInputX != 0 || padInputY != 0);
+}
+
+// ダッシュの判定
+bool Chara_Player::IsDash()
+{
+	return (InputManager::IsInputBarrage(e_MOVE_LEFT) ||
+			InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
+		!InputManager::IsInputNow(e_FIXED);
+}
+
+// ダッシュなどの判定からスピードを取得
+float Chara_Player::GetNowSpeed()
+{
+	// ダッシュ
+	if ( IsDash() )
+	{
+		return P_DASH_SPEED;
+	}
+
+	// 通常移動
+	if ( IsInputMove() )
+	{
+		return P_NORMAL_SPEED;
+	}
+
+	return 0.0f;
+}
+
+// 向き固定時の処理
+void Chara_Player::Fixed()
+{
+	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
+	if ( InputManager::IsInputNow(e_FIXED) )
+	{
+		// 左向き
+		if ( isLeftWard )
+		{
+			// 左進行
+			if ( padInputX < 0 )
+			{
+				speed = P_NORMAL_SPEED;
+			}
+			// 右進行
+			else if ( padInputX > 0 )
+			{
+				speed = P_NORMAL_SPEED / 2.0f;
+			}
+		}
+		// 右向き
+		else
+		{
+			// 左進行
+			if ( padInputX < 0 )
+			{
+				speed = P_NORMAL_SPEED / 2.0f;
+			}
+			// 右進行
+			else if ( padInputX > 0 )
+			{
+				speed = P_NORMAL_SPEED;
+			}
+		}
+	}
+}
+
 // 入力での移動
 void Chara_Player::InputMove()
 {
@@ -114,50 +184,11 @@ void Chara_Player::InputMove()
 	padInputX = InputManager::GetPadInputX();
 	padInputY = InputManager::GetPadInputY();
 
-	// ダッシュ
-	if ( (InputManager::IsInputBarrage(e_MOVE_LEFT) ||
-		  InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
-		!InputManager::IsInputNow(e_FIXED) )
-	{
-		speed = P_DASH_SPEED;
-	}
-	else if ( padInputX != 0 || padInputY != 0 )
-	{
-		speed = P_NORMAL_SPEED;
-	}
+	// スピード
+	speed = GetNowSpeed();
 
-	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
-	if ( InputManager::IsInputNow(e_FIXED) )
-	{
-		// 左向き
-		if ( isLeftWard )
-		{
-			// 左進行
-			if ( padInputX < 0 )
-			{
-				speed = P_NORMAL_SPEED;
-			}
-			// 右進行
-			else if ( padInputX > 0 )
-			{
-				speed = P_NORMAL_SPEED / 2.0f;
-			}
-		}
-		// 右向き
-		else
-		{
-			// 左進行
-			if ( padInputX < 0 )
-			{
-				speed = P_NORMAL_SPEED / 2.0f;
-			}
-			// 右進行
-			else if ( padInputX > 0 )
-			{
-				speed = P_NORMAL_SPEED;
-			}
-		}
-	}
+	// 向き固定時
+	Fixed();
 
 	// 方向キー/アナログスティックでの左右移動
 	moveX += speed * (padInputX / 1000.0f);
@@ -165,6 +196,9 @@ void Chara_Player::InputMove()
 	// ジャンプ
 	if ( InputManager::IsInputTrigger(e_JUMP) )
 	{
+		// SE再生
+		Sound_SE::GetInstance()->PlaySE(e_PLAYER_JUMP_SE, false);
+
 		// ジャンプの初期化
 		CharaJump(P_JUMP_POWER);
 	}
@@ -208,6 +242,12 @@ void Chara_Player::ChangeGraphicDirection()
 // バッテリー減少
 void Chara_Player::BatteryDecrease()
 {
+	// ゴールした後は処理を行わない
+	if ( IsGoal() )
+	{
+		return;
+	}
+
 	// ダメージを受けているときは処理を行わない
 	if ( isCBlinking )
 	{
@@ -245,37 +285,79 @@ void Chara_Player::BatteryDecrease()
 	if ( shotBulletNum >= P_CONSUMPTION_BULLET_NUM )
 	{
 		// バッテリー減少
-		battery -= 2;
+		battery -= 5;
 		shotBulletNum = 0;
 	}
+}
+
+// バッテリチャージを行わない場合
+void Chara_Player::NotBatteryChage()
+{
+	// SE停止
+	Sound_SE::GetInstance()->StopSE(e_PLAYER_CHAGING_SE);
+	batteryChargeTimer = 0;
 }
 
 // バッテリーチャージ
 void Chara_Player::BatteryCharge()
 {
-	// バッテリーが最大またはダメージを受けたときは処理を行わない
-	if ( battery == P_MAX_BATTERY || isCBlinking )
+	// ゴールした後は処理を行わない
+	if ( IsGoal() )
 	{
-		batteryChargeTimer = 0;
 		return;
 	}
 
-	// 移動中でないかつ攻撃中でない
-	if ( moveX == 0.0f && moveY == 0.0f && (!isJump || !isFall) && !isAttack )
+	// バッテリー中だったがバッテリーが最大になったとき
+	if ( batteryChargeTimer > 0 && battery == P_MAX_BATTERY )
 	{
-		batteryChargeTimer += 15;
-
-		// バッテリー上昇
-		if ( batteryChargeTimer % BATTERY_CHARGE_TIME == 0 )
-		{
-			battery++;
-		}
-
-		// チャージ中はバッテリーは減少しない
-		batteryTimer = 0;
-
+		NotBatteryChage();
 		return;
 	}
+
+	// バッテリーが最大になったときは処理を行わない
+	if ( battery == P_MAX_BATTERY )
+	{
+		NotBatteryChage();
+		return;
+	}
+
+	// ダメージを受けたときは処理を行わない
+	if ( isCBlinking )
+	{
+		NotBatteryChage();
+		return;
+	}
+
+	// 移動中は処理を行わない
+	if ( moveX != 0.0f || moveY != 0.0f ||
+		isJump || isFall )
+	{
+		NotBatteryChage();
+		return;
+	}
+
+	// 攻撃中は処理を行わない
+	if ( isAttack )
+	{
+		NotBatteryChage();
+		return;
+	}
+
+	// ここからチャージ処理
+	// SE再生
+	Sound_SE::GetInstance()->PlaySE(e_PLAYER_CHAGING_SE, true);
+	batteryChargeTimer += 15;
+
+	// バッテリー上昇
+	if ( batteryChargeTimer % BATTERY_CHARGE_TIME == 0 )
+	{
+		battery++;
+	}
+
+	// チャージ中はバッテリーは減少しない
+	batteryTimer = 0;
+
+	return;
 }
 
 // バッテリーゼロ
@@ -522,7 +604,7 @@ void Chara_Player::State()
 void Chara_Player::BatteryBoxUpdate()
 {
 	// 左向き
-	if (isLeftWard)
+	if ( isLeftWard )
 	{
 		batteryBox.boxPosLeft = x + 1.0f;
 	}

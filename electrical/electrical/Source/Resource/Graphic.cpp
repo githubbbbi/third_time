@@ -3,6 +3,7 @@
 
 Graphic::Graphic()
 {
+	// ì«Ç›çûÇ›
 	mask = MyLoadGraph("Resource/Graphic/Mask/mask.png");
 	MyLoadDivGraph("Resource/Graphic/Character/Player/player.png",
 				   4 * e_P_STATE_NUM, 4, e_P_STATE_NUM, CHARA_SIZE, CHARA_SIZE, player);
@@ -12,8 +13,8 @@ Graphic::Graphic()
 				   4 * e_EE_STATE_NUM, 4, e_EE_STATE_NUM, CHARA_SIZE, CHARA_SIZE, enemyElectric);
 	MyLoadDivGraph("Resource/Graphic/Character/Enemy/water.png",
 				   4 * e_EW_STATE_NUM, 4, e_EW_STATE_NUM, CHARA_SIZE, CHARA_SIZE, enemyWater);
-	electricGun = MyLoadGraph("Resource/Graphic/Weapon/electricGun.png");
-	waterGun = MyLoadGraph("Resource/Graphic/Weapon/waterGun.png");
+	electricGun = MyLoadGraph("Resource/Graphic/Weapon/electric_gun.png");
+	waterGun = MyLoadGraph("Resource/Graphic/Weapon/water_gun.png");
 	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
 	MyLoadDivGraph("Resource/Graphic/MapChip/map_chip.png",
 				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, mapChip);
@@ -21,9 +22,12 @@ Graphic::Graphic()
 	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_manipulation_method.png",
 				   2, 2, 1, 144, 176, uiManipulationMethod);
+	MyLoadDivGraph("Resource/Graphic/UI/UI_help.png",
+				   2, 1, 2, 96, 32, uiHelp);
 	title = MyLoadGraph("Resource/Graphic/Title/title.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_title.png",
 				   2, 1, 2, 140, 24, uiTitle);
+	ending = MyLoadGraph("Resource/Graphic/Ending/ending.png");
 }
 
 // ç°Ç‹Ç≈ÉçÅ[ÉhÇµÇΩâÊëúÇâï˙Ç∑ÇÈ
@@ -117,6 +121,11 @@ int Graphic::GetUIManipulationMethod(int index)
 	return uiManipulationMethod[index];
 }
 
+int Graphic::GetUIHelp(int index)
+{
+	return uiHelp[index];
+}
+
 int Graphic::GetTitle()
 {
 	return title;
@@ -125,4 +134,9 @@ int Graphic::GetTitle()
 int Graphic::GetUITitle(int index)
 {
 	return uiTitle[index];
+}
+
+int Graphic::GetEnding()
+{
+	return ending;
 }

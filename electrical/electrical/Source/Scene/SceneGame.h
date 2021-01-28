@@ -30,8 +30,7 @@ private:
 	void Screen();
 
 	// エフェクト管理
-	// 「Local」はEffectManagerクラスと名前が被らないよう
-	void LocalEffectManager();
+	void MyEffectManager();
 
 	// UI管理
 	void LoaclUIManager();

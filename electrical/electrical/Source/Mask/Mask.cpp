@@ -5,7 +5,7 @@
 
 const double EX_RATE_UP_SPEED = 1.0;
 const double EX_RATE_DOWN_SPEED = 1.5;
-const double MAX_EX_RATE = 125.0;
+const double MAX_EX_RATE = 150.0;
 const double MIN_EX_RATE = 0.0;
 
 // •Ï”‰Šú‰»

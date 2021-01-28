@@ -2,7 +2,8 @@
 #include "Weapon_ElectricGun.h"
 #include "../../Define/Define.h"
 #include "../../Utility/Utility.h"
-#include "../..//Resource/Graphic.h"
+#include "../../Resource/Graphic.h"
+#include "../../Resource/Sound_SE.h"
 
 const float EG_SPEED = 10.0f;
 const int EG_ALIVE_TIME = 30;
@@ -11,8 +12,11 @@ Weapon_ElectricGun::Weapon_ElectricGun(float x, float y, int radius, float speed
 									   int eraseFrame, bool isCharaLeftWard):
 	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard)
 {
-	exRate = 1.0;
+	exRate = 0.75;
 	aliveTimer = 0;
+
+	// SEÄ¶
+	Sound_SE::GetInstance()->PlaySE(e_SHOT_ELECTRIC_GUN_SE, false);
 }
 
 // ˆÚ“®

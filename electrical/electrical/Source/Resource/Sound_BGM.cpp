@@ -3,6 +3,23 @@
 
 Sound_BGM::Sound_BGM()
 {
+	// 読み込み
+	title = MyLoadSoundMem("Resource/Sound/BGM/title.mp3");
+	game = MyLoadSoundMem("Resource/Sound/BGM/game.mp3");
+
+	// サウンドの音量を設定
+	MyChangeVolumeSoundMem();
+}
+
+// サウンドの音量を設定
+void Sound_BGM::MyChangeVolumeSoundMem()
+{
+	for ( unsigned i = 0; i < BGM.size(); i++ )
+	{
+		ChangeVolumeSoundMem((int)(255.0f * 70.0f / 100.0f), BGM[i]);
+	}
+
+	ChangeVolumeSoundMem((int)(255.0f * 45.0f / 100.0f), game);
 }
 
 void Sound_BGM::Release()
@@ -21,4 +38,64 @@ int Sound_BGM::MyLoadSoundMem(const char *filename)
 	BGM.push_back(temp);
 
 	return temp;
+}
+
+// BGM再生
+void Sound_BGM::PlayBGM(BGM_Info bgm)
+{
+	switch ( bgm )
+	{
+		case e_TITLE_BGM:
+			// タイトル
+			if ( CheckSoundMem(title) )
+			{
+				break;
+			}
+
+			PlaySoundMem(title, DX_PLAYTYPE_BACK);
+			break;
+
+		case e_GAME_BGM:
+			// ゲーム
+			if ( CheckSoundMem(game) )
+			{
+				break;
+			}
+
+			PlaySoundMem(game, DX_PLAYTYPE_BACK);
+			break;
+
+		default:
+			break;
+	}
+}
+
+// BGM停止
+void Sound_BGM::StopBGM(BGM_Info bgm)
+{
+	switch ( bgm )
+	{
+		case e_TITLE_BGM:
+			// タイトル
+			if ( !CheckSoundMem(title) )
+			{
+				break;
+			}
+
+			StopSoundMem(title);
+			break;
+
+		case e_GAME_BGM:
+			// ゲーム
+			if ( !CheckSoundMem(game) )
+			{
+				break;
+			}
+
+			StopSoundMem(game);
+			break;
+
+		default:
+			break;
+	}
 }

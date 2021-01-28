@@ -3,9 +3,14 @@
 class UI_ManipulationMethod
 {
 private:
-	int x;			// 中心座標
-	int y;			// 中心座標
-	int graphIndex;	// グラフインデックス
+	typedef struct
+	{
+		int x;			// 中心座標
+		int y;			// 中心座標
+		int graphIndex;	// グラフインデックス
+	}UI;
+
+	UI ui[2];
 
 public:
 	UI_ManipulationMethod();

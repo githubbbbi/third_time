@@ -64,6 +64,18 @@ private:
 
 	BatteryBox batteryBox;
 
+	// 移動入力があるかの判定
+	bool IsInputMove();
+
+	// ダッシュの判定
+	bool IsDash();
+
+	// ダッシュなどの判定からスピードを取得
+	float GetNowSpeed();
+
+	// 向き固定時の処理
+	void Fixed();
+
 	// 入力での移動
 	void InputMove();
 
@@ -75,6 +87,9 @@ private:
 
 	// バッテリー減少
 	void BatteryDecrease();
+
+	// バッテリチャージを行わない場合
+	void NotBatteryChage();
 
 	// バッテリーチャージ
 	void BatteryCharge();

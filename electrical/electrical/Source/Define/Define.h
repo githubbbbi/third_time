@@ -1,7 +1,7 @@
 #pragma once
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "ゲームタイトル";
+const char TITLE[] = "CHARGING";
 
 // ウィンドウ横幅縦幅
 const int WIN_WIDTH = 56 * 17;

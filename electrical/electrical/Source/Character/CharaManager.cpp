@@ -164,7 +164,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					speed *= EE_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyElectric(spawnX, spawnY,
 															 32, EE_WIDTH, EE_HEIGHT,
-															 speed, 5, 2, x, y));
+															 speed, 5, 5, x, y));
 					isEnemySpawn[y][x] = true;
 					break;
 
@@ -306,14 +306,17 @@ void Chara_Manager::Update(int screenX, int screenY)
 	// プレイヤー
 	player->Update();
 
+	// プレイヤーがゴール時は処理を行わない
+	if ( player->GetIsGoal() )
+	{
+		return;
+	}
+
 	//キャラの当たり判定
 	CharaCollision();
 
-	// エネミー プレイヤーがゴール時は処理を行わない
-	if ( !player->GetIsGoal() )
-	{
-		EnemyManager(screenX, screenY);
-	}
+	// エネミー
+	EnemyManager(screenX, screenY);
 
 	// 攻撃の当たり判定
 	AttackCollision();

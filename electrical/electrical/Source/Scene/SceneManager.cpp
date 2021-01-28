@@ -5,14 +5,22 @@
 #include "../Input/InputManager.h"
 #include "../Mask/Mask.h"
 #include "../Resource/Graphic.h"
+#include "../Resource/Sound_BGM.h"
+#include "../Resource/Sound_SE.h"
 
 SceneManager::SceneManager()
 {
 	nowScene = std::make_unique<SceneTitle>();
 	scene = e_TITLE;
 
-	// 画像の読み込み
+	// 画像読み込み
 	Graphic::GetInstance()->Load();
+
+	// BGM読み込み
+	Sound_BGM::GetInstance()->Load();
+	
+	// SE読み込み
+	Sound_SE::GetInstance()->Load();
 
 	// マスクセット
 	Mask::SetMask();

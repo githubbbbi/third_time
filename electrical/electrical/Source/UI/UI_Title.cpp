@@ -9,7 +9,7 @@ UI_Title::UI_Title()
 	x = WIN_WIDTH / 2;
 	y = WIN_HEIGHT / 2 + WIN_HEIGHT / 4;
 	trasparency = 255;
-	graphIndex = 0;
+	graphIndex = 1;
 }
 
 // XVˆ—

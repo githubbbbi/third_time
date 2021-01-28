@@ -4,6 +4,8 @@
 #include "../Utility/Utility.h"
 #include "../Input/InputManager.h"
 #include "../Background/Background.h"
+#include "../Resource/Sound_BGM.h"
+#include "../Resource/Sound_SE.h"
 
 // コンストラクタ
 SceneGame::SceneGame()
@@ -66,7 +68,7 @@ void SceneGame::Screen()
 }
 
 // エフェクト管理
-void SceneGame::LocalEffectManager()
+void SceneGame::MyEffectManager()
 {
 	// キャラクターの死亡エフェクト
 	if ( characters->GetIsCharaDeath() )
@@ -108,6 +110,8 @@ void SceneGame::LoaclUIManager()
 	if ( !isDrawUIMM &&
 		InputManager::IsInputTrigger(e_HELP) )
 	{
+		// SE再生
+		Sound_SE::GetInstance()->PlaySE(e_OPEN_HELP_SE, false);
 		isDrawUIMM = true;
 		return;
 	}
@@ -116,6 +120,8 @@ void SceneGame::LoaclUIManager()
 	if ( isDrawUIMM &&
 		InputManager::IsInputTrigger(e_HELP) )
 	{
+		// SE再生
+		Sound_SE::GetInstance()->PlaySE(e_OPEN_HELP_SE, false);
 		isDrawUIMM = false;
 		return;
 	}
@@ -127,6 +133,8 @@ void SceneGame::SceneChange()
 	// プレイヤーが死亡→初期化処理
 	if ( !characters->GetPlayerIsAlive() )
 	{
+		// BGM停止
+		Sound_BGM::GetInstance()->StopBGM(e_GAME_BGM);
 		nextScene = e_GAME;
 		isSceneChange = true;
 		return;
@@ -143,6 +151,17 @@ void SceneGame::SceneChange()
 		}
 
 		timer = 0;
+		// BGM停止
+		Sound_BGM::GetInstance()->StopBGM(e_GAME_BGM);
+
+		// すべてのSE停止
+		if ( !isSceneChange )
+		{
+			Sound_SE::GetInstance()->StopAllSE();
+		}
+
+		// SE(ジングル)再生
+		Sound_SE::GetInstance()->PlaySE(e_STAGE_CLEAR_SE, true);
 		nextScene = e_ENDING;
 		isSceneChange = true;
 		return;
@@ -161,6 +180,18 @@ void SceneGame::GameEnd()
 // 更新処理
 void SceneGame::Update()
 {
+	// BGM再生
+	if ( !isSceneChange )
+	{
+		Sound_BGM::GetInstance()->PlayBGM(e_GAME_BGM);
+	}
+
+	// SE再生
+	if ( isScroll )
+	{
+		Sound_SE::GetInstance()->PlaySE(e_SCROLL_SE, true);
+	}
+
 	// スクリーン座標を求める
 	Screen();
 
@@ -173,14 +204,13 @@ void SceneGame::Update()
 						&scrollX, &scrollY, &isScroll);
 
 		// エフェクト
-		LocalEffectManager();
+		MyEffectManager();
 
 		// スクロール中は更新処理を行わない
 		if ( !isScroll )
 		{
 			// キャラクター
 			characters->Update(screenX, screenY);
-
 		}
 	}
 

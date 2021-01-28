@@ -23,8 +23,10 @@ private:
 	int background;							// 背景
 	int uiPlayer;							// プレイヤーUI
 	int uiManipulationMethod[2];			// 操作方法UI
+	int uiHelp[2];							// ヘルプUI
 	int title;								// タイトル
 	int uiTitle[2];							// タイトルUI
+	int ending;								// エンディング
 
 	int MyLoadGraph(const char *filename);
 	int MyLoadDivGraph(const char *fileName, int n,
@@ -58,6 +60,8 @@ public:
 	int GetBackground();
 	int GetUIPlayer();
 	int GetUIManipulationMethod(int index);
+	int GetUIHelp(int index);
 	int GetTitle();
 	int GetUITitle(int index);
+	int GetEnding();
 };

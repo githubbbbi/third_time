@@ -22,6 +22,9 @@ private:
 	// ライトニング描画処理
 	void LightningDraw();
 
+	// シーン遷移判定
+	bool IsSceneChange();
+
 	// シーン遷移
 	void SceneChange();
 

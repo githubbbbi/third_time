@@ -5,6 +5,9 @@
 class SceneEnding:public SceneBase
 {
 private:
+	int x;	// 中心座標
+	int y;	// 中心座標
+
 	// シーン遷移
 	void SceneChange();
 

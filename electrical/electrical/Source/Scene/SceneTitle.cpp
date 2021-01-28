@@ -4,6 +4,8 @@
 #include "../Resource/Graphic.h"
 #include "../Define/Define.h"
 #include "../Background/Background.h"
+#include "../Resource/Sound_BGM.h"
+#include "../Resource/Sound_SE.h"
 
 SceneTitle::SceneTitle()
 {
@@ -74,13 +76,26 @@ void SceneTitle::LightningDraw()
 	}
 }
 
+// シーン遷移判定
+bool SceneTitle::IsSceneChange()
+{
+	return InputManager::IsInputRelease(e_START);
+}
+
 // シーン遷移
 void SceneTitle::SceneChange()
 {
 	// メインゲームへ遷移
-	if ( InputManager::IsInputRelease(e_START) )
+	if ( IsSceneChange() )
 	{
 		nextScene = e_GAME;
+
+		// BGM停止
+		Sound_BGM::GetInstance()->StopBGM(e_TITLE_BGM);
+
+		// SE再生
+		Sound_SE::GetInstance()->PlaySE(e_GAME_START_SE, true);
+
 		isSceneChange = true;
 	}
 }
@@ -97,6 +112,12 @@ void SceneTitle::GameEnd()
 // 更新処理
 void SceneTitle::Update()
 {
+	// BGM再生
+	if ( !isSceneChange )
+	{
+		Sound_BGM::GetInstance()->PlayBGM(e_TITLE_BGM);
+	}
+
 	LightningUpdate();
 
 	// タイトルUI シーン遷移時に点滅、そうでなければ明滅

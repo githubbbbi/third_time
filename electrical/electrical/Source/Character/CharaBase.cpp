@@ -4,6 +4,7 @@
 #include "../Utility/Utility.h"
 #include "../Define/Define.h"
 #include "../Stage/Stage.h"
+#include "../Resource/Sound_SE.h"
 
 const int CHARA_SIZE = 56;
 const float GRAVITY = 0.850f;
@@ -186,6 +187,9 @@ void CharaBase::HpZero()
 	if ( hp <= 0 )
 	{
 		hp = 0;
+
+		// SE再生
+		Sound_SE::GetInstance()->PlaySE(e_DEATH_SE, false);
 		isAlive = false;
 	}
 }
@@ -351,6 +355,9 @@ void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 {
 	hp -= attackPower;
 
+	// SE再生
+	Sound_SE::GetInstance()->PlaySE(e_RECEIVE_DAMAGE_SE, false);
+
 	// 色点滅フラグTRUE
 	if ( !isCBlinking )
 	{
@@ -454,6 +461,7 @@ bool CharaBase::GetIsInvicible()
 	return isInvicible;
 }
 
+// isExplosionを取得
 bool CharaBase::GetIsExplosion()
 {
 	return isExplosion;

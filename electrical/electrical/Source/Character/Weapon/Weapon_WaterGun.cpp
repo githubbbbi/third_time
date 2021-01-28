@@ -3,6 +3,7 @@
 #include "../../Define/Define.h"
 #include "../../Utility/Utility.h"
 #include "../..//Resource/Graphic.h"
+#include "../..//Resource/Sound_SE.h"
 
 const float WG_GRAVITY = 0.85f;
 
@@ -11,6 +12,9 @@ Weapon_WaterGun::Weapon_WaterGun(float x, float y, int radius, float speedX, flo
 	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard)
 {
 	moveY = -10.0f;
+
+	// SE再生
+	Sound_SE::GetInstance()->PlaySE(e_SHOT_WATER_GUN_SE, false);
 }
 
 // ブロックとの当たり判定を考慮しない移動

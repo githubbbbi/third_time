@@ -2,9 +2,12 @@
 #include "SceneEnding.h"
 #include "../Input/InputManager.h"
 #include "../Resource/Graphic.h"
+#include "../Define/Define.h"
 
 SceneEnding::SceneEnding()
 {
+	x = WIN_WIDTH / 2;
+	y = WIN_HEIGHT / 2;
 }
 
 // ‰Šú‰»ˆ—
@@ -43,6 +46,6 @@ void SceneEnding::Update()
 // •`‰æˆ—
 void SceneEnding::Draw()
 {
-	DrawString(500, 100, "ENDING", GetColor(255, 255, 255));
-	DrawString(500, 200, "space", GetColor(255, 255, 255));
+	DrawRotaGraph(x, y, 2.0, 0.0,
+				  Graphic::GetInstance()->GetEnding(), true);
 }
