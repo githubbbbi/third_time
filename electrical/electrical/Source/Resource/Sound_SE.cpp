@@ -30,8 +30,8 @@ void Sound_SE::MyChangeVolumeSoundMem()
 	ChangeVolumeSoundMem((int)(255.0f * 70.0f / 100.0f), gameStart);
 	ChangeVolumeSoundMem((int)(255.0f * 40.0f / 100.0f), playerJump);
 	ChangeVolumeSoundMem((int)(255.0f * 35.0f / 100.0f), shotElectricGun);
+	ChangeVolumeSoundMem((int)(255.0f * 65.0f / 100.0f), shotWaterGun);
 	ChangeVolumeSoundMem((int)(255.0f * 90.0f / 100.0f), receiveDamage);
-	ChangeVolumeSoundMem((int)(255.0f * 50.0f / 100.0f), openHelp);
 }
 
 // ¡‚Ü‚Åƒ[ƒh‚µ‚½SE‚ğ‰ğ•ú‚·‚é

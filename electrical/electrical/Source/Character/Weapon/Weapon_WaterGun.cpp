@@ -14,7 +14,7 @@ Weapon_WaterGun::Weapon_WaterGun(float x, float y, int radius, float speedX, flo
 	moveY = -10.0f;
 
 	// SE再生
-	Sound_SE::GetInstance()->PlaySE(e_SHOT_WATER_GUN_SE, false);
+	Sound_SE::GetInstance()->PlaySE(e_SHOT_WATER_GUN_SE, true);
 }
 
 // ブロックとの当たり判定を考慮しない移動

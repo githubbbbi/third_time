@@ -19,7 +19,7 @@ void Sound_BGM::MyChangeVolumeSoundMem()
 		ChangeVolumeSoundMem((int)(255.0f * 70.0f / 100.0f), BGM[i]);
 	}
 
-	ChangeVolumeSoundMem((int)(255.0f * 45.0f / 100.0f), game);
+	ChangeVolumeSoundMem((int)(255.0f * 40.0f / 100.0f), game);
 }
 
 void Sound_BGM::Release()

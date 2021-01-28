@@ -94,7 +94,10 @@ void SceneTitle::SceneChange()
 		Sound_BGM::GetInstance()->StopBGM(e_TITLE_BGM);
 
 		// SEÄ¶
-		Sound_SE::GetInstance()->PlaySE(e_GAME_START_SE, true);
+		if ( !isSceneChange )
+		{
+			Sound_SE::GetInstance()->PlaySE(e_GAME_START_SE, true);
+		}
 
 		isSceneChange = true;
 	}

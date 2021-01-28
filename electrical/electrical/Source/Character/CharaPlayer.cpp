@@ -196,6 +196,12 @@ void Chara_Player::InputMove()
 	// ジャンプ
 	if ( InputManager::IsInputTrigger(e_JUMP) )
 	{
+		// ジャンプができない場合は処理を行わない
+		if ( isJump || isFall )
+		{
+			return;
+		}
+
 		// SE再生
 		Sound_SE::GetInstance()->PlaySE(e_PLAYER_JUMP_SE, false);
 
