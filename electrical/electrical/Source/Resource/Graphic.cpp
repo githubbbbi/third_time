@@ -23,7 +23,7 @@ Graphic::Graphic()
 				   2, 2, 1, 144, 176, uiManipulationMethod);
 	title = MyLoadGraph("Resource/Graphic/Title/title.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_title.png",
-				   1, 1, 1, 103, 24, uiTitle);
+				   2, 1, 2, 140, 24, uiTitle);
 }
 
 // ¡‚Ü‚Åƒ[ƒh‚µ‚½‰æ‘œ‚ğ‰ğ•ú‚·‚é

@@ -154,7 +154,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					speed *= EB_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyBomb(spawnX, spawnY,
 														 32, EB_WIDTH, EB_HEIGHT,
-														 speed, 2, 10, x, y));
+														 speed, 10, 10, x, y));
 
 					isEnemySpawn[y][x] = true;
 					break;
@@ -164,7 +164,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					speed *= EE_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyElectric(spawnX, spawnY,
 															 32, EE_WIDTH, EE_HEIGHT,
-															 speed, 2, 2, x, y));
+															 speed, 5, 2, x, y));
 					isEnemySpawn[y][x] = true;
 					break;
 

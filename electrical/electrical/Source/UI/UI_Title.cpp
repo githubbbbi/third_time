@@ -15,6 +15,17 @@ UI_Title::UI_Title()
 // 更新処理
 void UI_Title::Update(bool isBlinking, bool isFlashing)
 {
+	// 入力がキーボードの場合
+	if ( InputManager::GetIsInputKey() )
+	{
+		graphIndex = 0;
+	}
+	// パッドの場合
+	else if ( InputManager::GetIsInputPad() )
+	{
+		graphIndex = 1;
+	}
+
 	// 明滅
 	if ( isBlinking )
 	{
@@ -24,12 +35,9 @@ void UI_Title::Update(bool isBlinking, bool isFlashing)
 		{
 			transSpeed *= -1;
 		}
-
-		return;
 	}
-
 	// 点滅
-	if ( isFlashing )
+	else if ( isFlashing )
 	{
 		const int change = 10;
 		static int timer = 0;
@@ -43,17 +51,6 @@ void UI_Title::Update(bool isBlinking, bool isFlashing)
 		{
 			timer = 0;
 		}
-	}
-
-	// 入力がキーボードの場合
-	if ( InputManager::GetIsInputKey() )
-	{
-		graphIndex = 0;
-	}
-	// パッドの場合
-	else if ( InputManager::GetIsInputPad() )
-	{
-		graphIndex = 1;
 	}
 }
 
