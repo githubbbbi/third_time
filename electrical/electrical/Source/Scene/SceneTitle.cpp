@@ -33,7 +33,7 @@ void SceneTitle::Initialize()
 }
 
 // ライトニング更新処理
-void SceneTitle::LightningUpdate()
+void SceneTitle::UpdateLightning()
 {
 	const int wallX1 = x - width / 2;
 	const int wallY1 = y - height / 2;
@@ -68,7 +68,7 @@ void SceneTitle::LightningUpdate()
 }
 
 // ライトニング描画処理
-void SceneTitle::LightningDraw()
+void SceneTitle::DrawLightning()
 {
 	for ( unsigned int i = 0; i < lightnings.size(); i++ )
 	{
@@ -121,7 +121,7 @@ void SceneTitle::Update(bool isSCPossible)
 		Sound_BGM::GetInstance()->PlayBGM(e_TITLE_BGM);
 	}
 
-	LightningUpdate();
+	UpdateLightning();
 
 	// タイトルUI シーン遷移時に点滅、そうでなければ明滅
 	ui->Update(!isSceneChange, isSceneChange);
@@ -136,7 +136,7 @@ void SceneTitle::Draw()
 	Background back;
 	back.Draw(0.0f, 0.0f);
 
-	LightningDraw();
+	DrawLightning();
 	DrawRotaGraph(x, y, 1.0, 0.0,
 				  Graphic::GetInstance()->GetTitle(), true);
 

@@ -168,6 +168,7 @@
     <ClCompile Include="Source\UI\UI_Manager.cpp" />
     <ClCompile Include="Source\UI\UI_ManipulationMethod.cpp" />
     <ClCompile Include="Source\UI\UI_Player.cpp" />
+    <ClCompile Include="Source\UI\UI_Ready.cpp" />
     <ClCompile Include="Source\UI\UI_Title.cpp" />
     <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
@@ -208,6 +209,7 @@
     <ClInclude Include="Source\UI\UI_Manager.h" />
     <ClInclude Include="Source\UI\UI_ManipulationMethod.h" />
     <ClInclude Include="Source\UI\UI_Player.h" />
+    <ClInclude Include="Source\UI\UI_Ready.h" />
     <ClInclude Include="Source\UI\UI_Title.h" />
     <ClInclude Include="Source\Utility\Utility.h" />
   </ItemGroup>

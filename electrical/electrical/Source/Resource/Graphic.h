@@ -27,6 +27,7 @@ private:
 	int title;								// タイトル
 	int uiTitle[2];							// タイトルUI
 	int ending;								// エンディング
+	int uiReady;							// READY_UI
 
 	int MyLoadGraph(const char *filename);
 	int MyLoadDivGraph(const char *fileName, int n,
@@ -64,4 +65,5 @@ public:
 	int GetTitle();
 	int GetUITitle(int index);
 	int GetEnding();
+	int GetUIReady();
 };

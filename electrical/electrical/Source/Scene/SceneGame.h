@@ -33,7 +33,7 @@ private:
 	void MyEffectManager();
 
 	// UIŠÇ—
-	void LoaclUIManager();
+	void MyUIManager();
 
 	// ƒV[ƒ“‘JˆÚ
 	void SceneChange(bool isSCPossible);

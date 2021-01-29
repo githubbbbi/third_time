@@ -204,6 +204,9 @@
     <ClCompile Include="Source\Resource\Sound_BGM.cpp">
       <Filter>ソース ファイル\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UI\UI_Ready.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Define\Define.h">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="Source\Resource\Sound_BGM.h">
       <Filter>ヘッダー ファイル\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\UI_Ready.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

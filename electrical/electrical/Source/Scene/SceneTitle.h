@@ -17,10 +17,10 @@ private:
 	int height;	// 縦幅
 
 	// ライトニング更新処理
-	void LightningUpdate();
+	void UpdateLightning();
 
 	// ライトニング描画処理
-	void LightningDraw();
+	void DrawLightning();
 
 	// シーン遷移
 	void SceneChange(bool isSCPossible);

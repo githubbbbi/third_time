@@ -86,24 +86,31 @@ void SceneGame::MyEffectManager()
 }
 
 // UI管理
-void SceneGame::LoaclUIManager()
+void SceneGame::MyUIManager()
 {
 	// 更新処理
 	ui->Update(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
 			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
 
-	// 操作一覧表示中は後ろの明度を下げる
+	// 操作一覧表示中でない
 	if ( !isDrawUIMM )
 	{
 		h = 0.0f;
 		s = 0.0f;
 		v = 255.0f;
 	}
+	// 操作一覧表示中
 	else
 	{
 		h = 0.0f;
 		s = 0.0f;
 		v = 64.0f;
+	}
+
+	//  READYの場合は処理を行わない
+	if ( ui->GetIsReady() )
+	{
+		return;
 	}
 
 	// ヘルプ(操作一覧を表示)
@@ -192,18 +199,18 @@ void SceneGame::Update(bool isSCPossible)
 		Sound_BGM::GetInstance()->PlayBGM(e_GAME_BGM);
 	}
 
-	// SE再生
-	if ( isScroll )
-	{
-		Sound_SE::GetInstance()->PlaySE(e_SCROLL_SE, true);
-	}
-
 	// スクリーン座標を求める
 	Screen();
 
 	// 操作一覧表示中は更新処理を行わない
 	if ( !isDrawUIMM )
 	{
+		// SE再生
+		if ( isScroll )
+		{
+			Sound_SE::GetInstance()->PlaySE(e_SCROLL_SE, true);
+		}
+
 		// スクロール
 		Utility::Scroll((int)characters->GetScrollCenterX(),
 						(int)characters->GetScrollCenterY(),
@@ -212,8 +219,8 @@ void SceneGame::Update(bool isSCPossible)
 		// エフェクト
 		MyEffectManager();
 
-		// スクロール中は更新処理を行わない
-		if ( !isScroll )
+		// スクロール中またはREADYの場合は更新処理を行わない
+		if ( !isScroll && !ui->GetIsReady() )
 		{
 			// キャラクター
 			characters->Update(screenX, screenY);
@@ -221,7 +228,7 @@ void SceneGame::Update(bool isSCPossible)
 	}
 
 	// UI
-	LoaclUIManager();
+	MyUIManager();
 
 	// HSVからRGBへ変換
 	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
@@ -257,6 +264,8 @@ void SceneGame::Draw()
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
 			 characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+
+	SetDrawBright(255, 255, 255);
 }
 
 // 終了処理
