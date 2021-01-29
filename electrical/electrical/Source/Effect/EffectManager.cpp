@@ -129,8 +129,15 @@ void EffectManager::Explosion(float x, float y)
 // クリア
 void EffectManager::Clear(float x, float y)
 {
-	for ( int i = 0; i < 5; i++ )
+	static int waitTimer = 20;		// クリア時に生成する星のタイマー
+
+	if (waitTimer-- == 0)
 	{
-		clear.push_back(new Effect_Clear(x, y));
+		for (int i = 0; i < 3; i++)
+		{
+			clear.push_back(new Effect_Clear(x, y));
+		}
+
+		waitTimer = 20;
 	}
 }
