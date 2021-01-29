@@ -19,7 +19,7 @@ protected:
 	void Jump();
 
 	// is•ûŒü‚ğ•Ï‚¦‚é
-	void ChangeDirection();
+	void ChangeDirection(int screenX, int screenY);
 
 	// ‰æ‘œ‚ÌŒü‚«‚ğ•Ï‰»
 	void ChangeGraphicDirection();
@@ -33,7 +33,8 @@ public:
 
 	virtual ~Chara_EnemyBase() = default;
 
-	virtual void Update(float playerX, float playerY, bool isPlayerAlive) = 0;
+	virtual void Update(float playerX, float playerY,
+						int screenX, int screenY, bool isPlayerAlive) = 0;
 	virtual void Draw(float shakeX, float shakeY, int scrollX, int scrollY) = 0;
 
 	virtual void HitAttack() = 0;

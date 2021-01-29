@@ -2,6 +2,7 @@
 #include "Chara_EnemyBase.h"
 #include"../stage/stage.h"
 #include "../Resource/Graphic.h"
+#include "../Define/Define.h"
 
 const float E_JUMP_POWER = -13.0f;
 
@@ -37,29 +38,40 @@ void Chara_EnemyBase::Jump()
 }
 
 // 進行方向を変える
-void Chara_EnemyBase::ChangeDirection()
+void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 {
+	// スクリーンより端 この判定は優先して行われる
+	if ( (int)x + width / 2 > screenX + WIN_WIDTH / 2 ||
+		(int)x - width / 2 < screenX - WIN_WIDTH / 2 )
+	{
+		speed *= -1.0f;
+		return;
+	}
+
+	// 動いていないまたはジャンプ、落下中の時
 	if ( x != oldX || isJump || isFall )
 	{
 		return;
 	}
 
 	// 進む予定の位置に縦に2つ並んでブロックがある
-	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
-		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-		 Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
+	if ( (Stage::GetMapParam(x + width / 2 + 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x + width / 2 + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		(Stage::GetMapParam(x - width / 2 - 1, y) == e_MAP_BLOCK &&
+		 Stage::GetMapParam(x - width / 2 - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
-		speed *= -1;
+		speed *= -1.0f;
+		return;
 	}
 
 	// 目の前に縦1ブロックがあるかつ真上にブロックがある
-	if ( (Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
+	if ( (Stage::GetMapParam(x + width / 2 + 1, y) == e_MAP_BLOCK &&
 		  Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
-		(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+		(Stage::GetMapParam(x - width / 2 - 1, y) == e_MAP_BLOCK &&
 		 Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
-		speed *= -1;
+		speed *= -1.0f;
+		return;
 	}
 }
 

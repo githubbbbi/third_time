@@ -126,9 +126,10 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 }
 
 // à⁄ìÆ
-void Chara_EnemyElectric::Move(float playerX, float playerY, bool isPlayerAlive)
+void Chara_EnemyElectric::Move(float playerX, float playerY,
+							   int screenX, int screenY, bool isPlayerAlive)
 {
-	ChangeDirection();
+	ChangeDirection(screenX, screenY);
 	AutoMove(playerX, playerY, isPlayerAlive);
 	CharaMove((float)width / 2.0f, (float)height / 2.0f);
 }
@@ -238,11 +239,12 @@ void Chara_EnemyElectric::State()
 }
 
 // çXêVèàóù
-void Chara_EnemyElectric::Update(float playerX, float playerY, bool isPlayerAlive)
+void Chara_EnemyElectric::Update(float playerX, float playerY,
+								 int screenX, int screenY, bool isPlayerAlive)
 {
 	if ( isAlive )
 	{
-		Move(playerX, playerY, isPlayerAlive);
+		Move(playerX, playerY, screenX, screenY, isPlayerAlive);
 		ChangeGraphicDirection();
 		HpZero();
 		ColorBlinking(0.0f, 255.0f, 255.0f, 5, 2);

@@ -81,6 +81,12 @@ void SceneGame::MyEffectManager()
 						   characters->GetExplosionPosY());
 	}
 
+	// クリア時のエフェクト
+	if ( characters->GetPlayerIsGoal() )
+	{
+		effects->Clear(characters->GetPlayerX(), characters->GetPlayerY());
+	}
+
 	// エフェクト
 	effects->Update();
 }
@@ -259,7 +265,6 @@ void SceneGame::Draw()
 
 	// エフェクト
 	effects->Draw(scrollX, scrollY);
-	SetDrawBright(255, 255, 255);
 
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),

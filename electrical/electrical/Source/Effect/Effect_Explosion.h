@@ -12,12 +12,12 @@ private:
 	int blendValue;		// ブレンド値
 	int blendDecrease;	// ブレンド減少値
 	bool isActive;		// TRUEの場合、アクティブ
-	float r;		// 赤色				:0~255
-	float g;		// 緑色				:0~255
-	float b;		// 青色				:0~255
-	float h;		// 色相(hue)			:0~360
-	float s;		// 彩度(saturation)	:0~255
-	float v;		// 明度(value)		:0~255
+	float r;			// 赤色				:0~255
+	float g;			// 緑色				:0~255
+	float b;			// 青色				:0~255
+	float h;			// 色相(hue)			:0~360
+	float s;			// 彩度(saturation)	:0~255
+	float v;			// 明度(value)		:0~255
 
 	int number;
 

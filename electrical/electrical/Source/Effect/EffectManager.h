@@ -2,12 +2,14 @@
 
 #include <vector>
 #include "Effect_Explosion.h"
+#include "Effect_Clear.h"
 
 // このクラスではメインゲームで使用するエフェクトのみを管理する
 class EffectManager
 {
 private:
 	std::vector<Effect_Explosion *>explosion;
+	std::vector<Effect_Clear * > clear;
 
 	float shakeX, shakeY;
 	float shakeAddX, shakeAddY;
@@ -33,4 +35,7 @@ public:
 
 	// 爆発
 	void Explosion(float x, float y);
+
+	// クリア
+	void Clear(float x, float y);
 };

@@ -70,6 +70,12 @@ public:
 	// キャラクターの死亡を取得
 	bool GetIsCharaDeath();
 
+	// プレイヤーの中心X座標を取得
+	float GetPlayerX();
+
+	// プレイヤーの中心Y座標を取得
+	float GetPlayerY();
+
 	// プレイヤーのHPを取得
 	int GetPlayerHp();
 

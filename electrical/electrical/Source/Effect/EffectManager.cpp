@@ -20,6 +20,16 @@ EffectManager::~EffectManager()
 			explosion.erase(explosion.begin() + i);
 		}
 	}
+
+	// クリア時
+	for ( int i = clear.size() - 1; i >= 0; i-- )
+	{
+		if ( !clear[i]->GetIsActive() )
+		{
+			delete clear[i];
+			clear.erase(clear.begin() + i);
+		}
+	}
 }
 
 // 更新処理
@@ -38,12 +48,31 @@ void EffectManager::Update()
 	}
 
 	// 消去
-	for ( int i = explosion.size() - 1; i >= 0; i-- )
+	for ( int i = clear.size() - 1; i >= 0; i-- )
 	{
-		if ( !explosion[i]->GetIsActive() )
+		if ( !clear[i]->GetIsActive() )
 		{
-			delete explosion[i];
-			explosion.erase(explosion.begin() + i);
+			delete clear[i];
+			clear.erase(clear.begin() + i);
+		}
+	}
+
+	// クリア
+	for ( unsigned int i = 0; i < clear.size(); i++ )
+	{
+		if ( clear[i]->GetIsActive() )
+		{
+			clear[i]->Update();
+		}
+	}
+
+	// 消去
+	for ( int i = clear.size() - 1; i >= 0; i-- )
+	{
+		if ( !clear[i]->GetIsActive() )
+		{
+			delete clear[i];
+			clear.erase(clear.begin() + i);
 		}
 	}
 }
@@ -57,6 +86,15 @@ void EffectManager::Draw(int scrollX, int scrollY)
 		if ( explosion[i]->GetIsActive() )
 		{
 			explosion[i]->Draw(scrollX, scrollY);
+		}
+	}
+
+	// クリア
+	for ( unsigned int i = 0; i < clear.size(); i++ )
+	{
+		if ( clear[i]->GetIsActive() )
+		{
+			clear[i]->Draw(scrollX, scrollY);
 		}
 	}
 }
@@ -85,5 +123,14 @@ void EffectManager::Explosion(float x, float y)
 	for ( int i = 0; i < 100; i++ )
 	{
 		explosion.push_back(new Effect_Explosion(x, y, 9));
+	}
+}
+
+// クリア
+void EffectManager::Clear(float x, float y)
+{
+	for ( int i = 0; i < 5; i++ )
+	{
+		clear.push_back(new Effect_Clear(x, y));
 	}
 }

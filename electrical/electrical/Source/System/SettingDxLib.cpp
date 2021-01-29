@@ -14,6 +14,9 @@ bool SettingDxLib::DxLibInit()
 	// タイトルを変更
 	SetMainWindowText(TITLE);
 
+	// アイコンを設定
+	SetWindowIconID(634);
+
 	// 画面サイズの最大サイズ、カラービット数を設定(モニターの解像度に合わせる)
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32);
 

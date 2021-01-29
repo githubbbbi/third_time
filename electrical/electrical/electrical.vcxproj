@@ -145,6 +145,7 @@
     <ClCompile Include="Source\Character\Weapon\Weapon_WaterGun.cpp" />
     <ClCompile Include="Source\Character\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Source\Effect\EffectManager.cpp" />
+    <ClCompile Include="Source\Effect\Effect_Clear.cpp" />
     <ClCompile Include="Source\Effect\Effect_Explosion.cpp" />
     <ClCompile Include="Source\Effect\Effect_Ligthning.cpp" />
     <ClCompile Include="Source\Effect\Effect_Shake.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Source\Character\Weapon\WeaponBase.h" />
     <ClInclude Include="Source\Define\Define.h" />
     <ClInclude Include="Source\Effect\EffectManager.h" />
+    <ClInclude Include="Source\Effect\Effect_Clear.h" />
     <ClInclude Include="Source\Effect\Effect_Explosion.h" />
     <ClInclude Include="Source\Effect\Effect_Ligthning.h" />
     <ClInclude Include="Source\Effect\Effect_Shake.h" />
@@ -212,6 +214,9 @@
     <ClInclude Include="Source\UI\UI_Ready.h" />
     <ClInclude Include="Source\UI\UI_Title.h" />
     <ClInclude Include="Source\Utility\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource\Icon\icon.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

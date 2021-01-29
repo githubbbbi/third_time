@@ -191,7 +191,8 @@ void Chara_EnemyWater::State()
 }
 
 // XVˆ—
-void Chara_EnemyWater::Update(float playerX, float playerY, bool isPlayerAlive)
+void Chara_EnemyWater::Update(float playerX, float playerY,
+							  int screenX, int screenY, bool isPlayerAlive)
 {
 	if ( isAlive )
 	{

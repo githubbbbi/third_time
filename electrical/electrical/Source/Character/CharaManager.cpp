@@ -192,7 +192,8 @@ void Chara_Manager::EnemyManager(int screenX, int screenY)
 	// 更新処理
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
-		enemys[i]->Update(player->GetPosX(), player->GetPosY(), player->GetIsAlive());
+		enemys[i]->Update(player->GetPosX(), player->GetPosY(),
+						  screenX, screenY, player->GetIsAlive());
 	}
 
 	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
@@ -395,6 +396,18 @@ bool Chara_Manager::GetIsCharaDeath()
 	}
 
 	return false;
+}
+
+// プレイヤーの中心X座標を取得
+float Chara_Manager::GetPlayerX()
+{
+	return player->GetPosX();
+}
+
+// プレイヤーの中心Y座標を取得
+float Chara_Manager::GetPlayerY()
+{
+	return player->GetPosY();
 }
 
 // プレイヤーのHPを取得

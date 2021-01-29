@@ -24,7 +24,8 @@ private:
 	void AutoMove(float playerX, float playerY, bool isPlayerAlive);
 
 	// ˆÚ“®
-	void Move(float playerX, float playerY, bool isPlayerAlive);
+	void Move(float playerX, float playerY,
+			  int screenX, int screenY, bool isPlayerAlive);
 
 	// UŒ‚ŠÇ—
 	void AttackManager(bool isPlayerAlive);
@@ -38,7 +39,8 @@ public:
 	~Chara_EnemyBomb() = default;
 
 	// XVˆ—
-	void Update(float playerX, float playerY, bool isPlayerAlive) override;
+	void Update(float playerX, float playerY,
+				int screenX, int screenY, bool isPlayerAlive) override;
 
 	// •`‰æˆ—
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY) override;

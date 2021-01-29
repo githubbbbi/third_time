@@ -46,7 +46,8 @@ public:
 	~Chara_EnemyWater();
 
 	// XVˆ—
-	void Update(float playerX, float playerY, bool isPlayerAlive) override;
+	void Update(float playerX, float playerY,
+				int screenX, int screenY, bool isPlayerAlive) override;
 
 	// •`‰æˆ—
 	void Draw(float shakeX, float shakeY, int scrollX, int scrollY) override;
