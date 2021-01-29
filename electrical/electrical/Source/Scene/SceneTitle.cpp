@@ -76,17 +76,17 @@ void SceneTitle::LightningDraw()
 	}
 }
 
-// シーン遷移判定
-bool SceneTitle::IsSceneChange()
-{
-	return InputManager::IsInputRelease(e_START);
-}
-
 // シーン遷移
-void SceneTitle::SceneChange()
+void SceneTitle::SceneChange(bool isSCPossible)
 {
+	// シーン遷移が可能
+	if ( !isSCPossible )
+	{
+		return;
+	}
+
 	// メインゲームへ遷移
-	if ( IsSceneChange() )
+	if ( InputManager::IsInputRelease(e_START) )
 	{
 		nextScene = e_GAME;
 
@@ -113,7 +113,7 @@ void SceneTitle::GameEnd()
 }
 
 // 更新処理
-void SceneTitle::Update()
+void SceneTitle::Update(bool isSCPossible)
 {
 	// BGM再生
 	if ( !isSceneChange )
@@ -125,7 +125,7 @@ void SceneTitle::Update()
 
 	// タイトルUI シーン遷移時に点滅、そうでなければ明滅
 	ui->Update(!isSceneChange, isSceneChange);
-	SceneChange();
+	SceneChange(isSCPossible);
 	GameEnd();
 }
 

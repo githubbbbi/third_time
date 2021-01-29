@@ -53,6 +53,29 @@ int Sound_SE::MyLoadSoundMem(const char *filename)
 	return temp;
 }
 
+// サウンドの再生をチェック、再生
+void Sound_SE::CheckAndPlay(int soundHandle, bool isCheckSound)
+{
+	if ( isCheckSound &&
+		CheckSoundMem(soundHandle) )
+	{
+		return;
+	}
+
+	PlaySoundMem(soundHandle, DX_PLAYTYPE_BACK);
+}
+
+// サウンドの再生をチェック、停止
+void Sound_SE::CheckAndStop(int soundHandle)
+{
+	if ( !CheckSoundMem(soundHandle) )
+	{
+		return;
+	}
+
+	StopSoundMem(soundHandle);
+}
+
 // SE再生
 void Sound_SE::PlaySE(SE_Info se, bool isCheckSound)
 {
@@ -60,112 +83,52 @@ void Sound_SE::PlaySE(SE_Info se, bool isCheckSound)
 	{
 		case e_GAME_START_SE:
 			// ゲームスタート
-			if ( isCheckSound &&
-				CheckSoundMem(gameStart) )
-			{
-				break;
-			}
-
-			PlaySoundMem(gameStart, DX_PLAYTYPE_BACK);
+			CheckAndPlay(gameStart, isCheckSound);
 			break;
 
 		case e_PLAYER_JUMP_SE:
 			// プレイヤーのジャンプ
-			if ( isCheckSound &&
-				CheckSoundMem(playerJump) )
-			{
-				break;
-			}
-
-			PlaySoundMem(playerJump, DX_PLAYTYPE_BACK);
+			CheckAndPlay(playerJump, isCheckSound);
 			break;
 
 		case e_PLAYER_CHAGING_SE:
 			// 充電中
-			if ( isCheckSound &&
-				CheckSoundMem(playerCharging) )
-			{
-				break;
-			}
-
-			PlaySoundMem(playerCharging, DX_PLAYTYPE_BACK);
+			CheckAndPlay(playerCharging, isCheckSound);
 			break;
 
 		case e_SHOT_ELECTRIC_GUN_SE:
 			// 電気銃を撃つ
-			if ( isCheckSound &&
-				CheckSoundMem(shotElectricGun) )
-			{
-				break;
-			}
-
-			PlaySoundMem(shotElectricGun, DX_PLAYTYPE_BACK);
+			CheckAndPlay(shotElectricGun, isCheckSound);
 			break;
 
 		case e_SHOT_WATER_GUN_SE:
 			// 水銃を撃つ
-			if ( isCheckSound &&
-				CheckSoundMem(shotWaterGun) )
-			{
-				break;
-			}
-
-			PlaySoundMem(shotWaterGun, DX_PLAYTYPE_BACK);
+			CheckAndPlay(shotWaterGun, isCheckSound);
 			break;
 
 		case e_RECEIVE_DAMAGE_SE:
 			// ダメージを受ける
-			if ( isCheckSound &&
-				CheckSoundMem(receiveDamage) )
-			{
-				break;
-			}
-
-			PlaySoundMem(receiveDamage, DX_PLAYTYPE_BACK);
+			CheckAndPlay(receiveDamage, isCheckSound);
 			break;
 
 		case e_DEATH_SE:
 			// 死亡
-			if ( isCheckSound &&
-				CheckSoundMem(death) )
-			{
-				break;
-			}
-
-			PlaySoundMem(death, DX_PLAYTYPE_BACK);
+			CheckAndPlay(death, isCheckSound);
 			break;
 
 		case e_OPEN_HELP_SE:
 			// ヘルプを開く
-			if ( isCheckSound &&
-				CheckSoundMem(openHelp) )
-			{
-				break;
-			}
-
-			PlaySoundMem(openHelp, DX_PLAYTYPE_BACK);
+			CheckAndPlay(openHelp, isCheckSound);
 			break;
-		
+
 		case e_SCROLL_SE:
 			// スクロール
-			if ( isCheckSound &&
-				CheckSoundMem(scroll) )
-			{
-				break;
-			}
-
-			PlaySoundMem(scroll, DX_PLAYTYPE_BACK);
+			CheckAndPlay(scroll, isCheckSound);
 			break;
-		
+
 		case e_STAGE_CLEAR_SE:
 			// ステージクリア
-			if ( isCheckSound &&
-				CheckSoundMem(stageClear) )
-			{
-				break;
-			}
-
-			PlaySoundMem(stageClear, DX_PLAYTYPE_BACK);
+			CheckAndPlay(stageClear, isCheckSound);
 			break;
 
 		default:
@@ -180,102 +143,52 @@ void Sound_SE::StopSE(SE_Info se)
 	{
 		case e_GAME_START_SE:
 			// ゲームスタート
-			if ( !CheckSoundMem(gameStart) )
-			{
-				break;
-			}
-
-			StopSoundMem(gameStart);
+			CheckAndStop(gameStart);
 			break;
 
 		case e_PLAYER_JUMP_SE:
 			// プレイヤーのジャンプ
-			if ( !CheckSoundMem(playerJump) )
-			{
-				break;
-			}
-
-			StopSoundMem(playerJump);
+			CheckAndStop(playerJump);
 			break;
 
 		case e_PLAYER_CHAGING_SE:
 			// 充電中
-			if ( !CheckSoundMem(playerCharging) )
-			{
-				break;
-			}
-
-			StopSoundMem(playerCharging);
+			CheckAndStop(playerCharging);
 			break;
 
 		case e_SHOT_ELECTRIC_GUN_SE:
 			// 電気銃を撃つ
-			if ( !CheckSoundMem(shotElectricGun) )
-			{
-				break;
-			}
-
-			StopSoundMem(shotElectricGun);
+			CheckAndStop(shotElectricGun);
 			break;
 
 		case e_SHOT_WATER_GUN_SE:
 			// 水銃を撃つ
-			if ( !CheckSoundMem(shotWaterGun) )
-			{
-				break;
-			}
-
-			StopSoundMem(shotWaterGun);
+			CheckAndStop(shotWaterGun);
 			break;
 
 		case e_RECEIVE_DAMAGE_SE:
 			// ダメージを受ける
-			if ( !CheckSoundMem(receiveDamage) )
-			{
-				break;
-			}
-
-			StopSoundMem(receiveDamage);
+			CheckAndStop(receiveDamage);
 			break;
 
 		case e_DEATH_SE:
 			// 死亡
-			if ( !CheckSoundMem(death) )
-			{
-				break;
-			}
-
-			StopSoundMem(death);
+			CheckAndStop(death);
 			break;
 
 		case e_OPEN_HELP_SE:
 			// ヘルプを開く
-			if ( !CheckSoundMem(openHelp) )
-			{
-				break;
-			}
-
-			StopSoundMem(openHelp);
+			CheckAndStop(openHelp);
 			break;
 
 		case e_SCROLL_SE:
 			// スクロール
-			if ( !CheckSoundMem(scroll) )
-			{
-				break;
-			}
-
-			StopSoundMem(scroll);
+			CheckAndStop(scroll);
 			break;
 
 		case e_STAGE_CLEAR_SE:
 			// ステージクリア
-			if ( !CheckSoundMem(stageClear) )
-			{
-				break;
-			}
-
-			StopSoundMem(stageClear);
+			CheckAndStop(stageClear);
 			break;
 
 		default:

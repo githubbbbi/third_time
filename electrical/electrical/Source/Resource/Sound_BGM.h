@@ -21,6 +21,12 @@ private:
 	// サウンドの音量を設定
 	void MyChangeVolumeSoundMem();
 
+	// サウンドの再生をチェック、再生
+	void CheckAndPlay(int soundHandle);
+
+	// サウンドの再生をチェック、停止
+	void CheckAndStop(int soundHandle);
+
 public:
 	Sound_BGM();
 	~Sound_BGM() = default;

@@ -9,7 +9,7 @@ private:
 	int y;	// 中心座標
 
 	// シーン遷移
-	void SceneChange();
+	void SceneChange(bool isSCPossible);
 
 	// ゲーム終了
 	void GameEnd();
@@ -19,6 +19,6 @@ public:
 	~SceneEnding() = default;
 
 	void Initialize() override;
-	void Update() override;
+	void Update(bool isSCPossible) override;
 	void Draw() override;
 };

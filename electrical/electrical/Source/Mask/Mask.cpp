@@ -5,7 +5,7 @@
 
 const double EX_RATE_UP_SPEED = 1.0;
 const double EX_RATE_DOWN_SPEED = 1.5;
-const double MAX_EX_RATE = 150.0;
+const double MAX_EX_RATE = 75.0;
 const double MIN_EX_RATE = 0.0;
 
 // •Ï”‰Šú‰»
@@ -99,4 +99,16 @@ void Mask::LoopMask()
 
 	// ƒ}ƒXƒN‚ğ–³Œø‚É‚·‚é
 	SetUseMaskScreenFlag(FALSE);
+}
+
+// Šg‘å—¦‚ªÅ‘å‚Ì”»’è
+bool Mask::IsExRateMax()
+{
+	return exRate >= MAX_EX_RATE;
+}
+
+// Šg‘å—¦‚ªÅ‘å‚Ì”»’è
+bool Mask::IsExRateMin()
+{
+	return exRate <= MIN_EX_RATE;
 }

@@ -27,4 +27,10 @@ public:
 
 	// ƒ}ƒXƒN‚ÌŒãˆ—
 	static void LoopMask();
+
+	// Šg‘å—¦‚ªÅ‘å‚Ì”»’è
+	static bool IsExRateMax();
+
+	// Šg‘å—¦‚ªÅ¬‚Ì”»’è
+	static bool IsExRateMin();
 };

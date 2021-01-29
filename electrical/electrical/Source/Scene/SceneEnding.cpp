@@ -17,8 +17,14 @@ void SceneEnding::Initialize()
 }
 
 // シーン遷移
-void SceneEnding::SceneChange()
+void SceneEnding::SceneChange(bool isSCPossible)
 {
+	// シーン遷移が可能
+	if ( !isSCPossible )
+	{
+		return;
+	}
+
 	// タイトルへ遷移
 	if ( InputManager::IsInputRelease(e_START) )
 	{
@@ -37,9 +43,9 @@ void SceneEnding::GameEnd()
 }
 
 // 更新処理
-void SceneEnding::Update()
+void SceneEnding::Update(bool isSCPossible)
 {
-	SceneChange();
+	SceneChange(isSCPossible);
 	GameEnd();
 }
 

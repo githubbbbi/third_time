@@ -128,8 +128,14 @@ void SceneGame::LoaclUIManager()
 }
 
 // シーン遷移
-void SceneGame::SceneChange()
+void SceneGame::SceneChange(bool isSCPossible)
 {
+	// シーン遷移が可能
+	if ( !isSCPossible )
+	{
+		return;
+	}
+
 	// プレイヤーが死亡→初期化処理
 	if ( !characters->GetPlayerIsAlive() )
 	{
@@ -178,7 +184,7 @@ void SceneGame::GameEnd()
 }
 
 // 更新処理
-void SceneGame::Update()
+void SceneGame::Update(bool isSCPossible)
 {
 	// BGM再生
 	if ( !isSceneChange )
@@ -221,7 +227,7 @@ void SceneGame::Update()
 	Utility::ConvertHSVtoRGB(&r, &g, &b, h, s, v);
 
 	// シーン遷移
-	SceneChange();
+	SceneChange(isSCPossible);
 
 	// ゲーム終了
 	GameEnd();

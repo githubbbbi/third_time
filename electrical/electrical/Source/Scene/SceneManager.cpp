@@ -18,12 +18,14 @@ SceneManager::SceneManager()
 
 	// BGM読み込み
 	Sound_BGM::GetInstance()->Load();
-	
+
 	// SE読み込み
 	Sound_SE::GetInstance()->Load();
 
 	// マスクセット
 	Mask::SetMask();
+
+	isSCPossible = false;
 }
 
 SceneManager::~SceneManager()
@@ -47,9 +49,26 @@ bool SceneManager::FadeIn()
 		return false;
 	}
 
+	// 拡大可能フラグ
+	static bool isScaleUpPossible = false;
+
+	// 最小の時拡大可能
+	if ( Mask::IsExRateMin() )
+	{
+		isScaleUpPossible = true;
+	}
+
+	if ( !isScaleUpPossible )
+	{
+		return false;
+	}
+
 	// マスクの拡大終了
 	if ( Mask::MaskScaleUp() )
 	{
+		// シーン遷移可能
+		isSCPossible = true;
+		isScaleUpPossible = false;
 		return true;
 	}
 
@@ -59,7 +78,22 @@ bool SceneManager::FadeIn()
 // フェードアウト
 bool SceneManager::FadeOut()
 {
+	// シーン遷移中以外でフェードアウトは行わない
 	if ( !nowScene->GetIsSceneChange() )
+	{
+		return false;
+	}
+
+	// 縮小可能フラグ
+	static bool isScaleDownPossible = false;
+
+	// 最大の時縮小可能
+	if ( Mask::IsExRateMax() )
+	{
+		isScaleDownPossible = true;
+	}
+
+	if ( !isScaleDownPossible )
 	{
 		return false;
 	}
@@ -67,6 +101,9 @@ bool SceneManager::FadeOut()
 	// マスクの縮小終了
 	if ( Mask::MaskScaleDown() )
 	{
+		// シーン遷移不可能
+		isSCPossible = false;
+		isScaleDownPossible = false;
 		return true;
 	}
 
@@ -118,7 +155,7 @@ void SceneManager::Update()
 	FadeIn();
 
 	// 現在のシーン
-	nowScene->Update();
+	nowScene->Update(isSCPossible);
 
 	// シーン遷移
 	SceneChange();

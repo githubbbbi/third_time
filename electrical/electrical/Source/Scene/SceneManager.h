@@ -9,6 +9,8 @@ private:
 	std::unique_ptr<SceneBase> nowScene;	// 現在処理を行っているシーン
 	Scene scene;							// 現在のシーン
 
+	bool isSCPossible;	// シーン遷移可能フラグ
+
 	// フェードイン
 	bool FadeIn();
 

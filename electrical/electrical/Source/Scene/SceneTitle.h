@@ -22,11 +22,8 @@ private:
 	// ライトニング描画処理
 	void LightningDraw();
 
-	// シーン遷移判定
-	bool IsSceneChange();
-
 	// シーン遷移
-	void SceneChange();
+	void SceneChange(bool isSCPossible);
 
 	// ゲーム終了
 	void GameEnd();
@@ -36,6 +33,6 @@ public:
 	~SceneTitle();
 
 	void Initialize() override;
-	void Update() override;
+	void Update(bool isSCPossible) override;
 	void Draw() override;
 };

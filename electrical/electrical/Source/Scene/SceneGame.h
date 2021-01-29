@@ -36,7 +36,7 @@ private:
 	void LoaclUIManager();
 
 	// シーン遷移
-	void SceneChange();
+	void SceneChange(bool isSCPossible);
 
 	// ゲーム終了
 	void GameEnd();
@@ -52,7 +52,7 @@ public:
 	void Initialize() override;
 
 	// 更新処理
-	void Update() override;
+	void Update(bool isSCPossible) override;
 
 	// 描画処理
 	void Draw() override;
