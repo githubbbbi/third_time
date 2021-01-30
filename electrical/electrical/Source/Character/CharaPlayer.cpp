@@ -472,16 +472,48 @@ void Chara_Player::WeaponManager()
 	// 生成
 	if ( IsAttack() && isAlive )
 	{
-		int xx = 24;
+		// 生成座標
+		float xx = 24.0f;
 		if ( isLeftWard )
 		{
-			xx *= -1;
+			xx *= -1.0f;
+		}
+
+		// 飛距離 バッテリーの残量割合によって変化
+		auto BatteryRate = [this](int value)->bool
+		{
+			return ((float)battery / (float)P_MAX_BATTERY) * 100.f > value;
+		};
+		// 100%
+		float flightDistance = 300.0f;
+		// 80%
+		if ( BatteryRate(80) )
+		{
+			flightDistance = 250.0f;
+		}
+		// 50%
+		else if ( BatteryRate(50) )
+		{
+			flightDistance = 200.0f;
+		}
+		// 20%
+		else if ( BatteryRate(20) )
+		{
+			flightDistance = 150.0f;
+		}// 10%
+		else if ( BatteryRate(10) )
+		{
+			flightDistance = 100.0f;
+		}
+		else
+		{
+			flightDistance = 50.0f;
 		}
 
 		electricGun.push_back(new Weapon_ElectricGun(x + xx, y,
 													 16,
-													 EG_SPEED,
-													 0.0f, 2,
+													 EG_SPEED, 0.0f,
+													 flightDistance, 2,
 													 isLeftWard));
 	}
 

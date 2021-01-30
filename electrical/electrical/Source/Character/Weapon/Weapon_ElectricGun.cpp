@@ -6,14 +6,12 @@
 #include "../../Resource/Sound_SE.h"
 
 const float EG_SPEED = 10.0f;
-const int EG_ALIVE_TIME = 30;
 
 Weapon_ElectricGun::Weapon_ElectricGun(float x, float y, int radius, float speedX, float speedY,
-									   int eraseFrame, bool isCharaLeftWard):
-	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard)
+									   float flightDistance, int eraseFrame, bool isCharaLeftWard):
+	WeaponBase(x, y, radius, speedX, speedY, flightDistance, eraseFrame, isCharaLeftWard)
 {
 	exRate = 0.75;
-	aliveTimer = 0;
 
 	// SEÄ¶
 	Sound_SE::GetInstance()->PlaySE(e_SHOT_ELECTRIC_GUN_SE, false);
@@ -39,6 +37,8 @@ void Weapon_ElectricGun::Move()
 
 	moveY += speedY;
 
+	flightDistance -= fabsf(moveX);
+
 	BulletMove(true);
 }
 
@@ -58,18 +58,14 @@ void Weapon_ElectricGun::Erase()
 		isAlive = false;
 	}
 
-	// ˆê’èŠÔ‚ÅÁ‹
-	aliveTimer++;
-	if ( aliveTimer > EG_ALIVE_TIME )
+	// ”ò‹——£
+	if ( flightDistance <= 0.0f )
 	{
-		isAlive = false;
-	}
-	else if ( aliveTimer > EG_ALIVE_TIME / 2 )
-	{
-		// ¬‚³‚­‚È‚é
-		if ( exRate > 0.0 )
+		exRate -= 0.05f;
+		// ¬‚³‚­‚È‚Á‚½‚çÁ‹
+		if ( exRate < 0.0f )
 		{
-			exRate -= 0.05;
+			isAlive = false;
 		}
 	}
 }

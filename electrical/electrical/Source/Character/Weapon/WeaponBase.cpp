@@ -2,13 +2,14 @@
 #include "../../Utility/Utility.h"
 
 WeaponBase::WeaponBase(float x, float y, int radius, float speedX, float speedY,
-					   int eraseFrame, bool isCharaLeftWard)
+					   float flightDistance, int eraseFrame, bool isCharaLeftWard)
 {
 	this->x = x;
 	this->y = y;
 	this->radius = radius;
 	this->speedX = speedX;
 	this->speedY = speedY;
+	this->flightDistance = flightDistance;
 	this->eraseFrame = eraseFrame;
 	this->isLeftWard = isCharaLeftWard;
 

@@ -16,6 +16,30 @@ UI_Player::UI_Player()
 	y = 20;
 }
 
+// hpの残量に合わせて色を変える
+void UI_Player::ChangeHSV(int hp, int maxHp)
+{
+	// 50以上で緑、20以上で黄色、1以上で赤
+	if ( ((float)hp / (float)maxHp) * 100.0f > 50 )
+	{
+		line[0].h = 120.0f;
+		line[0].s = 230.0f;
+		line[0].v = 230.0f;
+	}
+	else if ( ((float)hp / (float)maxHp) * 100.0f > 20 )
+	{
+		line[0].h = 60.0f;
+		line[0].s = 230.0f;
+		line[0].v = 230.0f;
+	}
+	else
+	{
+		line[0].h = 0.0f;
+		line[0].s = 230.0f;
+		line[0].v = 230.0f;
+	}
+}
+
 // 更新処理
 void UI_Player::Update(int hp, int maxHp, int battery, int maxBattery)
 {
@@ -87,28 +111,4 @@ void UI_Player::Draw(int hp, int maxHp, int battery, int maxBattery)
 	// 数字
 	DrawFormatString(180, 32, GetColor(255, 255, 255), "%d / 100", hp);
 	DrawFormatString(180, 70, GetColor(255, 255, 255), "%d / 100", battery);
-}
-
-// hpの残量に合わせて色を変える
-void UI_Player::ChangeHSV(int hp, int maxHp)
-{
-	// 50以上で緑、20以上で黄色、1以上で赤
-	if ( ((float)hp / (float)maxHp) * 100.0f > 50 )
-	{
-		line[0].h = 120.0f;
-		line[0].s = 230.0f;
-		line[0].v = 230.0f;
-	}
-	else if ( ((float)hp / (float)maxHp) * 100.0f > 20 )
-	{
-		line[0].h = 60.0f;
-		line[0].s = 230.0f;
-		line[0].v = 230.0f;
-	}
-	else
-	{
-		line[0].h = 0.0f;
-		line[0].s = 230.0f;
-		line[0].v = 230.0f;
-	}
 }

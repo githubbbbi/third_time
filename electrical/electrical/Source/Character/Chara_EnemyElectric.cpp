@@ -152,11 +152,13 @@ void Chara_EnemyElectric::WeaponManager()
 	// ê∂ê¨
 	if ( bulletInterval == EE_BULLET_INTERVAL && isTargetLock )
 	{
-		electricGun.push_back(new Weapon_ElectricGun(x, y + 8, 16,
-													 EG_SPEED,
-													 0.0f, 2,
+		// îÚãóó£
+		float flightDistance = 100.0f;
+		electricGun.push_back(new Weapon_ElectricGun(x, y + 8.0f,
+													 16,
+													 EG_SPEED, 0.0f,
+													 flightDistance, 2,
 													 isLeftWard));
-
 		isAttack = true;
 	}
 

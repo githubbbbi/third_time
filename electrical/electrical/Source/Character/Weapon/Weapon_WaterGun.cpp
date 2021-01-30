@@ -8,8 +8,8 @@
 const float WG_GRAVITY = 0.85f;
 
 Weapon_WaterGun::Weapon_WaterGun(float x, float y, int radius, float speedX, float speedY,
-								 int eraseFrame, bool isCharaLeftWard):
-	WeaponBase(x, y, radius, speedX, speedY, eraseFrame, isCharaLeftWard)
+								 float flightDistance, int eraseFrame, bool isCharaLeftWard):
+	WeaponBase(x, y, radius, speedX, speedY, flightDistance, eraseFrame, isCharaLeftWard)
 {
 	moveY = -10.0f;
 
@@ -35,6 +35,9 @@ void Weapon_WaterGun::Move()
 	}
 
 	moveY += speedY;
+
+	// ”ò‹——£‚Í–³ŒÀ
+	flightDistance -= 0.0f;
 
 	BulletMove(false);
 }

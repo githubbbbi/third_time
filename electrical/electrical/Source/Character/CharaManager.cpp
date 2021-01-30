@@ -64,7 +64,7 @@ bool Chara_Manager::LoadFile()
 // プレイヤーのスポーン
 void Chara_Manager::PlayerSpawn()
 {
-	auto SpawnPos = [](int x)
+	auto SpawnPos = [](int x)->float
 	{
 		return (float)(x * CHARA_SIZE + CHARA_SIZE / 2);
 	};
@@ -154,7 +154,7 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 
 			// スピード(プレイヤーへ向かう)
 			float playerX = player->GetPosX();
-			auto Speed = [playerX, x]()
+			auto Speed = [playerX, x]()->float
 			{
 				if ( playerX < x * CHIP_SIZE )
 				{

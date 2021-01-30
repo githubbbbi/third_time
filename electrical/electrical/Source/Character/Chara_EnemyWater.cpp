@@ -86,15 +86,19 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 			bulletSpeed = 5.0f;
 		}
 
-		int xx = 16;
+		// ê∂ê¨ç¿ïW
+		float xx = 24.0f;
 		if ( isLeftWard )
 		{
-			xx *= -1;
+			xx *= -1.0f;
 		}
 
-		waterGun.push_back(new Weapon_WaterGun(x + xx, y + 8, 16,
-											   bulletSpeed,
-											   GRAVITY, 0,
+		// îÚãóó£
+		float flightDistance = 100.0f;
+		waterGun.push_back(new Weapon_WaterGun(x + xx, y + 8.0f,
+											   16,
+											   bulletSpeed, GRAVITY,
+											   flightDistance, 0,
 											   isLeftWard));
 
 		isAttack = true;
