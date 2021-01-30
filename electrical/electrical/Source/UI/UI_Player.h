@@ -3,7 +3,6 @@
 class UI_Player
 {
 private:
-
 	// line‚Ì\‘¢‘Ì‚ÌéŒ¾
 	typedef struct
 	{

@@ -5,11 +5,11 @@
 
 Effect_Clear::Effect_Clear(float x, float y)
 {
-	this->x = rand() % 57 - 28;
-	this->y = 30;
-	exRate = (rand() % 4 + 2.0f) / 10;
-	angle = rand() % 72;
-	speed = (rand() % 15 + 8.0f) / 10;
+	this->x = (float)(rand() % 57) - 28.0f;
+	this->y = 30.0f;
+	exRate = (double)(rand() % 4 + 2.0f) / 10.0;
+	angle = (double)(rand() % 72);
+	speed = (float)(rand() % 15 + 8.0f) / 10.0f;
 	transparency = 255;
 
 	r = 255.0f;

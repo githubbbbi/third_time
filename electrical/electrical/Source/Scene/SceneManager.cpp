@@ -119,6 +119,14 @@ void SceneManager::SceneChange()
 		return;
 	}
 
+	// 現在のシーンと次のシーンが同じの場合
+	if ( scene == nowScene->GetNextScene() )
+	{
+		// 初期化処理のみを行う
+		nowScene->Initialize();
+		return;
+	}
+
 	// シーン遷移
 	scene = nowScene->GetNextScene();
 

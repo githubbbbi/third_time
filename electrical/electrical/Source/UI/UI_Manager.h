@@ -15,6 +15,9 @@ public:
 	UI_Manager();
 	~UI_Manager();
 
+	// ‰Šú‰»ˆ—
+	void Initialize();
+
 	// XVˆ—
 	void Update(int playerHp, int playerMaxHp,
 				int playerBattery, int playerMaxBattery, bool isDrawUIMM);

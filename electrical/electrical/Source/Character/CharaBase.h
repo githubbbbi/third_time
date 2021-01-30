@@ -59,6 +59,9 @@ protected:
 	int blendMode;			// ブレンドモード
 	int blendValue;			// ブレンド値
 
+	// 初期化処理
+	void MyInitialize();
+
 	// キャラクタのジャンプ
 	void CharaJump(float jumpPower);
 

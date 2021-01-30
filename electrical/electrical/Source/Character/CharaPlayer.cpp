@@ -45,16 +45,9 @@ Chara_Player::Chara_Player(float x, float y, int radius, int width, int height,
 	attackMotionFrame = 0;
 	isBatteryZero = false;
 
-	batteryBox.boxPosLeft = 0.0f;
-	batteryBox.boxPosRight = 0.0f;
-	batteryBox.boxPosTop = 0.0f;
-	batteryBox.boxPosBottom = 0.0f;
-	batteryBox.r = 255.0f;
-	batteryBox.g = 255.0f;
-	batteryBox.b = 255.0f;
-	batteryBox.h = 210.0f;
-	batteryBox.s = 230.0f;
-	batteryBox.v = 200.0f;
+	batteryBox = { 0.0f, 0.0f, 0.0f, 0.0f,
+				   255.0f, 255.0f, 255.0f,
+				   215.0f, 230.0f, 200.0f };
 }
 
 Chara_Player::~Chara_Player()
@@ -67,17 +60,55 @@ Chara_Player::~Chara_Player()
 	}
 }
 
+// 初期の画像の向き
+bool Chara_Player::InitGraphDirection()
+{
+	// ワールド座標をローカル座標へ変換
+	// ワールド座標をウィンドウサイズでわり、かける→どこの部屋にいるかが求まる
+	int localX = (int)x;
+	int winX = ((int)x / WIN_WIDTH) * WIN_WIDTH;
+	if ( winX > 0 )
+	{
+		localX = (int)x - winX + WIN_WIDTH / 2;
+	}
+
+	// 初期座標(スポーン位置)が左より
+	if ( localX < WIN_WIDTH / 2 )
+	{
+		// 右を向く
+		return false;
+	}
+
+	// 初期座標(スポーン位置)が右より
+	if ( localX > WIN_WIDTH / 2 )
+	{
+		// 左を向く
+		return true;
+	}
+
+	return false;
+}
+
 // 初期化処理
 void Chara_Player::Initialize()
 {
 	moveX = 0.0f;
 	moveY = 0.0f;
-
 	gravity = 0.0f;
-
+	hp = P_MAX_HP;
+	battery = P_MAX_BATTERY;
 	batteryTimer = 0;
 	batteryChargeTimer = 0;
 	shotBulletNum = 0;
+	attackMotionFrame = 0;
+
+	// 画像の向きの初期化
+	isLeftWard = InitGraphDirection();
+
+	// バッテリーボックス
+	InitializeBatteryBox();
+
+	MyInitialize();
 }
 
 // 移動入力があるかの判定
@@ -606,8 +637,31 @@ void Chara_Player::State()
 	}
 }
 
+// バッテリーボックスの初期化処理
+void Chara_Player::InitializeBatteryBox()
+{
+	// 左向き
+	if ( isLeftWard )
+	{
+		batteryBox.boxPosLeft = x + 1.0f;
+	}
+	// 右向き
+	else
+	{
+		batteryBox.boxPosLeft = x - 19.0f;
+	}
+
+	batteryBox.boxPosRight = batteryBox.boxPosLeft + 18.0f;
+	batteryBox.boxPosTop = y + 18.0f - 30.0f * ((float)battery / (float)P_MAX_BATTERY);
+	batteryBox.boxPosBottom = y + 18.0f;
+
+	// HSVからRGBに変換
+	Utility::ConvertHSVtoRGB(&batteryBox.r, &batteryBox.g, &batteryBox.b,
+							 batteryBox.h, batteryBox.s, batteryBox.v);
+}
+
 // バッテリーボックスの更新処理
-void Chara_Player::BatteryBoxUpdate()
+void Chara_Player::UpdateBatteryBox()
 {
 	// 左向き
 	if ( isLeftWard )
@@ -630,7 +684,7 @@ void Chara_Player::BatteryBoxUpdate()
 }
 
 // バッテリーボックスの描画処理
-void Chara_Player::BatteryBoxDraw(float shakeX, float shakeY, int scrollX, int scrollY)
+void Chara_Player::DrawBatteryBox(float shakeX, float shakeY, int scrollX, int scrollY)
 {
 	DrawBox((int)(batteryBox.boxPosLeft + shakeX) - scrollX,
 			(int)(batteryBox.boxPosTop + shakeY) - scrollY,
@@ -653,8 +707,8 @@ void Chara_Player::Update()
 		Invicible();
 		State();
 
-		// バッテリー
-		BatteryBoxUpdate();
+		// バッテリーボックス
+		UpdateBatteryBox();
 
 		// 向き固定ボタンが押されていない
 		if ( !InputManager::IsInputNow(e_FIXED) )
@@ -684,8 +738,9 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	{
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
-		// バッテリー
-		BatteryBoxDraw(shakeX, shakeY, scrollX, scrollY);
+
+		// バッテリーボックス
+		DrawBatteryBox(shakeX, shakeY, scrollX, scrollY);
 
 		// プレイヤー
 		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,

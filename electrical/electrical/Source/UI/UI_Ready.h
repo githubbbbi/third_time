@@ -11,6 +11,9 @@ public:
 	UI_Ready();
 	~UI_Ready() = default;
 
+	// ‰Šú‰»ˆ—
+	void Initialize();
+
 	// XVˆ—
 	void Update();
 

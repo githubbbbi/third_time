@@ -5,13 +5,13 @@
 #include "Chara_EnemyBase.h"
 #include "../Define/Define.h"
 
-enum CharaInfo
+enum CharaSpawnInfo
 {
-	e_CharaPlayer,			// プレイヤー
-	e_CharaEnemyBomb,		// ボム兵
-	e_CharaEnemyElectric,	// 電気銃エネミー
-	e_CharaEnemyWater,		// 水銃エネミー
-	e_CharaCharaNum
+	e_CharaPlayer,				// プレイヤー
+	e_CharaEnemyBomb,			// ボム兵
+	e_CharaEnemyElectric,		// 電気銃エネミー
+	e_CharaEnemyWater,			// 水銃エネミー
+	e_CharaPlayer_ChecKPoint	// プレイヤーチェックポイント
 };
 
 class Chara_Manager
@@ -22,6 +22,7 @@ private:
 
 	int spawnData[MAP_COUNT_Y][MAP_COUNT_X];		// スポーンデータ
 	bool isEnemySpawn[MAP_COUNT_Y][MAP_COUNT_X];	// エネミースポーンフラグ
+	bool isPassCheckPoint;							// チェックポイント通過フラグ
 
 	float explosionX;								// 爆発の中心となる座標
 	float explosionY;								// 爆発の中心となる座標
@@ -31,7 +32,7 @@ private:
 
 	// プレイヤーのスポーン
 	void PlayerSpawn();
-	
+
 	// エネミーの生成
 	void EnemyGenerate(int screenX, int screenY);
 
@@ -43,6 +44,9 @@ private:
 
 	// 攻撃の当たり判定
 	void AttackCollision();
+
+	// チェックポイントの通過判定
+	void PassCheckPoint();
 
 public:
 	Chara_Manager();

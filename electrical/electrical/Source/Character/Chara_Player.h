@@ -64,6 +64,9 @@ private:
 
 	BatteryBox batteryBox;
 
+	// 初期の画像の向き
+	bool InitGraphDirection();
+
 	// 移動入力があるかの判定
 	bool IsInputMove();
 
@@ -115,11 +118,14 @@ private:
 	// 状態
 	void State();
 
+	// バッテリーボックスの初期化処理
+	void InitializeBatteryBox();
+
 	// バッテリーボックスの更新処理
-	void BatteryBoxUpdate();
+	void UpdateBatteryBox();
 
 	// バッテリーボックスの描画処理
-	void BatteryBoxDraw(float shakeX, float shakeY, int scrollX, int scrollY);
+	void DrawBatteryBox(float shakeX, float shakeY, int scrollX, int scrollY);
 
 public:
 	Chara_Player(float x, float y, int radius, int width, int height,

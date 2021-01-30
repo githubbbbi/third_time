@@ -57,6 +57,19 @@ void SceneGame::Initialize()
 		isGameEnd = true;
 	}
 
+	// UI
+	ui->Initialize();
+
+	scrollX = ((int)characters->GetScrollCenterX() / WIN_WIDTH) * WIN_WIDTH;
+	scrollY = ((int)characters->GetScrollCenterY() / WIN_HEIGHT) * WIN_HEIGHT;
+	screenX = 0;
+	screenY = 0;
+	isScroll = false;
+	isDrawUIMM = false;
+
+	r = g = b = 255.0f;
+	h = s = v = 255.0f;
+
 	isSceneChange = false;
 }
 

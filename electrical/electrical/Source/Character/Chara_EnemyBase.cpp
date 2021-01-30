@@ -41,9 +41,16 @@ void Chara_EnemyBase::Jump()
 void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 {
 	// スクリーンより端 この判定は優先して行われる
-	if ( (int)x + width / 2 > screenX + WIN_WIDTH / 2 ||
-		(int)x - width / 2 < screenX - WIN_WIDTH / 2 )
+	if ( (int)x + width / 2 > screenX + WIN_WIDTH / 2 )
 	{
+		x = (float)(screenX + WIN_WIDTH / 2 - width);
+		speed *= -1.0f;
+		return;
+	}
+
+	if ( (int)x - width / 2 < screenX - WIN_WIDTH / 2 )
+	{
+		x = (float)(screenX - WIN_WIDTH / 2 + width);
 		speed *= -1.0f;
 		return;
 	}

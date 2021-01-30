@@ -14,6 +14,13 @@ UI_Manager::~UI_Manager()
 	delete uiReady;
 }
 
+// ‰Šú‰»ˆ—
+void UI_Manager::Initialize()
+{
+	// READY
+	uiReady->Initialize();
+}
+
 // XVˆ—
 void UI_Manager::Update(int playerHp, int playerMaxHp,
 						int playerBattery, int playerMaxBattery, bool isDrawUIMM)

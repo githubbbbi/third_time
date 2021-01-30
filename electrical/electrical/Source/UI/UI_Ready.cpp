@@ -10,6 +10,12 @@ UI_Ready::UI_Ready()
 	isReady = true;
 }
 
+// ‰Šú‰»ˆ—
+void UI_Ready::Initialize()
+{
+	isReady = true;
+}
+
 // XVˆ—
 void UI_Ready::Update()
 {

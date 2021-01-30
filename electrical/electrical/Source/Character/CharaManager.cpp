@@ -22,6 +22,8 @@ Chara_Manager::Chara_Manager()
 	explosionX = 0.0f;
 	explosionY = 0.0f;
 
+	isPassCheckPoint = false;
+
 	// プレイヤー生成
 	player = new Chara_Player(0.0f, 0.0f, 32,
 							  P_WIDTH, P_HEIGHT,
@@ -62,15 +64,31 @@ bool Chara_Manager::LoadFile()
 // プレイヤーのスポーン
 void Chara_Manager::PlayerSpawn()
 {
+	auto SpawnPos = [](int x)
+	{
+		return (float)(x * CHARA_SIZE + CHARA_SIZE / 2);
+	};
+
 	for ( int y = 0; y < MAP_COUNT_Y; y++ )
 	{
 		for ( int x = 0; x < MAP_COUNT_X; x++ )
 		{
+			// チェックポイント
+			if ( isPassCheckPoint )
+			{
+				if ( spawnData[y][x] == e_CharaPlayer_ChecKPoint )
+				{
+					player->Spawn(SpawnPos(x), SpawnPos(y));
+					return;
+				}
+
+				continue;
+			}
+
+			// 通常スポーン
 			if ( spawnData[y][x] == e_CharaPlayer )
 			{
-				float spawnX = (float)(x * CHARA_SIZE + CHARA_SIZE / 2);
-				float spawnY = (float)(y * CHARA_SIZE + CHARA_SIZE / 2);
-				player->Spawn(spawnX, spawnY);
+				player->Spawn(SpawnPos(x), SpawnPos(y));
 				return;
 			}
 		}
@@ -95,11 +113,11 @@ bool Chara_Manager::Initialize()
 		return false;
 	}
 
-	// プレイヤー
-	player->Initialize();
-
 	// プレイヤーのスポーン
 	PlayerSpawn();
+
+	// プレイヤーの変数初期化
+	player->Initialize();
 
 	// エネミーは全て消去しちゃう
 	for ( int i = enemys.size() - 1; i >= 0; i-- )
@@ -301,6 +319,24 @@ void Chara_Manager::AttackCollision()
 	}
 }
 
+// チェックポイントの通過判定
+void Chara_Manager::PassCheckPoint()
+{
+	// 通過フラグがTRUEの場合は処理を行わない
+	if ( isPassCheckPoint )
+	{
+		return;
+	}
+
+	// チェックポイントを通過しているか判定
+	int x = (int)player->GetPosX() / CHIP_SIZE;
+	int y = (int)player->GetPosY() / CHIP_SIZE;
+	if ( spawnData[y][x] == e_CharaPlayer_ChecKPoint )
+	{
+		isPassCheckPoint = true;
+	}
+}
+
 // 更新処理
 void Chara_Manager::Update(int screenX, int screenY)
 {
@@ -321,6 +357,9 @@ void Chara_Manager::Update(int screenX, int screenY)
 
 	// 攻撃の当たり判定
 	AttackCollision();
+
+	// チェックポイントの通過判定
+	PassCheckPoint();
 }
 
 // 描画処理
@@ -339,13 +378,13 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 // スクロールの中心X座標を取得
 float Chara_Manager::GetScrollCenterX()
 {
-	return player->GetPosOldX();
+	return player->GetPosX();
 }
 
 // スクロールの中心Y座標を取得
 float Chara_Manager::GetScrollCenterY()
 {
-	return player->GetPosOldY();
+	return player->GetPosY();
 }
 
 // エネミーの死亡X座標を取得

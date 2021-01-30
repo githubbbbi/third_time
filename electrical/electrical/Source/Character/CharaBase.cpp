@@ -77,6 +77,52 @@ CharaBase::~CharaBase()
 	delete anim;
 }
 
+// 初期化処理
+void CharaBase::MyInitialize()
+{
+	oldX = x;
+	oldY = y;
+
+	moveX = 0.0f;
+	moveY = 0.0f;
+
+	gravity = 0.0f;
+
+	isJump = false;
+	isFall = false;
+
+	isAttack = false;
+
+	r = g = b = 255.0f;
+	h = 0.0f;
+	s = 0.0f;
+	v = 255.0f;
+
+	state = 0;
+	graphIndex = 0;
+
+	cBlinkingTimer = 0;
+	cBlinkingCounter = 0;
+	isCBlinking = false;
+
+	bBlinkingTimer = 0;
+	bBlinkingCounter = 0;
+	isBBlinking = false;
+
+	isKnockBack = false;
+	isAttackLeftWard = false;
+
+	invicibleTimer = 0;
+	isInvicible = false;
+
+	isExplosion = false;
+
+	blendMode = DX_BLENDMODE_NOBLEND;
+	blendValue = 0;
+
+	isAlive = true;
+}
+
 // キャラクタのジャンプ
 void CharaBase::CharaJump(float jumpPower)
 {
