@@ -29,7 +29,7 @@ Graphic::Graphic()
 	title = MyLoadGraph("Resource/Graphic/Title/title.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_title.png",
 				   2, 1, 2, 140, 24, uiTitle);
-	ending = MyLoadGraph("Resource/Graphic/Ending/ending1.png");
+	ending = MyLoadGraph("Resource/Graphic/Ending/ending.png");
 	uiReady = MyLoadGraph("Resource/Graphic/UI/UI_ready.png");
 }
 
