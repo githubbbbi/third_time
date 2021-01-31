@@ -60,7 +60,7 @@ bool InputKey::IsKeyInputBarrage(int key)
 	static int oldFrame[256] = { 0 };
 
 	// 再びキー入力があるまで待てるフレーム数
-	const int waitFrame = 15;
+	const int waitFrame = 30;
 
 	if ( !oldFrame[key] && keys[key] )
 	{
@@ -88,7 +88,7 @@ bool InputKey::IsKeyInputBarrage(int key)
 }
 
 // 押されていない場合
-bool InputKey::IsKeyInputNo(int key)
+bool InputKey::IsKeyInputNot(int key)
 {
 	if ( !keys[key] )
 	{

@@ -59,7 +59,7 @@ bool InputPad::IsPadInputBarrage(int key)
 	static int oldFrame[256] = { 0 };
 
 	// 再びキー入力があるまで待てるフレーム数
-	const int waitFrame = 15;
+	const int waitFrame = 30;
 
 	if ( !oldFrame[key] && (pad1 & key) )
 	{
@@ -87,7 +87,7 @@ bool InputPad::IsPadInputBarrage(int key)
 }
 
 // 押されていない場合
-bool InputPad::IsPadInputNo(int key)
+bool InputPad::IsPadInputNot(int key)
 {
 	if ( !(pad1 & key) )
 	{

@@ -7,6 +7,7 @@ enum KeyConfig
 {
 	e_KEY_MOVE_LEFT = KEY_INPUT_LEFT,	// 左移動
 	e_KEY_MOVE_RIGHT = KEY_INPUT_RIGHT,	// 右移動
+	e_KEY_DASH = KEY_INPUT_LSHIFT,		// ダッシュ
 	e_KEY_JUMP = KEY_INPUT_UP,			// ジャンプ
 	e_KEY_ATTACK = KEY_INPUT_SPACE,		// 攻撃
 	e_KEY_FIXED = KEY_INPUT_Z,			// 向き固定
@@ -40,5 +41,5 @@ public:
 	static bool IsKeyInputBarrage(int key);
 
 	// 押されていない場合
-	static bool IsKeyInputNo(int key);
+	static bool IsKeyInputNot(int key);
 };

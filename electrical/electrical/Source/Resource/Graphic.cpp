@@ -21,7 +21,7 @@ Graphic::Graphic()
 	background = MyLoadGraph("Resource/Graphic/Background/background.png");
 	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_manipulation_method.png",
-				   2, 2, 1, 144, 176, uiManipulationMethod);
+				   2, 2, 1, 144, 208, uiManipulationMethod);
 	MyLoadDivGraph("Resource/Graphic/UI/UI_help.png",
 				   2, 1, 2, 96, 32, uiHelp);
 	title = MyLoadGraph("Resource/Graphic/Title/title.png");

@@ -4,6 +4,7 @@ enum
 {
 	e_MOVE_LEFT,		// 左移動
 	e_MOVE_RIGHT,		// 右移動
+	e_DASH,			// ダッシュ
 	e_JUMP,				// ジャンプ
 	e_ATTACK,			// 攻撃
 	e_FIXED,			// 向き固定
@@ -43,7 +44,7 @@ public:
 	static bool IsInputBarrage(int key);
 
 	// 押されていない場合
-	static bool IsInputNo(int key);
+	static bool IsInputNot(int key);
 
 	// padのinputXを取得
 	static int GetPadInputX();

@@ -261,7 +261,7 @@ void Chara_Manager::CharaCollision()
 									  player->GetWidth(),
 									  player->GetHeight()) )
 		{
-			player->ReceiveDamage(2, !player->GetIsLeftWard());
+			player->ReceiveDamage(5, !player->GetIsLeftWard());
 			break;
 		}
 	}

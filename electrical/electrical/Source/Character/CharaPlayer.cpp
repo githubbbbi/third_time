@@ -120,7 +120,8 @@ bool Chara_Player::IsInputMove()
 // ダッシュの判定
 bool Chara_Player::IsDash()
 {
-	return (InputManager::IsInputBarrage(e_MOVE_LEFT) ||
+	return (InputManager::IsInputNow(e_DASH) ||
+			InputManager::IsInputBarrage(e_MOVE_LEFT) ||
 			InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
 		!InputManager::IsInputNow(e_FIXED);
 }
@@ -243,7 +244,7 @@ void Chara_Player::InputMove()
 	// ジャンプ上昇中中にキーが離された場合ジャンプを中止
 	if ( isJump && gravity < P_JUMP_POWER / 2.0f )
 	{
-		if ( InputManager::IsInputNo(e_JUMP) )
+		if ( InputManager::IsInputNot(e_JUMP) )
 		{
 			gravity = P_JUMP_POWER / 1.5f;
 			isJump = false;
@@ -489,25 +490,25 @@ void Chara_Player::WeaponManager()
 		// 80%
 		if ( BatteryRate(80) )
 		{
-			flightDistance = 250.0f;
+			flightDistance = 200.0f;
 		}
 		// 50%
 		else if ( BatteryRate(50) )
 		{
-			flightDistance = 200.0f;
+			flightDistance = 100.0f;
 		}
 		// 20%
 		else if ( BatteryRate(20) )
 		{
-			flightDistance = 150.0f;
+			flightDistance = 50.0f;
 		}// 10%
 		else if ( BatteryRate(10) )
 		{
-			flightDistance = 100.0f;
+			flightDistance = 10.0f;
 		}
 		else
 		{
-			flightDistance = 50.0f;
+			flightDistance = 5.0f;
 		}
 
 		electricGun.push_back(new Weapon_ElectricGun(x + xx, y,

@@ -22,6 +22,10 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_KEY_MOVE_RIGHT;
 		}
+		else if ( key == e_DASH )
+		{
+			keyCode = e_KEY_DASH;
+		}
 		else if ( key == e_JUMP )
 		{
 			keyCode = e_KEY_JUMP;
@@ -62,6 +66,10 @@ void InputManager::ConversionKeyCode(int key)
 		else if ( key == e_MOVE_RIGHT )
 		{
 			keyCode = e_PAD_MOVE_RIGHT;
+		}
+		else if ( key == e_DASH )
+		{
+			keyCode = e_PAD_DASH;
 		}
 		else if ( key == e_JUMP )
 		{
@@ -220,14 +228,14 @@ bool InputManager::IsInputBarrage(int key)
 }
 
 // 押されていない場合
-bool InputManager::IsInputNo(int key)
+bool InputManager::IsInputNot(int key)
 {
 	ConversionKeyCode(key);
 
 	// キーボード入力
 	if ( isInputKey )
 	{
-		if ( InputKey::IsKeyInputNo(keyCode) )
+		if ( InputKey::IsKeyInputNot(keyCode) )
 		{
 			return true;
 		}
@@ -236,7 +244,7 @@ bool InputManager::IsInputNo(int key)
 	// パッド入力
 	if ( isInputPad )
 	{
-		if ( InputPad::IsPadInputNo(keyCode) )
+		if ( InputPad::IsPadInputNot(keyCode) )
 		{
 			return true;
 		}
