@@ -265,7 +265,7 @@ void SceneGame::Draw()
 	SetDrawBright((int)r, (int)g, (int)b);
 	// ”wŒi
 	Background back;
-	back.Draw(effects->GetShakeX(), effects->GetShakeY());
+	back.Draw(effects->GetShakeX(), effects->GetShakeY(),1);
 
 	// ƒXƒe[ƒW
 	stage->Draw(effects->GetShakeX(),

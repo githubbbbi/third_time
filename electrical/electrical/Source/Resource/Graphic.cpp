@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Graphic.h"
+#include "../Define/Define.h"
 
 Graphic::Graphic()
 {
@@ -18,7 +19,8 @@ Graphic::Graphic()
 	particle = MyLoadGraph("Resource/Graphic/Effects/particle.png");
 	MyLoadDivGraph("Resource/Graphic/MapChip/map_chip.png",
 				   e_MAP_NUM, e_MAP_NUM, 1, CHIP_SIZE, CHIP_SIZE, mapChip);
-	background = MyLoadGraph("Resource/Graphic/Background/background.png");
+	MyLoadDivGraph("Resource/Graphic/Background/background.png",
+				   2,1,2,WIN_WIDTH,WIN_HEIGHT,background);
 	uiPlayer = MyLoadGraph("Resource/Graphic/UI/UI_player.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_manipulation_method.png",
 				   2, 2, 1, 144, 208, uiManipulationMethod);
@@ -27,7 +29,7 @@ Graphic::Graphic()
 	title = MyLoadGraph("Resource/Graphic/Title/title.png");
 	MyLoadDivGraph("Resource/Graphic/UI/UI_title.png",
 				   2, 1, 2, 140, 24, uiTitle);
-	ending = MyLoadGraph("Resource/Graphic/Ending/ending.png");
+	ending = MyLoadGraph("Resource/Graphic/Ending/ending1.png");
 	uiReady = MyLoadGraph("Resource/Graphic/UI/UI_ready.png");
 }
 
@@ -107,9 +109,9 @@ int Graphic::GetMapChip(int index)
 	return mapChip[index];
 }
 
-int Graphic::GetBackground()
+int Graphic::GetBackground(int index)
 {
-	return background;
+	return background[index];
 }
 
 int Graphic::GetUIPlayer()

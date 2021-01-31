@@ -10,5 +10,5 @@ public:
 	~Background() = default;
 
 	// •`‰æˆ—
-	void Draw(float shakeX, float shakeY);
+	void Draw(float shakeX, float shakeY,int index);
 };

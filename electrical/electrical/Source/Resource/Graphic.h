@@ -20,7 +20,7 @@ private:
 	int waterGun;							// 水銃
 	int particle;							// パーティクル
 	int mapChip[e_MAP_NUM];					// マップチップ
-	int background;							// 背景
+	int background[2];						// 背景
 	int uiPlayer;							// プレイヤーUI
 	int uiManipulationMethod[2];			// 操作方法UI
 	int uiHelp[2];							// ヘルプUI
@@ -58,7 +58,7 @@ public:
 	int GetWaterGun();
 	int GetParticle();
 	int GetMapChip(int index);
-	int GetBackground();
+	int GetBackground(int index);
 	int GetUIPlayer();
 	int GetUIManipulationMethod(int index);
 	int GetUIHelp(int index);

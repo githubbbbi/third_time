@@ -134,7 +134,7 @@ void SceneTitle::Draw()
 {
 	// îwåi
 	Background back;
-	back.Draw(0.0f, 0.0f);
+	back.Draw(0.0f, 0.0f,0);
 
 	DrawLightning();
 	DrawRotaGraph(x, y, 1.0, 0.0,
