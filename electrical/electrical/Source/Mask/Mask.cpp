@@ -89,7 +89,7 @@ void Mask::DrawMask()
 }
 
 // マスクの後処理
-void Mask::LoopMask()
+void Mask::PostMask()
 {
 	// マスクを有効にする
 	SetUseMaskScreenFlag(TRUE);

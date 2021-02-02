@@ -26,7 +26,7 @@ public:
 	static void DrawMask();
 
 	// ƒ}ƒXƒN‚ÌŒãˆ—
-	static void LoopMask();
+	static void PostMask();
 
 	// Šg‘å—¦‚ªÅ‘å‚Ì”»’è
 	static bool IsExRateMax();

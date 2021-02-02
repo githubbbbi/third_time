@@ -69,8 +69,7 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 	if ( bulletInterval == EW_BULLET_INTERVAL )
 	{
 		double a = (double)x - playerX;
-		//double b = (double)y - playerY;
-		double distance = sqrt(a * a/* + b * b*/);
+		double distance = sqrt(a * a);
 
 		//　プレイヤーと敵の距離によって、弾のスピードを変更する
 		if ( distance > 500 )

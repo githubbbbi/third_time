@@ -130,7 +130,7 @@ void SceneManager::SceneChange()
 	// シーン遷移
 	scene = nowScene->GetNextScene();
 
-	// 遷移後のシーンを生成し初期化処理を行う(同時に遷移前のシーンも削除も行う)
+	// 遷移後のシーンを生成し初期化処理を行う(同時に遷移前のシーンの削除も行う)
 	switch ( scene )
 	{
 		case e_TITLE:
@@ -179,7 +179,7 @@ void SceneManager::Draw()
 	nowScene->Draw();
 
 	// マスクの後処理
-	Mask::LoopMask();
+	Mask::PostMask();
 }
 
 // 終了処理
