@@ -119,6 +119,9 @@ void CharaBase::MyInitialize()
 
 	blendMode = DX_BLENDMODE_NOBLEND;
 	blendValue = 0;
+	
+	displaceX = 0;
+	displaceY = 0;
 
 	isAlive = true;
 }
@@ -434,6 +437,18 @@ void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 void CharaBase::Explosion()
 {
 	isExplosion = true;
+}
+
+// displaceX‚ğİ’è
+void CharaBase::SetDisplaceX(int displaceX)
+{
+	this->displaceX = displaceX;
+}
+
+// displaceX‚ğİ’è
+void CharaBase::SetDisplaceY(int displaceY)
+{
+	this->displaceY = displaceY;
 }
 
 // XÀ•W‚ğæ“¾

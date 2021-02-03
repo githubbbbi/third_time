@@ -15,7 +15,7 @@ Effect_Clear::Effect_Clear(float x, float y)
 	r = 255.0f;
 	g = 255.0f;
 	b = 255.0f;
-	h =  60.0f;
+	h = 60.0f;
 	s = 230.0f;
 	v = 255.0f;
 
@@ -28,7 +28,7 @@ Effect_Clear::Effect_Clear(float x, float y)
 // ˆÚ“®
 void Effect_Clear::Move()
 {
-	if (isActive)
+	if ( isActive )
 	{
 		y -= speed;
 
@@ -41,7 +41,7 @@ void Effect_Clear::Move()
 void Effect_Clear::Erase()
 {
 	// “§–¾“x‚ª0ˆÈ‰º‚ÌŽž
-	if (transparency <= 0)
+	if ( transparency <= 0 )
 	{
 		isActive = false;
 	}
@@ -61,13 +61,15 @@ void Effect_Clear::Update()
 }
 
 // •`‰æˆ—
-void Effect_Clear::Draw(int scrollX, int scrollY)
+void Effect_Clear::Draw(int scrollX, int scrollY,
+						int displaceX, int  displaceY)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ADD, transparency);
 
 	SetDrawBright((int)r, (int)g, (int)b);
 
-	DrawRotaGraph((int)(playerX + x) - scrollX, (int)(playerY + y) - scrollY,
+	DrawRotaGraph((int)(playerX + x) - scrollX + displaceX,
+				  (int)(playerY + y) - scrollY + displaceY,
 				  exRate, angle, Graphic::GetInstance()->GetParticle(), true);
 
 	SetDrawBright(0xFF, 0xFF, 0xFF);

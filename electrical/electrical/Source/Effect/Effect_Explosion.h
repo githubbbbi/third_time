@@ -34,7 +34,8 @@ public:
 	void Update();
 
 	// •`‰æˆ—
-	void Draw(int scrollX, int scrollY);
+	void Draw(int scrollX, int scrollY,
+			  int displaceX, int  displaceY);
 
 	// isActive‚ğæ“¾
 	bool GetIsActive();

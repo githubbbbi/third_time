@@ -23,7 +23,8 @@ private:
 	static int mapData[MAP_COUNT_Y][MAP_COUNT_X];
 
 	// マップ描画
-	void MapDraw(int x, int y, float shakeX, float shakeY, int scrollX, int scrollY);
+	void MapDraw(int x, int y, float shakeX, float shakeY,
+				 int scrollX, int scrollY, int displaceX, int displaceY);
 
 public:
 	Stage();
@@ -32,8 +33,8 @@ public:
 	bool Initialize();
 
 	// 描画処理
-	void Draw(float shakeX, float shakeY,
-			  int scrollX, int scrollY, int screenX, int screenY);
+	void Draw(float shakeX, float shakeY, int scrollX, int scrollY,
+			  int screenX, int screenY, int displaceX, int displaceY);
 
 	//マップチップの値を取得
 	static int GetMapParam(float x, float y);

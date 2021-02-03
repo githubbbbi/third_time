@@ -61,11 +61,13 @@ void Weapon_WaterGun::Update()
 }
 
 // •`‰æˆ—
-void Weapon_WaterGun::Draw(int scrollX, int scrollY)
+void Weapon_WaterGun::Draw(int scrollX, int scrollY,
+						   int displaceX, int displaceY)
 {
 	if ( isAlive )
 	{
-		DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
+		DrawRotaGraph((int)x - scrollX + displaceX,
+					  (int)y - scrollY + displaceY,
 					  0.75, 0.0, Graphic::GetInstance()->GetWaterGun(), true, isLeftWard);
 	}
 }

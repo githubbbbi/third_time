@@ -21,5 +21,6 @@ public:
 	void Update();
 
 	// •`‰æˆ—
-	void Draw(int scrollX, int scrollY);
+	void Draw(int scrollX, int scrollY, 
+			  int displaceX, int displaceY);
 };

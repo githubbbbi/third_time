@@ -24,6 +24,9 @@ private:
 	bool isEnemySpawn[MAP_COUNT_Y][MAP_COUNT_X];	// エネミースポーンフラグ
 	bool isPassCheckPoint;							// チェックポイント通過フラグ
 
+	int displaceX;			// スクリーンの中心に描画するためにずらす量
+	int displaceY;			// スクリーンの中心に描画するためにずらす量
+
 	float explosionX;								// 爆発の中心となる座標
 	float explosionY;								// 爆発の中心となる座標
 
@@ -59,7 +62,14 @@ public:
 	void Update(int screenX, int screenY);
 
 	// 描画処理
-	void Draw(float shakeX, float shakeY, int scrollX, int scrollY);
+	void Draw(float shakeX, float shakeY,
+			  int scrollX, int scrollY);
+
+	// displaceXを設定
+	void SetDisplaceX(int displaceX);
+
+	// displaceYを設定
+	void SetDisplaceY(int displaceY);
 
 	// スクロールの中心座標を取得
 	float GetScrollCenterX();

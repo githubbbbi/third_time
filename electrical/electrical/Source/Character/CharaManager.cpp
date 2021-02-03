@@ -19,6 +19,9 @@ Chara_Manager::Chara_Manager()
 		}
 	}
 
+	displaceX = 0;
+	displaceY = 0;
+
 	explosionX = 0.0f;
 	explosionY = 0.0f;
 
@@ -133,10 +136,10 @@ bool Chara_Manager::Initialize()
 void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 {
 	// スクリーンに映っている部分だけ
-	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipLeft = (screenX - displaceX - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX + displaceX + WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipTop = (screenY - displaceY - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY + displaceY + WIN_HEIGHT / 2) / CHIP_SIZE;
 
 	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{
@@ -214,10 +217,10 @@ void Chara_Manager::EnemyManager(int screenX, int screenY)
 						  screenX, screenY, player->GetIsAlive());
 	}
 
-	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipLeft = (screenX - displaceX - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX + displaceX + WIN_WIDTH / 2) / CHIP_SIZE - 1;
+	int mapChipTop = (screenY - displaceY - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY + displaceY + WIN_HEIGHT / 2) / CHIP_SIZE - 1;
 
 	// 消去
 	for ( int i = enemys.size() - 1; i >= 0; i-- )
@@ -363,7 +366,8 @@ void Chara_Manager::Update(int screenX, int screenY)
 }
 
 // 描画処理
-void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
+void Chara_Manager::Draw(float shakeX, float shakeY,
+						 int scrollX, int scrollY)
 {
 	// プレイヤー
 	player->Draw(shakeX, shakeY, scrollX, scrollY);
@@ -373,6 +377,36 @@ void Chara_Manager::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	{
 		enemys[i]->Draw(shakeX, shakeY, scrollX, scrollY);
 	}
+}
+
+// displaceXを設定
+void Chara_Manager::SetDisplaceX(int displaceX)
+{
+	// プレイヤー
+	player->SetDisplaceX(displaceX);
+
+	// エネミー
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	{
+		enemys[i]->SetDisplaceX(displaceX);
+	}
+
+	this->displaceX = displaceX;
+}
+
+// displaceXを設定
+void Chara_Manager::SetDisplaceY(int displaceY)
+{
+	// プレイヤー
+	player->SetDisplaceY(displaceY);
+
+	// エネミー
+	for ( unsigned int i = 0; i < enemys.size(); i++ )
+	{
+		enemys[i]->SetDisplaceY(displaceY);
+	}
+
+	this->displaceY = displaceY;
 }
 
 // スクロールの中心X座標を取得

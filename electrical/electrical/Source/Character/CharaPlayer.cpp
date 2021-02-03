@@ -719,10 +719,10 @@ void Chara_Player::UpdateBatteryBox()
 // バッテリーボックスの描画処理
 void Chara_Player::DrawBatteryBox(float shakeX, float shakeY, int scrollX, int scrollY)
 {
-	DrawBox((int)(batteryBox.boxPosLeft + shakeX) - scrollX,
-			(int)(batteryBox.boxPosTop + shakeY) - scrollY,
-			(int)(batteryBox.boxPosRight + shakeX) - scrollX,
-			(int)(batteryBox.boxPosBottom + shakeY) - scrollY,
+	DrawBox((int)(batteryBox.boxPosLeft + shakeX) - scrollX + displaceX,
+			(int)(batteryBox.boxPosTop + shakeY) - scrollY + displaceY,
+			(int)(batteryBox.boxPosRight + shakeX) - scrollX + displaceX,
+			(int)(batteryBox.boxPosBottom + shakeY) - scrollY + displaceY,
 			GetColor((int)batteryBox.r, (int)batteryBox.g, (int)batteryBox.b), true);
 }
 
@@ -764,7 +764,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	// 電気銃
 	for ( unsigned int i = 0; i < electricGun.size(); i++ )
 	{
-		electricGun[i]->Draw(scrollX, scrollY);
+		electricGun[i]->Draw(scrollX, scrollY, displaceX, displaceY);
 	}
 
 	if ( isAlive )
@@ -776,7 +776,8 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		DrawBatteryBox(shakeX, shakeY, scrollX, scrollY);
 
 		// プレイヤー
-		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
+		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
+					  (int)(y + shakeY) - scrollY + displaceY,
 					  1.0, 0.0, Graphic::GetInstance()->GetPlayer(graphIndex), true, isLeftWard);
 
 		SetDrawBright(255, 255, 255);

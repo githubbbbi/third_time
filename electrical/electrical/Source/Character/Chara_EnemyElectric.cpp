@@ -268,14 +268,15 @@ void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scro
 	// ìdãCèe
 	for ( unsigned int i = 0; i < electricGun.size(); i++ )
 	{
-		electricGun[i]->Draw(scrollX, scrollY);
+		electricGun[i]->Draw(scrollX, scrollY, displaceX, displaceY);
 	}
 
 	if ( isAlive )
 	{
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
-		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
+		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
+					  (int)(y + shakeY) - scrollY + displaceY,
 					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

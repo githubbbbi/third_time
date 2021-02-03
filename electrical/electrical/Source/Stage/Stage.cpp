@@ -29,8 +29,8 @@ bool Stage::Initialize()
 }
 
 // マップ描画
-void Stage::MapDraw(int x, int y,
-					float shakeX, float shakeY, int scrollX, int scrollY)
+void Stage::MapDraw(int x, int y, float shakeX, float shakeY,
+					int scrollX, int scrollY, int displaceX, int displaceY)
 {
 	switch ( mapData[y][x] )
 	{
@@ -70,21 +70,21 @@ void Stage::MapDraw(int x, int y,
 
 	if ( graphIndex != e_MAP_NONE )
 	{
-		DrawGraph(x * CHIP_SIZE + (int)shakeX - scrollX,
-				  y * CHIP_SIZE + (int)shakeX - scrollY,
+		DrawGraph(x * CHIP_SIZE + (int)shakeX - scrollX + displaceX,
+				  y * CHIP_SIZE + (int)shakeX - scrollY + displaceY,
 				  Graphic::GetInstance()->GetMapChip(graphIndex), true);
 	}
 }
 
 // 描画処理
-void Stage::Draw(float shakeX, float shakeY,
-				 int scrollX, int scrollY, int screenX, int screenY)
+void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
+				 int screenX, int screenY, int displaceX, int displaceY)
 {
 	// スクリーンに映っている部分(2ブロック分多く)だけを描画
-	int mapChipLeft = (screenX - WIN_WIDTH / 2) / CHIP_SIZE - 2;
-	int mapChipRight = (screenX + WIN_WIDTH / 2) / CHIP_SIZE + 2;
-	int mapChipTop = (screenY - WIN_HEIGHT / 2) / CHIP_SIZE - 2;
-	int mapChipBottom = (screenY + WIN_HEIGHT / 2) / CHIP_SIZE + 2;
+	int mapChipLeft = (screenX - displaceX - WIN_WIDTH / 2) / CHIP_SIZE - 2;
+	int mapChipRight = (screenX + displaceX + WIN_WIDTH / 2) / CHIP_SIZE + 2;
+	int mapChipTop = (screenY - displaceY - WIN_HEIGHT / 2) / CHIP_SIZE - 2;
+	int mapChipBottom = (screenY + displaceY + WIN_HEIGHT / 2) / CHIP_SIZE + 2;
 
 	if ( mapChipLeft < 0 )
 	{
@@ -110,7 +110,8 @@ void Stage::Draw(float shakeX, float shakeY,
 	{
 		for ( int x = mapChipLeft; x < mapChipRight; x++ )
 		{
-			MapDraw(x, y, shakeX, shakeY, scrollX, scrollY);
+			MapDraw(x, y, shakeX, shakeY,
+					scrollX, scrollY, displaceX, displaceY);
 		}
 	}
 }

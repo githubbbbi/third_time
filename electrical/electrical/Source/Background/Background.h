@@ -2,9 +2,6 @@
 
 class Background
 {
-private:
-
-
 public:
 	Background() = default;
 	~Background() = default;

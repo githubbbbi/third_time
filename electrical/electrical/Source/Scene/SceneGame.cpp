@@ -26,6 +26,8 @@ SceneGame::SceneGame()
 	scrollY = 0;
 	screenX = 0;
 	screenY = 0;
+	displaceX = 0;
+	displaceY = 0;
 	isScroll = false;
 	isDrawUIMM = false;
 
@@ -221,6 +223,10 @@ void SceneGame::Update(bool isSCPossible)
 	// スクリーン座標を求める
 	Screen();
 
+	// オブジェクトをスクリーンの中心にずらす
+	Utility::DisplaceObjScrnCntr(scrollX, scrollY,
+								 screenX, screenY, &displaceX, &displaceY);
+
 	// 操作一覧表示中は更新処理を行わない
 	if ( !isDrawUIMM )
 	{
@@ -231,8 +237,8 @@ void SceneGame::Update(bool isSCPossible)
 		}
 
 		// スクロール
-		Utility::Scroll((int)characters->GetScrollCenterX(),
-						(int)characters->GetScrollCenterY(),
+		Utility::Scroll((int)characters->GetScrollCenterX() + displaceX,
+						(int)characters->GetScrollCenterY() + displaceY,
 						&scrollX, &scrollY, &isScroll);
 
 		// エフェクト
@@ -245,6 +251,10 @@ void SceneGame::Update(bool isSCPossible)
 			characters->Update(screenX, screenY);
 		}
 	}
+
+	// キャラクターのdisplaceX,displaceYを設定
+	characters->SetDisplaceX(displaceX);
+	characters->SetDisplaceY(displaceY);
 
 	// UI
 	MyUIManager();
@@ -265,19 +275,22 @@ void SceneGame::Draw()
 	SetDrawBright((int)r, (int)g, (int)b);
 	// 背景
 	Background back;
-	back.Draw(effects->GetShakeX(), effects->GetShakeY(),1);
+	back.Draw(effects->GetShakeX(), effects->GetShakeY(), 1);
 
 	// ステージ
 	stage->Draw(effects->GetShakeX(),
 				effects->GetShakeY(),
-				scrollX, scrollY, screenX, screenY);
+				scrollX, scrollY,
+				screenX, screenY,
+				displaceX, displaceY);
 
 	// キャラクター
 	characters->Draw(effects->GetShakeX(),
-					 effects->GetShakeY(), scrollX, scrollY);
+					 effects->GetShakeY(),
+					 scrollX, scrollY);
 
 	// エフェクト
-	effects->Draw(scrollX, scrollY);
+	effects->Draw(scrollX, scrollY, displaceX, displaceY);
 
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),

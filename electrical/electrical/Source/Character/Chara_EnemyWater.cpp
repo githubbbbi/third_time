@@ -216,19 +216,21 @@ void Chara_EnemyWater::Update(float playerX, float playerY,
 }
 
 // •`‰æˆ—
-void Chara_EnemyWater::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
+void Chara_EnemyWater::Draw(float shakeX, float shakeY,
+							int scrollX, int scrollY)
 {
 	// …’e
 	for ( unsigned int i = 0; i < waterGun.size(); i++ )
 	{
-		waterGun[i]->Draw(scrollX, scrollY);
+		waterGun[i]->Draw(scrollX, scrollY, displaceX, displaceY);
 	}
 
 	if ( isAlive )
 	{
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
-		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
+		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
+					  (int)(y + shakeY) - scrollY + displaceY,
 					  1.0, 0.0, Graphic::GetInstance()->GetEnemyWater(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

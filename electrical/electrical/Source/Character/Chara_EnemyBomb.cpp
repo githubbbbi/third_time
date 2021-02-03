@@ -164,7 +164,8 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 	{
 		SetDrawBlendMode(blendMode, blendValue);
 		SetDrawBright((int)r, (int)g, (int)b);
-		DrawRotaGraph((int)(x + shakeX) - scrollX, (int)(y + shakeY) - scrollY,
+		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
+					  (int)(y + shakeY) - scrollY + displaceY,
 					  1.0, 0.0, Graphic::GetInstance()->GetEnemyBomb(graphIndex), true, isLeftWard);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

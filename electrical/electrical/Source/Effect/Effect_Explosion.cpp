@@ -74,7 +74,8 @@ void Effect_Explosion::Update()
 }
 
 // •`‰æˆ—
-void Effect_Explosion::Draw(int scrollX, int scrollY)
+void Effect_Explosion::Draw(int scrollX, int scrollY,
+							int displaceX, int  displaceY)
 {
 	if ( !isActive )
 	{
@@ -84,7 +85,8 @@ void Effect_Explosion::Draw(int scrollX, int scrollY)
 	SetDrawBlendMode(DX_BLENDMODE_ADD, blendValue);
 	SetDrawBright((int)r, (int)g, (int)b);
 
-	DrawRotaGraph((int)x - scrollX, (int)y - scrollY,
+	DrawRotaGraph((int)x - scrollX + displaceX,
+				  (int)y - scrollY + displaceY,
 				  exRate, 0.0, Graphic::GetInstance()->GetParticle(), true);
 
 	SetDrawBright(255, 255, 255);

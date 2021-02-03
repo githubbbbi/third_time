@@ -14,10 +14,14 @@ private:
 	EffectManager *effects;
 	UI_Manager *ui;
 
-	int scrollX, scrollY;	// スクロール量
-	int screenX, screenY;	// スクリーン中心座標
-	bool isScroll;			// スクロールフラグ
-	bool isDrawUIMM;		// 操作方法UI描画フラグ
+	int scrollX;		// スクロール量
+	int scrollY;		// スクロール量
+	int screenX;		// スクリーン中心座標
+	int screenY;		// スクリーン中心座標
+	int displaceX;		// スクリーンの中心に描画するためにずらす量
+	int displaceY;		// スクリーンの中心に描画するためにずらす量
+	bool isScroll;		// スクロールフラグ
+	bool isDrawUIMM;	// 操作方法UI描画フラグ
 
 	float r;		// 赤色				:0~255
 	float g;		// 緑色				:0~255

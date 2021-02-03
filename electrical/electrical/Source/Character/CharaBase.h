@@ -59,6 +59,9 @@ protected:
 	int blendMode;			// ブレンドモード
 	int blendValue;			// ブレンド値
 
+	int displaceX;			// スクリーンの中心に描画するためにずらす量
+	int displaceY;			// スクリーンの中心に描画するためにずらす量
+
 	// 初期化処理
 	void MyInitialize();
 
@@ -107,6 +110,12 @@ public:
 
 	// 爆発
 	void Explosion();
+
+	// displaceXを設定
+	void SetDisplaceX(int displaceX);
+
+	// displaceYを設定
+	void SetDisplaceY(int displaceY);
 
 	// X座標を取得
 	float GetPosX();

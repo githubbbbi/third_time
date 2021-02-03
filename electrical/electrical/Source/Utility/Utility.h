@@ -37,6 +37,10 @@ public:
 	static void Scroll(int centerX, int centerY,
 					   int *scrollX, int *scrollY, bool *isScroll);
 
+	// オブジェクトをスクリーンの中心にずらす
+	static void DisplaceObjScrnCntr(int scrollX, int scrollY,
+									int screenX, int screenY, int *displaceX, int *displaceY);
+
 	// HSVからRGBに変換
 	static void ConvertHSVtoRGB(float *r, float *g, float *b,
 								float h, float s, float v);

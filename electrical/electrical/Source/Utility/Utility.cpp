@@ -149,46 +149,45 @@ void Utility::Scroll(int centerX, int centerY,
 	const int scrollSpeedX = 20;
 	const int scrollSpeedY = 15;
 
-	bool isLeftScroll = false;	// 左スクロールフラグ
-	bool isTopScroll = false;	// 上スクロールフラグ
+	bool isRightScroll = false;		// 右スクロールフラグ
+	bool isBottomScroll = false;	// 下スクロールフラグ
 
 	// フラグ初期化
 	*isScroll = false;
 
 	// スクリーン座標より端に行くとスクロール
 	// 左スクロール
-	if ( *scrollX < (centerX / WIN_WIDTH) * WIN_WIDTH )
-	{
-		*scrollX += scrollSpeedX;
-		*isScroll = true;
-		isLeftScroll = true;
-	}
-	// 右スクロール
-	else if ( *scrollX > (centerX / WIN_WIDTH) * WIN_WIDTH )
+	if ( *scrollX > (centerX / WIN_WIDTH) * WIN_WIDTH )
 	{
 		*scrollX -= scrollSpeedX;
 		*isScroll = true;
 	}
+	// 右スクロール
+	else if ( *scrollX < (centerX / WIN_WIDTH) * WIN_WIDTH )
+	{
+		*scrollX += scrollSpeedX;
+		*isScroll = true;
+		isRightScroll = true;
+	}
 
 	// 上スクロース
-	if ( *scrollY < (centerY / WIN_HEIGHT) * WIN_HEIGHT )
-	{
-		*scrollY += scrollSpeedY;
-		*isScroll = true;
-		isTopScroll = true;
-	}
-	// 下スクロール
-	else if ( *scrollY > (centerY / WIN_HEIGHT) * WIN_HEIGHT )
+	if ( *scrollY > (centerY / WIN_HEIGHT) * WIN_HEIGHT )
 	{
 		*scrollY -= scrollSpeedY;
 		*isScroll = true;
 	}
+	// 下スクロール
+	else if ( *scrollY < (centerY / WIN_HEIGHT) * WIN_HEIGHT )
+	{
+		*scrollY += scrollSpeedY;
+		*isScroll = true;
+		isBottomScroll = true;
+	}
 
-
-	// 左スクロール＆上スクロースしたときのみ
+	// 右スクロール＆下スクロースしたときのみ
 	// スクロール量をウィンドウサイズの倍数に調整
 	// X方向
-	if ( isLeftScroll )
+	if ( isRightScroll )
 	{
 		int x = *scrollX - (centerX / WIN_WIDTH) * WIN_WIDTH;
 		if ( x > 0 )
@@ -198,7 +197,7 @@ void Utility::Scroll(int centerX, int centerY,
 	}
 
 	// Y方向
-	if ( isTopScroll )
+	if ( isBottomScroll )
 	{
 		int y = *scrollY - (centerY / WIN_HEIGHT) * WIN_HEIGHT;
 		if ( y > 0 )
@@ -214,9 +213,9 @@ void Utility::Scroll(int centerX, int centerY,
 		*scrollX = 0;
 	}
 	// マップの右端より右にはいかない
-	else if ( *scrollX + WIN_WIDTH > MAP_COUNT_X * CHIP_SIZE )
+	else if ( *scrollX + WIN_WIDTH > MAP_WIDTH )
 	{
-		*scrollX = MAP_COUNT_X * CHIP_SIZE - WIN_WIDTH;
+		*scrollX = MAP_WIDTH - WIN_WIDTH;
 	}
 
 	// Y方向
@@ -226,10 +225,23 @@ void Utility::Scroll(int centerX, int centerY,
 		*scrollY = 0;
 	}
 	// マップの下端より下にはいかない
-	else if ( *scrollY + WIN_HEIGHT > MAP_COUNT_Y * CHIP_SIZE )
+	else if ( *scrollY + WIN_HEIGHT > MAP_HEIGHT )
 	{
-		*scrollY = MAP_COUNT_Y * CHIP_SIZE - WIN_HEIGHT;
+		*scrollY = MAP_HEIGHT - WIN_HEIGHT;
 	}
+}
+
+// オブジェクトをスクリーンの中心にずらす
+void Utility::DisplaceObjScrnCntr(int scrollX, int scrollY, int 
+								  screenX, int screenY, int *displaceX, int *displaceY)
+{
+	// ウィンドウに映るチップの数 × チップサイズ = チップをウィンドウサイズを超えない最大個並べた場合のサイズ
+	const int chipX = (WIN_WIDTH / CHIP_SIZE) * CHIP_SIZE;
+	const int chipY = (WIN_HEIGHT / CHIP_SIZE) * CHIP_SIZE;
+
+	// 現在のスクリーン座標からいくつずらすかを算出
+	*displaceX = ((WIN_WIDTH - chipX) / 2) * (screenX / (WIN_WIDTH / 2));
+	*displaceY = ((WIN_HEIGHT - chipY) / 2) * (screenY / (WIN_HEIGHT / 2));
 }
 
 // HSVからRGBに変換

@@ -78,14 +78,16 @@ void EffectManager::Update()
 }
 
 // 描画処理
-void EffectManager::Draw(int scrollX, int scrollY)
+void EffectManager::Draw(int scrollX, int scrollY,
+						 int displaceX, int  displaceY)
 {
 	//　爆発
 	for ( unsigned int i = 0; i < explosion.size(); i++ )
 	{
 		if ( explosion[i]->GetIsActive() )
 		{
-			explosion[i]->Draw(scrollX, scrollY);
+			explosion[i]->Draw(scrollX, scrollY,
+							   displaceX, displaceY);
 		}
 	}
 
@@ -94,7 +96,8 @@ void EffectManager::Draw(int scrollX, int scrollY)
 	{
 		if ( clear[i]->GetIsActive() )
 		{
-			clear[i]->Draw(scrollX, scrollY);
+			clear[i]->Draw(scrollX, scrollY,
+						   displaceX, displaceY);
 		}
 	}
 }
@@ -131,9 +134,9 @@ void EffectManager::Clear(float x, float y)
 {
 	static int waitTimer = 20;		// クリア時に生成する星のタイマー
 
-	if (waitTimer-- == 0)
+	if ( waitTimer-- == 0 )
 	{
-		for (int i = 0; i < 3; i++)
+		for ( int i = 0; i < 3; i++ )
 		{
 			clear.push_back(new Effect_Clear(x, y));
 		}
