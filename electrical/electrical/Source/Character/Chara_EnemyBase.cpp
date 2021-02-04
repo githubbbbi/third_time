@@ -44,14 +44,14 @@ void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 	// ç∂
 	if ( (int)x - width / 2 + displaceX < screenX - WIN_WIDTH / 2 )
 	{
-		x = (float)(screenX + displaceX - WIN_WIDTH / 2 + width);
+		x = (float)(screenX - displaceX - WIN_WIDTH / 2 + width / 2);
 		speed *= -1.0f;
 		return;
 	}
 	// âE
 	else if ( (int)x + width / 2 + displaceX > screenX + WIN_WIDTH / 2 )
 	{
-		x = (float)(screenX - displaceX + WIN_WIDTH / 2 - width);
+		x = (float)(screenX - displaceX + WIN_WIDTH / 2 - width / 2);
 		speed *= -1.0f;
 		return;
 	}
