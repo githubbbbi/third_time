@@ -114,6 +114,8 @@ void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
 					scrollX, scrollY, displaceX, displaceY);
 		}
 	}
+
+	
 }
 
 // マップチップの値を取得
