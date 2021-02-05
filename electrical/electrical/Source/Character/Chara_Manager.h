@@ -23,10 +23,8 @@ private:
 	int spawnData[MAP_COUNT_Y][MAP_COUNT_X];		// スポーンデータ
 	bool isEnemySpawn[MAP_COUNT_Y][MAP_COUNT_X];	// エネミースポーンフラグ
 	bool isPassCheckPoint;							// チェックポイント通過フラグ
-
-	int displaceX;			// スクリーンの中心に描画するためにずらす量
-	int displaceY;			// スクリーンの中心に描画するためにずらす量
-
+	int displaceX;									// スクリーンの中心に描画するためにずらす量
+	int displaceY;									// スクリーンの中心に描画するためにずらす量
 	float explosionX;								// 爆発の中心となる座標
 	float explosionY;								// 爆発の中心となる座標
 
@@ -90,6 +88,12 @@ public:
 	// プレイヤーの中心Y座標を取得
 	float GetPlayerY();
 
+	// プレイヤーのmoveXを取得
+	float GetPlayerMoveX();
+
+	// プレイヤーのmoveYを取得
+	float GetPlayerMoveY();
+
 	// プレイヤーのHPを取得
 	int GetPlayerHp();
 
@@ -107,8 +111,4 @@ public:
 
 	// プレイヤーのゴールフラグを取得
 	bool GetPlayerIsGoal();
-
-	float GetPlayerMoveX();
-
-	float GetPlayerMoveY();
 };

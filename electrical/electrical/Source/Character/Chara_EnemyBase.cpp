@@ -7,7 +7,7 @@
 const float E_JUMP_POWER = -13.0f;
 
 Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int height,
-	float speed, int hp, int attackPower, int mapChipX, int mapChipY) :
+								 float speed, int hp, int attackPower, int mapChipX, int mapChipY):
 	CharaBase(x, y, radius, width, height, speed, hp, attackPower)
 {
 	this->mapChipX = mapChipX;
@@ -29,9 +29,9 @@ void Chara_EnemyBase::Jump()
 	// 目の前に縦1ブロックがあるかつ真上にブロックがない場合のみジャンプする
 	if ( Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_NONE &&
 		((Stage::GetMapParam(x + width + 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
-			(Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
-				Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
+		  Stage::GetMapParam(x + width + 1, y - CHIP_SIZE) == e_MAP_NONE) ||
+		 (Stage::GetMapParam(x - width - 1, y) == e_MAP_BLOCK &&
+		  Stage::GetMapParam(x - width - 1, y - CHIP_SIZE) == e_MAP_NONE)) )
 	{
 		CharaJump(E_JUMP_POWER);
 	}
@@ -42,16 +42,20 @@ void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 {
 	// スクリーンより端 この判定は優先して行われる
 	// 左
-	if ( (int)x - width / 2 < screenX - displaceX + (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2 )
+	if ( (int)x - width / 2 < screenX - displaceX +
+		(displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2 )
 	{
-		x = (float)(screenX - displaceX + (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2 + width / 2);
+		x = (float)(screenX - displaceX + (
+			displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2 + width / 2);
 		speed *= -1.0f;
 		return;
 	}
 	// 右
-	else if ( (int)x + width / 2 > screenX - displaceX - (displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2 )
+	else if ( (int)x + width / 2 > screenX - displaceX -
+			 (displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2 )
 	{
-		x = (float)(screenX - displaceX - (displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2 - width / 2);
+		x = (float)(screenX - displaceX -
+					(displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2 - width / 2);
 		speed *= -1.0f;
 		return;
 	}
@@ -64,9 +68,9 @@ void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 
 	// 進む予定の位置に縦に2つ並んでブロックがある
 	if ( (Stage::GetMapParam(x + width / 2 + 1, y) == e_MAP_BLOCK &&
-		Stage::GetMapParam(x + width / 2 + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		  Stage::GetMapParam(x + width / 2 + 1, y - CHIP_SIZE) == e_MAP_BLOCK) ||
 		(Stage::GetMapParam(x - width / 2 - 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x - width / 2 - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
+		 Stage::GetMapParam(x - width / 2 - 1, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1.0f;
 		return;
@@ -74,9 +78,9 @@ void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 
 	// 目の前に縦1ブロックがあるかつ真上にブロックがある
 	if ( (Stage::GetMapParam(x + width / 2 + 1, y) == e_MAP_BLOCK &&
-		Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
+		  Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) ||
 		(Stage::GetMapParam(x - width / 2 - 1, y) == e_MAP_BLOCK &&
-			Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
+		 Stage::GetMapParam(x, y - CHIP_SIZE) == e_MAP_BLOCK) )
 	{
 		speed *= -1.0f;
 		return;

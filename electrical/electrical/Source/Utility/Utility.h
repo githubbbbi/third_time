@@ -34,12 +34,12 @@ public:
 								float x2, float y2, int w2, int h2);
 
 	// スクロール
-	static void Scroll(int centerX, int centerY,
-					   int *scrollX, int *scrollY,int displaceX,int displaceY, bool *isScroll);
+	static void Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
+					   int displaceX, int displaceY, bool *isScroll);
 
 	// オブジェクトをスクリーンの中心にずらす
-	static void DisplaceObjScrnCntr(int screenX, int screenY, 
-					   float *displaceX, float *displaceY);
+	static void DisplaceObjScrnCntr(int screenX, int screenY,
+									float *displaceX, float *displaceY);
 
 	// HSVからRGBに変換
 	static void ConvertHSVtoRGB(float *r, float *g, float *b,

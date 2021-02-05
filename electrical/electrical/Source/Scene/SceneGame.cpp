@@ -75,15 +75,18 @@ void SceneGame::Initialize()
 	isSceneChange = false;
 }
 
+// プレイヤーが左進行:-1,右進行:1
 int SceneGame::PlayerMoveLR()
 {
-	
-	return (int)((characters->GetPlayerMoveX() + 1.0f) / fabsf(characters->GetPlayerMoveX() + 1.0f));
+	return (int)((characters->GetPlayerMoveX() + 1.0f) /
+				 fabsf(characters->GetPlayerMoveX() + 1.0f));
 }
 
+// プレイヤーが上進行:-1,下進行:1
 int SceneGame::PlayerMoveUD()
 {
-	return (int)((characters->GetPlayerMoveY() + 1.0f) / fabsf(characters->GetPlayerMoveY() + 1.0f));
+	return (int)((characters->GetPlayerMoveY() + 1.0f) /
+				 fabsf(characters->GetPlayerMoveY() + 1.0f));
 }
 
 // スクリーン座標を求める
@@ -104,7 +107,7 @@ void SceneGame::MyEffectManager()
 
 		// 爆発
 		effects->Explosion(characters->GetExplosionPosX(),
-			characters->GetExplosionPosY());
+						   characters->GetExplosionPosY());
 	}
 
 	// クリア時のエフェクト
@@ -122,7 +125,7 @@ void SceneGame::MyUIManager()
 {
 	// 更新処理
 	ui->Update(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-		characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
 
 	// 操作一覧表示中でない
 	if ( !isDrawUIMM )
@@ -241,9 +244,11 @@ void SceneGame::Update(bool isSCPossible)
 		}
 
 		// スクロール
-		Utility::Scroll((int)characters->GetScrollCenterX() + displaceX + ((displaceX / (screenX / (WIN_WIDTH / 2))) * PlayerMoveLR()),
-			(int)characters->GetScrollCenterY() + displaceY + ((displaceY / (screenY / (WIN_HEIGHT / 2))) * PlayerMoveUD()),
-			&scrollX, &scrollY, displaceX, displaceY, &isScroll);
+		Utility::Scroll((int)characters->GetScrollCenterX() + displaceX +
+						((displaceX / (screenX / (WIN_WIDTH / 2))) * PlayerMoveLR()),
+						(int)characters->GetScrollCenterY() + displaceY +
+						((displaceY / (screenY / (WIN_HEIGHT / 2))) * PlayerMoveUD()),
+						&scrollX, &scrollY, displaceX, displaceY, &isScroll);
 
 		// エフェクト
 		MyEffectManager();
@@ -289,28 +294,22 @@ void SceneGame::Draw()
 
 	// ステージ
 	stage->Draw(effects->GetShakeX(),
-		effects->GetShakeY(),
-		scrollX, scrollY,
-		screenX, screenY,
-		displaceX, displaceY);
+				effects->GetShakeY(),
+				scrollX, scrollY,
+				screenX, screenY,
+				displaceX, displaceY);
 
 	// キャラクター
 	characters->Draw(effects->GetShakeX(),
-		effects->GetShakeY(),
-		scrollX, scrollY);
+					 effects->GetShakeY(),
+					 scrollX, scrollY);
 
 	// エフェクト
 	effects->Draw(scrollX, scrollY, displaceX, displaceY);
 
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-		characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+			 characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
 
 	SetDrawBright(255, 255, 255);
-}
-
-// 終了処理
-void SceneGame::Finalize()
-{
-
 }

@@ -6,7 +6,7 @@
 
 // 画面内にとどまる
 void Utility::StayOnScreen(float *x, float *y, int radius,
-	bool isStayX, bool isStayY)
+						   bool isStayX, bool isStayY)
 {
 	if ( isStayX )
 	{
@@ -36,7 +36,7 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 // マップとの当たり判定
 // 1：左辺、2：右辺、3：上辺、4：下辺
 int Utility::MapHitCheck(float x, float y,
-	float *moveX, float *moveY)
+						 float *moveX, float *moveY)
 {
 	const float value = 1.0f;
 
@@ -108,7 +108,7 @@ int Utility::MapHitCheck(float x, float y,
 
 // 円のコリジョン
 bool Utility::IsCircleCollision(float x1, float y1, int r1,
-	float x2, float y2, int r2)
+								float x2, float y2, int r2)
 {
 	double disX = (double)x2 - (double)x1;
 	double disY = (double)y2 - (double)y1;
@@ -125,7 +125,7 @@ bool Utility::IsCircleCollision(float x1, float y1, int r1,
 
 // 矩形の子リジョン
 bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
-	float x2, float y2, int w2, int h2)
+							  float x2, float y2, int w2, int h2)
 {
 	float halfW1 = (float)w1 / 2.0f;
 	float halfH1 = (float)h1 / 2.0f;
@@ -142,8 +142,8 @@ bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
 }
 
 // スクロール
-void Utility::Scroll(int centerX, int centerY,
-	int *scrollX, int *scrollY, int displaceX, int displaceY, bool *isScroll)
+void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
+					 int displaceX, int displaceY, bool *isScroll)
 {
 	// スクロールスピード
 	const int scrollSpeedX = 20;
@@ -213,9 +213,11 @@ void Utility::Scroll(int centerX, int centerY,
 		*scrollX = 0;
 	}
 	// マップの右端より右にはいかない
-	else if ( *scrollX + WIN_WIDTH > MAP_WIDTH + displaceX + (displaceX / ((*scrollX + WIN_WIDTH / 2) / (WIN_WIDTH / 2))) )
+	else if ( *scrollX + WIN_WIDTH > MAP_WIDTH + displaceX +
+			 (displaceX / ((*scrollX + WIN_WIDTH / 2) / (WIN_WIDTH / 2))) )
 	{
-		*scrollX = MAP_WIDTH - WIN_WIDTH + displaceX + (displaceX / ((*scrollX + WIN_WIDTH / 2) / (WIN_WIDTH / 2)));
+		*scrollX = MAP_WIDTH - WIN_WIDTH + displaceX +
+			(displaceX / ((*scrollX + WIN_WIDTH / 2) / (WIN_WIDTH / 2)));
 	}
 
 	// Y方向
@@ -225,15 +227,17 @@ void Utility::Scroll(int centerX, int centerY,
 		*scrollY = 0;
 	}
 	// マップの下端より下にはいかない
-	else if ( *scrollY + WIN_HEIGHT > MAP_HEIGHT + displaceY + (displaceY / ((*scrollY + WIN_HEIGHT / 2) / (WIN_HEIGHT / 2))) )
+	else if ( *scrollY + WIN_HEIGHT > MAP_HEIGHT + displaceY +
+			 (displaceY / ((*scrollY + WIN_HEIGHT / 2) / (WIN_HEIGHT / 2))) )
 	{
-		*scrollY = MAP_HEIGHT - WIN_HEIGHT + displaceY + (displaceY / ((*scrollY + WIN_HEIGHT / 2) / (WIN_HEIGHT / 2)));
+		*scrollY = MAP_HEIGHT - WIN_HEIGHT + displaceY +
+			(displaceY / ((*scrollY + WIN_HEIGHT / 2) / (WIN_HEIGHT / 2)));
 	}
 }
 
 // オブジェクトをスクリーンの中心にずらす
 void Utility::DisplaceObjScrnCntr(int screenX, int screenY,
-	float *displaceX, float *displaceY)
+								  float *displaceX, float *displaceY)
 {
 	// ウィンドウに映るチップの数 × チップサイズ = チップをウィンドウサイズを超えない最大個並べた場合のサイズ
 	const float chipX = 17.0f * (float)CHIP_SIZE;
@@ -247,7 +251,7 @@ void Utility::DisplaceObjScrnCntr(int screenX, int screenY,
 
 // HSVからRGBに変換
 void Utility::ConvertHSVtoRGB(float *r, float *g, float *b,
-	float h, float s, float v)
+							  float h, float s, float v)
 {
 	float max = v;
 	float min = max - (s / 255.0f) * max;

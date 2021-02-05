@@ -30,11 +30,13 @@ private:
 	float s;		// 彩度(saturation)	:0~255
 	float v;		// 明度(value)		:0~255
 
-	
+	// プレイヤーが左進行:-1,右進行:1
 	int PlayerMoveLR();
-	
+
+
+	// プレイヤーが上進行:-1,下進行:1
 	int PlayerMoveUD();
-	
+
 	// スクリーン座標を求める
 	void Screen();
 
@@ -65,7 +67,4 @@ public:
 
 	// 描画処理
 	void Draw() override;
-
-	// 終了処理
-	void Finalize();
 };

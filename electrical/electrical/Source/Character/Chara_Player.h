@@ -171,9 +171,9 @@ public:
 	// ƒS[ƒ‹”»’è‚ğæ“¾
 	bool GetIsGoal();
 
-	//
+	// moveX‚ğæ“¾
 	float GetMoveX();
 
+	// moveY‚ğæ“¾
 	float GetMoveY();
-	
 };

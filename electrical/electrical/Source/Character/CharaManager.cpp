@@ -538,6 +538,17 @@ float Chara_Manager::GetPlayerY()
 	return player->GetPosY();
 }
 
+// プレイヤーのmoveXを取得
+float Chara_Manager::GetPlayerMoveX()
+{
+	return player->GetMoveX();
+}
+// プレイヤーのmoveYを取得
+float Chara_Manager::GetPlayerMoveY()
+{
+	return player->GetMoveY();
+}
+
 // プレイヤーのHPを取得
 int Chara_Manager::GetPlayerHp()
 {
@@ -572,14 +583,4 @@ bool Chara_Manager::GetPlayerIsAlive()
 bool Chara_Manager::GetPlayerIsGoal()
 {
 	return player->GetIsGoal();
-}
-
-float Chara_Manager::GetPlayerMoveX()
-{
-	return player->GetMoveX();
-}
-
-float Chara_Manager::GetPlayerMoveY()
-{
-	return player->GetMoveY();
 }
