@@ -103,7 +103,7 @@ void Chara_Player::Initialize()
 	attackMotionFrame = 0;
 
 	// 画像の向きの初期化
-	isLeftWard = InitGraphDirection();
+	isLeft = InitGraphDirection();
 
 	// バッテリーボックス
 	InitializeBatteryBox();
@@ -151,7 +151,7 @@ void Chara_Player::Fixed()
 	if ( InputManager::IsInputNow(e_FIXED) )
 	{
 		// 左向き
-		if ( isLeftWard )
+		if ( isLeft )
 		{
 			// 左進行
 			if ( padInputX < 0 )
@@ -268,12 +268,12 @@ void Chara_Player::ChangeGraphicDirection()
 	// 左向き
 	if ( padInputX < 0 )
 	{
-		isLeftWard = true;
+		isLeft = true;
 	}
 	// 右向き
 	else if ( padInputX > 0 )
 	{
-		isLeftWard = false;
+		isLeft = false;
 	}
 }
 
@@ -475,7 +475,7 @@ void Chara_Player::WeaponManager()
 	{
 		// 生成座標
 		float xx = 24.0f;
-		if ( isLeftWard )
+		if ( isLeft )
 		{
 			xx *= -1.0f;
 		}
@@ -515,7 +515,7 @@ void Chara_Player::WeaponManager()
 													 16,
 													 EG_SPEED, 0.0f,
 													 flightDistance, 2,
-													 isLeftWard));
+													 isLeft));
 	}
 
 	// 電気銃
@@ -674,7 +674,7 @@ void Chara_Player::State()
 void Chara_Player::InitializeBatteryBox()
 {
 	// 左向き
-	if ( isLeftWard )
+	if ( isLeft )
 	{
 		batteryBox.boxPosLeft = x + 1.0f;
 	}
@@ -697,7 +697,7 @@ void Chara_Player::InitializeBatteryBox()
 void Chara_Player::UpdateBatteryBox()
 {
 	// 左向き
-	if ( isLeftWard )
+	if ( isLeft )
 	{
 		batteryBox.boxPosLeft = x + 1.0f;
 	}
@@ -744,7 +744,7 @@ void Chara_Player::Update()
 		UpdateBatteryBox();
 
 		// 向き固定ボタンが押されていない
-		if ( !InputManager::IsInputNow(e_FIXED) )
+		if ( !InputManager::IsInputNow(e_LOCK) )
 		{
 			ChangeGraphicDirection();
 		}
@@ -778,7 +778,7 @@ void Chara_Player::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		// プレイヤー
 		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
 					  (int)(y + shakeY) - scrollY + displaceY,
-					  1.0, 0.0, Graphic::GetInstance()->GetPlayer(graphIndex), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetPlayer(graphIndex), true, isLeft);
 
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -837,7 +837,7 @@ int Chara_Player::GetGunRadius(int index)
 // 電気銃のisLeftWard取得
 bool Chara_Player::GetIsGunLeftWard(int index)
 {
-	return electricGun[index]->GetIsLeftWard();
+	return electricGun[index]->GetIsLeft();
 }
 
 // HPを取得

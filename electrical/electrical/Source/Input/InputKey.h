@@ -10,7 +10,7 @@ enum KeyConfig
 	e_KEY_DASH = KEY_INPUT_LSHIFT,		// ダッシュ
 	e_KEY_JUMP = KEY_INPUT_UP,			// ジャンプ
 	e_KEY_ATTACK = KEY_INPUT_SPACE,		// 攻撃
-	e_KEY_FIXED = KEY_INPUT_Z,			// 向き固定
+	e_KEY_LOCK = KEY_INPUT_Z,			// 向き固定
 	e_KEY_HELP = KEY_INPUT_H,			// ヘルプ(操作方法を表示)
 	e_KEY_START = KEY_INPUT_SPACE,		// ゲーム開始
 	e_KEY_EXIT = KEY_INPUT_ESCAPE,		// ゲーム終了

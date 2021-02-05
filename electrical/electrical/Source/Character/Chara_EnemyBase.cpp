@@ -15,7 +15,7 @@ Chara_EnemyBase::Chara_EnemyBase(float x, float y, int radius, int width, int he
 	attackX = 0.0f;
 	attackY = 0.0f;
 	attackRadius = 0;
-	isAttackLeftWard = isLeftWard;
+	isAttackLeft = isLeft;
 }
 
 // ジャンプする
@@ -96,12 +96,12 @@ void Chara_EnemyBase::ChangeGraphicDirection()
 	}
 
 	// 左に進行で右向きの場合
-	if ( !isLeftWard )
+	if ( !isLeft )
 	{
 		if ( speed < 0.0f )
 		{
 			// 左を向く
-			isLeftWard = true;
+			isLeft = true;
 		}
 	}
 	// 右に進行で左向きの場合
@@ -110,7 +110,7 @@ void Chara_EnemyBase::ChangeGraphicDirection()
 		if ( speed > 0.0f )
 		{
 			// 右を向く
-			isLeftWard = false;
+			isLeft = false;
 		}
 	}
 }
@@ -125,7 +125,7 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 	for ( int i = 1; i <= enemySpace; i++ )
 	{
 		// 左向きの時
-		if ( isLeftWard )
+		if ( isLeft )
 		{
 			if ( Stage::GetMapParam(x - (float)(CHIP_SIZE * i), y) == e_MAP_BLOCK )
 			{
@@ -172,5 +172,5 @@ int Chara_EnemyBase::GetAttackRadius()
 
 bool Chara_EnemyBase::GetIsAttackLeftWard()
 {
-	return isAttackLeftWard;
+	return isAttackLeft;
 }

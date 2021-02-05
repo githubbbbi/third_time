@@ -8,8 +8,8 @@
 const float WG_GRAVITY = 0.85f;
 
 Weapon_WaterGun::Weapon_WaterGun(float x, float y, int radius, float speedX, float speedY,
-								 float flightDistance, int eraseFrame, bool isCharaLeftWard):
-	WeaponBase(x, y, radius, speedX, speedY, flightDistance, eraseFrame, isCharaLeftWard)
+								 float flightDistance, int eraseFrame, bool isCharaLeft):
+	WeaponBase(x, y, radius, speedX, speedY, flightDistance, eraseFrame, isCharaLeft)
 {
 	moveY = -10.0f;
 
@@ -24,7 +24,7 @@ void Weapon_WaterGun::Move()
 	moveX = 0.0f;
 
 	// ¶Œü‚«
-	if ( isLeftWard )
+	if ( isLeft )
 	{
 		moveX -= speedX;
 	}
@@ -68,6 +68,6 @@ void Weapon_WaterGun::Draw(int scrollX, int scrollY,
 	{
 		DrawRotaGraph((int)x - scrollX + displaceX,
 					  (int)y - scrollY + displaceY,
-					  0.75, 0.0, Graphic::GetInstance()->GetWaterGun(), true, isLeftWard);
+					  0.75, 0.0, Graphic::GetInstance()->GetWaterGun(), true, isLeft);
 	}
 }

@@ -7,7 +7,7 @@ enum
 	e_DASH,			// ダッシュ
 	e_JUMP,				// ジャンプ
 	e_ATTACK,			// 攻撃
-	e_FIXED,			// 向き固定
+	e_LOCK,			// 向き固定
 	e_HELP,				// ヘルプ(操作方法を表示)
 	e_START,			// ゲーム開始
 	e_EXIT,				// ゲーム終了

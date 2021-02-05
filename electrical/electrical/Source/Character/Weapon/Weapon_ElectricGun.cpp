@@ -8,8 +8,8 @@
 const float EG_SPEED = 10.0f;
 
 Weapon_ElectricGun::Weapon_ElectricGun(float x, float y, int radius, float speedX, float speedY,
-									   float flightDistance, int eraseFrame, bool isCharaLeftWard):
-	WeaponBase(x, y, radius, speedX, speedY, flightDistance, eraseFrame, isCharaLeftWard)
+									   float flightDistance, int eraseFrame, bool isCharaLeft):
+	WeaponBase(x, y, radius, speedX, speedY, flightDistance, eraseFrame, isCharaLeft)
 {
 	exRate = 0.75;
 
@@ -25,7 +25,7 @@ void Weapon_ElectricGun::Move()
 	moveY = 0.0f;
 
 	// ¶Œü‚«
-	if ( isLeftWard )
+	if ( isLeft )
 	{
 		moveX -= speedX;
 	}
@@ -85,6 +85,6 @@ void Weapon_ElectricGun::Draw(int scrollX, int scrollY,
 	{
 		DrawRotaGraph((int)x - scrollX + displaceX,
 					  (int)y - scrollY + displaceY,
-					  exRate, 0.0, Graphic::GetInstance()->GetElectricGun(), true, isLeftWard);
+					  exRate, 0.0, Graphic::GetInstance()->GetElectricGun(), true, isLeft);
 	}
 }

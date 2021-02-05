@@ -17,7 +17,7 @@ private:
 
 public:
 	Weapon_ElectricGun(float x, float y, int radius, float speedX, float speedY,
-					   float flightDistance, int eraseFrame, bool isCharaLeftWard);
+					   float flightDistance, int eraseFrame, bool isCharaLeft);
 
 	// XVˆ—
 	void Update();

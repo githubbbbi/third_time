@@ -17,14 +17,14 @@ protected:
 	int eraseFrame;			// マップチップにヒットしてから消去するフレーム数
 	bool isAlive;			// 発射フラグ
 	bool isMapHit;			// マップヒットフラグ
-	bool isLeftWard;		// 左向きフラグ
+	bool isLeft;			// 左向きフラグ
 
 	// マップチップとの当たり判定を考慮した移動
 	void BulletMove(bool isHitCalc);
 
 public:
 	WeaponBase(float x, float y, int radius, float speedX, float speedY,
-			   float flightDistance, int eraseFrame, bool isCharaLeftWard);
+			   float flightDistance, int eraseFrame, bool isCharaLeft);
 
 
 	// 弾がヒットした場合の処理
@@ -42,6 +42,6 @@ public:
 	// isAliveを取得
 	bool GetIsAlive();
 
-	// isLeftWardを取得
-	bool GetIsLeftWard();
+	// isLeftを取得
+	bool GetIsLeft();
 };

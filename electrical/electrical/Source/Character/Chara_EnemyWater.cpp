@@ -87,7 +87,7 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 
 		// ¶¬À•W
 		float xx = 24.0f;
-		if ( isLeftWard )
+		if ( isLeft )
 		{
 			xx *= -1.0f;
 		}
@@ -98,7 +98,7 @@ void Chara_EnemyWater::WeaponManager(float playerX, float playerY, bool isPlayer
 											   16,
 											   bulletSpeed, GRAVITY,
 											   flightDistance, 0,
-											   isLeftWard));
+											   isLeft));
 
 		isAttack = true;
 	}
@@ -148,7 +148,7 @@ void Chara_EnemyWater::AttackManager(float playerX, float playerY, bool isPlayer
 	attackX = waterGun[0]->GetPosX();;
 	attackY = waterGun[0]->GetPosY();;
 	attackRadius = waterGun[0]->GetRadius();
-	isAttackLeftWard = waterGun[0]->GetIsLeftWard();
+	isAttackLeft = waterGun[0]->GetIsLeft();
 }
 
 // Œü‚«‚ð•ÏX
@@ -162,12 +162,12 @@ void Chara_EnemyWater::ChangeDirection(float playerX)
 	if ( x > playerX )
 	{
 		// ¶‚ðŒü‚­
-		isLeftWard = true;
+		isLeft = true;
 	}
 	else
 	{
 		// ‰E‚ðŒü‚­
-		isLeftWard = false;
+		isLeft = false;
 	}
 }
 
@@ -231,7 +231,7 @@ void Chara_EnemyWater::Draw(float shakeX, float shakeY,
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
 					  (int)(y + shakeY) - scrollY + displaceY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyWater(graphIndex), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyWater(graphIndex), true, isLeft);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

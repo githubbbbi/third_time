@@ -2,7 +2,7 @@
 #include "../../Utility/Utility.h"
 
 WeaponBase::WeaponBase(float x, float y, int radius, float speedX, float speedY,
-					   float flightDistance, int eraseFrame, bool isCharaLeftWard)
+					   float flightDistance, int eraseFrame, bool isCharaLeft)
 {
 	this->x = x;
 	this->y = y;
@@ -11,7 +11,7 @@ WeaponBase::WeaponBase(float x, float y, int radius, float speedX, float speedY,
 	this->speedY = speedY;
 	this->flightDistance = flightDistance;
 	this->eraseFrame = eraseFrame;
-	this->isLeftWard = isCharaLeftWard;
+	this->isLeft = isCharaLeft;
 
 	oldX = x;
 	oldY = y;
@@ -113,7 +113,7 @@ bool WeaponBase::GetIsAlive()
 }
 
 // isLeftWard‚ðŽæ“¾
-bool WeaponBase::GetIsLeftWard()
+bool WeaponBase::GetIsLeft()
 {
-	return isLeftWard;
+	return isLeft;
 }

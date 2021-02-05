@@ -33,10 +33,13 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	moveX = 0.0f;
 	moveY = 0.0f;
 
+	displaceX = 0;
+	displaceY = 0;
+
 	gravity = 0.0f;
 
 	isAlive = true;
-	isLeftWard = false;
+	isLeft = false;
 
 	isJump = false;
 	isFall = false;
@@ -60,7 +63,7 @@ CharaBase::CharaBase(float x, float y, int radius, int width, int height,
 	isBBlinking = false;
 
 	isKnockBack = false;
-	isAttackLeftWard = false;
+	isAttackLeft = false;
 
 	invicibleTimer = 0;
 	isInvicible = false;
@@ -110,7 +113,7 @@ void CharaBase::MyInitialize()
 	isBBlinking = false;
 
 	isKnockBack = false;
-	isAttackLeftWard = false;
+	isAttackLeft = false;
 
 	invicibleTimer = 0;
 	isInvicible = false;
@@ -337,7 +340,7 @@ void CharaBase::KnockBack()
 
 			float knockBackSpeed = 0.20f;
 
-			if ( isAttackLeftWard )
+			if ( isAttackLeft )
 			{
 				knockBackSpeed *= -1.0f;
 			}
@@ -422,7 +425,7 @@ void CharaBase::ReceiveDamage(int attackPower, bool isLeftWard)
 	// ノックバックフラグTRUE
 	if ( !isKnockBack )
 	{
-		isAttackLeftWard = isLeftWard;
+		isAttackLeft = isLeftWard;
 		isKnockBack = true;
 	}
 
@@ -511,9 +514,9 @@ bool CharaBase::GetIsAlive()
 }
 
 // isLeftWardを取得
-bool CharaBase::GetIsLeftWard()
+bool CharaBase::GetIsLeft()
 {
-	return isLeftWard;
+	return isLeft;
 }
 
 // isInvicibleを取得

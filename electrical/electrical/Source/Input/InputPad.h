@@ -10,7 +10,7 @@ enum PadConfig
 	e_PAD_DASH = PAD_INPUT_6,			// ダッシュ
 	e_PAD_JUMP = PAD_INPUT_1,			// ジャンプ
 	e_PAD_ATTACK = PAD_INPUT_3,			// 攻撃
-	e_PAD_FIXED = PAD_INPUT_5,			// 向き固定
+	e_PAD_LOCK = PAD_INPUT_5,			// 向き固定
 	e_PAD_HELP = PAD_INPUT_4,			// ヘルプ(操作方法を表示)
 	e_PAD_START = PAD_INPUT_1,			// ゲーム開始
 	e_PAD_EXIT = PAD_INPUT_8,			// ゲーム終了

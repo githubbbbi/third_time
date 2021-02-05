@@ -26,7 +26,7 @@ protected:
 	int hp;					// HP
 	int attackPower;		// 攻撃力
 	bool isAlive;			// 生存フラグ
-	bool isLeftWard;		// 左向きフラグ
+	bool isLeft;			// 左向きフラグ
 	bool isJump;			// ジャンプフラグ
 	bool isFall;			// 落下フラグ
 	bool isAttack;			// 攻撃フラグ
@@ -49,7 +49,7 @@ protected:
 	bool isBBlinking;		// ブレンド点滅フラグ
 
 	bool isKnockBack;		// ノックバックフラグ
-	bool isAttackLeftWard;	// 攻撃の左向きフラグ
+	bool isAttackLeft;		// 攻撃の左向きフラグ
 
 	int invicibleTimer;		// 無敵時間
 	bool isInvicible;		// 無敵フラグ
@@ -148,7 +148,7 @@ public:
 	bool GetIsAlive();
 
 	// isLeftWardを取得
-	bool GetIsLeftWard();
+	bool GetIsLeft();
 
 	// isInvicibleを取得
 	bool GetIsInvicible();

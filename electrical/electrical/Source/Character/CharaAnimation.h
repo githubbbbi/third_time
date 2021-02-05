@@ -10,5 +10,6 @@ public:
 	CharaAnimation();
 	~CharaAnimation() = default;
 
-	int AnimationLoop(const int *motion, const int state, int wait, int num);
+	int AnimationLoop(const int *motion, const int state,
+					  int wait, int num);
 };

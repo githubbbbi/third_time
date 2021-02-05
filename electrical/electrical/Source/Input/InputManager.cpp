@@ -34,9 +34,9 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_KEY_ATTACK;
 		}
-		else if ( key == e_FIXED )
+		else if ( key == e_LOCK )
 		{
-			keyCode = e_KEY_FIXED;
+			keyCode = e_KEY_LOCK;
 		}
 		else if ( key == e_HELP )
 		{
@@ -79,9 +79,9 @@ void InputManager::ConversionKeyCode(int key)
 		{
 			keyCode = e_PAD_ATTACK;
 		}
-		else if ( key == e_FIXED )
+		else if ( key == e_LOCK )
 		{
-			keyCode = e_PAD_FIXED;
+			keyCode = e_PAD_LOCK;
 		}
 		else if ( key == e_HELP )
 		{

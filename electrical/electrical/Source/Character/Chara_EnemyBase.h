@@ -2,7 +2,6 @@
 
 #include "CharaBase.h"
 
-
 extern const float E_JUMP_POWER;	// ジャンプ力
 
 class Chara_EnemyBase:public CharaBase
@@ -13,7 +12,7 @@ protected:
 	float attackX;			// 攻撃中心座標
 	float attackY;			// 攻撃中心座標
 	int attackRadius;		// 攻撃半径
-	bool isAttackLeftWard;	// 攻撃左向きフラグ
+	bool isAttackLeft;		// 攻撃左向きフラグ
 
 	// ジャンプする
 	void Jump();

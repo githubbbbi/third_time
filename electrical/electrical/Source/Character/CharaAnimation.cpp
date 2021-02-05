@@ -6,7 +6,8 @@ CharaAnimation::CharaAnimation()
 	waitTime = 0;
 }
 
-int CharaAnimation::AnimationLoop(const int *motion, const int state, int wait, int num)
+int CharaAnimation::AnimationLoop(const int *motion, const int state,
+								  int wait, int num)
 {
 	if ( ++waitTime >= wait )
 	{

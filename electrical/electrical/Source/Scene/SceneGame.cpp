@@ -66,6 +66,8 @@ void SceneGame::Initialize()
 	scrollY = ((int)characters->GetScrollCenterY() / WIN_HEIGHT) * WIN_HEIGHT;
 	screenX = WIN_WIDTH / 2;
 	screenY = WIN_HEIGHT / 2;
+	displaceX = 0.0f;
+	displaceY = 0.0f;
 	isScroll = false;
 	isDrawUIMM = false;
 
@@ -75,18 +77,23 @@ void SceneGame::Initialize()
 	isSceneChange = false;
 }
 
-// プレイヤーが左進行:-1,右進行:1
+// プレイヤーが左進行:-1,右進行:1を返す
 int SceneGame::PlayerMoveLR()
 {
-	return (int)((characters->GetPlayerMoveX() + 1.0f) /
-				 fabsf(characters->GetPlayerMoveX() + 1.0f));
+	float moveX = characters->GetPlayerMoveX();
+	int a = ((moveX + moveX + moveX + 1.0f) /
+			 fabsf(moveX + moveX + moveX + 1.0f));
+	printfDx("%d\n", a);
+	return (int)((moveX + moveX + moveX + 1.0f) /
+				 fabsf(moveX + moveX + moveX + 1.0f));
 }
 
-// プレイヤーが上進行:-1,下進行:1
+// プレイヤーが上進行:-1,下進行:1を返す
 int SceneGame::PlayerMoveUD()
 {
-	return (int)((characters->GetPlayerMoveY() + 1.0f) /
-				 fabsf(characters->GetPlayerMoveY() + 1.0f));
+	float moveY = characters->GetPlayerMoveY();
+	return (int)((moveY + moveY + moveY + 1.0f) /
+				 fabsf(moveY + moveY + moveY + 1.0f));
 }
 
 // スクリーン座標を求める
@@ -113,7 +120,8 @@ void SceneGame::MyEffectManager()
 	// クリア時のエフェクト
 	if ( characters->GetPlayerIsGoal() )
 	{
-		effects->Clear(characters->GetPlayerX(), characters->GetPlayerY());
+		effects->Clear(characters->GetPlayerX(),
+					   characters->GetPlayerY());
 	}
 
 	// エフェクト

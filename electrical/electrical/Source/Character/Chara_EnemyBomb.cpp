@@ -44,7 +44,7 @@ void Chara_EnemyBomb::AutoMove(float playerX, float playerY, bool isPlayerAlive)
 	// 敵とプレイヤーのy座標が等しい時、スピードをダッシュに合わせる
 	if ( isPlayerAlive && !IsBlock(playerX) &&
 		(enemyMapY == playerMapY) &&
-		(isLeftWard && x > playerX || !isLeftWard && x < playerX) )
+		(isLeft && x > playerX || !isLeft && x < playerX) )
 	{
 		if ( speed > 0 )
 		{
@@ -100,7 +100,7 @@ void Chara_EnemyBomb::AttackManager(bool isPlayerAlive)
 		attackX = x;
 		attackY = y;
 		attackRadius = radius;
-		isAttackLeftWard = isLeftWard;
+		isAttackLeft = isLeft;
 	}
 	else
 	{
@@ -166,7 +166,7 @@ void Chara_EnemyBomb::Draw(float shakeX, float shakeY, int scrollX, int scrollY)
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
 					  (int)(y + shakeY) - scrollY + displaceY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyBomb(graphIndex), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyBomb(graphIndex), true, isLeft);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

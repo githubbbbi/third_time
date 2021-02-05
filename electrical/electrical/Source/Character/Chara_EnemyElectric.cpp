@@ -95,21 +95,21 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 		if ( isTargetLock )
 		{
 			// プレイヤーより右で、右を向いている場合、左向きに変える
-			if ( playerX < x && !isLeftWard )
+			if ( playerX < x && !isLeft )
 			{
 				speed *= -1;
 				if ( speed < 0 )
 				{
-					isLeftWard = true;
+					isLeft = true;
 				}
 			}
 
-			if ( playerX > x && isLeftWard )
+			if ( playerX > x && isLeft )
 			{
 				speed *= -1;
 				if ( speed > 0 )
 				{
-					isLeftWard = false;
+					isLeft = false;
 				}
 			}
 		}
@@ -161,7 +161,7 @@ void Chara_EnemyElectric::WeaponManager()
 													 16,
 													 EG_SPEED, 0.0f,
 													 flightDistance, 2,
-													 isLeftWard));
+													 isLeft));
 		isAttack = true;
 	}
 
@@ -211,7 +211,7 @@ void Chara_EnemyElectric::AttackManager(float playerX, float playerY, bool isPla
 	attackX = electricGun[0]->GetPosX();
 	attackY = electricGun[0]->GetPosY();
 	attackRadius = electricGun[0]->GetRadius();
-	isAttackLeftWard = electricGun[0]->GetIsLeftWard();
+	isAttackLeft = electricGun[0]->GetIsLeft();
 }
 
 // 状態
@@ -280,7 +280,7 @@ void Chara_EnemyElectric::Draw(float shakeX, float shakeY, int scrollX, int scro
 		SetDrawBright((int)r, (int)g, (int)b);
 		DrawRotaGraph((int)(x + shakeX) - scrollX + displaceX,
 					  (int)(y + shakeY) - scrollY + displaceY,
-					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(graphIndex), true, isLeftWard);
+					  1.0, 0.0, Graphic::GetInstance()->GetEnemyElectric(graphIndex), true, isLeft);
 		SetDrawBright(255, 255, 255);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
