@@ -81,6 +81,9 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 
 			// ŽË’öŠO‚Å‚ÍŒ‚‚½‚È‚¢
 			isTargetLock = false;
+
+			// ƒWƒƒƒ“ƒv
+			Jump();
 		}
 		else
 		{

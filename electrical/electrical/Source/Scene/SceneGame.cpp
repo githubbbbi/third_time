@@ -26,8 +26,8 @@ SceneGame::SceneGame()
 	scrollY = 0;
 	screenX = 0;
 	screenY = 0;
-	displaceX = 0;
-	displaceY = 0;
+	displaceX = 0.0f;
+	displaceY = 0.0f;
 	isScroll = false;
 	isDrawUIMM = false;
 
@@ -64,8 +64,8 @@ void SceneGame::Initialize()
 
 	scrollX = ((int)characters->GetScrollCenterX() / WIN_WIDTH) * WIN_WIDTH;
 	scrollY = ((int)characters->GetScrollCenterY() / WIN_HEIGHT) * WIN_HEIGHT;
-	screenX = 0;
-	screenY = 0;
+	screenX = WIN_WIDTH / 2;
+	screenY = WIN_HEIGHT / 2;
 	isScroll = false;
 	isDrawUIMM = false;
 
@@ -73,6 +73,17 @@ void SceneGame::Initialize()
 	h = s = v = 255.0f;
 
 	isSceneChange = false;
+}
+
+int SceneGame::PlayerMoveLR()
+{
+	
+	return (int)((characters->GetPlayerMoveX() + 1.0f) / fabsf(characters->GetPlayerMoveX() + 1.0f));
+}
+
+int SceneGame::PlayerMoveUD()
+{
+	return (int)((characters->GetPlayerMoveY() + 1.0f) / fabsf(characters->GetPlayerMoveY() + 1.0f));
 }
 
 // スクリーン座標を求める
@@ -93,7 +104,7 @@ void SceneGame::MyEffectManager()
 
 		// 爆発
 		effects->Explosion(characters->GetExplosionPosX(),
-						   characters->GetExplosionPosY());
+			characters->GetExplosionPosY());
 	}
 
 	// クリア時のエフェクト
@@ -111,7 +122,7 @@ void SceneGame::MyUIManager()
 {
 	// 更新処理
 	ui->Update(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+		characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
 
 	// 操作一覧表示中でない
 	if ( !isDrawUIMM )
@@ -220,13 +231,6 @@ void SceneGame::Update(bool isSCPossible)
 		Sound_BGM::GetInstance()->PlayBGM(e_GAME_BGM);
 	}
 
-	// スクリーン座標を求める
-	Screen();
-
-	// オブジェクトをスクリーンの中心にずらす
-	Utility::DisplaceObjScrnCntr(scrollX, scrollY,
-								 screenX, screenY, &displaceX, &displaceY);
-
 	// 操作一覧表示中は更新処理を行わない
 	if ( !isDrawUIMM )
 	{
@@ -237,9 +241,9 @@ void SceneGame::Update(bool isSCPossible)
 		}
 
 		// スクロール
-		Utility::Scroll((int)characters->GetScrollCenterX() + displaceX,
-						(int)characters->GetScrollCenterY() + displaceY,
-						&scrollX, &scrollY, &isScroll);
+		Utility::Scroll((int)characters->GetScrollCenterX() + displaceX + ((displaceX / (screenX / (WIN_WIDTH / 2))) * PlayerMoveLR()),
+			(int)characters->GetScrollCenterY() + displaceY + ((displaceY / (screenY / (WIN_HEIGHT / 2))) * PlayerMoveUD()),
+			&scrollX, &scrollY, displaceX, displaceY, &isScroll);
 
 		// エフェクト
 		MyEffectManager();
@@ -251,6 +255,12 @@ void SceneGame::Update(bool isSCPossible)
 			characters->Update(screenX, screenY);
 		}
 	}
+
+	// スクリーン座標を求める
+	Screen();
+
+	// オブジェクトをスクリーンの中心にずらす
+	Utility::DisplaceObjScrnCntr(screenX, screenY, &displaceX, &displaceY);
 
 	// キャラクターのdisplaceX,displaceYを設定
 	characters->SetDisplaceX(displaceX);
@@ -279,22 +289,22 @@ void SceneGame::Draw()
 
 	// ステージ
 	stage->Draw(effects->GetShakeX(),
-				effects->GetShakeY(),
-				scrollX, scrollY,
-				screenX, screenY,
-				displaceX, displaceY);
+		effects->GetShakeY(),
+		scrollX, scrollY,
+		screenX, screenY,
+		displaceX, displaceY);
 
 	// キャラクター
 	characters->Draw(effects->GetShakeX(),
-					 effects->GetShakeY(),
-					 scrollX, scrollY);
+		effects->GetShakeY(),
+		scrollX, scrollY);
 
 	// エフェクト
 	effects->Draw(scrollX, scrollY, displaceX, displaceY);
 
 	// UI
 	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-			 characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+		characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
 
 	SetDrawBright(255, 255, 255);
 }

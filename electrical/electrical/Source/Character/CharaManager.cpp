@@ -29,8 +29,8 @@ Chara_Manager::Chara_Manager()
 
 	// プレイヤー生成
 	player = new Chara_Player(0.0f, 0.0f, 32,
-							  P_WIDTH, P_HEIGHT,
-							  P_NORMAL_SPEED, 100, 1);
+		P_WIDTH, P_HEIGHT,
+		P_NORMAL_SPEED, 100, 1);
 }
 
 // デストラクタ
@@ -51,12 +51,12 @@ bool Chara_Manager::LoadFile()
 	// 読み込むファイル名を格納する
 	char fileName[512];
 	sprintf_s(fileName, sizeof(fileName),
-			  "Resource/Data/Spawn_Position/spawn_stage%d.csv", 1);
+		"Resource/Data/Spawn_Position/spawn_stage%d.csv", 1);
 
 	// ファイルが読み込めない場合、false
 	int *p = (int *)spawnData;
 	if ( !CSV::LoadFile(fileName,
-						MAP_COUNT_X, MAP_COUNT_Y, p) )
+		MAP_COUNT_X, MAP_COUNT_Y, p) )
 	{
 		return false;
 	}
@@ -136,10 +136,32 @@ bool Chara_Manager::Initialize()
 void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 {
 	// スクリーンに映っている部分だけ
-	int mapChipLeft = (screenX - displaceX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX + displaceX + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipTop = (screenY - displaceY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY + displaceY + WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipLeft = (screenX - displaceX + (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX - displaceX - (displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2) / CHIP_SIZE - 1;
+	int mapChipTop = (screenY - displaceY + (displaceY / (screenY / (WIN_HEIGHT / 2))) - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY - displaceY - (displaceY / (screenY / (WIN_HEIGHT / 2))) + WIN_HEIGHT / 2) / CHIP_SIZE - 1;
+
+
+	if ( mapChipLeft < 0 )
+	{
+		mapChipLeft = 0;
+	}
+
+	if ( mapChipRight > MAP_COUNT_X )
+	{
+		mapChipRight = MAP_COUNT_X;
+	}
+
+	if ( mapChipTop < 0 )
+	{
+		mapChipTop = 0;
+	}
+
+	if ( mapChipBottom > MAP_COUNT_Y )
+	{
+		mapChipBottom = MAP_COUNT_Y;
+	}
+
 
 	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{
@@ -152,8 +174,8 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 			}
 
 			// スポーン位置
-			float spawnX = (float)(x * CHIP_SIZE) + CHARA_SIZE / 2;
-			float spawnY = (float)(y * CHIP_SIZE) + CHARA_SIZE / 2;
+			float spawnX = (float)(x * CHIP_SIZE + CHARA_SIZE / 2);
+			float spawnY = (float)(y * CHIP_SIZE + CHARA_SIZE / 2);
 
 			// スピード(プレイヤーへ向かう)
 			float playerX = player->GetPosX();
@@ -174,8 +196,8 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					// 爆弾エネミー
 					speed *= EB_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyBomb(spawnX, spawnY,
-														 32, EB_WIDTH, EB_HEIGHT,
-														 speed, 10, 10, x, y));
+						32, EB_WIDTH, EB_HEIGHT,
+						speed, 10, 10, x, y));
 
 					isEnemySpawn[y][x] = true;
 					break;
@@ -184,16 +206,16 @@ void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 					// 銃エネミー
 					speed *= EE_NORMAL_SPEED;
 					enemys.push_back(new Chara_EnemyElectric(spawnX, spawnY,
-															 32, EE_WIDTH, EE_HEIGHT,
-															 speed, 5, 5, x, y));
+						32, EE_WIDTH, EE_HEIGHT,
+						speed, 5, 5, x, y));
 					isEnemySpawn[y][x] = true;
 					break;
 
 				case e_CharaEnemyWater:
 					// 水弾エネミー
 					enemys.push_back(new Chara_EnemyWater(spawnX, spawnY,
-														  32, EW_WIDTH, EW_HEIGHT,
-														  0.0f, 2, 2, x, y));
+						32, EW_WIDTH, EW_HEIGHT,
+						0.0f, 2, 2, x, y));
 					isEnemySpawn[y][x] = true;
 					break;
 
@@ -209,27 +231,49 @@ void Chara_Manager::EnemyManager(int screenX, int screenY)
 {
 	// エネミーの生成
 	EnemyGenerate(screenX, screenY);
-
+	
 	// 更新処理
 	for ( unsigned int i = 0; i < enemys.size(); i++ )
 	{
+		enemys[i]->SetDisplaceX(displaceX);
+		enemys[i]->SetDisplaceY(displaceY);
 		enemys[i]->Update(player->GetPosX(), player->GetPosY(),
-						  screenX, screenY, player->GetIsAlive());
+			screenX, screenY, player->GetIsAlive());
 	}
 
-	int mapChipLeft = (screenX - displaceX - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX + displaceX + WIN_WIDTH / 2) / CHIP_SIZE - 1;
-	int mapChipTop = (screenY - displaceY - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY + displaceY + WIN_HEIGHT / 2) / CHIP_SIZE - 1;
+	int mapChipLeft = (screenX - displaceX + (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2) / CHIP_SIZE;
+	int mapChipRight = (screenX - displaceX - (displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2) / CHIP_SIZE - 1;
+	int mapChipTop = (screenY - displaceY + (displaceY / (screenY / (WIN_HEIGHT / 2))) - WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipBottom = (screenY - displaceY - (displaceY / (screenY / (WIN_HEIGHT / 2))) + WIN_HEIGHT / 2) / CHIP_SIZE - 1;
+
+	if ( mapChipLeft < 0 )
+	{
+		mapChipLeft = 0;
+	}
+
+	if ( mapChipRight > MAP_COUNT_X )
+	{
+		mapChipRight = MAP_COUNT_X;
+	}
+
+	if ( mapChipTop < 0 )
+	{
+		mapChipTop = 0;
+	}
+
+	if ( mapChipBottom > MAP_COUNT_Y )
+	{
+		mapChipBottom = MAP_COUNT_Y;
+	}
 
 	// 消去
 	for ( int i = enemys.size() - 1; i >= 0; i-- )
 	{
 		// スポーン位置がスクリーン外の場合
 		if ( (enemys[i]->GetMapChipX() < mapChipLeft ||
-			  enemys[i]->GetMapChipX() > mapChipRight) ||
+			enemys[i]->GetMapChipX() > mapChipRight) ||
 			(enemys[i]->GetMapChipY() < mapChipTop ||
-			 enemys[i]->GetMapChipY() > mapChipBottom) )
+				enemys[i]->GetMapChipY() > mapChipBottom) )
 		{
 			isEnemySpawn[enemys[i]->GetMapChipY()][enemys[i]->GetMapChipX()] = false;
 
@@ -256,13 +300,13 @@ void Chara_Manager::CharaCollision()
 
 		// プレイヤーと敵との判定
 		if ( Utility::IsRectCollision(enemys[i]->GetPosX(),
-									  enemys[i]->GetPosY(),
-									  enemys[i]->GetWidth(),
-									  enemys[i]->GetHeight(),
-									  player->GetPosX(),
-									  player->GetPosY(),
-									  player->GetWidth(),
-									  player->GetHeight()) )
+			enemys[i]->GetPosY(),
+			enemys[i]->GetWidth(),
+			enemys[i]->GetHeight(),
+			player->GetPosX(),
+			player->GetPosY(),
+			player->GetWidth(),
+			player->GetHeight()) )
 		{
 			player->ReceiveDamage(5, !player->GetIsLeftWard());
 			break;
@@ -290,14 +334,14 @@ void Chara_Manager::AttackCollision()
 		for ( unsigned int j = 0; j < player->GetGunSize(); j++ )
 		{
 			if ( Utility::IsCircleCollision(enemys[i]->GetPosX(),
-											enemys[i]->GetPosY(),
-											enemys[i]->GetRadius() - 8,
-											player->GetGunPosX(j),
-											player->GetGunPosY(j),
-											player->GetGunRadius(j) - 4) )
+				enemys[i]->GetPosY(),
+				enemys[i]->GetRadius() - 8,
+				player->GetGunPosX(j),
+				player->GetGunPosY(j),
+				player->GetGunRadius(j) - 4) )
 			{
 				enemys[i]->ReceiveDamage(player->GetAttackPower(),
-										 player->GetIsGunLeftWard(j));
+					player->GetIsGunLeftWard(j));
 				player->HitAttack(j);
 			}
 		}
@@ -309,15 +353,15 @@ void Chara_Manager::AttackCollision()
 
 		// エネミーの攻撃とプレイヤーの当たり判定
 		if ( Utility::IsCircleCollision(enemys[i]->GetAttackPosX(),
-										enemys[i]->GetAttackPosY(),
-										enemys[i]->GetAttackRadius() - 4,
-										player->GetPosX(),
-										player->GetPosY(),
-										player->GetRadius() - 4) )
+			enemys[i]->GetAttackPosY(),
+			enemys[i]->GetAttackRadius() - 4,
+			player->GetPosX(),
+			player->GetPosY(),
+			player->GetRadius() - 4) )
 		{
 			enemys[i]->HitAttack();
 			player->ReceiveDamage(enemys[i]->GetAttackPower(),
-								  enemys[i]->GetIsAttackLeftWard());
+				enemys[i]->GetIsAttackLeftWard());
 		}
 	}
 }
@@ -367,7 +411,7 @@ void Chara_Manager::Update(int screenX, int screenY)
 
 // 描画処理
 void Chara_Manager::Draw(float shakeX, float shakeY,
-						 int scrollX, int scrollY)
+	int scrollX, int scrollY)
 {
 	// プレイヤー
 	player->Draw(shakeX, shakeY, scrollX, scrollY);
@@ -377,6 +421,17 @@ void Chara_Manager::Draw(float shakeX, float shakeY,
 	{
 		enemys[i]->Draw(shakeX, shakeY, scrollX, scrollY);
 	}
+
+	//clsDx();
+	/*printfDx("playerX : %d\n", (int)player->GetPosX());
+	if ( enemys.size() > 0 )
+	{
+		printfDx("enemyX : %d\n", (int)enemys[0]->GetPosX());
+	}
+	printfDx("scrollx : %d\n", scrollX);
+	printfDx("screenX : %d\n", scrollX + WIN_WIDTH / 2);
+	printfDx("displaceX : %d\n", displaceX);*/
+
 }
 
 // displaceXを設定
@@ -517,4 +572,14 @@ bool Chara_Manager::GetPlayerIsAlive()
 bool Chara_Manager::GetPlayerIsGoal()
 {
 	return player->GetIsGoal();
+}
+
+float Chara_Manager::GetPlayerMoveX()
+{
+	return player->GetMoveX();
+}
+
+float Chara_Manager::GetPlayerMoveY()
+{
+	return player->GetMoveY();
 }

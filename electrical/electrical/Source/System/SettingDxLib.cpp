@@ -21,7 +21,7 @@ bool SettingDxLib::DxLibInit()
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32);
 
 	// 画面サイズを設定(解像度との比率で設定)
-	SetWindowSizeExtendRate(1.5);
+	SetWindowSizeExtendRate(1.0);
 
 	// 画面の背景色を設定する
 	SetBackgroundColor(0x00, 0x0, 0x00);

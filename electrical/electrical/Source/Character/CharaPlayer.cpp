@@ -9,8 +9,8 @@
 const int P_WIDTH = 30;
 const int P_HEIGHT = 50;
 const float P_NORMAL_SPEED = 3.0f;
-const float P_DASH_SPEED = 5.0f;
-const float P_JUMP_POWER = -15.0f;
+const float P_DASH_SPEED = 10.0f;
+const float P_JUMP_POWER = -20.0f;
 const int BATTERY_DCREASE_TIME = 60 * 1;
 const int BATTERY_CHARGE_TIME = 60 * 1;
 const int P_MAX_HP = 100;
@@ -845,3 +845,14 @@ bool Chara_Player::GetIsGoal()
 {
 	return IsGoal();
 }
+
+float Chara_Player::GetMoveX()
+{
+	return moveX;
+}
+
+float Chara_Player::GetMoveY()
+{
+	return moveY;
+}
+

@@ -170,4 +170,10 @@ public:
 
 	// ƒS[ƒ‹”»’è‚ğæ“¾
 	bool GetIsGoal();
+
+	//
+	float GetMoveX();
+
+	float GetMoveY();
+	
 };

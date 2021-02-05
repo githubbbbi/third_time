@@ -107,4 +107,8 @@ public:
 
 	// プレイヤーのゴールフラグを取得
 	bool GetPlayerIsGoal();
+
+	float GetPlayerMoveX();
+
+	float GetPlayerMoveY();
 };

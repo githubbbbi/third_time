@@ -18,8 +18,8 @@ private:
 	int scrollY;		// スクロール量
 	int screenX;		// スクリーン中心座標
 	int screenY;		// スクリーン中心座標
-	int displaceX;		// スクリーンの中心に描画するためにずらす量
-	int displaceY;		// スクリーンの中心に描画するためにずらす量
+	float displaceX;	// スクリーンの中心に描画するためにずらす量
+	float displaceY;	// スクリーンの中心に描画するためにずらす量
 	bool isScroll;		// スクロールフラグ
 	bool isDrawUIMM;	// 操作方法UI描画フラグ
 
@@ -30,6 +30,11 @@ private:
 	float s;		// 彩度(saturation)	:0~255
 	float v;		// 明度(value)		:0~255
 
+	
+	int PlayerMoveLR();
+	
+	int PlayerMoveUD();
+	
 	// スクリーン座標を求める
 	void Screen();
 
