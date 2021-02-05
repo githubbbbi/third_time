@@ -124,8 +124,10 @@ void SceneGame::MyEffectManager()
 void SceneGame::MyUIManager()
 {
 	// 更新処理
-	ui->Update(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-			   characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+	ui->Update(characters->GetPlayerHp(),
+			   characters->GetPlayerMaxHp(),
+			   characters->GetPlayerBattery(),
+			   characters->GetPlayerMaxBattery(), isDrawUIMM);
 
 	// 操作一覧表示中でない
 	if ( !isDrawUIMM )
@@ -244,11 +246,11 @@ void SceneGame::Update(bool isSCPossible)
 		}
 
 		// スクロール
-		Utility::Scroll((int)characters->GetScrollCenterX() + displaceX +
-						((displaceX / (screenX / (WIN_WIDTH / 2))) * PlayerMoveLR()),
-						(int)characters->GetScrollCenterY() + displaceY +
-						((displaceY / (screenY / (WIN_HEIGHT / 2))) * PlayerMoveUD()),
-						&scrollX, &scrollY, displaceX, displaceY, &isScroll);
+		Utility::Scroll((int)characters->GetScrollCenterX() + (int)displaceX +
+						((int)(displaceX / (screenX / (WIN_WIDTH / 2))) * PlayerMoveLR()),
+						(int)characters->GetScrollCenterY() + (int)displaceY +
+						((int)(displaceY / (screenY / (WIN_HEIGHT / 2))) * PlayerMoveUD()),
+						&scrollX, &scrollY, (int)displaceX, (int)displaceY, &isScroll);
 
 		// エフェクト
 		MyEffectManager();
@@ -265,11 +267,12 @@ void SceneGame::Update(bool isSCPossible)
 	Screen();
 
 	// オブジェクトをスクリーンの中心にずらす
-	Utility::DisplaceObjScrnCntr(screenX, screenY, &displaceX, &displaceY);
+	Utility::DisplaceObjScrnCntr(screenX, screenY,
+								 &displaceX, &displaceY);
 
 	// キャラクターのdisplaceX,displaceYを設定
-	characters->SetDisplaceX(displaceX);
-	characters->SetDisplaceY(displaceY);
+	characters->SetDisplaceX((int)displaceX);
+	characters->SetDisplaceY((int)displaceY);
 
 	// UI
 	MyUIManager();
@@ -297,7 +300,7 @@ void SceneGame::Draw()
 				effects->GetShakeY(),
 				scrollX, scrollY,
 				screenX, screenY,
-				displaceX, displaceY);
+				(int)displaceX, (int)displaceY);
 
 	// キャラクター
 	characters->Draw(effects->GetShakeX(),
@@ -305,11 +308,14 @@ void SceneGame::Draw()
 					 scrollX, scrollY);
 
 	// エフェクト
-	effects->Draw(scrollX, scrollY, displaceX, displaceY);
+	effects->Draw(scrollX, scrollY,
+				  (int)displaceX, (int)displaceY);
 
 	// UI
-	ui->Draw(characters->GetPlayerHp(), characters->GetPlayerMaxHp(),
-			 characters->GetPlayerBattery(), characters->GetPlayerMaxBattery(), isDrawUIMM);
+	ui->Draw(characters->GetPlayerHp(),
+			 characters->GetPlayerMaxHp(),
+			 characters->GetPlayerBattery(),
+			 characters->GetPlayerMaxBattery(), isDrawUIMM);
 
 	SetDrawBright(255, 255, 255);
 }
