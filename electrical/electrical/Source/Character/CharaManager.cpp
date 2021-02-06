@@ -136,14 +136,14 @@ bool Chara_Manager::Initialize()
 void Chara_Manager::EnemyGenerate(int screenX, int screenY)
 {
 	// ÉXÉNÉäÅ[ÉìÇ…âfÇ¡ÇƒÇ¢ÇÈïîï™ÇæÇØ
-	int mapChipLeft = (screenX - displaceX +
-					   (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX - displaceX -
-						(displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipTop = (screenY - displaceY +
-					  (displaceY / (screenY / (WIN_HEIGHT / 2))) - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY - displaceY -
-						 (displaceY / (screenY / (WIN_HEIGHT / 2))) + WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipLeft = (screenX - WIN_WIDTH / 2 -
+					   displaceX + DISPLACE_X) / CHIP_SIZE;
+	int mapChipRight = (screenX + WIN_WIDTH / 2 -
+						displaceX - DISPLACE_X) / CHIP_SIZE - 1;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2 -
+					  displaceY + DISPLACE_Y) / CHIP_SIZE;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2 -
+						 displaceY - DISPLACE_Y) / CHIP_SIZE - 1;
 
 	if ( mapChipLeft < 0 )
 	{
@@ -243,14 +243,14 @@ void Chara_Manager::EnemyManager(int screenX, int screenY)
 						  screenX, screenY, player->GetIsAlive());
 	}
 
-	int mapChipLeft = (screenX - displaceX +
-					   (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipRight = (screenX - displaceX -
-						(displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2) / CHIP_SIZE;
-	int mapChipTop = (screenY - displaceY +
-					  (displaceY / (screenY / (WIN_HEIGHT / 2))) - WIN_HEIGHT / 2) / CHIP_SIZE;
-	int mapChipBottom = (screenY - displaceY -
-						 (displaceY / (screenY / (WIN_HEIGHT / 2))) + WIN_HEIGHT / 2) / CHIP_SIZE;
+	int mapChipLeft = (screenX - WIN_WIDTH / 2 -
+					   displaceX + DISPLACE_X) / CHIP_SIZE;
+	int mapChipRight = (screenX + WIN_WIDTH / 2 -
+						displaceX - DISPLACE_X) / CHIP_SIZE - 1;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2 -
+					  displaceY + DISPLACE_Y) / CHIP_SIZE;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2 -
+						 displaceY - DISPLACE_Y) / CHIP_SIZE - 1;
 
 	if ( mapChipLeft < 0 )
 	{

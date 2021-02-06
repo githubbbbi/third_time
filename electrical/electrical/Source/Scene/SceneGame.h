@@ -30,15 +30,17 @@ private:
 	float s;		// 彩度(saturation)	:0~255
 	float v;		// 明度(value)		:0~255
 
+	// スクロール座標の初期化処理
+	void InitScrollPos();
+
 	// プレイヤーが左進行:-1,右進行:1を返す
 	int PlayerMoveLR();
-
 
 	// プレイヤーが上進行:-1,下進行:1を返す
 	int PlayerMoveUD();
 
 	// スクリーン座標を求める
-	void Screen();
+	void CalcScreen();
 
 	// エフェクト管理
 	void MyEffectManager();

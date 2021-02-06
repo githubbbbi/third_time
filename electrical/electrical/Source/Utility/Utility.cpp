@@ -213,11 +213,9 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
 		*scrollX = 0;
 	}
 	// マップの右端より右にはいかない
-	else if ( *scrollX + WIN_WIDTH > MAP_WIDTH + displaceX +
-			 (displaceX / ((*scrollX + WIN_WIDTH / 2) / (WIN_WIDTH / 2))) )
+	else if ( *scrollX + WIN_WIDTH > MAP_WIDTH + displaceX + DISPLACE_X )
 	{
-		*scrollX = MAP_WIDTH - WIN_WIDTH + displaceX +
-			(displaceX / ((*scrollX + WIN_WIDTH / 2) / (WIN_WIDTH / 2)));
+		*scrollX = MAP_WIDTH - WIN_WIDTH + displaceX + DISPLACE_X;
 	}
 
 	// Y方向
@@ -227,11 +225,9 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
 		*scrollY = 0;
 	}
 	// マップの下端より下にはいかない
-	else if ( *scrollY + WIN_HEIGHT > MAP_HEIGHT + displaceY +
-			 (displaceY / ((*scrollY + WIN_HEIGHT / 2) / (WIN_HEIGHT / 2))) )
+	else if ( *scrollY + WIN_HEIGHT > MAP_HEIGHT + displaceY + DISPLACE_Y )
 	{
-		*scrollY = MAP_HEIGHT - WIN_HEIGHT + displaceY +
-			(displaceY / ((*scrollY + WIN_HEIGHT / 2) / (WIN_HEIGHT / 2)));
+		*scrollY = MAP_HEIGHT - WIN_HEIGHT + displaceY + DISPLACE_Y;
 	}
 }
 
@@ -239,14 +235,9 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
 void Utility::DisplaceObjScrnCntr(int screenX, int screenY,
 								  float *displaceX, float *displaceY)
 {
-	// ウィンドウに映るチップの数 × チップサイズ = チップをウィンドウサイズを超えない最大個並べた場合のサイズ
-	const float chipX = 17.0f * (float)CHIP_SIZE;
-	const float chipY = 9.0f * (float)CHIP_SIZE;
-
 	// 現在のスクリーン座標からいくつずらすかを算出
-	*displaceX = (((float)WIN_WIDTH - chipX) / 2.0f) * ((float)screenX / ((float)WIN_WIDTH / 2.0f));
-	*displaceY = (((float)WIN_HEIGHT - chipY) / 2.0f) * ((float)screenY / ((float)WIN_HEIGHT / 2.0f));
-
+	*displaceX = (((float)WIN_WIDTH - ROOM_SIZE_X) / 2.0f) * ((float)screenX / ((float)WIN_WIDTH / 2.0f));
+	*displaceY = (((float)WIN_HEIGHT - ROOM_SIZE_Y) / 2.0f) * ((float)screenY / ((float)WIN_HEIGHT / 2.0f));
 }
 
 // HSVからRGBに変換

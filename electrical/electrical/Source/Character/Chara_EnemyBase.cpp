@@ -42,20 +42,16 @@ void Chara_EnemyBase::ChangeDirection(int screenX, int screenY)
 {
 	// スクリーンより端 この判定は優先して行われる
 	// 左
-	if ( (int)x - width / 2 < screenX - displaceX +
-		(displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2 )
+	if ( (int)x - width / 2 < screenX - WIN_WIDTH / 2 - displaceX + DISPLACE_X )
 	{
-		x = (float)(screenX - displaceX + (
-			displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2 + width / 2);
+		x = (float)(screenX - WIN_WIDTH / 2 - displaceX + DISPLACE_X + width / 2);
 		speed *= -1.0f;
 		return;
 	}
 	// 右
-	else if ( (int)x + width / 2 > screenX - displaceX -
-			 (displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2 )
+	else if ( (int)x + width / 2 > screenX + WIN_WIDTH / 2 - displaceX - DISPLACE_X )
 	{
-		x = (float)(screenX - displaceX -
-					(displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2 - width / 2);
+		x = (float)(screenX + WIN_WIDTH / 2 - displaceX - DISPLACE_X - width / 2);
 		speed *= -1.0f;
 		return;
 	}

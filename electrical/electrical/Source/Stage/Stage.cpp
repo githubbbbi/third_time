@@ -81,16 +81,14 @@ void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
 				 int screenX, int screenY, int displaceX, int displaceY)
 {
 	// スクリーンに映っている部分(2ブロック分多く)だけを描画
-	int mapChipLeft = (screenX - displaceX +
-					   (displaceX / (screenX / (WIN_WIDTH / 2))) - WIN_WIDTH / 2) / CHIP_SIZE - 2;
-	int mapChipRight = (screenX - displaceX -
-						(displaceX / (screenX / (WIN_WIDTH / 2))) + WIN_WIDTH / 2) / CHIP_SIZE + 2;
-	int mapChipTop = (screenY - displaceY +
-					  (displaceY / (screenY / (WIN_HEIGHT / 2))) - WIN_HEIGHT / 2) / CHIP_SIZE - 2;
-	int mapChipBottom = (screenY - displaceY -
-						 (displaceY / (screenY / (WIN_HEIGHT / 2))) + WIN_HEIGHT / 2) / CHIP_SIZE + 2;
-
-	printfDx("%d, %d, %d, %d\n", mapChipLeft, mapChipRight, displaceX, screenX);
+	int mapChipLeft = (screenX - WIN_WIDTH / 2 -
+					   displaceX + DISPLACE_X) / CHIP_SIZE - 2;
+	int mapChipRight = (screenX + WIN_WIDTH / 2 -
+						displaceX - DISPLACE_X) / CHIP_SIZE + 2;
+	int mapChipTop = (screenY - WIN_HEIGHT / 2 -
+					  displaceY + DISPLACE_Y) / CHIP_SIZE - 2;
+	int mapChipBottom = (screenY + WIN_HEIGHT / 2 -
+						 displaceY - DISPLACE_Y) / CHIP_SIZE + 2;
 
 	if ( mapChipLeft < 0 )
 	{
@@ -112,6 +110,8 @@ void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
 		mapChipBottom = MAP_COUNT_Y;
 	}
 
+	printfDx("%d, %d, %d, %d\n", mapChipLeft, mapChipRight, displaceX, screenX);
+
 	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{
 		for ( int x = mapChipLeft; x < mapChipRight; x++ )
@@ -120,8 +120,6 @@ void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
 					scrollX, scrollY, displaceX, displaceY);
 		}
 	}
-
-
 }
 
 // マップチップの値を取得

@@ -109,6 +109,6 @@ void UI_Player::Draw(int hp, int maxHp, int battery, int maxBattery)
 	DrawGraph(x, y, Graphic::GetInstance()->GetUIPlayer(), true);
 
 	// êîéö
-	DrawFormatString(180, 32, GetColor(255, 255, 255), "%d / 100", hp);
-	DrawFormatString(180, 70, GetColor(255, 255, 255), "%d / 100", battery);
+	DrawFormatString(180, 32, GetColor(255, 255, 255), "%d / %d", hp, maxHp);
+	DrawFormatString(180, 70, GetColor(255, 255, 255), "%d / %d", battery, maxBattery);
 }
