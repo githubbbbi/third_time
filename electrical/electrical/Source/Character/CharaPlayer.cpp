@@ -123,7 +123,7 @@ bool Chara_Player::IsDash()
 	return (InputManager::IsInputNow(e_DASH) ||
 			InputManager::IsInputBarrage(e_MOVE_LEFT) ||
 			InputManager::IsInputBarrage(e_MOVE_RIGHT)) &&
-		!InputManager::IsInputNow(e_FIXED);
+		!InputManager::IsInputNow(e_LOCK);
 }
 
 // ダッシュなどの判定からスピードを取得
@@ -148,7 +148,7 @@ float Chara_Player::GetNowSpeed()
 void Chara_Player::Fixed()
 {
 	// 向き固定が押されているかつ後ろ向きに進行する場合はspeedを遅くする
-	if ( InputManager::IsInputNow(e_FIXED) )
+	if ( InputManager::IsInputNow(e_LOCK) )
 	{
 		// 左向き
 		if ( isLeft )

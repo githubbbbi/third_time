@@ -155,7 +155,7 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
 	// フラグ初期化
 	*isScroll = false;
 
-	// スクリーン座標より端に行くとスクロール
+	// 描画座標より端に行くとスクロール
 	// 左スクロール
 	if ( *scrollX > (centerX / WIN_WIDTH) * WIN_WIDTH )
 	{

@@ -90,6 +90,8 @@ void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
 	int mapChipBottom = (screenY - displaceY -
 						 (displaceY / (screenY / (WIN_HEIGHT / 2))) + WIN_HEIGHT / 2) / CHIP_SIZE + 2;
 
+	printfDx("%d, %d, %d, %d\n", mapChipLeft, mapChipRight, displaceX, screenX);
+
 	if ( mapChipLeft < 0 )
 	{
 		mapChipLeft = 0;

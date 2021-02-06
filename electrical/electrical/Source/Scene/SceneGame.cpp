@@ -81,19 +81,32 @@ void SceneGame::Initialize()
 int SceneGame::PlayerMoveLR()
 {
 	float moveX = characters->GetPlayerMoveX();
-	int a = ((moveX + moveX + moveX + 1.0f) /
-			 fabsf(moveX + moveX + moveX + 1.0f));
-	printfDx("%d\n", a);
-	return (int)((moveX + moveX + moveX + 1.0f) /
-				 fabsf(moveX + moveX + moveX + 1.0f));
+	if ( moveX > 0.0f )
+	{
+		return 1;
+	}
+	else if ( moveX < 0.0f )
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
 // プレイヤーが上進行:-1,下進行:1を返す
 int SceneGame::PlayerMoveUD()
 {
 	float moveY = characters->GetPlayerMoveY();
-	return (int)((moveY + moveY + moveY + 1.0f) /
-				 fabsf(moveY + moveY + moveY + 1.0f));
+	if ( moveY > 0.0f )
+	{
+		return 1;
+	}
+	else if ( moveY < 0.0f )
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
 // スクリーン座標を求める
