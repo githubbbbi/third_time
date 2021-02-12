@@ -44,16 +44,27 @@ SceneGame::~SceneGame()
 	delete ui;
 }
 
+// スクリーン座標の初期化処理
+void SceneGame::InitScreenPos()
+{
+	// スクリーンの中心となるキャラクターの座標
+	int charaX = (int)characters->GetScrollCenterX();
+	int charaY = (int)characters->GetScrollCenterY();
+
+	// 現在描画されているスクリーンの中心座標
+	screenX = (charaX / ROOM_SIZE_X) * WIN_WIDTH + WIN_WIDTH / 2;
+	screenY = (charaY / ROOM_SIZE_Y) * WIN_HEIGHT + WIN_HEIGHT / 2;
+}
+
 // スクロール座標の初期化処理
 void SceneGame::InitScrollPos()
 {
-	int charaX = (int)characters->GetScrollCenterX();
-	int charaY = (int)characters->GetScrollCenterY();
-	displaceX = (float)(DISPLACE_X * 2 * (charaX / ROOM_SIZE_X));
-	displaceY = (float)(DISPLACE_Y * 2 * (charaY / ROOM_SIZE_Y));
+	// スクリーン座標の初期化処理
+	InitScreenPos();
 
-	scrollX = (charaX / WIN_WIDTH) * WIN_WIDTH + (int)displaceX;
-	scrollY = (charaY / WIN_HEIGHT) * WIN_HEIGHT + (int)displaceY;
+	// スクロール量
+	scrollX = screenX - WIN_WIDTH / 2;
+	scrollY = screenY - WIN_HEIGHT / 2;
 }
 
 // 初期化処理
@@ -76,9 +87,6 @@ void SceneGame::Initialize()
 
 	// スクロール座標の初期化処理
 	InitScrollPos();
-
-	// スクリーン座標を求める
-	CalcScreen();
 
 	// オブジェクトをスクリーンの中心にずらす
 	Utility::DisplaceObjScrnCntr(screenX, screenY,
@@ -125,7 +133,7 @@ int SceneGame::PlayerMoveUD()
 }
 
 // スクリーン座標を求める
-void SceneGame::CalcScreen()
+void SceneGame::CalcScreenPos()
 {
 	screenX = scrollX + WIN_WIDTH / 2;
 	screenY = scrollY + WIN_HEIGHT / 2;
@@ -282,10 +290,10 @@ void SceneGame::Update(bool isSCPossible)
 		}
 
 		// スクロール
-		Utility::Scroll((int)characters->GetScrollCenterX() + (int)displaceX +
-						((int)(displaceX / (screenX / (WIN_WIDTH / 2))) * PlayerMoveLR()),
-						(int)characters->GetScrollCenterY() + (int)displaceY +
-						((int)(displaceY / (screenY / (WIN_HEIGHT / 2))) * PlayerMoveUD()),
+		Utility::Scroll((int)characters->GetScrollCenterX() +
+						(int)displaceX + (DISPLACE_X * PlayerMoveLR()),
+						(int)characters->GetScrollCenterY() +
+						(int)displaceY + (DISPLACE_Y * PlayerMoveUD()),
 						&scrollX, &scrollY, (int)displaceX, (int)displaceY, &isScroll);
 
 		// エフェクト
@@ -300,7 +308,7 @@ void SceneGame::Update(bool isSCPossible)
 	}
 
 	// スクリーン座標を求める
-	CalcScreen();
+	CalcScreenPos();
 
 	// オブジェクトをスクリーンの中心にずらす
 	Utility::DisplaceObjScrnCntr(screenX, screenY,

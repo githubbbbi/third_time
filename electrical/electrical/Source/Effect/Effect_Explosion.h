@@ -19,8 +19,6 @@ private:
 	float s;			// Ê“x(saturation)	:0~255
 	float v;			// –¾“x(value)		:0~255
 
-	int number;
-
 	// ˆÚ“®
 	void Move();
 

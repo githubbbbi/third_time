@@ -10,7 +10,7 @@ Effect_Explosion::Effect_Explosion(float x, float y, int blendDecrease)
 	this->y = y;
 	this->blendDecrease = blendDecrease;
 
-	number = rand() % 10 + 1;
+	int number = rand() % 10 + 1;
 	randAngle = (double)(rand() % 360);
 
 	if ( number < 10 )

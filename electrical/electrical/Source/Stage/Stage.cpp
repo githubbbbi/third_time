@@ -110,8 +110,6 @@ void Stage::Draw(float shakeX, float shakeY, int scrollX, int scrollY,
 		mapChipBottom = MAP_COUNT_Y;
 	}
 
-	printfDx("%d, %d, %d, %d\n", mapChipLeft, mapChipRight, displaceX, screenX);
-
 	for ( int y = mapChipTop; y < mapChipBottom; y++ )
 	{
 		for ( int x = mapChipLeft; x < mapChipRight; x++ )

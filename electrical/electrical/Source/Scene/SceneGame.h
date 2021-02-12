@@ -30,6 +30,9 @@ private:
 	float s;		// 彩度(saturation)	:0~255
 	float v;		// 明度(value)		:0~255
 
+	// スクリーン座標の初期化処理
+	void InitScreenPos();
+
 	// スクロール座標の初期化処理
 	void InitScrollPos();
 
@@ -40,7 +43,7 @@ private:
 	int PlayerMoveUD();
 
 	// スクリーン座標を求める
-	void CalcScreen();
+	void CalcScreenPos();
 
 	// エフェクト管理
 	void MyEffectManager();

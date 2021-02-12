@@ -4,8 +4,8 @@
 const char TITLE[] = "CHARGING";
 
 // ウィンドウ横幅縦幅
-const int WIN_WIDTH = 1920;
-const int WIN_HEIGHT = 1080;
+const int WIN_WIDTH = 1440;
+const int WIN_HEIGHT = 810;
 
 // マップチップサイズ
 const int CHIP_SIZE = 56;

@@ -4,10 +4,14 @@
 #include "../Resource/Graphic.h"
 #include "../Define/Define.h"
 
+const int ED_GRAPH_SIZE_X = 480;
+const int ED_GRAPH_SIZE_Y = 270;
+
 SceneEnding::SceneEnding()
 {
 	x = WIN_WIDTH / 2;
 	y = WIN_HEIGHT / 2;
+	exRate = (double)WIN_WIDTH / (double)ED_GRAPH_SIZE_X;
 }
 
 // ‰Šú‰»ˆ—
@@ -52,6 +56,6 @@ void SceneEnding::Update(bool isSCPossible)
 // •`‰æˆ—
 void SceneEnding::Draw()
 {
-	DrawRotaGraph(x, y, 2.0, 0.0,
+	DrawRotaGraph(x, y, exRate, 0.0,
 				  Graphic::GetInstance()->GetEnding(), true);
 }
