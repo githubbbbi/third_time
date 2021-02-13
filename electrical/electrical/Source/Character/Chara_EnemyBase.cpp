@@ -121,7 +121,7 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 	for ( int i = 1; i <= enemySpace; i++ )
 	{
 		// ¶Œü‚«‚ÌŽž
-		if ( isLeft )
+		if ( x - playerX > 0 )
 		{
 			if ( Stage::GetMapParam(x - (float)(CHIP_SIZE * i), y) == e_MAP_BLOCK )
 			{
@@ -129,7 +129,7 @@ bool Chara_EnemyBase::IsBlock(float playerX)
 			}
 		}
 		// ‰EŒü‚«‚ÌŽž
-		else
+		else if ( x - playerX < 0 )
 		{
 			if ( Stage::GetMapParam(x + (float)(CHIP_SIZE * i), y) == e_MAP_BLOCK )
 			{

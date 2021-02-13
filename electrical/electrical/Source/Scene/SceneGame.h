@@ -30,6 +30,23 @@ private:
 	float s;		// 彩度(saturation)	:0~255
 	float v;		// 明度(value)		:0~255
 
+	// レターボックス
+	typedef struct
+	{
+		int x1;		// 左端x座標
+		int y1;		// 上端y座標
+		int x2;		// 右端x座標
+		int y2;		// 下端y座標
+		float r;	// 赤色				:0~255
+		float g;	// 緑色				:0~255
+		float b;	// 青色				:0~255
+		float h;	// 色相(hue)			:0~360
+		float s;	// 彩度(saturation)	:0~255
+		float v;	// 明度(value)		:0~255
+	}LetterBox;
+
+	LetterBox letterBox[4];
+
 	// スクリーン座標の初期化処理
 	void InitScreenPos();
 
@@ -53,6 +70,12 @@ private:
 
 	// シーン遷移
 	void SceneChange(bool isSCPossible);
+
+	// レターボックスの初期化処理
+	void InitLetterBox();
+	
+	// レターボックスの描画処理
+	void DrawLetterBox();
 
 	// ゲーム終了
 	void GameEnd();

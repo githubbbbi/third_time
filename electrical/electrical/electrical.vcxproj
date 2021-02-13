@@ -171,6 +171,7 @@
     <ClCompile Include="Source\UI\UI_Player.cpp" />
     <ClCompile Include="Source\UI\UI_Ready.cpp" />
     <ClCompile Include="Source\UI\UI_Title.cpp" />
+    <ClCompile Include="Source\Utility\Frame.cpp" />
     <ClCompile Include="Source\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +214,7 @@
     <ClInclude Include="Source\UI\UI_Player.h" />
     <ClInclude Include="Source\UI\UI_Ready.h" />
     <ClInclude Include="Source\UI\UI_Title.h" />
+    <ClInclude Include="Source\Utility\Frame.h" />
     <ClInclude Include="Source\Utility\Utility.h" />
   </ItemGroup>
   <ItemGroup>

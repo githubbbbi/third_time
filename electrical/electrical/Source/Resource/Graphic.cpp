@@ -32,6 +32,7 @@ Graphic::Graphic()
 				   2, 1, 2, 140, 24, uiTitle);
 	ending = MyLoadGraph("Resource/Graphic/Ending/ending.png");
 	uiReady = MyLoadGraph("Resource/Graphic/UI/UI_ready.png");
+	frame = MyLoadGraph("Resource/Graphic/Other/frame.png");
 }
 
 // ¡‚Ü‚Åƒ[ƒh‚µ‚½‰æ‘œ‚ğ‰ğ•ú‚·‚é
@@ -148,4 +149,9 @@ int Graphic::GetEnding()
 int Graphic::GetUIReady()
 {
 	return uiReady;
+}
+
+int Graphic::GetFrame()
+{
+	return frame;
 }
