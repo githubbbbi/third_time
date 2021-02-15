@@ -31,7 +31,7 @@ void WeaponBase::BulletMove(bool isHitCalc)
 	float dummy = 0.0f;
 
 	// 当たり判定を行う長さ
-	int hitLength = radius - 10;
+	const int hitLength = radius - 5;
 
 	// 1フレーム前の座標を取得
 	oldX = x;

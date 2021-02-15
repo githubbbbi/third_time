@@ -6,7 +6,7 @@
 
 // 画面内にとどまる
 void Utility::StayOnScreen(float *x, float *y, int radius,
-						   bool isStayX, bool isStayY)
+	bool isStayX, bool isStayY)
 {
 	if ( isStayX )
 	{
@@ -36,7 +36,7 @@ void Utility::StayOnScreen(float *x, float *y, int radius,
 // マップとの当たり判定
 // 1：左辺、2：右辺、3：上辺、4：下辺
 int Utility::MapHitCheck(float x, float y,
-						 float *moveX, float *moveY)
+	float *moveX, float *moveY)
 {
 	const float value = 1.0f;
 
@@ -53,7 +53,7 @@ int Utility::MapHitCheck(float x, float y,
 		map.left = ((int)addX / CHIP_SIZE) * CHIP_SIZE;				// 左辺のX座標
 		map.right = ((int)addX / CHIP_SIZE + 1) * CHIP_SIZE - 1;	// 右辺のX座標
 		map.top = ((int)addY / CHIP_SIZE) * CHIP_SIZE;				// 上辺のY座標
-		map.bottom = ((int)addY / CHIP_SIZE + 1) * CHIP_SIZE;		// 下辺のY座標
+		map.bottom = ((int)addY / CHIP_SIZE + 1) * CHIP_SIZE - 1;	// 下辺のY座標
 
 		// 上辺に衝突
 		if ( *moveY > 0.0f )
@@ -108,7 +108,7 @@ int Utility::MapHitCheck(float x, float y,
 
 // 円のコリジョン
 bool Utility::IsCircleCollision(float x1, float y1, int r1,
-								float x2, float y2, int r2)
+	float x2, float y2, int r2)
 {
 	double disX = (double)x2 - (double)x1;
 	double disY = (double)y2 - (double)y1;
@@ -125,7 +125,7 @@ bool Utility::IsCircleCollision(float x1, float y1, int r1,
 
 // 矩形の子リジョン
 bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
-							  float x2, float y2, int w2, int h2)
+	float x2, float y2, int w2, int h2)
 {
 	float halfW1 = (float)w1 / 2.0f;
 	float halfH1 = (float)h1 / 2.0f;
@@ -143,7 +143,7 @@ bool Utility::IsRectCollision(float x1, float y1, int w1, int h1,
 
 // スクロール
 void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
-					 int displaceX, int displaceY, bool *isScroll)
+	int displaceX, int displaceY, bool *isScroll)
 {
 	// スクロールスピード
 	const int scrollSpeedX = 20;
@@ -233,7 +233,7 @@ void Utility::Scroll(int centerX, int centerY, int *scrollX, int *scrollY,
 
 // オブジェクトをスクリーンの中心にずらす
 void Utility::DisplaceObjScrnCntr(int screenX, int screenY,
-								  float *displaceX, float *displaceY)
+	float *displaceX, float *displaceY)
 {
 	// 現在のスクリーン座標からいくつずらすかを算出
 	*displaceX = (((float)WIN_WIDTH - ROOM_SIZE_X) / 2.0f) * ((float)screenX / ((float)WIN_WIDTH / 2.0f));
@@ -242,7 +242,7 @@ void Utility::DisplaceObjScrnCntr(int screenX, int screenY,
 
 // HSVからRGBに変換
 void Utility::ConvertHSVtoRGB(float *r, float *g, float *b,
-							  float h, float s, float v)
+	float h, float s, float v)
 {
 	float max = v;
 	float min = max - (s / 255.0f) * max;

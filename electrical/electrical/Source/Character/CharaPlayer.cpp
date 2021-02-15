@@ -740,16 +740,16 @@ void Chara_Player::Update()
 		Invicible();
 		State();
 
-		// バッテリーボックス
-		UpdateBatteryBox();
-
 		// 向き固定ボタンが押されていない
 		if ( !InputManager::IsInputNow(e_LOCK) )
 		{
 			ChangeGraphicDirection();
 		}
-
+		
 		Animation(P_MOTION, P_NORMAL_SPEED, P_DASH_SPEED);
+
+		// バッテリーボックス
+		UpdateBatteryBox();
 	}
 
 	WeaponManager();

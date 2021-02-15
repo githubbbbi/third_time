@@ -57,38 +57,32 @@ void Chara_EnemyElectric::AutoMove(float playerX, float playerY, bool isPlayerAl
 
 	if ( isPlayerAlive )
 	{
+		// 射程を決める
 		if ( shotLength == 0 )
 		{
-			shotLength = GetRand(150) + 100;
+			shotLength = (rand() % 4 + 2) * CHIP_SIZE;
 		}
 
-		// 射程内で止まる 間にブロックがあればとまらない
-		if ( fabsf(playerX - x + radius) >= shotLength || IsBlock(playerX) )
+		// 間にブロックがなく、射程内ならロックする
+		if( !IsBlock(playerX) && fabsf(playerX - x + radius) < shotLength )
 		{
-			moveX += speed;
-
-			// 射程外では撃たない
-
-			isTargetLock = false;
-
-			// ジャンプ
-			Jump();
-		}
-		// ｙが違う場合なら、射程内でも進む
-		else if ( enemyMapY != playerMapY )
-		{
-			moveX += speed;
-
-			// 射程外では撃たない
-			isTargetLock = false;
-
-			// ジャンプ
-			Jump();
+			isTargetLock = true;
 		}
 		else
 		{
-			// 射程内で、y座標が同じなら撃つ
-			isTargetLock = true;
+			isTargetLock = false;
+		}
+		
+		// Y座標が違うなら、ロックをはずす
+		if(enemyMapY != playerMapY )
+		{
+			isTargetLock = false;
+		}
+
+		if( !isTargetLock)
+		{
+			moveX += speed;
+			Jump();
 		}
 
 		// 標的になったら、プレイヤーを追いかける（反転したり)
