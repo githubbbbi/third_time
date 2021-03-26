@@ -119,7 +119,7 @@ private:
 	void State();
 
 	// バッテリーボックスの初期化処理
-	void InitializeBatteryBox();
+	void InitBatteryBox();
 
 	// バッテリーボックスの更新処理
 	void UpdateBatteryBox();

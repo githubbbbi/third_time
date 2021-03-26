@@ -2,6 +2,7 @@
 #include <time.h>
 #include "System.h"
 #include "SettingDxLib.h"
+#include "FrameRate.h"
 
 // コンストラクタ
 System::System()
@@ -19,7 +20,7 @@ System::~System()
 bool System::Initialize()
 {
 	// DXLibの初期化
-	if ( !SettingDxLib::DxLibInit() )
+	if ( !SettingDxLib::InitDxLib() )
 	{
 		return false;
 	}
@@ -29,6 +30,9 @@ bool System::Initialize()
 
 	// インスタンス生成
 	scene = new SceneManager;
+
+	// FrameRateの初期化
+	FrameRate::Initialize();
 
 	return true;
 }
@@ -42,8 +46,14 @@ bool System::MainLoop()
 		/* ----- 更新処理 ----- */
 		scene->Update();
 
+		// FPSの計算
+		FrameRate::CalcFPS();
+
 		/* ----- 描画処理 ----- */
 		scene->Draw();
+
+		// FPSの表示
+		FrameRate::DrawFPS();
 
 		// ゲーム終了
 		if ( scene->GetIsGameEnd() )
@@ -51,8 +61,8 @@ bool System::MainLoop()
 			break;
 		}
 
-		// DxLibのループ処理
-		if ( !SettingDxLib::DxLibGameLoop() )
+		// DxLibの描画処理
+		if ( !SettingDxLib::DrawDxLib() )
 		{
 			return false;
 		}

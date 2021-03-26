@@ -106,7 +106,7 @@ void Chara_Player::Initialize()
 	isLeft = InitGraphDirection();
 
 	// バッテリーボックス
-	InitializeBatteryBox();
+	InitBatteryBox();
 
 	MyInitialize();
 }
@@ -671,7 +671,7 @@ void Chara_Player::State()
 }
 
 // バッテリーボックスの初期化処理
-void Chara_Player::InitializeBatteryBox()
+void Chara_Player::InitBatteryBox()
 {
 	// 左向き
 	if ( isLeft )
